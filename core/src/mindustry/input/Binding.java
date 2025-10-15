@@ -4,6 +4,9 @@ import arc.input.*;
 import arc.input.KeyBind.*;
 import mindustry.*;
 
+/**
+ * This class defines all the KeyBind's to be used throughout the Input
+ */
 public class Binding{
     public static final KeyBind
 

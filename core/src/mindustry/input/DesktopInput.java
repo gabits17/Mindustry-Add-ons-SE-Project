@@ -549,6 +549,10 @@ public class DesktopInput extends InputHandler{
         }
     }
 
+    //I know the contributing file says not to do so but i believe this whole method would become a lot more readable
+    //if instead of just having a gigantic cascade of if's it just called a void function for each action for example
+    //the place/breack function or something of sorts or a shoot function that would ask (if) if the player was shooting
+
     //player input: for controlling the player unit (will crash if the unit is not present)
     void pollInputPlayer(){
         if(scene.hasField()) return;
@@ -717,14 +721,11 @@ public class DesktopInput extends InputHandler{
             schemY = rawCursorY;
         }
 
-        /**
-         * Seems to handle inputs of a player removing plans or buildings or both?
-         */
+        //This looks like it only removes planned buildings not placed one's (not studied yet)
         if(Core.input.keyDown(Binding.select) && mode == none && !isPlacing() && deleting){
             var plan = getPlan(cursorX, cursorY);
             if(plan != null && plan.breaking){
                 player.unit().plans().remove(plan);
-                System.out.println("Removed plan");
             }
         }else{
             deleting = false;
@@ -746,16 +747,18 @@ public class DesktopInput extends InputHandler{
             schemY = -1;
         }
 
+        //Rough implementation of a undo functionality still needs a lot of work and maybe some rafactoring
+        //Mostly just testing how the building system works
         if (Core.input.keyTap(Binding.undo) && Core.input.keyDown(Binding.diagonalPlacement)) {
             undoLastBuild();
             Events.fire(new LineConfirmEvent());
         }
 
-        /**
-         * Seems to handle player building and removing
-         */
+
+        //This if handles placing and destruction of blocks
         if(Core.input.keyRelease(Binding.breakBlock) || Core.input.keyRelease(Binding.select)){
 
+            //Handle placing of blocks
             if(mode == placing && block != null){ //touch up while placing, place everything in selection
                 if(input.keyDown(Binding.boost)){
                     flushPlansReverse(linePlans);
@@ -764,8 +767,10 @@ public class DesktopInput extends InputHandler{
                 }
 
                 linePlans.clear();
+                //Idk why this event is fired as no one seems to use it
                 Events.fire(new LineConfirmEvent());
             }else if(mode == breaking){ //touch up while breaking, break everything in selection
+                //Handle the destruction of blocks in the currently selected area
                 removeSelection(selectX, selectY, cursorX, cursorY, !Core.input.keyDown(Binding.schematicSelect) ? maxLength : Vars.maxSchematicSize);
                 if(lastSchematic != null){
                     useSchematic(lastSchematic);
