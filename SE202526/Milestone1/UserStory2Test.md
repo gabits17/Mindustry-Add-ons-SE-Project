@@ -19,7 +19,7 @@ As a PLAYER, i want to be able to see my resource count while in pause, so that 
 This may be too short/easy to be implemented in this project
 
 ### Review
-*(Please add your review here)*
+Game already has this feature this should be removed -- Gabriel
 
 #### Change Log
 
