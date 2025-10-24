@@ -75,7 +75,15 @@ public class EventType{
     public static class WaveEvent{}
     public static class TurnEvent{}
     /** Called when the player places a line, mobile or desktop.*/
-    public static class LineConfirmEvent{}
+    /**
+     * A Line looks like a build event
+     * This is called even if the build made had no effect (all the plans were invalid etc)
+     */
+    public static class LineConfirmEvent{
+        public LineConfirmEvent(){
+            System.out.println("Line confirm Event");
+        }
+    }
     /** Called when a turret receives ammo, but only when the tutorial is active! */
     public static class TurretAmmoDeliverEvent{}
     /** Called when a core receives ammo, but only when the tutorial is active! */
@@ -367,6 +375,7 @@ public class EventType{
         public BuildDamageEvent set(Building build, Bullet source){
             this.build = build;
             this.source = source;
+            System.out.println("Building Damaged");
             return this;
         }
     }
@@ -523,6 +532,7 @@ public class EventType{
             this.build = build;
             this.unit = unit;
             this.previous = previous;
+            System.out.println("Block rorated");
         }
     }
 
