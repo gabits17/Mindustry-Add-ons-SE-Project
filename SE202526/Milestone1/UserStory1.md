@@ -24,4 +24,5 @@ I can see this as a feature similar to snipping tool. It might be interesting to
 
 #### Change Log
 
-*date: *
+24/10/2025
+Diogo Antunes UserStory1 Review added.
