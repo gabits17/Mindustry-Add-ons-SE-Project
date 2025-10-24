@@ -2,8 +2,7 @@
 
 ## Author(s)
 
-- name surname (number)
-- name surname (number)
+- Gabriel Falcão (67775)
 
 ## Reviewer(s)
 
@@ -12,11 +11,11 @@
 
 ### User story
 
-*( please write up the User story here.)*
+*As a HIGHLY STRATEGIC PLAYER, I want to be able to change the targeting options of turrets and or units (change attack priority to, eg: stronger enemies, shields, bullets) so that my base's defense strategy is flexible according to my current needs.*
 
 #### Notes
 
-*(Please add any notes about this user story here.)*
+*No notes*
 
 ### Review
 *(Please add your review here)*
