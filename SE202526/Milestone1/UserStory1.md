@@ -7,7 +7,7 @@
 ## Reviewer(s)
 
 - name surname (number)
-- name surname (number)
+- Diogo Antunes (67763)
 
 ### User story
 
@@ -18,7 +18,9 @@
 *No notes*
 
 ### Review
-*(Please add your review here. Identify the reviewer’s Name and List of comments to be addressed / points to be corrected / suggestions.)*
+Diogo Antunes (67763)
+
+I can see this as a feature similar to snipping tool. It might be interesting to consider, in example, only deleting pipes and ducts in a certain mode to avoid destroying buildings when needing to reorganise pipelines.
 
 #### Change Log
 
