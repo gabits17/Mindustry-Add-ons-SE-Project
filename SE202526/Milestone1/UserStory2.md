@@ -6,8 +6,8 @@
 
 ## Reviewer(s)
 
+- Gabriel Matias Falcão (67775)
 - Manuel Oliveira (68547)
-- name surname (number)
 
 ### User story
 
@@ -20,9 +20,17 @@
 *- Look for new leaks when pipe blocks are destroyed by the user or by enemies (and potentially buildings connected to pipes).*
 
 ### Review
+
+Gabriel Matias Falcão 67775
+
+*This could be developed further as a sort of alert system, using the chat or some user interface, in which the player could sort between alerts (destroyed units, pipes, blocks...)*
+
+Manuel Oliveira 68547
+
 *The feature looks worth implementing if not too worksome for our timeframe.*
 
 #### Change Log
 
 *created - *
 *reviewed by 68547 - 24/10/2025*
+*reviewed by 67775 - 24/10/2025*
