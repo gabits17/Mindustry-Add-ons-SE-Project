@@ -6,7 +6,7 @@
 
 ## Reviewer(s)
 
-- name surname (number)
+- Manuel Oliveira (68547)
 - name surname (number)
 
 ### User story
@@ -20,8 +20,9 @@
 *- Look for new leaks when pipe blocks are destroyed by the user or by enemies (and potentially buildings connected to pipes).*
 
 ### Review
-*(Please add your review here)*
+*The feature looks worth implementing if not too worksome for our timeframe.*
 
 #### Change Log
 
-*(date: change description)*
+*created - *
+*reviewed by 68547 - 24/10/2025*
