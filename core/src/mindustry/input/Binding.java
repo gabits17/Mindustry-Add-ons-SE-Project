@@ -7,6 +7,10 @@ import mindustry.*;
 public class Binding{
     public static final KeyBind
 
+    //Undo stuff
+    undo = KeyBind.add("undo", KeyCode.z),
+
+
     moveX = KeyBind.add("move_x", new Axis(KeyCode.a, KeyCode.d), "general"),
     moveY = KeyBind.add("move_y", new Axis(KeyCode.s, KeyCode.w)),
     mouseMove = KeyBind.add("mouse_move", KeyCode.mouseBack),

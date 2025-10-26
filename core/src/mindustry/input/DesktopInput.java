@@ -63,6 +63,8 @@ public class DesktopInput extends InputHandler{
     private float buildPlanMouseOffsetX, buildPlanMouseOffsetY;
     private boolean changedCursor, pressedCommandRect;
 
+    private Commander commander = new Commander();
+
     boolean showHint(){
         return ui.hudfrag.shown && Core.settings.getBool("hints") && selectPlans.isEmpty() && !player.dead() &&
             (!isBuilding && !Core.settings.getBool("buildautopause") || player.unit().isBuilding() || !player.dead() && !player.unit().spawnedByCore());
@@ -738,16 +740,25 @@ public class DesktopInput extends InputHandler{
             schemY = -1;
         }
 
+        if (Core.input.keyDown(Binding.control) && Core.input.keyDown(Binding.boost) &&Core.input.keyTap(Binding.undo)) {
+            commander.redoTop();
+        } else if (Core.input.keyDown(Binding.control) && Core.input.keyTap(Binding.undo)) {
+            commander.undoTop();
+        }
+
         if(Core.input.keyRelease(Binding.breakBlock) || Core.input.keyRelease(Binding.select)){
 
             if(mode == placing && block != null){ //touch up while placing, place everything in selection
                 if(input.keyDown(Binding.boost)){
                     flushPlansReverse(linePlans);
                 }else{
-                    flushPlans(linePlans);
+                    //Should check if the event was just a rotation
+                    Command c = new BuildPlansCommand(linePlans, this);
+                    commander.addCommand(c);
+                    commander.executeTop();
                 }
 
-                linePlans.clear();
+                linePlans.clear(); //This will need to be handled some other way
                 Events.fire(new LineConfirmEvent());
             }else if(mode == breaking){ //touch up while breaking, break everything in selection
                 removeSelection(selectX, selectY, cursorX, cursorY, !Core.input.keyDown(Binding.schematicSelect) ? maxLength : Vars.maxSchematicSize);
