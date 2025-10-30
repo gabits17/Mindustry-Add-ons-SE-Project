@@ -33,3 +33,5 @@ It is a functionality that the game lacks, moving by copying and cutting would b
 *Reviewed by 67763 - 24/10/2025*
 
 *Changed by 67775 - 30/10/2025*
+
+*US modified for clarity by 67763 - 30/10/2025*

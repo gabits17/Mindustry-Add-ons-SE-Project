@@ -25,4 +25,4 @@ Avoids saving an in-game schematic for smaller changes.
 
 *Refined from US1 by 67775 - 30/10/2025*
 
-*Refination modified for clarity by 67763 - 30/10/2025*
+*Refined US modified for clarity by 67763 - 30/10/2025*
