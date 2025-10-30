@@ -11,11 +11,11 @@
 
 ### User story
 
-*As a HIGHLY STRATEGIC PLAYER, I want to be able to change the targeting options of turrets and or units (change attack priority to, eg: stronger enemies, shields, bullets) so that my base's defense strategy is flexible according to my current needs.*
+As a HIGHLY STRATEGIC PLAYER, I want to be able to change the targeting options of statically-placed, ranged weapons,  so that my base's defense strategy is flexible according to my current needs.
 
 #### Notes
 
-*No notes*
+Change attack priority to, eg: stronger enemies, shields, bullets
 
 ### Review
 
@@ -29,3 +29,5 @@
 *reviewed by 67286 - 24/10/2025*
 
 *reviewed by 67804 - 24/10/2025*
+
+*changed by 67775 - 30/10/2025*
