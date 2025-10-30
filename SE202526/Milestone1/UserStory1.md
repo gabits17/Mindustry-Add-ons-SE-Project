@@ -11,7 +11,7 @@
 
 ### User story
 
-As an EXPERIENCED USER, I want a reliable method to track and modify the edits I make to the map, so that I can efficiently undo or redo any mistakes while building.
+As an EXPERIENCED USER, I want to use a reliable method to track and modify the edits I make to the map, so that I can efficiently undo or redo any mistakes while building.
 
 #### Notes
 
@@ -30,7 +30,6 @@ It is a functionality that the game lacks, moving by copying and cutting would b
 
 #### Change Log
 
-24/10/2025
-Diogo Antunes UserStory1 Review added.
+*Reviewed by 67763 - 24/10/2025*
 
 *Changed by 67775 - 30/10/2025*
