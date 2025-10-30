@@ -11,11 +11,11 @@
 
 ### User story
 
-*As an EXPERIENCED USER, I would like if the game had a redo and undo functionality, as well as copy/cut/paste, so that errors can be efficiently deleted, and sections modified without needing to save a schematic.*
+As an EXPERIENCED USER, I want a reliable method to track and modify the edits I make to the map, so that I can efficiently undo or redo any mistakes while building.
 
 #### Notes
 
-*No notes*
+Undo and redo actions
 
 ### Review
 Diogo Antunes (67763)
@@ -32,3 +32,5 @@ It is a functionality that the game lacks, moving by copying and cutting would b
 
 24/10/2025
 Diogo Antunes UserStory1 Review added.
+
+*Changed by 67775 - 30/10/2025*
