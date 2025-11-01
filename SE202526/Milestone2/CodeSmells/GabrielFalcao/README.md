@@ -4,9 +4,9 @@
 # Code Smells
 ## Long Method
 This is probably the code smell that is most notable across the codebase, 
-as most methods exceed the 25-30 line average.
+As most methods exceed the 25-30 line average.
 
-Some examples may are:
+Some examples are:
 - The **pollInputPlayer** in **DesktopInput.java** has 330 lines
 - The **build** in **BannedContentDialog.java** has 84 lines
 - The **update** in **BaseBuilderAI.java** has 135 lines
@@ -14,11 +14,11 @@ Some examples may are:
 While many of these can be found throughout the codebase, this report 
 focuses on the **pollInputPlayer** method, as it is one of the longest methods.
 
-I believe that most actions (ifs) could be replaced by stand-alone methods,
+I believe that stand-alone methods could replace most actions (ifs),
 not only would it improve the method's **readability** quite a lot.
-It would also be much easier to understand which action each if block is treating,
-most are either not commented, or the comments barely explain what the action is/does.
-Thus, much of the reader's time goes into guesswork through the name of the bindings
+It would also be much easier to understand which action each if block is treating;
+Most are either not commented, or the comments barely explain what the action is/does.
+Thus, much of the reader's time goes into guesswork through the names of the bindings
 polled in each if.
 
 *Start of pollInputPlayer*
@@ -91,5 +91,5 @@ But do not override it with new functionality (since it had none to begin with).
 ![img.png](Assets/hoverPartRefusedBequest.png)
 
 ### Proposed Solution
-Find where this method is used and if possible remove it from the abstract class.
+Find where this method is used and, if possible, remove it from the abstract class.
 
