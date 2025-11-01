@@ -2,33 +2,73 @@
 ## Author
 - Gabriel Falcão (67775)
 # Code Smells
-- Attach a picture of the block of code with the smell
-- Reference the file in which the smell was found
-- Possible solutions for the code smell you found
 ## Long Method
-The **pollInputPlayer** has about 330 lines
+This is probably the code smell that is most notable across the codebase, 
+as most methods exceed the 25-30 line average.
 
-This method is found in DesktopInput.java
+Some examples may are:
+- The **pollInputPlayer** in **DesktopInput.java** has 330 lines
+- The **build** in **BannedContentDialog.java** has 84 lines
+- The **update** in **BaseBuilderAI.java** has 135 lines
 
-I believe that most actions (if's) could be replaced by stand-alone methods,
-not only would it improve the method's readability quite a lot 
-it would also be easier to understand which action each if block is treating, 
-most are either not commented or the comments barely explain what the action is.
+While many of these can be found throughout the codebase, this report 
+focuses on the **pollInputPlayer** method, as it is one of the longest methods.
 
+I believe that most actions (ifs) could be replaced by stand-alone methods,
+not only would it improve the method's **readability** quite a lot.
+It would also be much easier to understand which action each if block is treating,
+most are either not commented, or the comments barely explain what the action is/does.
+Thus, much of the reader's time goes into guesswork through the name of the bindings
+polled in each if.
+
+*Start of pollInputPlayer*
 ![img.png](Assets/start_pollinput.png)
+
+*End of pollInputPlayer*
 ![img_1.png](Assets/end_pollinput.png)
+
 ### Proposed Solution
-I believe most if's in this method should be stand-alone methods to improve readability.
+I believe most ifs in this method should be stand-alone methods to improve readability.
 
 ### Example Solution
-Below is one of the many if's inside this method. 
+Below is one of the many ifs inside this method. 
 I believe it handles the schematic flipping functionality.
 It would be much better if the reader didn't have to guess what it does
 through the binding names.
-![img_3.png](Assets/proposedSolution1.png)
-![img_2.png](Assets/problem1.png)
 
+![img_3.png](Assets/problemLongMethod.png)
+![img_2.png](Assets/proposedSolutionLongMethod.png)
 
+## Data Clump
+The abstract class **InputHandler.java**, class **DesktopInput.java**,
+class **MobileInput.java**, all employ the use of **4 variables** that are
+usually passed around together (they may have different
+names in which one of the classes, but they seem to have similar purposes.
 
-## (Code Smell 2 Name)
+### Evidence
+
+#### MobileInput
+1. ![img.png](Assets/mobileInputDataClump1.png)
+2. ![img.png](Assets/mobileInputDataClump2.png)
+3. ![img.png](Assets/mobileInputDataClump3.png)
+
+#### DesktopInput
+
+1. ![img.png](Assets/desktopInputDataClump1.png)
+2. ![img.png](Assets/desktopInputDataClump2.png)
+3. ![img.png](Assets/desktopInputDataClump3.png)
+
+#### InputHandler
+1. ![img.png](Assets/inputHandlerDataClump1.png)
+2. ![img.png](Assets/inputHandlerDataClump2.png)
+3. ![img.png](Assets/inputHandlerDataClump3.png)
+
+### Proposed Solution
+
+This data clump seems to represent the selection rectangle,
+used when a player is selecting a region to break, rebuild, or build.
+
+Thus, I propose creating a record of type SelectionRectangle when passing these 4 around.
+
 ## (Code Smell 3 Name)
+
