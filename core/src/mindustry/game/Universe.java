@@ -49,16 +49,7 @@ public class Universe{
         return turn;
     }
 
-    private void updatePlanet(Planet planet){
-        planet.position.setZero();
-        planet.addParentOffset(planet.position);
-        if(planet.parent != null){
-            planet.position.add(planet.parent.position);
-        }
-        for(Planet child : planet.children){
-            updatePlanet(child);
-        }
-    }
+
 
     /** Update planet rotations, global time and relevant state. */
     public void update(){
