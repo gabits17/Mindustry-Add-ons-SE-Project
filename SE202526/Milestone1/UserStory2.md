@@ -11,14 +11,22 @@
 
 ### User story
 
-*As a USER WITH A BIG BASE, I want to know where there are water leaks in my base, shown on the minimap as soon as they occur (eg: enemy destroys pipe) so that I don't have to do so visually on the terrain since it becomes very busy.*
-
+As a USER WITH AN IN-GAME BASE THAT COVERS A WIDE AREA, 
+I want to be instantly informed of the location of any leaks of 
+liquid resources within my base, with their locations clearly highlighted 
+on the minimap in a different colour the moment they occur, 
+so that I don't have to identify them manually, 
+reducing time wasted on looking for the source of resource loss
+in a busy game environment.
 #### Notes
 
-*- Update the minimap when an existing leaking pipe has an adjacent connecting pipe placed.*
+- The Game already checks for leaking pipes (plays a leaking animation with a puddle).
 
-*- Look for new leaks when pipe blocks are destroyed by the user or by enemies (and potentially buildings connected to pipes).*
+- When a block that carries a liquid is identified as leaking, display the pixel representing the block in the minimap with a unique colour.
 
+- Only identify leaks for blocks placed by the player.
+
+- Inform the player of the leak location via warning message (if non-obstructive) and a dotted circle centered on the leak.
 ### Review
 
 Gabriel Matias Falcão 67775
@@ -36,3 +44,5 @@ Manuel Oliveira 68547
 *reviewed by 68547 - 24/10/2025*
 
 *reviewed by 67775 - 24/10/2025*
+
+*modified by 67763: modified user story and notes to increase clarity - 30/10/2025*
