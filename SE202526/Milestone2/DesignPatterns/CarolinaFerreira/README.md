@@ -1,7 +1,7 @@
 # Design Pattern Report
 ## Author
 - Gabriela Silva (#STUDENT IF)
-# Code Smells
+# Design Patterns
 - Attach a picture of the block of code with the Design Pattern
 - Reference the file in which the Pattern was found
 - Possible improvements you found
