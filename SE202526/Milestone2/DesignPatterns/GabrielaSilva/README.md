@@ -1,5 +1,6 @@
 # Design Patterns Report
 ## Author
+<<<<<<< HEAD
 - Gabriela Silva (67286)
 
 ## Template Method
@@ -42,6 +43,15 @@ The following UML diagram translates the structure of the **Template Method** de
 The methods that are customized are not abstract in the source code, but they are over writen by the concrete classes ``ErekirPlanetGenerator``, ``SerpuloPlanetGenerator`` and ``TantrosPlanetGenerator``, thus giving the main idea of the desgin pattern. 
 ![Template Method UML](template-method.svg)
 
+=======
+- Gabriela Silva (#STUDENT IF)
+# Design Patterns
+- Attach a picture of the block of code with the Design Pattern
+- Reference the file in which the Pattern was found
+- Possible improvements you found
+- Possible blocks of code you believe a Pattern could be implemented
+    - Picture of said blocks
+>>>>>>> master
 
 ## (Design Pattern 2 Name)
 
