@@ -65,7 +65,7 @@ public class DesktopInput extends InputHandler{
 
     boolean showHint(){
         return ui.hudfrag.shown && Core.settings.getBool("hints") && selectPlans.isEmpty() && !player.dead() &&
-            (!isBuilding && !Core.settings.getBool("buildautopause") || player.unit().isBuilding() || !player.dead() && !player.unit().spawnedByCore());
+                (!isBuilding && !Core.settings.getBool("buildautopause") || player.unit().isBuilding() || !player.dead() && !player.unit().spawnedByCore());
     }
 
     @Override
@@ -85,8 +85,8 @@ public class DesktopInput extends InputHandler{
                         str.append(Core.bundle.format("enablebuilding", Binding.pauseBuilding.value.key.toString()));
                     }else if(player.unit().isBuilding()){
                         str.append(Core.bundle.format(isBuilding ? "pausebuilding" : "resumebuilding", Binding.pauseBuilding.value.key.toString()))
-                            .append("\n").append(Core.bundle.format("cancelbuilding", Binding.clearBuilding.value.key.toString()))
-                            .append("\n").append(Core.bundle.format("selectschematic", Binding.schematicSelect.value.key.toString()));
+                                .append("\n").append(Core.bundle.format("cancelbuilding", Binding.clearBuilding.value.key.toString()))
+                                .append("\n").append(Core.bundle.format("selectschematic", Binding.schematicSelect.value.key.toString()));
                     }
                     if(!player.dead() && !player.unit().spawnedByCore()){
                         str.append(str.length() != 0 ? "\n" : "").append(Core.bundle.format("respawn", Binding.respawn.value.key.toString()));
@@ -103,8 +103,8 @@ public class DesktopInput extends InputHandler{
             t.table(Styles.black6, b -> {
                 b.defaults().left();
                 b.label(() -> Core.bundle.format("schematic.flip",
-                    Binding.schematicFlipX.value.key.toString(),
-                    Binding.schematicFlipY.value.key.toString())).style(Styles.outlineLabel).visible(() -> Core.settings.getBool("hints"));
+                        Binding.schematicFlipX.value.key.toString(),
+                        Binding.schematicFlipY.value.key.toString())).style(Styles.outlineLabel).visible(() -> Core.settings.getBool("hints"));
                 b.row();
                 b.table(a -> {
                     a.button("@schematic.add", Icon.save, this::showSchematicSave).colspan(2).size(250f, 50f).disabled(f -> lastSchematic == null || lastSchematic.file != null);
@@ -116,7 +116,7 @@ public class DesktopInput extends InputHandler{
     @Override
     public void drawTop(){
         if(cursorType != SystemCursor.arrow && scene.hasMouse()){
-           graphics.cursor(cursorType = SystemCursor.arrow);
+            graphics.cursor(cursorType = SystemCursor.arrow);
         }
 
         Lines.stroke(1f);
@@ -432,6 +432,9 @@ public class DesktopInput extends InputHandler{
             }
         }
 
+        /**
+         * Handles most miscelaneus inputs
+         */
         if(state.isGame() && !scene.hasDialog() && !scene.hasField()){
             if(Core.input.keyTap(Binding.minimap)) ui.minimapfrag.toggle();
             if(Core.input.keyTap(Binding.planetMap) && state.isCampaign()) ui.planet.toggle();
@@ -456,7 +459,7 @@ public class DesktopInput extends InputHandler{
 
         //zoom camera
         if((!Core.scene.hasScroll() || Core.input.keyDown(Binding.diagonalPlacement)) && !ui.chatfrag.shown() && !ui.consolefrag.shown() && Math.abs(Core.input.axisTap(Binding.zoom)) > 0
-            && !Core.input.keyDown(Binding.rotatePlaced) && (Core.input.keyDown(Binding.diagonalPlacement) ||
+                && !Core.input.keyDown(Binding.rotatePlaced) && (Core.input.keyDown(Binding.diagonalPlacement) ||
                 !Binding.zoom.value.equals(Binding.rotate.value) || ((!player.isBuilder() || !isPlacing() || !block.rotate) && selectPlans.isEmpty()))){
             renderer.scaleCamera(Core.input.axisTap(Binding.zoom));
         }
@@ -545,6 +548,10 @@ public class DesktopInput extends InputHandler{
             }
         }
     }
+
+    //I know the contributing file says not to do so but i believe this whole method would become a lot more readable
+    //if instead of just having a gigantic cascade of if's it just called a void function for each action for example
+    //the place/breack function or something of sorts or a shoot function that would ask (if) if the player was shooting
 
     //player input: for controlling the player unit (will crash if the unit is not present)
     void pollInputPlayer(){
@@ -690,7 +697,7 @@ public class DesktopInput extends InputHandler{
             }else if(!checkConfigTap() && selected != null && !tryRepairDerelict(selected)){
                 //only begin shooting if there's no cursor event
                 if(!tryTapPlayer(Core.input.mouseWorld().x, Core.input.mouseWorld().y) && !tileTapped(selected.build) && !player.unit().activelyBuilding() && !droppingItem
-                    && !(tryStopMine(selected) || (!settings.getBool("doubletapmine") || selected == prevSelected && Time.timeSinceMillis(selectMillis) < 500) && tryBeginMine(selected)) && !Core.scene.hasKeyboard()){
+                        && !(tryStopMine(selected) || (!settings.getBool("doubletapmine") || selected == prevSelected && Time.timeSinceMillis(selectMillis) < 500) && tryBeginMine(selected)) && !Core.scene.hasKeyboard()){
                     player.shooting = shouldShoot;
                 }
             }else if(!Core.scene.hasKeyboard()){ //if it's out of bounds, shooting is just fine
@@ -714,6 +721,7 @@ public class DesktopInput extends InputHandler{
             schemY = rawCursorY;
         }
 
+        //This looks like it only removes planned buildings not placed one's (not studied yet)
         if(Core.input.keyDown(Binding.select) && mode == none && !isPlacing() && deleting){
             var plan = getPlan(cursorX, cursorY);
             if(plan != null && plan.breaking){
@@ -722,6 +730,7 @@ public class DesktopInput extends InputHandler{
         }else{
             deleting = false;
         }
+
 
         if(mode == placing && block != null){
             if(!overrideLineRotation && !Core.input.keyDown(Binding.diagonalPlacement) && (selectX != cursorX || selectY != cursorY) && ((int)Core.input.axisTap(Binding.rotate) != 0)){
@@ -738,8 +747,18 @@ public class DesktopInput extends InputHandler{
             schemY = -1;
         }
 
+        //Rough implementation of a undo functionality still needs a lot of work and maybe some rafactoring
+        //Mostly just testing how the building system works
+        if (Core.input.keyTap(Binding.undo) && Core.input.keyDown(Binding.diagonalPlacement)) {
+            undoLastBuild();
+            Events.fire(new LineConfirmEvent());
+        }
+
+
+        //This if handles placing and destruction of blocks
         if(Core.input.keyRelease(Binding.breakBlock) || Core.input.keyRelease(Binding.select)){
 
+            //Handle placing of blocks
             if(mode == placing && block != null){ //touch up while placing, place everything in selection
                 if(input.keyDown(Binding.boost)){
                     flushPlansReverse(linePlans);
@@ -748,8 +767,10 @@ public class DesktopInput extends InputHandler{
                 }
 
                 linePlans.clear();
+                //Idk why this event is fired as no one seems to use it
                 Events.fire(new LineConfirmEvent());
             }else if(mode == breaking){ //touch up while breaking, break everything in selection
+                //Handle the destruction of blocks in the currently selected area
                 removeSelection(selectX, selectY, cursorX, cursorY, !Core.input.keyDown(Binding.schematicSelect) ? maxLength : Vars.maxSchematicSize);
                 if(lastSchematic != null){
                     useSchematic(lastSchematic);
@@ -986,8 +1007,8 @@ public class DesktopInput extends InputHandler{
             }
 
             if(Core.input.keyDown(Binding.pickupCargo)
-            && Time.timeSinceMillis(lastPayloadKeyHoldMillis) > 20
-            && Time.timeSinceMillis(lastPayloadKeyTapMillis) > 200){
+                    && Time.timeSinceMillis(lastPayloadKeyHoldMillis) > 20
+                    && Time.timeSinceMillis(lastPayloadKeyTapMillis) > 200){
                 tryPickupPayload();
                 lastPayloadKeyHoldMillis = Time.millis();
             }
@@ -998,8 +1019,8 @@ public class DesktopInput extends InputHandler{
             }
 
             if(Core.input.keyDown(Binding.dropCargo)
-            && Time.timeSinceMillis(lastPayloadKeyHoldMillis) > 20
-            && Time.timeSinceMillis(lastPayloadKeyTapMillis) > 200){
+                    && Time.timeSinceMillis(lastPayloadKeyHoldMillis) > 20
+                    && Time.timeSinceMillis(lastPayloadKeyTapMillis) > 200){
                 tryDropPayload();
                 lastPayloadKeyHoldMillis = Time.millis();
             }

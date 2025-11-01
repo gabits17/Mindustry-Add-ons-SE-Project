@@ -6,36 +6,42 @@
 
 ## Scrum master
 
-Student name and number
+Diogo Antunes 67763
 
 ## Management info
-### Sprint Planning Meeting: 
-*(This meeting is held at the beginning of the sprint to define the primary purpose and goal of the sprint. The Scrum team, comprising the product manager, development team, and Scrum Master, selects and commits to a set of product backlog items (PBIs) referred to as the sprint backlog. You can use this section to log what happened during this meeting. A few bullet points should be enough.)*
+### Sprint Planning Meeting:
+- Ensure everyone gets a basic grasp of the game features (by attempting the game's first map)
+- Check potential sources of information (trello board, reddit threads) for quick reading
+- General code read-through if possible, not too thorough.
+- Potentially brainstorm rough ideas for additional functionalities (may not end up feasible to implement)
+- Attempt to modify code for one such functionality as a test
 
 ### Sprint Review Meeting: 
-*(Held at the end of the sprint, this meeting is attended by all stakeholders to demo the completed work and validate if the sprint goal has been met.)*
+- Not all tasks have been completed however:
+  - Tasks left behind can be quickly achieved
+  - Still on track for milestone 1, but need better understanding of feasibility of new functionalities.
+- Many existing suggestions on forums are gameplay-tuning related, or creating new content.
 
-### Sprint Retrospective Meeting: 
-*(This meeting happens after the sprint review and before the next sprint planning meeting. The team reflects on what went well, what needs improvement, and how to enhance their processes for future sprints.)*
+### Sprint Retrospective Meeting:
+- Came up with 3-4 potential ideas.
+- Varying in complexity, but 3 seem more reliably achieved within the timeframe, and another  that depends on existing code which needs to be looked at.
+- Time is short for the following week due to different projects.
+- With the replacement idea, there should be 3 features that are more likely to be reasonably implemented in the given timeframe (needs confirmation via the code study for next week).
+- Little to say for now regarding work efficiency due to lack of structured practical tasks for this week and conflicting constraints.
 
 ## Relevant resources
 
 ### Scrum Board at the beginning of the sprint
-
-Please add the scrumboard picture here.
+![sprint1_start_scrum_board.png](sprint1_start_scrum_board.png)
 
 ### Scrum Board in the middle of the sprint
-
-Please add the scrumboard picture here.
+![sprint1_mid_scrum_board.png](sprint1_mid_scrum_board.png)
 
 ### Scrum Board at the end of the sprint
-
-Please add the scrumboard picture here.
+![sprint1_end_scrum_board.png](sprint1_end_scrum_board.png)
 
 ### Burndown Chart for the sprint
-
-Please add the burndown chart here.
+![sprint1_burndown_chart.png](sprint1_burndown_chart.png)
 
 ### Gantt Chart
-
-Please add the Gantt chart here.
+![sprint1_end_gantt.png](sprint1_end_gantt.png)
