@@ -70,5 +70,26 @@ used when a player is selecting a region to break, rebuild, or build.
 
 Thus, I propose creating a record of type SelectionRectangle when passing these 4 around.
 
-## (Code Smell 3 Name)
+## Refused Bequest
+All classes int **core/src/mindustry/entities/part** apart from **RegionPart.java**
+seem to inherit the method **load** this method is declared as *{}* (does nothing) in the
+abstract class (**DrawPart.java**) from which all of the classes in this folder inherit.
+The children's classes (apart from **RegionPart.java** mentioned above) inherit the method,
+But do not override it with new functionality (since it had none to begin with).
+- ShapePart.java
+
+![img.png](Assets/shapePartRefusedBequest.png)
+- HaloPart.java
+
+![img.png](Assets/haloPartRefusedBequest.png)
+- FlarePart.java
+
+![img.png](Assets/flarePartRefusedBequest.png)
+
+- HoverPart.java
+
+![img.png](Assets/hoverPartRefusedBequest.png)
+
+### Proposed Solution
+Find where this method is used and if possible remove it from the abstract class.
 
