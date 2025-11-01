@@ -761,7 +761,10 @@ public class DesktopInput extends InputHandler{
                 linePlans.clear(); //This will need to be handled some other way
                 Events.fire(new LineConfirmEvent());
             }else if(mode == breaking){ //touch up while breaking, break everything in selection
-                removeSelection(selectX, selectY, cursorX, cursorY, !Core.input.keyDown(Binding.schematicSelect) ? maxLength : Vars.maxSchematicSize);
+                int maxSize = !Core.input.keyDown(Binding.schematicSelect) ? maxLength : Vars.maxSchematicSize;
+                Command c = new RemoveSelectionCommand(selectX, selectY, cursorX, cursorY, maxSize, this);
+                commander.addCommand(c);
+                commander.executeTop();
                 if(lastSchematic != null){
                     useSchematic(lastSchematic);
                     lastSchematic = null;
