@@ -6,37 +6,40 @@
 
 ## Scrum master
 
-Student name and number
+Carolina Ferreira - 67804
 
 ## Management info
 ### Sprint Planning Meeting: 
-*(This meeting is held at the beginning of the sprint to define the primary purpose and goal of the sprint. The Scrum team, comprising the product manager, development team, and Scrum Master, selects and commits to a set of product backlog items (PBIs) referred to as the sprint backlog. You can use this section to log what happened during this meeting. A few bullet points should be enough.)*
+- Choose the current Scrum Master
+- Define what to do during the following week
+- Brainstorm on ways to improve team work
 
 ### Sprint Review Meeting: 
-*(Held at the end of the sprint, this meeting is attended by all stakeholders to demo the completed work and validate if the sprint goal has been met.)*
+- Talk about ways to implement the wanted features
 
-### Sprint Retrospective Meeting: 
-*(This meeting happens after the sprint review and before the next sprint planning meeting. The team reflects on what went well, what needs improvement, and how to enhance their processes for future sprints.)*
+### Sprint Retrospective Meeting:
+- Due to the lack of time, there were undone tasks 
+- Comunnication needs to improve and so do the means
 
 ## Relevant resources
 
 ### Scrum Board at the beginning of the sprint
 
-Please add the scrumboard picture here.
+![sprint2_start_scrum_board.png](sprint2_start_scrum.png)
 
 ### Scrum Board in the middle of the sprint
 
-Please add the scrumboard picture here.
+![sprint2_mid_scrum_board.png](sprint2_mid_scrum.png)
 
 ### Scrum Board at the end of the sprint
 
-Please add the scrumboard picture here.
+![sprint2_end_scrum_board.png](sprint2_end_scrum.png)
 
 ### Burndown Chart for the sprint
 
-Please add the burndown chart here.
+![sprint2_burndown_chart.png](sprint2_burndown_chart.png)
 
 ### Gantt Chart
 
-Please add the Gantt chart here.
+![sprint2_end_gantt.png](sprint2_end_gantt.png)
 
