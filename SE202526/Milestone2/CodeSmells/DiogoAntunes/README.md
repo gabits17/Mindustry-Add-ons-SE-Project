@@ -7,7 +7,7 @@
 
 ![img.png](Assets/img.png)
 
-I briefly mentioned it in the Design Patterns section do to its contribution towards, to an extent,
+I briefly mentioned it in the Design Patterns section due to its contribution towards, to an extent,
 aiding worse encapsulation in the Memento Design Pattern.
 It's used to store values of attributes stored in the save file for quick access via getters in the SaveSlot nested class of Saves:  
 
@@ -31,7 +31,7 @@ Currently SaveMeta is instantiated in SaveIO using SaveVer, both from the packag
 *(getMeta in SaveVersion from package mindustry.io)*
 ![img_3.png](Assets/img_3.png)
 The SaveVersion getMeta method should be modified so that the logic in the constructor of SaveMeta pertaining to json and the map filter is done externally (in SaveVersion).
-This allows the correct variables to be passed directly into the record, so that the data representation class doesn't need to be aware of globally-accessed variables (from the Singleton Vars).
+This allows the correct variables to be passed directly into the record, so that the data representation class doesn't need to be aware of globally-accessed variables (from Vars).
 
 ## Divergent Class
 *(World class from package mindustry.core)*
@@ -91,7 +91,7 @@ The 3 methods related to raycasting are static, so they could be separated so th
 instead of calling on the World class statically (since they are static methods, they aren't called on an instance).
 
 In example, just like in darkness, raycastEachWorld uses a method of the World class toTile which is actually just a one-line
-method that uses a global variable from the singleton Vars (therefore refactoring wouldn't make the extracted class depend on World):
+method that uses a global variable from Vars (therefore refactoring wouldn't make the extracted class depend on World):
 
 *(Code for raycastEachWorld static method in World class)*
 ![img_8.png](Assets2/img_8.png)
@@ -129,7 +129,7 @@ and through polymorphism each class implementation would return what is indicate
 *(setTile method in DrawOperation of package mindustry.editor)*
 ![img_2.png](Assets3/img_2.png)
 For setTile, it should take as a parameter a Tile tile (int to could just be a class attribute).
-Also, since content is a global attribute from the Vars singleton, they could access it just the same as DrawOperation.
+Also, since content is a global attribute from Vars, they could access it just the same as DrawOperation.
 
 At the end of the method, there's also additional behaviour for 3 of the operation types.
 *(end of code for setTile method in DrawOperation of package mindustry.editor)*
