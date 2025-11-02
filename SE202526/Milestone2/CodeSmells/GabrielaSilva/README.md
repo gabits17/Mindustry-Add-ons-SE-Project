@@ -5,38 +5,25 @@
 - Attach a picture of the block of code with the smell
 - Reference the file in which the smell was found
 - Possible solutions for the code smell you found
-## 1. Data Clumps
+## 1. Long Parameter List
+*(And Data Clumps)*
 
-It is evident that in the ``EntityGroup`` class (``core/src/mindustry/entities``), the *Data Clump* code smell is present in the methods ``intersect()`` and ``resize()``:
-
-````Java
-public Seq<T> intersect(float x, float y, float width, float height){
-    intersectArray.clear();
-    if(isEmpty()) return intersectArray;
-    tree.intersect(intersectRect.set(x, y, width, height), intersectArray);
-    return intersectArray;
-}
-// (...)
-public void resize(float x, float y, float w, float h){
-    if(tree != null){
-        tree = new QuadTree<>(new Rect(x, y, w, h));
-    }
-}
-````
-
-The four *float* parameters - ``float x``, ``float y``, ``float w/width``, ``float h/height`` - are often together (since there's two more ``intersect()`` implementations with the same four *floats*, there is more evidence of their togetherness).
-
-The code smell is strongly identified here, since the class itself already knows about the correct abstraction:
+The **Long Parameter List** code smell is clearly present in the ``EntityCollisions`` class (``core/src/mindustry/entities``). The static method ``collide()`` is the perfect example of this case.
 
 ````Java
-private final Rect viewport = new Rect();
-private final Rect intersectRect = new Rect();
+public static boolean collide(float x1, float y1, float w1, float h1, float vx1, float vy1,
+                            float x2, float y2, float w2, float h2, float vx2, float vy2, Vec2 out)
+{ ... }
 ````
-This way, it is inconsistently implementing logic for a concept that *is already known as an abstraction* in the class' code base.
+
+This smell is a consequence of the **Data Clump** code smell, since it is common here for four floats (``x``,``y``,``w`` and ``h``) to be together.
 
 #### How to fix?
-
 Instead of repeating the same parameters over and over, it should be refactored: change the method signature to accept a single ``Rect`` object. This way, the method's signature becomes shorter (thus easier to read and comprehend) and it is safer, since it is impossible to pass the parameters unordered.
 
-## (Code Smell 2 Name)
+This way, it would fix the **Data Clump** code smell and, consequently, the **Long Parameter List** as well, since it would only accept two ``Rect`` objects as parameters.
+## 2. 
+
+
+
 ## (Code Smell 3 Name)
