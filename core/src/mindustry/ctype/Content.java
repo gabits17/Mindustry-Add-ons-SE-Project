@@ -22,6 +22,7 @@ public abstract class Content implements Comparable<Content>{
      */
     public abstract ContentType getContentType();
 
+
     /** Called after all content and modules are created. Do not use to load regions or texture data! */
     public void init(){}
 
