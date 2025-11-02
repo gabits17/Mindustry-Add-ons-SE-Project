@@ -20,31 +20,30 @@ Gabriel Falcão - 67775
 - The code seems to have quite a lot of code smells
   - Long Methods
   - Data Clumps
+  - Data Classes
 - Most design patterns are not obvious
   - Visitor has a strange implementation
 
-
 ### Sprint Retrospective Meeting: 
-*(This meeting happens after the sprint review and before the next sprint planning meeting. The team reflects on what went well, what needs improvement, and how to enhance their processes for future sprints.)*
+- Drastic change of methodology
+- Created user stories for the next sprint
+  - UseCases
+- Group is unhappy with this sprint
+  - A lot was left undone or unreviewed
 
 ## Relevant resources
 
 ### Scrum Board at the beginning of the sprint
-
-Please add the scrumboard picture here.
+![sprint3_start_scrum_board.jpg](sprint3_start_scrum_board.jpg)
 
 ### Scrum Board in the middle of the sprint
-
-Please add the scrumboard picture here.
+![sprint3_mid_scrum_board.jpg](sprint3_mid_scrum_board.jpg)
 
 ### Scrum Board at the end of the sprint
-
-Please add the scrumboard picture here.
+![spirit3_end_scrum_board.jpg](spirit3_end_scrum_board.jpg)
 
 ### Burndown Chart for the sprint
-
-Please add the burndown chart here.
+![sprint3_burndown_chart.jpg](sprint3_burndown_chart.jpg)
 
 ### Gantt Chart
-
-Please add the Gantt chart here.
+![sprint3_end_gantt.jpg](sprint3_end_gantt.jpg)
