@@ -35,7 +35,7 @@ public class World{
     public int tileChanges = -1;
 
     private boolean generating, invalidMap;
-    private ObjectMap<Map, Runnable> customMapLoaders = new ObjectMap<>();
+    private ObjectMap<Map, Runnable> customMapLoaders = new     ObjectMap<>();
 
     public World(){
         Events.on(TileChangeEvent.class, e -> {
