@@ -31,5 +31,62 @@ Currently SaveMeta is instantiated in SaveIO using SaveVer, both from the packag
 The SaveVersion getMeta method should be modified so that the logic in the constructor of SaveMeta pertaining to json and the map filter is done externally (in SaveVersion).
 This allows the correct variables to be passed directly into the record, so that the data representation class doesn't need to be aware of globally-accessed variables (from the Singleton Vars).
 
+## Divergent Class
+*(World class from package mindustry.core)*
+![img.png](Assets2/img.png)
+
+### Rationale
+Indicative code metrics:
+
+- Number of methods: 48
+- Response for a class: 132
+- Weighted Methods per class: 149
+
+These metrics allude to a class wide in responsibility, given the number of methods in general,
+as well as the number of methods called in response to a class.  
+In this case it is a result of several distinct responsibilities, which include:
+- Building
+
+![img_4.png](Assets2/img_4.png)
+- Loading maps
+![img_5.png](Assets2/img_5.png)
+- Loading sectors
+![img_6.png](Assets2/img_6.png)
+- Darkness management (used in map loading, code snippets in proposed solution)
+
+  - addDarkness -> Line 396
+  - getWallDarkness -> line 450
+  - getDarkness -> line 481
+- World raycasting
+![img_7.png](Assets2/img_7.png)
+
+
+### Proposed Solution: Separation of Concerns
+#### Darkness
+Separate the logic of Darkness into another class, "DarknessManager", potentially static.
+
+*(Example method pertaining to Darkness)*
+![img_1.png](Assets2/img_1.png)
+The variable darkRadius above is a global from the class Vars, so the extraction there wouldn't lead to any more coupling.
+However, the method rawTile used is from the World class. On the other hand, the method rawTile is simply:
+
+*(Code for rawTile method in World class)*
+![img_2.png](Assets2/img_2.png)
+Therefore, the code logic isn't lengthy or unique enough to justify tying it to the World class. The same logic could still be performed in the extracted Darkness class.
+In line 455, we can see the argument attribute "tiles" of the World class being used. However, tiles could simply be put as a method parameter, seen as this is already done in the method addDarkness:
+
+*(Beginning of the addDarkness method seen below)*
+![img_3.png](Assets2/img_3.png)
+
+#### Raycasting
+The 3 methods related to raycasting are static, so they could be separated so that uses would couple with the extracted class
+instead of calling on the World class statically (since they are static methods, they aren't called on an instance).
+
+In example, just like in darkness, raycastEachWorld uses a method of the World class toTile which is actually just a one-line
+method that uses a global variable from the singleton Vars (therefore refactoring wouldn't make the extracted class depend on World):
+
+*(Code for raycastEachWorld static method in World class)*
+![img_8.png](Assets2/img_8.png)
+*(Code for toTile static method in World class, which uses a global variable tilesize)*
+![img_9.png](Assets2/img_9.png)
 ## Long Method
-## (Code Smell 3 Name)
