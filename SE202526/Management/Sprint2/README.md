@@ -25,21 +25,16 @@ Carolina Ferreira - 67804
 
 ### Scrum Board at the beginning of the sprint
 
-![sprint2_start_scrum_board.png](sprint2_start_scrum.png)
-
+![sprint2_end_scrum_board.jpg](sprint2_end_scrum_board.jpg)
 ### Scrum Board in the middle of the sprint
 
-![sprint2_mid_scrum_board.png](sprint2_mid_scrum.png)
-
+![sprint2_mid_scrum_board.jpg](sprint2_mid_scrum_board.jpg)
 ### Scrum Board at the end of the sprint
-
-![sprint2_end_scrum_board.png](sprint2_end_scrum.png)
+![sprint2_end_scrum_board.jpg](sprint2_end_scrum_board.jpg)
 
 ### Burndown Chart for the sprint
 
-![sprint2_burndown_chart.png](sprint2_burndown_chart.png)
-
+![sprint2_burndown_chart.jpg](sprint2_burndown_chart.jpg)
 ### Gantt Chart
 
-![sprint2_end_gantt.png](sprint2_end_gantt.png)
-
+![sprint2_end_gantt.jpg](sprint2_end_gantt.jpg)
