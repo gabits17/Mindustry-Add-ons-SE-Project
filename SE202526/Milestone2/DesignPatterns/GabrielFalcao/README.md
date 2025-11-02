@@ -236,4 +236,4 @@ foreshadow = new ItemTurret("foreshadow"){{
 }};
 ```
 ### Diagram
-![[StrategyPattern.svg]]
+![StrategyPattern.svg](StrategyPattern.svg)
