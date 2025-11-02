@@ -89,4 +89,41 @@ method that uses a global variable from the singleton Vars (therefore refactorin
 ![img_8.png](Assets2/img_8.png)
 *(Code for toTile static method in World class, which uses a global variable tilesize)*
 ![img_9.png](Assets2/img_9.png)
-## Long Method
+
+## Switch Statements
+
+*(TileOp class in mindustry.gen)*
+![img.png](img.png)
+Use of a switch case over TileOp type "attribute":  
+*(getTile and setTile methods in DrawOperation of package mindustry.editor)*
+![img_1.png](img_1.png)
+
+### Rationale
+The code metrics of the classes didn't seem to indicate a particular problem.  
+The current implementation uses the automatically generated TileOp class. However, this means
+there is no formal abstraction for a tile operation, resulting in a switch operation to perform the
+respective action per type.
+This leads to very strong coupling between DrawOperation and the classes it helps interpret for:
+- TileOpData (another automatically generated class);
+- TileOp.
+
+### Proposed Solution
+
+Formally abstract TileOp and TileOpData into a TileOp interface implemented by each type of tile operation.
+The behaviour of each method implementation wouldn't differ from the logic in the getTile and setTIle method above.  
+
+*(getTile method in DrawOperation of package mindustry.editor)*
+![img_3.png](img_3.png)
+In example, the interface would have a getTile method with a Tile tile parameter,
+and through polymorphism each class implementation would return what is indicated by the switch case above.  
+
+*(setTile method in DrawOperation of package mindustry.editor)*
+![img_2.png](img_2.png)
+For setTile, it should take as a parameter a Tile tile (int to could just be a class attribute).
+Also, since content is a global attribute from the Vars singleton, they could access it just the same as DrawOperation.
+
+At the end of the method, there's also additional behaviour for 3 of the operation types.
+*(end of code for setTile method in DrawOperation of package mindustry.editor)*
+![img_4.png](img_4.png)
+To avoid code duplication, TileOp could be implemented by an abstract class with a protected method that would
+perform this added functionality for the ops that require it, so that it could be called at the end of the setTile method.
