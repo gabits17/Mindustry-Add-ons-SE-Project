@@ -16,6 +16,6 @@ I'd rewrite
 as  
 "uses a Strategy design pattern where a single algorithm is attributed to a unit (a Turret in this case).
 The algorithm is responsible for deciding what targets the Turret prioritises, based on properties like distance and strength.
-Named turrets like foreshadow, malign, lustre use to sort the target unit by strength."
+Named turrets like foreshadow, malign, lustre use an algorithm that sorts the target units by strength."
 
 Spelling error in "functionlalities" -> functionalities
