@@ -11,13 +11,13 @@
 ## Command Pattern
 The **Command** pattern isn’t immediately evident here, as its implementation differs somewhat from the version presented in class. Its presence is mainly suggested by the undo and redo functionality, as well as the `OperationStack` (`core/src/mindustry/editor`) class, which stores `DrawOperation`(`core/src/mindustry/editor`)   objects. However, it could also be mistaken for the **Memento** pattern—though that doesn’t seem to be the case, since the state of the `MapEditor` (`core/src/mindustry/editor`) itself is not stored.
 
-Another unusual aspect of this implementation is that the **MapEditor** class appears to serve as both the _Invoker_ and the _Receiver_. Although some operations are indeed performed by external elements such as `EditorTile`, the `MapEditor` is responsible for invoking operations through the `addTileOp` method, which adds operations to the current one. It also applies the operation’s changes via the `updateStatic` (`EditorRender` this class could also be considered a *Receiver*) method (acting as the Invoker) directly on itself (acting as the Receiver). Finally, the resulting operation is added to the `OperationStack` through the `flushOp` method, which is invoked either by the `MapEditor` itself (in the seemingly unused `addClifs` method) or by the `MapView`, which appears to handle editor input.
+Another unusual aspect of this implementation is that the **MapEditor** class appears to serve as both the _Invoker_ and the _Receiver_. Although some operations are indeed invoked by external elements such as `EditorTile`, the `MapEditor` is responsible for invoking operations through the `addTileOp` method, which adds operations to the current one. It also applies the operation’s changes via the `updateStatic` (`EditorRender` this class could also be considered a *Receiver*) method (acting as the Invoker) directly on itself (acting as the Receiver). Finally, the resulting operation is added to the `OperationStack` through the `flushOp` method, which is invoked either by the `MapEditor` itself (in the seemingly unused `addClifs` method) or by the `MapView`, which appears to handle editor input.
 
 The `MapEditor` uses the `undo`, `canUndo`, `redo` and `canRedo` methods to control the flow of the operations, giving the user the ability to *undo* or *redo* operations made in the editor.
 
 It’s worth noting that the `EditorRender` class was not discussed here, as most of the operations relevant to the pattern occur within `MapEditor`, `OperationStack`, or `DrawOperation`. Though `EditorRender` class also functions as a Receiver of operations through the `updateStatic` method.
 ### Relevant Code Snippets
-##### addTileOp
+#### addTileOp Method
 In the `MapEditor` class
 ```java
 public void addTileOp(long data){  
@@ -29,7 +29,7 @@ public void addTileOp(long data){
     renderer.updateStatic(TileOp.x(data), TileOp.y(data));  
 }
 ```
-##### flushOp
+#### flushOp Method
 In the `MapEditor` class
 ``` java
 public void flushOp(){  
@@ -38,7 +38,7 @@ public void flushOp(){
     currentOp = null;  
 }
 ```
-##### OperationStack
+#### OperationStack Class
 Acts as an **history** for the performed operations
 ```java
 public OperationStack(){  
@@ -89,5 +89,76 @@ Some methods in `MapEditor` are not displayed as they are not deemed relevant to
 
 
 
-## (Design Pattern 2 Name)
+## Visitor
+The **Visitor** pattern can be found in the `LExecuter` class in `core/src/mindustry/logic`.
+The pattern is, once again, not immediately obvious, as its implementation differs from the typical form where a single Visitor traverses multiple classes to add functionality. In this case, the situation is reversed: there are multiple _Visitors_, the instruction, and only one _Visited_ element, the executor itself.
+### Relevant Code Snippets
+#### runOnce Method
+This method is implemented by `LExecuter`
+```java
+/** Runs a single instruction. */  
+public void runOnce(){  
+    //reset to start  
+    if(counter.numval >= instructions.length || counter.numval < 0){  
+        counter.numval = 0;  
+    }  
+  
+    if(counter.numval < instructions.length){  
+        counter.isobj = false;  
+        instructions[(int)(counter.numval++)].run(this);  
+    }  
+}
+```
+#### LInstruction Interface
+```java
+public interface LInstruction{  
+    void run(LExecutor exec);  
+}
+```
+#### UnitBind
+One of the many *instructions* that implement `LInstrucion`, as one may note the run method receives an instance of `LExecuter` and uses it, visits it.
+```java
+/** Binds the processor to a unit based on some filters. */  
+public static class UnitBindI implements LInstruction{  
+    public LVar type;  
+  
+    public UnitBindI(LVar type){  
+        this.type = type;  
+    }  
+  
+    public UnitBindI(){  
+    }  
+    @Override  
+    public void run(LExecutor exec){  
+        if(exec.binds == null || exec.binds.length != content.units().size){  
+            exec.binds = new int[content.units().size];  
+        }  
+  
+        //binding to `null` was previously possible, but was too powerful and exploitable  
+        if(type.obj() instanceof UnitType type && type.logicControllable){  
+            Seq<Unit> seq = exec.team.data().unitCache(type);  
+  
+            if(seq != null && seq.any()){  
+                exec.binds[type.id] %= seq.size;  
+                if(exec.binds[type.id] < seq.size){  
+                    //bind to the next unit  
+                    exec.unit.setconst(seq.get(exec.binds[type.id]));  
+                }  
+                exec.binds[type.id] ++;  
+            }else{  
+                //no units of this type found  
+                exec.unit.setconst(null);  
+            }  
+        }else if(type.obj() instanceof Unit u && (u.team == exec.team || exec.privileged) && u.type.logicControllable){  
+            //bind to specific unit object  
+            exec.unit.setconst(u);  
+        }else{  
+            exec.unit.setconst(null);  
+        }  
+    }  
+}
+```
+### Diagram
+![VisitorPattern](VisitorPattern.svg)
+
 ## (Design Pattern 3 Name)
