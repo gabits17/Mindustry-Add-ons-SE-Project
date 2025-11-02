@@ -1,6 +1,6 @@
 # Scrum masters log
 1. Diogo Antunes (67763)
-2. bbbb bbbb (bbbbb)
+2. Carolina Ferreira (67804)
 3. Gabriel Matias (67775)
 4. dddd dddd (ddddd)
 5. eeee eeee (eeeee)
