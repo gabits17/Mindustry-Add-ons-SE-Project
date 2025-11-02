@@ -1,6 +1,6 @@
 # Code Smell Report
 ## Author
-- Diogo Antunes (#STUDENT ID)
+- Diogo Antunes (67763)
 # Code Smells
 - Attach a picture of the block of code with the smell
 - Reference the file in which the smell was found

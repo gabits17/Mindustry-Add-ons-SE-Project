@@ -1,6 +1,6 @@
 # Design Pattern Report
 ## Author
-- Diogo Antunes (#67763)
+- Diogo Antunes (67763)
 # Design Patterns
 - Attach a picture of the block of code with the Design Pattern
 - Reference the file in which the Pattern was found
