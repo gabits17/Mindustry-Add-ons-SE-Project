@@ -159,7 +159,7 @@ public static class UnitBindI implements LInstruction{
 }
 ```
 ### Diagram
-![VisitorPattern](VisitorPattern.svg)
+![VisitorPattern](Assets/VisitorPattern.svg)
 
 ## Strategy
 The `UnitSorts` class ,in `core/src/mindustry/entities`, according to the reference https://refactoring.guru/design-patterns/strategy, determines a **Strategy** design pattern this class exposes algorithms used to sort units based on their properties. It is usually used by turrets such as ***foreshadow***, ***malign***, ***lustre***, etc...; to sort through the strongest unit.
@@ -236,4 +236,4 @@ foreshadow = new ItemTurret("foreshadow"){{
 }};
 ```
 ### Diagram
-![StrategyPattern.svg](StrategyPattern.svg)
+![StrategyPattern.svg](Assets/StrategyPattern.svg)
