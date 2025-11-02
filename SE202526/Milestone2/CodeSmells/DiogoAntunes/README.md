@@ -1,13 +1,16 @@
-# Code Smell Report
+# Code Smells Report
 ## Author
 - Diogo Antunes (67763)
 # Code Smells
 ## Data Class
 *(SaveMeta from package mindustry.io)*
+
 ![img.png](Assets/img.png)
+
 I briefly mentioned it in the Design Patterns section do to its contribution towards, to an extent,
 aiding worse encapsulation in the Memento Design Pattern.
 It's used to store values of attributes stored in the save file for quick access via getters in the SaveSlot nested class of Saves:  
+
 *(SaveSlot from package mindustry.game)*
 ![img_1.png](Assets/img_1.png)
 ### Rationale
@@ -20,9 +23,11 @@ with the exceptions:
 Therefore, being a class with no methods, and providing no additional functionality except for data storage, it's a data class.
 ### Proposed Solution
 SaveMeta should be turned into a record, however, that would require the constructor logic being done externally.  
-Currently SaveMeta is instantiated in SaveIO using SaveVer, both from the package mindustry.io. The related code is shown below:  
+Currently SaveMeta is instantiated in SaveIO using SaveVer, both from the package mindustry.io. The related code is shown below:
+
 *(getMeta in SaveIO from package mindustry.io)*
 ![img_2.png](Assets/img_2.png)
+
 *(getMeta in SaveVersion from package mindustry.io)*
 ![img_3.png](Assets/img_3.png)
 The SaveVersion getMeta method should be modified so that the logic in the constructor of SaveMeta pertaining to json and the map filter is done externally (in SaveVersion).
@@ -43,11 +48,15 @@ These metrics allude to a class wide in responsibility, given the number of meth
 as well as the number of methods called in response to a class.  
 In this case it is a result of several distinct responsibilities, which include:
 - Building
-
+- 
 ![img_4.png](Assets2/img_4.png)
+
 - Loading maps
+
 ![img_5.png](Assets2/img_5.png)
+
 - Loading sectors
+
 ![img_6.png](Assets2/img_6.png)
 - Darkness management (used in map loading, code snippets in proposed solution)
 
@@ -55,6 +64,7 @@ In this case it is a result of several distinct responsibilities, which include:
   - getWallDarkness -> line 450
   - getDarkness -> line 481
 - World raycasting
+
 ![img_7.png](Assets2/img_7.png)
 
 
@@ -69,6 +79,7 @@ However, the method rawTile used is from the World class. On the other hand, the
 
 *(Code for rawTile method in World class)*
 ![img_2.png](Assets2/img_2.png)
+
 Therefore, the code logic isn't lengthy or unique enough to justify tying it to the World class. The same logic could still be performed in the extracted Darkness class.
 In line 455, we can see the argument attribute "tiles" of the World class being used. However, tiles could simply be put as a method parameter, seen as this is already done in the method addDarkness:
 
@@ -91,6 +102,7 @@ method that uses a global variable from the singleton Vars (therefore refactorin
 
 *(TileOp class in mindustry.gen)*
 ![img.png](Assets3/img.png)
+
 Use of a switch case over TileOp type "attribute":  
 *(getTile and setTile methods in DrawOperation of package mindustry.editor)*
 ![img_1.png](Assets3/img_1.png)
