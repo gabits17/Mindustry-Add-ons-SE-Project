@@ -5,7 +5,7 @@
 
 # Review
 - Diogo Antunes (67763)
-### Review of Refused Bequest
+### Review of Refused Bequest (02/11/2025)
 The codebase seems to have many locations where defined methods are unused and not always documented as such.  
 In this case, the method is properly implemented by one subclass (RegionPart), so it seems necessary, just not for every subclass.  
 #### Proposed Solution difference
