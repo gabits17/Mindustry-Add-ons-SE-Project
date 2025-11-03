@@ -159,6 +159,81 @@ public static class UnitBindI implements LInstruction{
 }
 ```
 ### Diagram
-![VisitorPattern](VisitorPattern.svg)
+![VisitorPattern](Assets/VisitorPattern.svg)
 
-## (Design Pattern 3 Name)
+## Strategy
+The `UnitSorts` class ,in `core/src/mindustry/entities`, according to the reference https://refactoring.guru/design-patterns/strategy, uses a Strategy design pattern where a single algorithm is attributed to a unit (a Turret in this case). The algorithm is responsible for deciding what targets the Turret prioritises, based on properties like distance and strength. Named turrets like foreshadow, malign, lustre use an algorithm that sorts the target units by strength.
+
+Note: This class will be extremely important upon the implementation of the third user story, it combined with some sort of *UI* will be needed to implement the desired functionalities.
+### Relevant Code Snippets
+#### UnitSorts
+```java
+package mindustry.entities;  
+  
+import arc.math.*;  
+import mindustry.content.*;  
+import mindustry.entities.Units.*;  
+import mindustry.gen.*;  
+  
+public class UnitSorts{  
+    public static Sortf  
+  
+    closest = Unit::dst2,  
+    farthest = (u, x, y) -> -u.dst2(x, y),  
+    strongest = (u, x, y) -> -u.maxHealth + Mathf.dst2(u.x, u.y, x, y) / 6400f,  
+    weakest = (u, x, y) -> u.maxHealth + Mathf.dst2(u.x, u.y, x, y) / 6400f;  
+  
+    public static BuildingPriorityf  
+  
+    buildingDefault = b -> b.block.priority,  
+    buildingWater = b -> b.block.priority + (b.liquids != null && b.liquids.get(Liquids.water) > 5f ? 10f : 0f);  
+}
+```
+#### Example Turret Creation (Foreshadow)
+The *foreshadow* is a late-game *Serpulo* only turret that prioritises stronger enemies.
+```java
+foreshadow = new ItemTurret("foreshadow"){{  
+    float brange = range = 500f;  
+  
+    requirements(Category.turret, with(Items.copper, 1000, Items.metaglass, 600, Items.surgeAlloy, 300, Items.plastanium, 200, Items.silicon, 600));  
+    ammo(  
+        Items.surgeAlloy, new RailBulletType(){{  
+            shootEffect = Fx.instShoot;  
+            hitEffect = Fx.instHit;  
+            pierceEffect = Fx.railHit;  
+            smokeEffect = Fx.smokeCloud;  
+            pointEffect = Fx.instTrail;  
+            despawnEffect = Fx.instBomb;  
+            pointEffectSpace = 20f;  
+            damage = 1350;  
+            buildingDamageMultiplier = 0.2f;  
+            maxDamageFraction = 0.6f;  
+            pierceDamageFactor = 1f;  
+            length = brange;  
+            hitShake = 6f;  
+            ammoMultiplier = 1f;  
+        }}    );  
+    maxAmmo = 40;  
+    ammoPerShot = 5;  
+    rotateSpeed = 2f;  
+    reload = 200f;  
+    ammoUseEffect = Fx.casing3Double;  
+    recoil = 5f;  
+    cooldownTime = reload;  
+    shake = 4f;  
+    size = 4;  
+    shootCone = 2f;  
+    shootSound = Sounds.railgun;  
+    unitSort = UnitSorts.strongest; //The used startegy
+
+    envEnabled |= Env.space;  
+  
+    coolantMultiplier = 0.4f;  
+    scaledHealth = 150;  
+  
+    coolant = consumeCoolant(1f);  
+    consumePower(10f);  
+}};
+```
+### Diagram
+![StrategyPattern.svg](Assets/StrategyPattern.svg)
