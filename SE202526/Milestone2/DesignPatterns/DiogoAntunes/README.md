@@ -47,5 +47,27 @@ However, this repository often uses public attributes for this express purpose, 
 
 Additionally, there is another class associated with the SaveSlot(Sector), but only Control handles this association, so storing save data is also done in another class.
 
-## (Design Pattern 2 Name)
+## Mediator
+Mindustry connects the in game actions to completable achievements using the Events class as an intermediary:
+
+*(Example Events and Triggers that result in achievement updates from package mindustry.service in core/src)*
+![img.png](img.png)
+Only some of the classes that interact with GameService via Events are mentioned due to the many places they are referenced
+for purposes other than just achievement updates.
+
+### Rationale
+Any game available on online platforms and otherwise usually has some form of unlockable completion indicator for certain
+milestones achieved in a game. These are achievements. In mindustry these range from killing enemies, to winning fights against
+other players, to producing resources and some more obscure, hard to categorise actions that usually reward exploring the game's mechanics.
+
+Since effectively any event in the game can trigger something that an achievement would like to track, we can observe how
+Triggers and In-game Events relate to specific achievements. Therefore, we can observe that this Events class serves
+as the intermediary between every other class that activates Triggers or In-Game Events, and the GameService class.
+GameService sets up logic to handle certain events, testing for conditions that result in achievements being completed.
+
+It also communicates with the Achievement enum that holds these individual achievements, as well as the enum SStat which stores values
+evaluated to check for completing certain achievement requirements.
+
+This is preferential to each of these classes individually attempting to communicate with the GameService, since the interactions
+would be very similar (code duplication).
 ## (Design Pattern 3 Name)
