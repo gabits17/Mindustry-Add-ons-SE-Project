@@ -162,9 +162,9 @@ public static class UnitBindI implements LInstruction{
 ![VisitorPattern](Assets/VisitorPattern.svg)
 
 ## Strategy
-The `UnitSorts` class ,in `core/src/mindustry/entities`, according to the reference https://refactoring.guru/design-patterns/strategy, determines a **Strategy** design pattern this class exposes algorithms used to sort units based on their properties. It is usually used by turrets such as ***foreshadow***, ***malign***, ***lustre***, etc...; to sort through the strongest unit.
+The `UnitSorts` class ,in `core/src/mindustry/entities`, according to the reference https://refactoring.guru/design-patterns/strategy, uses a Strategy design pattern where a single algorithm is attributed to a unit (a Turret in this case). The algorithm is responsible for deciding what targets the Turret prioritises, based on properties like distance and strength. Named turrets like foreshadow, malign, lustre use an algorithm that sorts the target units by strength.
 
-Note: This class will be extremely important upon the implementation of the third user story, it combined with some sort of *UI* will be needed to implement the desired functionlalities.
+Note: This class will be extremely important upon the implementation of the third user story, it combined with some sort of *UI* will be needed to implement the desired functionalities.
 ### Relevant Code Snippets
 #### UnitSorts
 ```java

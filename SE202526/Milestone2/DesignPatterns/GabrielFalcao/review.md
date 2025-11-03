@@ -19,3 +19,5 @@ The algorithm is responsible for deciding what targets the Turret prioritises, b
 Named turrets like foreshadow, malign, lustre use an algorithm that sorts the target units by strength."
 
 Spelling error in "functionlalities" -> functionalities
+
+- I have updated the report and fixed what was mentioned here (67775)
