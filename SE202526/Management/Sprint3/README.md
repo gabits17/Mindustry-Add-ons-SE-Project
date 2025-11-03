@@ -40,7 +40,7 @@ Gabriel Falcão - 67775
 ![sprint3_mid_scrum_board.jpg](sprint3_mid_scrum_board.jpg)
 
 ### Scrum Board at the end of the sprint
-![spirit3_end_scrum_board.jpg](spirit3_end_scrum_board.jpg)
+![sprint3_end_scrum_board.jpg](sprint3_end_scrum_board.jpg)
 
 ### Burndown Chart for the sprint
 ![sprint3_burndown_chart.jpg](sprint3_burndown_chart.jpg)
