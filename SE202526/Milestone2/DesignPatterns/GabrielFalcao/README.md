@@ -159,6 +159,7 @@ public static class UnitBindI implements LInstruction{
 }
 ```
 ### Diagram
+
 ![VisitorPattern](Assets/VisitorPattern.svg)
 
 ## Strategy
