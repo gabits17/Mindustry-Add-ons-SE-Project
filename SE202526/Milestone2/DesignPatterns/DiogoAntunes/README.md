@@ -23,7 +23,7 @@ SaveSlots store data in a file they store as an attribute via the abstraction Fi
 However, SaveIO is used as an intermediary in this interaction to actually read and write to the file.
 
 The diagram below shows the associated classes and main methods to exemplify usage:
-![img_3.png](Assets/img_3.png)
+![img.png](Assets/img_2.png)
 SaveIO, SaveMeta - core/src/mindustry/io  
 Saves (SaveSlot is a nested class) - core/src/mindustry/game  
 Control - core/src/mindustry/core  
