@@ -55,6 +55,14 @@ Mindustry connects the in game actions to completable achievements using the Eve
 Only some of the classes that interact with GameService via Events are mentioned due to the many places they are referenced
 for purposes other than just achievement updates.
 
+*(Example achievements from Achievement enum from package mindustry.service in core/src)*
+![img_1.png](img_1.png)
+
+The diagram below examplifies the communication between the Logic class that handles logic for entities and waves,
+and the GameService class.
+![img_3.png](img_3.png)
+*Note: Visual Paradigm doesn't seem to like the use of > in the generic parameter names, so it's missing one after Enum<T>*
+
 ### Rationale
 Any game available on online platforms and otherwise usually has some form of unlockable completion indicator for certain
 milestones achieved in a game. These are achievements. In mindustry these range from killing enemies, to winning fights against
@@ -68,6 +76,10 @@ GameService sets up logic to handle certain events, testing for conditions that 
 It also communicates with the Achievement enum that holds these individual achievements, as well as the enum SStat which stores values
 evaluated to check for completing certain achievement requirements.
 
+*(Example statistics from SStat enum from package mindustry.service in core/src)*
+![img_2.png](img_2.png)
+
 This is preferential to each of these classes individually attempting to communicate with the GameService, since the interactions
-would be very similar (code duplication).
+would be very similar (might lead to shotgun surgery due to modifying all classes that called GameServices about an achievement if
+its criteria was modified).
 ## (Design Pattern 3 Name)
