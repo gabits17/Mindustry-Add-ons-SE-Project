@@ -2,12 +2,6 @@
 ## Author
 - Diogo Antunes (67763)
 # Design Patterns
-- Attach a picture of the block of code with the Design Pattern
-- Reference the file in which the Pattern was found
-- Possible improvements you found
-- Possible blocks of code you believe a Pattern could be implemented
-    - Picture of said blocks
-
 ## Memento
 Mindustry allows saving progress regularly (and automatically).  
 To allow saving without progress loss,
@@ -18,6 +12,7 @@ Saves.java constructor line 25
 ![img_1.png](Assets/img_1.png)
 Saves.java, line 243, method addSave:
 ![img.png](Assets/img.png)
+
 This creates a new save slot and adds it to the Sequence of SaveSlots.
 SaveSlots store data in a file they store as an attribute via the abstraction Fi.  
 However, SaveIO is used as an intermediary in this interaction to actually read and write to the file.
@@ -32,7 +27,7 @@ Fi is external
 
 ### Rationale
 There is a client (Control class) that interacts with an instance of the Saves class.
-Saves serves as a caretaker, managing multiple SaveSlot instances, each representing 
+Saves serves as a caretaker, managing multiple SaveSlot instances, each representing
 an abstraction of saved game data (found in its file attribute).
 
 The code diverges from the pattern since the Caretaker should have a sequence of Memento instances and an Originator.
@@ -51,9 +46,17 @@ Additionally, there is another class associated with the SaveSlot(Sector), but o
 Mindustry connects the in game actions to completable achievements using the Events class as an intermediary:
 
 *(Example Events and Triggers that result in achievement updates from package mindustry.service in core/src)*
-![img.png](img.png)
+![img.png](Assets2/img.png)
 Only some of the classes that interact with GameService via Events are mentioned due to the many places they are referenced
 for purposes other than just achievement updates.
+
+*(Example achievements from Achievement enum from package mindustry.service in core/src)*
+![img_1.png](Assets2/img_1.png)
+
+The diagram below examplifies the communication between the Logic class that handles logic for entities and waves,
+and the GameService class.
+![img_3.png](Assets2/img_3.png)
+*Note: Visual Paradigm doesn't seem to like the use of > in the generic parameter names, so it's missing one after Enum\<T>*
 
 ### Rationale
 Any game available on online platforms and otherwise usually has some form of unlockable completion indicator for certain
@@ -69,5 +72,39 @@ It also communicates with the Achievement enum that holds these individual achie
 evaluated to check for completing certain achievement requirements.
 
 This is preferential to each of these classes individually attempting to communicate with the GameService, since the interactions
-would be very similar (code duplication).
-## (Design Pattern 3 Name)
+would be very similar (might lead to shotgun surgery due to modifying all classes that called GameServices about an achievement if
+its criteria was modified).
+
+## Composite
+
+*(RegionPart class from package mindustry.entities.part in core/src)*
+
+![img_2.png](Assets3/img_2.png)
+
+*(HoverPart class from package mindustry.entities.part in core/src)*
+
+![img.png](Assets3/img_1.png)
+
+The diagram below shows how parts are interconnected in a tree-like structure:
+
+![img_3.png](Assets3/img_3.png)
+
+### Rationale
+
+These part classes extend DrawPart, but only one subclass (RegionPart) has children of the superclass type, making RegionPart easily identifiable
+as the composite in this tree-like structure, where all other subclasses of DrawPart are leaves.
+No distinction is made between the composition of parts (via RegionPart), and individual parts, so the design pattern is fitting.
+
+As mentioned in the Code Smell detected by Gabriel Falcão 67775, load is only properly implemented by RegionPart. The method getOutline() is similar,
+except only RegionPart actually overrides the method.
+
+Also, its draw(), load() and getOutline() methods also iterate over the children, calling the method on them too.
+No add, remove or such method exists to modify the children attribute since, as standard for this code base, the public children attribute is directly
+accessed and modified.
+
+For example:
+
+*(Example of direct access to children in the load method from the Blocks class
+from package mindustry.content in core/src)*
+
+![img_4.png](Assets3/img_4.png)
