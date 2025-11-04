@@ -51,7 +51,7 @@ Additionally, there is another class associated with the SaveSlot(Sector), but o
 Mindustry connects the in game actions to completable achievements using the Events class as an intermediary:
 
 *(Example Events and Triggers that result in achievement updates from package mindustry.service in core/src)*
-![img.png](img.png)
+![img.png](Assets2/img.png)
 Only some of the classes that interact with GameService via Events are mentioned due to the many places they are referenced
 for purposes other than just achievement updates.
 
@@ -88,11 +88,11 @@ its criteria was modified).
 
 *(HoverPart class from package mindustry.entities.part in core/src)*
 
-![img_3.png](Assets3/img_3.png)
+![img.png](Assets3/img.png)
 
 The diagram below shows how parts are interconnected in a tree-like structure:
 
-![img_4.png](Assets3/img_4.png)
+![img_3.png](Assets3/img_3.png)
 
 ### Rationale
 
