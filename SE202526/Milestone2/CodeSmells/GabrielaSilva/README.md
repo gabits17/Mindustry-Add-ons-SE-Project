@@ -60,8 +60,78 @@ This way, the method's signature becomes shorter (thus easier to read and compre
 This solution would fix the **Data Clump** code smell and, consequently, the **Long Parameter List** as well, since it would only accept two ``MovingHitbox`` objects and a ``Vec2`` as parameters.
 
 
-## 2. 
+## 2. Duplicated Code
 
+The *Duplicated Code* Code Smell can be identified once in the ``UI`` class (``core/mindustry/src/core``).
 
+`````Java
+public void showInfoFade(String info, float duration){
+    var cinfo = Core.scene.find("coreinfo");
+    Table table = new Table();
+    table.touchable = Touchable.disabled;
+    table.setFillParent(true);
+    if(cinfo.visible && !state.isMenu())
+        table.marginTop(cinfo.getPrefHeight() / Scl.scl() / 2);
+    // (...)
+}
 
-## (Code Smell 3 Name)
+public void showInfoToast(String info, float duration){
+    var cinfo = Core.scene.find("coreinfo");
+    Table table = new Table();
+    table.touchable = Touchable.disabled;
+    table.setFillParent(true);
+    if(cinfo.visible && !state.isMenu())
+        table.marginTop(cinfo.getPrefHeight() / Scl.scl() / 2);
+    // (...)
+}
+`````
+These two methods have clearly different functionalities, but both need to setup a new ``Table`` element to display a temporary message.
+
+Actually, many methods of this class use a similar logic while doing its setup to display a message. Another example of this smell that also is related to the code block above is the following, on ``showInfoPopup(String, float)``:
+
+````Java
+public void showInfoPopup(String info, float duration) {
+    Table table = new Table();  
+    table.setFillParent(true);  
+    table.touchable = Touchable.disabled;
+    // (...)
+}
+````
+
+It is safe to say that these three methods execute the same three lines of code:
+
+````Java
+Table table = new Table();  
+table.setFillParent(true);  
+table.touchable = Touchable.disabled;
+````
+
+Although it seems little, refatoring this code block would also benefit the code.
+
+#### How to fix?
+
+A possible solution to this Code Smell could be writing a new method that contains the repeated code. Refactoring the code would make it easier to read, clearer to maintain and be simple to write new code in this class.
+
+To fix it, the suggested solution would, then, be to implement two new (private or not) functions that contain each of the repeated code blocks:
+
+````Java
+private void setupNewTable() {
+    Table table = new Table();  
+    table.setFillParent(true);  
+    table.touchable = Touchable.disabled;
+}
+````
+
+````Java
+private void handleCoreInfo() {
+  var cinfo = Core.scene.find("coreinfo");
+  if(cinfo.visible && !state.isMenu())
+      table.marginTop(cinfo.getPrefHeight() / Scl.scl() / 2);
+}
+````
+
+These two new methods would be called everytime an arbitrary method needs to execute its functionalities. In this case:
+- The methods ``showInfoFade()`` and ``showInfoToast()`` would call both ``setupNewTable()`` and ``handleCoreInfo()`` functions;
+- The method ``showInfoPopup()`` would only call ``setupNewTable()``.
+
+## 3. 
