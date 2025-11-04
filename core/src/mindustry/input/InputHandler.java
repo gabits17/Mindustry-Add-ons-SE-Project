@@ -1622,41 +1622,13 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
      * @param plans
      */
     protected void flushPlans(Seq<BuildPlan> plans){
-        Queue<BuildPlan> building = new Queue<>();
         for(var plan : plans){
             if(plan.block != null && validPlace(plan.x, plan.y, plan.block, plan.rotation, null, true)){
                 BuildPlan copy = plan.copy();
                 plan.block.onNewPlan(copy);
                 player.unit().addBuild(copy);
-                BuildPlan queuePlan = plan.copy();
-                building.add(queuePlan);
             }
         };
-
-        //Undo code
-        buildStack.add(building);
-        System.out.println("----------");
-        ui.consolefrag.addMessage("----------");
-        for (Queue<BuildPlan> queue : buildStack) {
-            System.out.println("I made this changes");
-            ui.consolefrag.addMessage("I made this changes");
-            for (BuildPlan plan : queue) {
-                if (plan.breaking) {
-                    System.out.println("I broke " + plan.block);
-                    ui.consolefrag.addMessage("I broke " + plan.block);
-                } else {
-                    System.out.println("I placed " + plan.block);
-                    ui.consolefrag.addMessage("I placed " + plan.block);
-                }
-                System.out.println(plan);
-            }
-            System.out.println();
-            ui.consolefrag.addMessage("");
-        }
-        System.out.println("----------");
-        ui.consolefrag.addMessage("----------");
-        System.out.println(buildStack);
-        //End of undo code
     }
 
     protected void drawOverPlan(BuildPlan plan){
