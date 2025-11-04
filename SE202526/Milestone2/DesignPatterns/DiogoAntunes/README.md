@@ -2,12 +2,6 @@
 ## Author
 - Diogo Antunes (67763)
 # Design Patterns
-- Attach a picture of the block of code with the Design Pattern
-- Reference the file in which the Pattern was found
-- Possible improvements you found
-- Possible blocks of code you believe a Pattern could be implemented
-    - Picture of said blocks
-
 ## Memento
 Mindustry allows saving progress regularly (and automatically).  
 To allow saving without progress loss,
