@@ -18,6 +18,7 @@ Saves.java constructor line 25
 ![img_1.png](Assets/img_1.png)
 Saves.java, line 243, method addSave:
 ![img.png](Assets/img.png)
+
 This creates a new save slot and adds it to the Sequence of SaveSlots.
 SaveSlots store data in a file they store as an attribute via the abstraction Fi.  
 However, SaveIO is used as an intermediary in this interaction to actually read and write to the file.
@@ -109,4 +110,4 @@ accessed and modified. For example:
 *(Example of direct access to children in the load method from the Blocks class
 from package mindustry.content in core/src)*
 
-![img_1.png](Assets3/img_1.png)!
+![img_1.png](Assets3/img_1.png)
