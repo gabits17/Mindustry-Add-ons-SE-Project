@@ -32,7 +32,7 @@ Fi is external
 
 ### Rationale
 There is a client (Control class) that interacts with an instance of the Saves class.
-Saves serves as a caretaker, managing multiple SaveSlot instances, each representing 
+Saves serves as a caretaker, managing multiple SaveSlot instances, each representing
 an abstraction of saved game data (found in its file attribute).
 
 The code diverges from the pattern since the Caretaker should have a sequence of Memento instances and an Originator.
@@ -61,7 +61,7 @@ for purposes other than just achievement updates.
 The diagram below examplifies the communication between the Logic class that handles logic for entities and waves,
 and the GameService class.
 ![img_3.png](Assets2/img_3.png)
-*Note: Visual Paradigm doesn't seem to like the use of > in the generic parameter names, so it's missing one after Enum<T>*
+*Note: Visual Paradigm doesn't seem to like the use of > in the generic parameter names, so it's missing one after Enum\<T>*
 
 ### Rationale
 Any game available on online platforms and otherwise usually has some form of unlockable completion indicator for certain
@@ -82,4 +82,34 @@ evaluated to check for completing certain achievement requirements.
 This is preferential to each of these classes individually attempting to communicate with the GameService, since the interactions
 would be very similar (might lead to shotgun surgery due to modifying all classes that called GameServices about an achievement if
 its criteria was modified).
-## (Design Pattern 3 Name)
+
+## Composite
+
+*(RegionPart class from package mindustry.entities.part in core/src)*
+
+![img_2.png](img_2.png)
+
+*(HoverPart class from package mindustry.entities.part in core/src)*
+
+![img_3.png](img_3.png)
+
+The diagram below shows how parts are interconnected in a tree-like structure:
+
+![img_4.png](img_4.png)
+
+### Rationale
+
+These part classes extend DrawPart, but only one subclass (RegionPart) has children of the superclass type, making RegionPart easily identifiable
+as the composite in this tree-like structure, where all other subclasses of DrawPart are leaves.
+
+As mentioned in the Code Smell detected by Gabriel Falcão 67775, load is only properly implemented by RegionPart. The method getOutline() is similar,
+except only RegionPart actually overrides the method.
+
+Also, its draw(), load() and getOutline() methods also iterate over the children, calling the method on them too.
+No add, remove or such method exists to modify the children attribute since, as standard for this code base, the public children attribute is directly
+accessed and modified. For example:
+
+*(Example of direct access to children in the load method from the Blocks class
+from package mindustry.content in core/src)*
+
+![img_1.png](img_1.png)!
