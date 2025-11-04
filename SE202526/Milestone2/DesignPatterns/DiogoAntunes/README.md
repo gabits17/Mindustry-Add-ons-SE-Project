@@ -87,15 +87,15 @@ its criteria was modified).
 
 *(RegionPart class from package mindustry.entities.part in core/src)*
 
-![img_2.png](img_2.png)
+![img_2.png](Assets3/img_2.png)
 
 *(HoverPart class from package mindustry.entities.part in core/src)*
 
-![img_3.png](img_3.png)
+![img_3.png](Assets3/img_3.png)
 
 The diagram below shows how parts are interconnected in a tree-like structure:
 
-![img_4.png](img_4.png)
+![img_4.png](Assets3/img_4.png)
 
 ### Rationale
 
@@ -112,4 +112,4 @@ accessed and modified. For example:
 *(Example of direct access to children in the load method from the Blocks class
 from package mindustry.content in core/src)*
 
-![img_1.png](img_1.png)!
+![img_1.png](Assets3/img_1.png)!
