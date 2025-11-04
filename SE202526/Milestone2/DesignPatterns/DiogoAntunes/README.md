@@ -100,7 +100,9 @@ except only RegionPart actually overrides the method.
 
 Also, its draw(), load() and getOutline() methods also iterate over the children, calling the method on them too.
 No add, remove or such method exists to modify the children attribute since, as standard for this code base, the public children attribute is directly
-accessed and modified. For example:
+accessed and modified.
+
+For example:
 
 *(Example of direct access to children in the load method from the Blocks class
 from package mindustry.content in core/src)*
