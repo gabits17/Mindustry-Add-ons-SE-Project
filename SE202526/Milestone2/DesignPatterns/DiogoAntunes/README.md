@@ -94,7 +94,7 @@ The diagram below shows how parts are interconnected in a tree-like structure:
 These part classes extend DrawPart, but only one subclass (RegionPart) has children of the superclass type, making RegionPart easily identifiable
 as the composite in this tree-like structure, where all other subclasses of DrawPart are leaves.
 No distinction is made between the composition of parts (via RegionPart), and individual parts, so the design pattern is fitting.
-The "client" interacts with this structure via the DrawPart abstract, so while not an interface, it serves a similar purpose in this scenario.
+The "client" interacts with this structure via the DrawPart abstract class, so while not an interface, it serves a similar purpose in this scenario.
 The original programmer doesn't seem to use interfaces for every object, but there could very easily be one that the DrawPart class could implement.
 
 As mentioned in the Code Smell detected by Gabriel Falcão 67775, load is only properly implemented by RegionPart. The method getOutline() is similar,
