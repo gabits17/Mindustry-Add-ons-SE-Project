@@ -1,10 +1,6 @@
 # Code Smell Report
 ## Author
-- Gabriela Silva (#STUDENT ID)
-# Code Smells
-- Attach a picture of the block of code with the smell
-- Reference the file in which the smell was found
-- Possible solutions for the code smell you found
+- Gabriela Silva (67286)
 ## 1. Long Parameter List
 *(and Data Clumps)*
 
@@ -62,7 +58,7 @@ This solution would fix the **Data Clump** code smell and, consequently, the **L
 
 ## 2. Duplicated Code
 
-The *Duplicated Code* Code Smell can be identified once in the ``UI`` class (``core/mindustry/src/core``).
+The *Duplicated Code* Code Smell can be identified a few times in the ``UI`` class (``core/mindustry/src/core``).
 
 `````Java
 public void showInfoFade(String info, float duration){
@@ -133,5 +129,9 @@ private void handleCoreInfo() {
 These two new methods would be called everytime an arbitrary method needs to execute its functionalities. In this case:
 - The methods ``showInfoFade()`` and ``showInfoToast()`` would call both ``setupNewTable()`` and ``handleCoreInfo()`` functions;
 - The method ``showInfoPopup()`` would only call ``setupNewTable()``.
+
+#### Notes
+
+This Code Smell can also be detected in the same class in the methods ``showConfirm()`` and ``showCustomConfirm()``. The solution suggestion would be the same as the one did above.
 
 ## 3. 
