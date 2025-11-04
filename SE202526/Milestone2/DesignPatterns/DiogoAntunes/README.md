@@ -89,7 +89,7 @@ its criteria was modified).
 
 *(HoverPart class from package mindustry.entities.part in core/src)*
 
-![img.png](Assets3/img_4.png)
+![img.png](Assets3/img_1.png)
 
 The diagram below shows how parts are interconnected in a tree-like structure:
 
