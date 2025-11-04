@@ -156,10 +156,12 @@ public class ErekirTechTree{
 }
 ````
 
-However, this *Factory Method* instance is not consistent with its *GoF* definition, since it does not include a central interface for the *Product* created. To make it more accurate to its *GoF* definition, ``TechTree`` should be transformed into an **abstract class** that has a protected method called **``factoryMethod()``** to create the ``TechNode`` objects. The concrete creators would extend that class and implement its own method to instanciate different variants or configurations. It would be also necessary to build a **Product** interface to have several variants ``TechNode`` *products*.
+However, this *Factory Method* instance is not consistent with its *GoF* definition: it does not include a central interface for the *Product* created and the ``TechTree`` is not an abstract class or an interface for ``ErekirTechTree`` and ``SerpuloTechTree`` to extend or implement.
+
+To make it more accurate to its *GoF* definition, ``TechTree`` should be transformed into an **abstract class** that has a protected method called **``factoryMethod()``** to create the ``TechNode`` objects. The concrete creators would extend that class and implement its own method to instanciate different variants or configurations. It would be also necessary to build a **Product** interface to have several variants ``TechNode`` *products*.
 
 ### UML Diagram
-The following UML diagram translates this pattern with the classes mentioned. ``ErekirTechTree`` and ``SerpuloTechTree`` uses the three specified methods of ``TechTree`` to create ``TechNode`` objects. 
+The following UML diagram translates this pattern with the classes mentioned. ``ErekirTechTree`` and ``SerpuloTechTree`` uses the three specified methods of ``TechTree`` to create ``TechNode`` objects, when calling the ``load()`` function.  
 
 Since it is not consistent with its *GoF* definition as explained above, it has some crucial differences that feel like it is not that well designed. 
 
