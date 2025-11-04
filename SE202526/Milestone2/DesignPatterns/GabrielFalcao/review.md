@@ -6,7 +6,7 @@
 # Review
 - Diogo Antunes (67763)
 
-## Review of Strategy Design Pattern
+## Review of Strategy Design Pattern (02/11/2025)
 
 The final Diagram has the Turret aggregation with the class instead of the interface.
 
