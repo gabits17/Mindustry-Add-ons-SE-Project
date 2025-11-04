@@ -134,4 +134,13 @@ These two new methods would be called everytime an arbitrary method needs to exe
 
 This Code Smell can also be detected in the same class in the methods ``showConfirm()`` and ``showCustomConfirm()``. The solution suggestion would be the same as the one did above.
 
-## 3. 
+## 3. Divergent Class
+
+The ``Map`` class can be considered a *Divergent Class* Code Smell since it takes too many responsibilities.
+
+I believe it could be solutioned by the methodology *Separation of Concerns*: create one (or more) classes per responsibility, making it easier to understand what each class is responsible for.
+
+For example, there could be the following classes:
+- ``MapMetaData`` class that (intuitively) contains the map's meta data and all methods related to it.
+- ``MapSteamData`` class to store all the necessary *Steam* information about the map and handle *Steam Workshop* posts.
+- ``MapScoreManagement`` class to be responsible for everything about the scores of the map, even implementing new functionalities regarding this context.
