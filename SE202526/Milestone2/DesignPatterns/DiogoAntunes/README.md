@@ -99,6 +99,7 @@ The diagram below shows how parts are interconnected in a tree-like structure:
 
 These part classes extend DrawPart, but only one subclass (RegionPart) has children of the superclass type, making RegionPart easily identifiable
 as the composite in this tree-like structure, where all other subclasses of DrawPart are leaves.
+No distinction is made between the composition of parts (via RegionPart), and individual parts, so the design pattern is fitting.
 
 As mentioned in the Code Smell detected by Gabriel Falcão 67775, load is only properly implemented by RegionPart. The method getOutline() is similar,
 except only RegionPart actually overrides the method.
