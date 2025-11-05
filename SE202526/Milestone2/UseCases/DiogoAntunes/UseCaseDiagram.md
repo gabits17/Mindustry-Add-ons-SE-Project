@@ -18,7 +18,7 @@ Remote Game Server - Machine hosting an internet-access map.
 Storage Device - Digital device that can store files.
 
 ## Diagram
-![GameManagementSystem.png](Assets/UseCaseDiagramGameManagementSystem.png)
+![GameManagementSystem.svg](Assets/UseCaseDiagramGameManagementSystem.svg)
 
 Note:
 Both the campaign and the Load custom game have a Game paused extension point to allow connecting to multiplayer.
@@ -91,7 +91,7 @@ Game Host
 #### Secondary
 None
 
-## Join another game (abstract)
+## Join external game (abstract)
 
 ### Description
 The player participates in a game organised by another entity.
@@ -102,7 +102,7 @@ Player
 #### Secondary
 Player (0 or more) - other players in the map that affect gameplay.
 
-## Join local game
+## Join network game
 
 ### Description
 The player participates in a game organised by another player in the local network.
@@ -162,7 +162,7 @@ Github - The online platform used to store potential mods.
 Storage Device - Digital device that can store files.
 
 ## Diagram
-![ModManagementSystem.png](Assets/UseCaseDiagramModManagementSystem.png)
+![ModManagementSystem.svg](Assets/UseCaseDiagramModManagementSystem.svg)
 
 ## Delete mod
 
