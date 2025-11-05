@@ -2,11 +2,12 @@
 ## Reviewers
 - Diogo Antunes (67763)
 - Gabriela Silva (67286)
-- #REVEIWER NAME (#STUDENT ID)
+- Gabriel Falcão (67775)
 
 ## Change Log
  - Diogo Antunes 67763 (03/11/2025 23:00)
  - Gabriela Silva 67286 (04/11/2025 11:37)
+- Gabriel Falcão 67775 (05/11/2025 22:08)
 
 # Reviews
 ## Review of Duplicated Code (03/11/2025)
@@ -46,6 +47,7 @@ Although the proposed solution would work, perhaps it is heavier than necessary.
 This way, it would still remove duplication and the refactoring would be clearer and more modular.
 
 ## Review of Feature Envy
+- Gabriel Falcão (67775)
 
 First of all the code would be better if displayed in a code block, as the snippet is quite large
 and thus the image becomes unreadable on smaller devices/screens, this is of course a personal opinion and has 
