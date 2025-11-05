@@ -44,3 +44,47 @@ Data Clumps detection here is accurate, since both ``findTile()`` and ``findEnem
 Although the proposed solution would work, perhaps it is heavier than necessary. Instead of *hard-merging* every parameter together into a single object, it could be more effective to group them into smaller groups of parameters that relate to each other, such as the *position* and *range* together, or the *team* and *predicade*.
 
 This way, it would still remove duplication and the refactoring would be clearer and more modular.
+
+## Review of Feature Envy
+
+First of all the code would be better if displayed in a code block, as the snippet is quite large
+and thus the image becomes unreadable on smaller devices/screens, this is of course a personal opinion and has 
+nothing todo with the code smell itself.
+
+About the code smell, maybe point lines of code that actually have the smell instead of giving the whole method.
+When reviewing I had to spend some time trying to understand where the smell was.
+
+**Example**
+
+Here the `ContentParser` is directly accessing some an attribute of node (`TechNode`).
+```java
+if(research.has("objectives")){
+    node.objectives.addAll(parser.readValue(Objective[].class, research.get("objectives")));
+}
+
+```
+
+
+**Another Example**
+
+Here we see the `ContentParser` directly accessing a `Seq` of `TechTree` and using a method of said `Seq`.
+- Envious of `TechTree`'s attributes
+```java
+TechNode lastNode = TechTree.all.find(t -> t.content == unlock);
+```
+
+### Proposed Solution
+1. About the proposed solution, I don't believe that refactoring this method onto `TechTree` or `TechNode` would solve the problem
+it would just create the same code smell inversed, where either `TechTree` or `TechNode` would be envious of the parser's
+capabilities.
+2. Creating a new class just to house this method would make the problem even 
+worse since that proposed class would only access features either from
+`ContentParser`, `TechTree` or `TechNode`, thus making it envious of all three.
+
+
+I propose that, as said in [Refactoring Guru Feature Envy](https://refactoring.guru/smells/feature-envy), we could create
+methods in `TechTree` or `TechNode` that would aid the parser executing its function instead of it needing to directly 
+access the objects attributes would be better. This would also solve the encapsulation issue 
+(even if that is something we have noted to be normal throughout the codebase).
+ 
+
