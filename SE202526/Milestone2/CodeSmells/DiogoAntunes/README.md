@@ -137,11 +137,11 @@ At the end of the method, there's also additional behaviour for 3 of the operati
 To avoid code duplication, TileOp could be implemented by an abstract class with a protected method that would
 perform this added functionality for the ops that require it, so that it could be called at the end of the setTile method.
 
-Example code implementation for OpBlock, which would extend a class called TileUpdateOperation that would have the additional
+Example code implementation for OpBlock, which would extend a class called TileUpdateOp that would have the additional
 logic mentioned above:
 
 ```
-public class OpBlock extends TileUpdateOperation implements TileOperation {
+public class OpBlock extends TileUpdateOp implements TileOp {
     public OpBlock() {
         ...
     }
