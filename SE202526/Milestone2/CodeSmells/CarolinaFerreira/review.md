@@ -6,7 +6,7 @@
 
 ## Change Log
  - Diogo Antunes 67763 (03/11/2025 23:00)
- - Gabriela Silva 677286 (04/11/2025 11:37)
+ - Gabriela Silva 67286 (04/11/2025 11:37)
 
 # Reviews
 ## Review of Duplicated Code (03/11/2025)

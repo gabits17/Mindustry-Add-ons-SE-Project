@@ -4,6 +4,9 @@
 - Manuel Oliveira (68547)
 - Gabriela Silva (67286)
 
+## Change Log
+- Diogo Antunes 67763 (02/11/2025 10:11)
+
 # Review
 ### Review of Refused Bequest (02/11/2025)
 - Diogo Antunes (67763)

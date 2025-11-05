@@ -3,6 +3,9 @@
 - Diogo Antunes (67763)
 - Gabriel Matias (67775)
 
+## Change Log
+- Diogo Antunes 67763 (02/11/2025 19:34)
+
 # Review
 - Diogo Antunes (67763)
 ### Review of Shotgun Surgery (03/11/2025)
