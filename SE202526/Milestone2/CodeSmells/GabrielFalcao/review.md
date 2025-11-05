@@ -6,6 +6,7 @@
 
 ## Change Log
 - Diogo Antunes 67763 (02/11/2025 10:11)
+- Gabriela Silva 677286 (05/11/2025 14:09)
 
 # Review
 ### Review of Refused Bequest (02/11/2025)

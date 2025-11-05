@@ -4,11 +4,11 @@
 - #REVIEWR NAME (#STUDENT ID)
 
 ## Change log
-- Diogo Antunes (67763) (10:32)
+- Diogo Antunes (67763) (04/11/2025 10:32)
 
 # Review
 
-## Review of Template Method Design Pattern (04/11/2025)
+## Review of Template Method
 - Diogo Antunes (67763)
 While this example of the template method doesn't have a lot of steps that are overridden by subclasses,
 the methods that are changed can contain very substantial additions of logic, such as the generate method in Serpulo,

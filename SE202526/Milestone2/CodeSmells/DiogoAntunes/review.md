@@ -6,7 +6,7 @@
 
 # Change Log
 - Gabriel Matias Falcão (67775) -
-- Gabriela Silva (67286) - 05/11/2025 12:15
+- Gabriela Silva (67286) 05/11/2025 12:15
 
 # Review
 
