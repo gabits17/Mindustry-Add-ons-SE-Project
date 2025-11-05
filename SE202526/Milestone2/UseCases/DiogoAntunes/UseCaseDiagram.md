@@ -3,7 +3,7 @@
 - Diogo Antunes (67763)
 
 ## Big Diagram
-![UseCaseDiagram.png](UseCaseDiagram.png)
+![UseCaseDiagram.svg](UseCaseDiagram.svg)
 
 # Use Cases - Game Management System
 Use Case Diagram pertaining to:
