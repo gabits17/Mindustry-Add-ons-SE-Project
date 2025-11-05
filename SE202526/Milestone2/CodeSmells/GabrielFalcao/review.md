@@ -2,10 +2,12 @@
 ## Reviewers
 - Diogo Antunes (67763)
 - Manuel Oliveira (68547)
+- Gabriela Silva (67286)
 
 # Review
-- Diogo Antunes (67763)
 ### Review of Refused Bequest (02/11/2025)
+- Diogo Antunes (67763)
+
 The codebase seems to have many locations where defined methods are unused and not always documented as such.  
 In this case, the method is properly implemented by one subclass (RegionPart), so it seems necessary, just not for every subclass.  
 #### Proposed Solution difference
@@ -17,6 +19,14 @@ RegionPart could inherit fom this subclass, while the other could inherit from t
 If the intention in the future would be to implement the method for all classes, then they could be moved to the subclass,
 and eventually refactor the subclass to become the superclass DrawPart again, once this has been finalised.
 
+### Review of Long Method
+- Gabriela Silva (67286)
+
+The Long Method code smell, as stated, is the most common code smell in this codebase. The example analysed is a pretty good example, since it has 330 lines (more than 10 times greater than the expected average) and **71 (!)** ``if`` statements. This clearly make the code really hard do read and understand. 
+
+The proposed solution might be the best one accross the possibilities. Since there are multiple ``if`` statements, having stand-alone methods that execute each ``if`` would definetly improve readability. The example solution is well demonstrated.
+
+Overall, this code smell report is really well structured. There's only room for improvement to consider in the random *enters* done during a sentence and the frequent use of the expression "*I believe*". I recommend reviewing it.
 
 # Review
 - Manuel Oliveira (68547)
