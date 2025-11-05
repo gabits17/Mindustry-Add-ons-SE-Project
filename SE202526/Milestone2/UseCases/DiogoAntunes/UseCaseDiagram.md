@@ -18,7 +18,7 @@ Remote Game Server - Machine hosting an internet-access map.
 Storage Device - Digital device that can store files.
 
 ## Diagram
-![GameManagementSystem.svg](Assets/UseCaseDiagramModManagementSystem.svg)
+![GameManagementSystem.svg](Assets/UseCaseDiagramGameManagementSystem.svg)
 
 Note:
 Both the campaign and the Load custom game have a Game paused extension point to allow connecting to multiplayer.
@@ -162,7 +162,7 @@ Github - The online platform used to store potential mods.
 Storage Device - Digital device that can store files.
 
 ## Diagram
-![ModManagementSystem.svg](Assets/UseCaseDiagramGameManagementSystem.svg)
+![ModManagementSystem.svg](Assets/UseCaseDiagramModManagementSystem.svg)
 
 ## Delete mod
 
