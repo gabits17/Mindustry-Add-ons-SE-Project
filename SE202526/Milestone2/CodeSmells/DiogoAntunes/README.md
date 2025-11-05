@@ -136,3 +136,30 @@ At the end of the method, there's also additional behaviour for 3 of the operati
 ![img_4.png](Assets3/img_4.png)
 To avoid code duplication, TileOp could be implemented by an abstract class with a protected method that would
 perform this added functionality for the ops that require it, so that it could be called at the end of the setTile method.
+
+Example code implementation for OpBlock, which would extend a class called TileUpdateOperation that would have the additional
+logic mentioned above:
+
+```
+public class OpBlock extends TileUpdateOperation implements TileOperation {
+    public OpBlock() {
+        ...
+    }
+    
+    @Override
+    public int getTile(Tile tile) {
+        return tile.blockID();
+    }
+    
+    @Override
+    public void setTile(Tile tile, int to){
+        Block block = content.block(to);
+        tile.setBlock(block, tile.team(), tile.build == null ? 0 : tile.build.rotation);
+        if(tile.build != null){
+            tile.build.enabled = true;
+        }
+        //do extra tile.getLinkedTiles(...)
+        super.setTile(tile, to);
+    }
+}
+```
