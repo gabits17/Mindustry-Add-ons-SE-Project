@@ -3,11 +3,13 @@
 - Diogo Antunes (67763)
 - #REVIEWR NAME (#STUDENT ID)
 
+## Change log
+- Diogo Antunes (67763) (10:32)
+
 # Review
-- Diogo Antunes (67763)
 
 ## Review of Template Method Design Pattern (04/11/2025)
-
+- Diogo Antunes (67763)
 While this example of the template method doesn't have a lot of steps that are overridden by subclasses,
 the methods that are changed can contain very substantial additions of logic, such as the generate method in Serpulo,
 with 500 lines of code, including the class Room defined within the method.

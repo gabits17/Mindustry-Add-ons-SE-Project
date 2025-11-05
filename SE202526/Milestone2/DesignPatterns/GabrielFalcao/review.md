@@ -3,11 +3,13 @@
 - Diogo Antunes (67763)
 - #REVIEWR NAME (#STUDENT ID)
 
+## Change log
+- Diogo Antunes (67763) (18:03)
+
 # Review
-- Diogo Antunes (67763)
-
 ## Review of Strategy Design Pattern (02/11/2025)
-
+- Diogo Antunes (67763)
+- 
 The final Diagram has the Turret aggregation with the class instead of the interface.
 
 The sentence that initially describes the rationale is difficult to understand.
