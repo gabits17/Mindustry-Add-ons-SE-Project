@@ -1,6 +1,6 @@
 # Design Pattern Report
 ## Author
-- Carolina Ferreira  (#STUDENT IF)
+- Dinis Neves  (68130)
 # Design Patterns
 - Attach a picture of the block of code with the Design Pattern
 - Reference the file in which the Pattern was found
@@ -9,5 +9,7 @@
     - Picture of said blocks
 
 ## (Design Pattern 1 Name)
+
 ## (Design Pattern 2 Name)
+
 ## (Design Pattern 3 Name)
