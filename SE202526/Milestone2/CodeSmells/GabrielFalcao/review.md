@@ -7,6 +7,7 @@
 ## Change Log
 - Diogo Antunes 67763 (02/11/2025 10:11)
 - Gabriela Silva 677286 (05/11/2025 14:09)
+- Manuel Oliveira 68547 (05/11/2025 18:52)
 
 # Review
 ### Review of Refused Bequest (02/11/2025)
@@ -32,8 +33,12 @@ The proposed solution might be the best one accross the possibilities. Since the
 
 Overall, this code smell report is really well structured. There's only room for improvement to consider in the random *enters* done during a sentence and the frequent use of the expression "*I believe*". I recommend reviewing it.
 
-# Review
+# Review of Data Clumps
 - Manuel Oliveira (68547)
-### Review
-Except for the Refused Bequest, the code smells seem valid and consistent, and are clearly presented and explained, as well as the solutions. In the case of Reused Bequest, I agree with Diogo Antunes (67763), who previously reviewed this code smell. I think that in this case, would **load()** do anything it would be well implemented, but seeing as it doesn't do anything it might qualify better as **Dead Code**. That said I think the proposed solution still applies, to simply remove the method.
-That said there are some minor spelling mistakes and weird phrase construction that make the report hard to follow at times.
+
+I personally have also encountered this same code smell, specifically applied to the same, or very similar, coordinates set, throughout the code base in distinct instances from the ones showcased. And even if they serve slightly different purposes each time they appear, these 4 variables truly do appear consistently together.
+And therefore it is a good example of a recurring **Data Clump**.
+
+The solution presented can often be regarded as the "Standard" solution for this smell and for a good reason, and the only thing I can comment on it is that I don't see a reason this was not done from the beginning.
+
+In summary, the code smell seems valid and consistent, and is clearly presented and explained, apart from some minor spelling mistakes ( like a ")" missing at the end of a sentence), and weird phrase construction that make the report hard to follow at times, but nothing too major.
