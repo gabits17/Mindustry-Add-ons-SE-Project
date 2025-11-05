@@ -6,7 +6,7 @@
 Description of subtopic?
 
 ## Diagram
-![UseCaseDiagram.png](UseCaseDiagram.png)
+
 ## Use Case 1 Name
 
 ### Description
