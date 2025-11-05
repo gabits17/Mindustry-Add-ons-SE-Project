@@ -188,7 +188,7 @@ public class Map implements Comparable<Map>, Publishable{
     }
 
     @Override
-    public String steamTitle(){
+    public String steamTitle()  {
         return name();
     }
 

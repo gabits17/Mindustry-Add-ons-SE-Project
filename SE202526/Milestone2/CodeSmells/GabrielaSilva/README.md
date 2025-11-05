@@ -18,42 +18,42 @@ The ``collide()`` method calculates both velocities of two entities with respect
 This smell is a consequence of the **Data Clump** code smell, since the four floats defining the bounds of a box (``x``,``y``,``w`` and ``h``) are repeatedly together, along with two floats (``vx`` and ``vy``) that define the box's velocity.
 
 #### How to fix?
-Instead of repeating the same parameters over and over, it should be refactored. To do this, an extra class could be implemented: ``MovingHitbox``. This class would store a ``Rect`` object that limited the bounds of the box, and the a ``Vec2`` object that represents the movement ``(vx, vy)``. 
+Instead of repeating the same parameters over and over, it should be refactored. To do this, an extra class could be implemented: ``MovingBox``. This class would store a ``Rect`` object that limited the bounds of the box, and the a ``Vec2`` object that represents the movement ``(vx, vy)``. 
 
 ````Java
-public class MovingHitbox() {
-  private Rect bounds;
-  private Vec2 vel;
-  public MovingHitbox(Rect r, Vec2 v) {
-    this.bounds = r;
-    this.vel = v;
-  }
-  public MovingHitbox(float x, float y, float w, float h, Vec2 v) {
-    this.bounds = new Rect(x,y,w,h);
-    this.vel = v;
-  }
-  public MovingHitbox(Rect r, float vx, float vy) {
-    this.bound = r;
-    this.vel = new Vec2(vx, vy);
-  }
-  public MovingHitbox(float x, float y, float w, float h, float vx, float vy) {
-    this.bounds = new Rect(x,y,w,h);
-    this.vel = new Vec2(vx,vy);
-  }
+public class MovingBox() {
+    private Rect bounds;
+    private Vec2 vel;
+    public MovingBox(Rect r, Vec2 v) {
+      this.bounds = r;
+      this.vel = v;
+    }
+    public MovingBox(float x, float y, float w, float h, Vec2 v) {
+      this.bounds = new Rect(x,y,w,h);
+      this.vel = v;
+    }
+    public MovingBox(Rect r, float vx, float vy) {
+      this.bound = r;
+      this.vel = new Vec2(vx, vy);
+    }
+    public MovingBox(float x, float y, float w, float h, float vx, float vy) {
+      this.bounds = new Rect(x,y,w,h);
+      this.vel = new Vec2(vx,vy);
+    }
 } 
 ````
 
-It would be needed to be careful to not do a *Data Class*, which also is a code smell.
+It would be needed to be careful to not do a *Data Class*, which also is a Code Smell.
 
-This object class would clean the ``collide()`` method parameters and the calculation of each box's *bounds* and *velocity* could be done outside of it, thus reducing its complexity as well. 
+This object class would clean the ``collide()`` method parameters and the calculation of each box's *bounds* and *velocity* could be done outside of it, thus reducing its complexity. 
 
 ````Java
-public static boolean collide(MovingHitbox b1, MovingHitbox b2, Vec2 out) {}
+public static boolean collide(MovingBox b1, MovingBox b2, Vec2 out) {}
 ````
 
 This way, the method's signature becomes shorter (thus easier to read and comprehend) and it is safer, since it is impossible to pass the parameters unordered.
 
-This solution would fix the **Data Clump** code smell and, consequently, the **Long Parameter List** as well, since it would only accept two ``MovingHitbox`` objects and a ``Vec2`` as parameters.
+This solution would fix the **Data Clump** code smell and, consequently, the **Long Parameter List** as well, since it would only accept two ``MovingBox`` objects and a ``Vec2`` as parameters.
 
 
 ## 2. Duplicated Code
@@ -136,11 +136,46 @@ This Code Smell can also be detected in the same class in the methods ``showConf
 
 ## 3. Divergent Class
 
-The ``Map`` class can be considered a *Divergent Class* Code Smell since it takes too many responsibilities.
+The ``Map`` class can be considered a *Divergent Class* Code Smell since it takes too many responsibilities. This class can be found in ``core/src/mindustry/maps``.
 
-I believe it could be solutioned by the methodology *Separation of Concerns*: create one (or more) classes per responsibility, making it easier to understand what each class is responsible for.
+Below, there is a few examples of responsabilites that the class handles.
+
+- **Stores and returns map's meta data**:
+````Java
+public String name(){}
+public String author(){}
+public String description(){}
+public String plainName() {}
+public String plainAuthor(){}
+public String plainDescription(){}
+// (...)
+````
+- **Handles *Steam* management**:
+````Java
+public String getSteamID() {}
+public void addSteamID() {}
+public String steamTitle() {}
+public Fi createSteamPreview() {}
+public String steamTag() {}
+// (...)
+````
+
+- **Applies rules to the specified gamemode of the map**
+````Java
+public Rules applyRules(Gamemode mode) {}
+public Rules rules() {}
+public Rules rules(Rules base) {}
+// (...)
+````
+And so on.
+
+#### How to fix?
+
+The most practical and clearer solution is to separate the ``Map`` class into several other small classes that handles each responsbility. That way, it would be easier to understand what each class is responsible for.
 
 For example, there could be the following classes:
-- ``MapMetaData`` class that (intuitively) contains the map's meta data and all methods related to it.
-- ``MapSteamData`` class to store all the necessary *Steam* information about the map and handle *Steam Workshop* posts.
-- ``MapScoreManagement`` class to be responsible for everything about the scores of the map, even implementing new functionalities regarding this context.
+- ``MapMetaData``: (Intuitively) contains the map's meta data and all methods related to it.
+- ``MapSteamManagement``: Stores all the necessary *Steam* information about the map and handle *Steam Workshop* management.
+  - Note: This class could actually be *map-independent*, i.e., ``SteamManagement``, so it could take responsibility for everything regarding *Steam*, even if not map-related.
+- ``MapRules``: Responsible for everything about the rules of the map, scores, filters, and so on.
+- ``Map``: The actual ``Map`` class, handling only the crucial methods (such as file handling, ``compareTo``, etc). 
