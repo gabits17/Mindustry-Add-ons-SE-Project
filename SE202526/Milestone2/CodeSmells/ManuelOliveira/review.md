@@ -1,7 +1,7 @@
 # Code Smell Review
 ## Reviewers
 - Diogo Antunes (67763)
-- #REVIEWR NAME (#STUDENT ID)
+- Gabriel Matias (67775)
 
 # Review
 - Diogo Antunes (67763)
