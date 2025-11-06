@@ -2,9 +2,6 @@
 ## Author
 - Diogo Antunes (67763)
 
-## Big Diagram
-![UseCaseDiagram.svg](UseCaseDiagram.svg)
-
 # Use Cases - Game Management System
 Use Case Diagram pertaining to:
 - Loading existing games
@@ -13,12 +10,10 @@ Use Case Diagram pertaining to:
 
 #### Actors
 Player - Mindustry game user.  
-Game Host - Mindustry game user hosting a LAN-access map.  
-Remote Game Server - Machine hosting an internet-access map.  
-Storage Device - Digital device that can store files.
+Game Host - Mindustry game user hosting a LAN-access map.
 
 ## Diagram
-![GameManagementSystem.svg](Assets/UseCaseDiagramGameManagementSystem.svg)
+![UseCaseDiagram.svg](UseCaseDiagram.svg)
 
 Note:
 Both the campaign and the Load custom game have a Game paused extension point to allow connecting to multiplayer.
@@ -58,7 +53,7 @@ Player
 #### Secondary
 None
 
-## Load Campaign
+## Load campaign
 
 ### Description
 The player picks a planet and sector map from unlocked content and continues exploration.
@@ -69,7 +64,7 @@ Player
 #### Secondary
 None.
 
-## Start Campaign
+## Start campaign
 
 ### Description
 Starts the game tutorial in an available, pre-determined planet and sector map picked by the player.
@@ -123,8 +118,7 @@ The player chooses a game server hosted by a remote server to play in from a lis
 #### Primary
 Player
 #### Secondary
-Player (0 or more) - other players in the map that affect gameplay.  
-Remote Game Server.
+Player (0 or more) - other players in the map that affect gameplay.
 
 ## Import save
 
@@ -135,7 +129,7 @@ The player creates a new game save from an external file.
 #### Primary
 Player
 #### Secondary
-Storage Device
+None
 
 ## Export save
 
@@ -146,142 +140,4 @@ The player stores a generated file from a game save.
 #### Primary
 Player
 #### Secondary
-Storage Device
-
-
-# Use Cases - Mod Management System
-Use Case Diagram pertaining to:
-- Adding/Removing/Publishing mods
-
-#### Actors
-Player - Mindustry game user.  
-Mod Developer - Web-user that creates additional content for Mindustry with the intent of releasing it.  
-Mod Server - Mindustry server that processes mod storage and access.  
-Time - An agent that performs abstract operations routinely.  
-Github - The online platform used to store potential mods.  
-Storage Device - Digital device that can store files.
-
-## Diagram
-![ModManagementSystem.svg](Assets/UseCaseDiagramModManagementSystem.svg)
-
-## Delete mod
-
-### Description
-The player deletes a mod out of those currently activated.
-### Actors
-
-#### Primary
-Player
-#### Secondary
 None
-
-## Add mod (abstract)
-
-### Description
-The player installs a mod to change game content.
-### Actors
-
-#### Primary
-Player
-#### Secondary
-None
-
-## Enable mod
-
-### Description
-The player enables the effect of a disabled game mod.
-### Actors
-
-#### Primary
-Player
-#### Secondary
-None
-
-## Disable mod
-
-### Description
-The player disables the effect of an enabled game mod.
-### Actors
-
-#### Primary
-Player
-#### Secondary
-None
-
-## Restart game (included use case - behavior fragment)
-
-### Description
-The game performs a restart operation.
-### Actors
-
-#### Primary
-None
-#### Secondary
-None
-
-## Import mod (abstract)
-
-### Description
-The player installs a mod from a chosen source to change game content.
-### Actors
-
-#### Primary
-Player
-#### Secondary
-None
-
-## Add mod from files
-
-### Description
-The player installs a mod from an external file in a local device.
-### Actors
-
-#### Primary
-Player
-#### Secondary
-Storage Device
-
-## Add mod from Github link
-
-### Description
-The player installs a mod from an external file in a remote repository.
-### Actors
-
-#### Primary
-Player
-#### Secondary
-Github
-
-## Add community mod
-
-### Description
-The player installs a mod offered within the game.
-### Actors
-
-#### Primary
-Player
-#### Secondary
-Mod Server
-
-## Publish mod
-
-### Description
-A developer assigns the tag to make their content visible to the game server on github.
-### Actors
-
-#### Primary
-Mod Developer
-#### Secondary
-Github
-
-## Accept pending mods
-
-### Description
-A interval-based poll event triggers to process pending mod requests on github.
-### Actors
-
-#### Primary
-Time
-#### Secondary
-Github  
-Mod Server
