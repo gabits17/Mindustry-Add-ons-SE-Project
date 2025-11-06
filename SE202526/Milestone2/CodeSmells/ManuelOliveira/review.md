@@ -57,7 +57,7 @@ there are any major issues with this report, only that it could maybe be extende
 ### Minor Spelling mistakes
 Therefor -> Therefore
 
-### Review of Shotgun Surgery (06/11/2025)
+## Review of Long Method (06/11/2025)
 The Code Smell is particularly noticeable, given the size of the class.  
 However, I think I'd describe the role of Events as responding to a Trigger or game event as opposed to a periodic
 check for updates on game elements.
