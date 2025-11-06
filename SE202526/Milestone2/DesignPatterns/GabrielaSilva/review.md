@@ -20,6 +20,7 @@ in future updates.
 
 ## Review of Factory Method
 - Gabriel Falcão (67775)
+- 
 This probably isn't the best example of the factory method, as you said, the **Factory Method** consists of delegating the creation of objects to the subclasses of a class.  The `TechTree` does indeed provide many ways of creating a node, but none of those are overridden by a subclass (no one inherits from `TechTree`), so saying that *concrete creators* like `ErekitTechTree` and `SerpuloTechTree` produce `TechNode` objects isn't correct, as they ask `TechTree` to create the objects for them.
 ### Methods
 About the second part, usually **Factory Method** refers to ***one or more*** method/s that are overridden by the subclasses, since here no subclasses exist, if this were to be a **Factory Method**, it would have a drastic difference from the one mentioned in 
