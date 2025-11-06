@@ -28,13 +28,23 @@ Given that **BulletType** for example has about 1000 lines of code, quite a few 
 ![Template_diagram.png](Assets/Template_diagram.png)
 
 ## Strategy
-The case of **Strategy** that I want to talk about is in **core/src/mindustry/graphics/g3d**
+The case of **Strategy** that I want to talk about is in **core/src/mindustry/graphics/g3d**. As many examples in this Codebase, this one doesn't fit exactly in the textbook standard of the **Strategy** design pattern.
+What is happening is that we have the interface **GenericMesh**, witch would be our **Context**, that only declares one method, **render**, witch is then implemented in different ways in a variety of classes depending on the class's purpose.
 
+I believe this still counts as a **Strategy** design pattern because it still applies the basic principles of one. The situation is still the **Context** estabilishing the basic guidelines for implementation of a **Strategy**, and then the **Context** delegates the work of implementing it to a **linked Strategy object**.
+
+### Example
+Here, as stated above the **GenericMesh** declares the **render** function, witch is then implemented by abstract class **PlanetMesh** and used in **ShaderSphereMesh**, and finally is used in regular code in **core/src/mindustry/type/Planet.java**
+**Screenshots of the function, an implementation and it being used
+-core/src/mindustry/graphics/g3d/GenericMesh.java
+-core/src/mindustry/graphics/g3d/PlanetMesh.java
+-core/src/mindustry/type/Planet.java
+-core/src/mindustry/graphics/g3d/ShaderSphereMesh.java**
 ### Diagram
 
 
 ## Observer
-In this case I found an example of the **Observer** design pattern in **core/src/mindustry/game/** with **EventType** as the **Publisher**
+In this case I found a very evident example of the **Observer** design pattern in **core/src/mindustry/game/** with **EventType** as the **Publisher**.
+This design pattern specifically is very close from the one given in class
 
 ### Diagram
-
