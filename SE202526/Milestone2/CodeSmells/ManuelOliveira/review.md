@@ -6,6 +6,8 @@
 
 ## Change Log
 - Diogo Antunes 67763 (02/11/2025 19:34)
+- Gabriel Falcão 67775 (03/11/2025)
+- Diogo Antunes 67763 (06/11/2025 21:13)
 - Carolina Ferreira 67804 (06/11/2025 22:13)
 
 # Review
@@ -56,6 +58,20 @@ there are any major issues with this report, only that it could maybe be extende
 
 ### Minor Spelling mistakes
 Therefor -> Therefore
+
+## Review of Long Method (06/11/2025)
+The Code Smell is particularly noticeable, given the size of the class.  
+However, I think I'd describe the role of Events as responding to a Trigger or game event as opposed to a periodic
+check for updates on game elements.
+
+Since all achievements need to be defined I do agree there is little choice but to do something with this structure.
+In regards to the proposed solution, I believe there are events with similar logic structure that could have their logic factorised into private methods
+with the aim of reducing code duplication and line count. This is opposed to grouping similar logic within the method into private methods,
+which should also be done.
+
+Creating types of achievements might also be useful, but there's also "miscellaneous achievements" with no particular group to belong to,
+so not subdividing achievements is also understandable.
+
 
 ## Review of Dead Code
 

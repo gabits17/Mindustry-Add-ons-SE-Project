@@ -120,6 +120,9 @@ Player
 #### Secondary
 Player (0 or more) - other players in the map that affect gameplay.
 
+# External Save File System
+## SubDiagram
+![UseCaseDiagramFileSave.svg](UseCaseDiagramFileSave.svg)
 ## Import save
 
 ### Description
