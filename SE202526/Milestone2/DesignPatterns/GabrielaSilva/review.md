@@ -23,12 +23,12 @@ in future updates.
 This probably isn't the best example of the factory method, as you said the **Factory Method** consists in delegating the creation of objects to the subclasses of a class.  The `TechTree` does indeed provide many ways of creating a node, but none of those are overridden by a subclass (no one inherits from `TechTree`), so saying that *concrete creators* like `ErekitTechTree` and `SerpuloTechTree` produce `TechNode` objects, isn't correct as they ask `TechTree` to produce the objects for them.
 ### Methods
 About the second part, usually **Factory Method** refers to ***one or more*** method/s that are overridden by the subclasses, since here no subclasses exist, if this were to be a **Factory Method** it would have a drastic difference from the one mentioned in [Refactoring Guru Factory Method](https://refactoring.guru/design-patterns/factory-method)
-![[factory_method_review.png]]
+![factory_method_review.png](factory_method_review.png)
 ### Objects
 I do indeed agree that the product created by the methods is always the same type, but the factory method talks about objects of the same type of super class.
-![[factory_method_review2.png]]
+![factory_method_review2.png](factory_method_review2.png)
 ### Proposed 1
 I actually would propose the **Builder**, although not correctly implemented (as most design patterns in the code base), pattern here, as mentioned in [Refactoring Guru Builder Pattern](https://refactoring.guru/design-patterns/builder), as you have the **directors** (`SepuloTechTree` and `ErekirTechTree`) , the **builder** (`TechTree`), that would also serve as the **product**.
-![[factory_method_review3.png]]
+![factory_method_review3.png](factory_method_review3.png)
 ### Proposed 2
 Maybe a **Decorator** since nodes can be *decorated* with other nodes.
