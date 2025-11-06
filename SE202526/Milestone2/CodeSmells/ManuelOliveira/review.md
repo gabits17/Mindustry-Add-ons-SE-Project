@@ -2,9 +2,11 @@
 ## Reviewers
 - Diogo Antunes (67763)
 - Gabriel Matias (67775)
+- Carolina Ferreira (67804)
 
 ## Change Log
 - Diogo Antunes 67763 (02/11/2025 19:34)
+- Carolina Ferreira 67804 (06/11/2025 22:13)
 
 # Review
 - Diogo Antunes (67763)
@@ -12,7 +14,7 @@
 Since all these classes extend the same class to provide some differing, but often overlapping effect, I'm not too sure this is similar
 to the traditional example of shotgun surgery.
 
-At least in this example, the separation of code seems somewhat justified as, 
+At least in this example, the separation of code seems somewhat justified as,
 while similar, the for loops used and their inner logic differ enough that it wouldn't make sense to create templates.
 The logic is already abstracted by using a bullet handler, so I feel further abstracting the logic might be difficult or read to unnecessary generalization.
 
@@ -54,3 +56,9 @@ there are any major issues with this report, only that it could maybe be extende
 
 ### Minor Spelling mistakes
 Therefor -> Therefore
+
+## Review of Dead Code
+
+The first problem with this code smell is not the report, but the fact that this code smell was not part of the ones taught in class and there wasn't a small explain about this code smell, an improvement I think would be useful. Due to this fact, I had to taught myself the Dead Code code smell, which is not entirely negative, but less productive.
+
+With this said, I agree with Manuel's opinion, since the own developer of this code states ``"doesn´t actually do anything, reading calls add()"`` about the ``unitSpawn()``, as well as the given solution.

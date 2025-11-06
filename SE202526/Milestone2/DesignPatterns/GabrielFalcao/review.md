@@ -1,10 +1,11 @@
 # Design Pattern Review
 ## Reviewers
 - Diogo Antunes (67763)
-- #REVIEWR NAME (#STUDENT ID)
+- Carolina Ferreira (67804)
 
 ## Change log
 - Diogo Antunes (67763) (18:03)
+- Carolina Ferreira (67804) - 22:45
 
 # Review
 ## Review of Strategy Design Pattern (02/11/2025)
@@ -23,3 +24,8 @@ Named turrets like foreshadow, malign, lustre use an algorithm that sorts the ta
 Spelling error in "functionlalities" -> functionalities
 
 - I have updated the report and fixed what was mentioned here (67775)
+
+## Review of Command Design Pattern 
+
+A small explanation of the design pattern would be a nice add to the beginning of first paragraph. 
+With that said, I agree with the taken conclusions and have no further comments.
