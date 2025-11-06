@@ -30,6 +30,9 @@ polled in each if.
 ### Proposed Solution
 I believe most ifs in this method should be stand-alone methods to improve readability.
 
+### Useful Metrics
+![img.png](Assets/img.png)
+
 ### Example Solution
 Below is one of the many ifs inside this method. 
 I believe it handles the schematic flipping functionality.
