@@ -27,10 +27,14 @@ Given that **BulletType** for example has about 1000 lines of code, quite a few 
 
 ![Template_diagram.png](Assets/Template_diagram.png)
 
+## Strategy
+The case of **Strategy** that I want to talk about is in **core/src/mindustry/graphics/g3d**
+
+### Diagram
 
 
+## Observer
+In this case I found an example of the **Observer** design pattern in **core/src/mindustry/game/** with **EventType** as the **Publisher**
 
+### Diagram
 
-
-## (Code Smell 2 Name)
-## (Code Smell 3 Name)
