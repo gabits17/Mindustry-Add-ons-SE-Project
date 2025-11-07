@@ -1,6 +1,6 @@
 # Code metrics Report
 ## Author
-- #STUDENT NAME (#STUDENT ID)
+- Dinis Neves (68130)
 
 ---
 ## To-do
@@ -26,7 +26,7 @@ You should add metrics visualisation and discussion in the report (your MD file)
 ---
 (*Everything above is to be removed.*)
 
-# (*Code Metrics Set name*)
+# (*Martin Package*)
 
 ## (*Analysis of collected metrics*)
 
