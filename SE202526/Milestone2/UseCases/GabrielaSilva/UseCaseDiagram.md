@@ -6,7 +6,7 @@
 *Campaign Progression* and *Progression Display*
 
 ## Diagram
-![game-progression.svg](Assets/progression-system.svg)
+![game-progression.svg](Assets/progression-use-case-system.svg)
 
 ---
 
