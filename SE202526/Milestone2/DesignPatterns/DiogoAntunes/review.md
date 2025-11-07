@@ -2,11 +2,12 @@
 ## Reviewers
 - Gabriel Matias (67775)
 - Gabriela Silva (67286)
-- #REVIEWER NAME (#STUDENT ID)
+- Carolina Ferreira (67804)
 
 ## Change log
 - Gabriel Matias (67775) 03/11/2025
 - Gabriela Silva (67286) 04/11/2025 12:10
+- Carolina Ferreira (67804) 07/11/2025 20:40
 
 # Review
 
@@ -30,3 +31,11 @@ The lack of interfaces in the source code makes several patterns hard to detect,
 The hierarchy is clear to understand, since ``DrawPart`` is an abstract class and every class that extends it are either the *Composite* role or the *Leaf* role, which are enough to justify the pattern. This way, it can be possible to treat individual parts (``EffectSpawnerPart``, ``FlarePart``, ``HaloPart``, ``HoverPart``, etc) and groups of parts (``RegionPart``) uniformly.
 
 For the purpose of the report, while the technical content is well written and pointed out, adopting a clearer format would enhance readability. I recomend reviewing the *enters* in the mid of paragraphs and perhaps some bolds to emphasize important details.
+
+## Review of Mediator Design Pattern
+
+- Carolina Ferreira (67804)
+
+As referenced in Gabriela's review, the lack of Interfaces in the Mindustry code base is a major problem in terms of Design Pattern detection, and it shows with this implementation of the Mediator design pattern. It isn't a regular Mediator, but it does what it is supposed to do, even though it misses some points, like a Mediator Interface with connection to a ConcreteMediator, since Events acts in behalf of both.
+
+It's a really well written report, easy to read and to understand, one that doesn't just focus on the code itself but the game we're focusing on. 
