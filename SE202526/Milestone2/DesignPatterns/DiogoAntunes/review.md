@@ -20,6 +20,7 @@ but I could not find any source that used them with \<\<use\>\>. Maybe I'm wrong
 About the pattern, it was expected that a game would have at least an implementation of **Memento**, even if it is not entirely correct due to encapsulation issues.
 
 Apart from the dependency arrow "\<\<use\>\>", I don't believe there is anything else to point out. The report is well structured and easy to read.
+I have reviewed this again and i found out that \<\<use\>\> does indeed exist. [Uml Class Diagrams](https://www.uml-diagrams.org/class-diagrams-overview.html)
 
 ## Review of Composite Design Pattern
 - Gabriela Silva (67286)
