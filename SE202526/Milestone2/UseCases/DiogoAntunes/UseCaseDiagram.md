@@ -67,7 +67,7 @@ None.
 ## Start campaign
 
 ### Description
-Starts the game tutorial in an available, pre-determined planet and sector map picked by the player.
+The player starts the game tutorial in an available sector.
 ### Actors
 
 #### Primary
@@ -78,7 +78,7 @@ None.
 ## Host multiplayer game (extending use case)
 
 ### Description
-The player's active game becomes temporarily available to other players in the same LAN (becomes the host).
+The Game Host makes active game available to other players in the same LAN.
 ### Actors
 
 #### Primary
@@ -112,7 +112,8 @@ Game Host
 ## Join remote game
 
 ### Description
-The player chooses a game server hosted by a remote server to play in from a list of options.
+The player loads a game hosted by a remote server (presented by the game).
+
 ### Actors
 
 #### Primary
@@ -185,7 +186,7 @@ None
 ## Restart game (included use case - behavior fragment)
 
 ### Description
-The game processes new content on closing and opening.
+The game closes and reopens.
 ### Actors
 
 #### Primary
@@ -207,7 +208,7 @@ None
 ## Import mod (abstract)
 
 ### Description
-The player installs a mod from a chosen source to change game content.
+The player installs a device-sourced content mod.
 ### Actors
 
 #### Primary
