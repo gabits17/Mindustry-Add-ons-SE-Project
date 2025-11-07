@@ -18,9 +18,11 @@ Although some relevant ones are:
 ### Dpt Metric
 Bar Chart sorted by highest **Dpt** metric value.
 Here we see that Vars is the class most dependent on others.
-![DptSortHighLow.png](DptSortHighLow.png)
+
+![DptSortHighLow.png](Data/DptSortHighLow.png)
 ### PDpt Metric
 Bar Chart sorted by highest **PDpt** metric value.
 Here we see that Vars is once again on top.
-![[PDptSortHighLow.png]]
+
+![PDptSortHighLow.png](Data/PDptSortHighLow.png)
 
