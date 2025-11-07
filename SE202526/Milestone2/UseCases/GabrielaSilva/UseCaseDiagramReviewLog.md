@@ -3,7 +3,7 @@
 - Diogo Antunes (67763)
 
 ## Change log
-- Diogo Antunes (67763) (19:44)
+- Diogo Antunes (67763) (20:05)
 
 # Review
 The dependency arrow between Inspect Core Database and Save Progress
@@ -18,7 +18,7 @@ or load the mission before "playing" the mission.
 The Progression Display makes sense as a sub-system tied to campaign progression.
 
 I think Autosave should be a specialization of Save Progress or there should be some "save data" use
-case that both extend. Since AutoSave doesn't actually require used input, it might not make sense for it to extend
+case that both include. Since AutoSave doesn't actually require used input, it might not make sense for it to extend
 Save Progress, which interacts with the player.
 
 The descriptions are helpful. I'm not sure they're all written in the tense of the typical format though.
