@@ -1,35 +1,31 @@
 # Code metrics Report
 ## Author
-- #STUDENT NAME (#STUDENT ID)
+- Manuel Oliveira (68547)
 
----
-## To-do
-1. A data file with the collected metrics.
-2. A report explaining the collected metrics.
-3. Identification of potential trouble spots in the codebase. (Hint: look for the extreme
-values in the collected metrics - boxplots, or other data visualisation techniques are useful
-here).
-4. A short discussion on how these metrics might relate to the identified code smells, where
-applicable.
+# Chidamber-Kemerer Metrics
 
+## Analysis of collected metrics
+The metrics I found relevant to analyse in this report are WWC, DIT and CBO, because from the metrics in this set, these are the ones I believe give the broadest picture of this project's structure.
+As per standard in this metric set, all this metrics were treated on a project scope, studying all classes.
 
-**Important: Each student should collect at least 3 metrics. Where appropriate, a metric can be collected at different levels (e.g. class vs method) and counted as 2 metrics analysis**
+### WWC
+This is the metric that evaluates the number of methods defined in each class.
+A lower number of declared classes has been reported to be more beneficial to a project, as it makes for more reusable and easy-to-maintain classes.
+The standard I considered adequate for this analysis was that no more than 10% can have more than 24 methods defined in them, and what I found is that about 18% os classes surpass this number.
+That said given other metric reports that is not a horrible statistic whilst being still a bad one. There are some very bad classes like **mindustry.Vars** with about 500 methods, as it's possible to see on the first graph, but the average class is not too much above the standard.
 
-Collect the metrics on that metrics set and save them to a file (e.g. a spreadsheet)
+### DIT
+DIT studies the depth of inheritance tree, and shows the maximum inheritance path from the class in question to the root class.
+Generally the further away a class is from its root class, the more complex it becomes. That said, whilst a high DIT has been found to increase faults, the classes in the middle of the hierarchy tend to cause the most problems, so a DIT of 5 or less is recommended.
+From the data I gathered I found that about 19% of all classes have a higher DIT than 5, leading to the overall codebase being quite convoluted and hard to follow.
 
-Produce a visualisation of those metrics (e.g. with a chart, such as a bar chart or a box plot) to support the analysis.
+### CBO
+The focus on this metric is to analyse the number of classes to which a class is coupled.
+In most cases an excessive coupling between classes tens to degrade reusability and therefore a high CBO is undesirable in most cases.
+That said the standard I found to be acceptable is a CBO lower or equal than 14 for each class, and I discovered that about 30% of classes exceed this value.
+This is the worst average so far, and as seen on the second chart, the outliers here are not that many, the average code is just overly complex and entangled between itself.
 
-Analyse the collected metrics, focusing on identifying values that are not normal (i.e., outliers and extreme values). In particular, it is common for software repositories to contain artefacts (e.g., classes) that stand out in these metric distributions due to having extreme values (e.g., a very high complexity compared to other classes). These classes can be identified by their metrics and are worthy of further scrutiny, as they are often much more complex than average classes. Indeed, they are commonly a good place to look for code smells and to focus testing efforts. The analysis of the metrics done by a student also assumes that the student has to do a bit of research on the chosen metrics so that the student can frame the analysis and interpretation of those metrics' values in light of the rationale that led to those metrics creation.
+## Relevant graphs
 
-You should add metrics visualisation and discussion in the report (your MD file). The long tables with raw data values can be found in the Git repository if they don't fit easily into the report. Charts and their discussion should be in the report.
-
----
-(*Everything above is to be removed.*)
-
-# (*Code Metrics Set name*)
-
-## (*Analysis of collected metrics*)
-
-## (*Relevant graphs*)
-
-(...)
+![WWC.png](Assets/WWC.png)
+![CBO.png](Assets/CBO.png)
