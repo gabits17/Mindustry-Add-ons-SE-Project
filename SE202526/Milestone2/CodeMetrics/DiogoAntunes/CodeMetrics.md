@@ -1,7 +1,7 @@
 # Code Metrics Report
 ## Author
 - Diogo Antunes (67763)
-# Metrics Set - MOOD
+# MOOD
 ## Metrics Source
 To avoid any changes made by added files and code modification undertaken by project members, data was collected from
 a clone of the last version of the Mindustry Repository before the project management files were added:
