@@ -2,71 +2,70 @@
 ## Author
 - Gabriela Silva (67286)
 
-# Use Cases - (subtopic name/s)
-Game Progression and Display Progression
+# Use Cases - System Names
+*Campaign Progression* and *Progression Display*
 
 ## Diagram
-![game-progression.svg](Assets/game-progression.svg)
+![game-progression.svg](Assets/progression-system.svg)
+
+---
 
 ## Use Case 1 Name
-*Play Campaign*
+*Play Mission on Sector*
 ### Description
-The goal for this use case is for the player to start playing the game in campaign mode, where progression takes place in multiple missions on sectors. The player can choose between starting a new campaign or loading one.
+This use case represents the act of playing a mission on a planet sector. For that, the player must choose a planet where the sector is located, and they can load an ongoing mission or launch a new one.
 ### Actors
 Player
 #### Primary
 Player
 #### Secondary
 None
+
+---
 
 ## Use Case 2 Name
 *Unlock Item*
 ### Description
-O propósito deste use case é mostrar a interação do jogador perante o seu progresso, através do desbloqueamento de novos itens. Estes *itens* podem ser **Units**, **Effects**, **Ores**, **Blocks** ou **Liquids**. Estende o use case *Launch Mission On Sector*, i.e., pode acontecer durante uma instância desse use case, enquanto o jogador explora.
+The goal of this use case is to show an interaction between a player and their progress, by unlocking new items of the game. These items can be **Units**, **Effects**, **Ores**, **Blocks** and **Liquids**. They can be unlocked when the player is exploring during a mission.
 ### Actors
 Player
 #### Primary
 Player
 #### Secondary
 None
+
+---
 
 ## Use Case 3 Name
-*Launch Mission on Sector*
-### Description
-Este use case representa o início de uma missão do jogador num determinado sector. Para tal, o jogador deve possuir os materiais específicos necessários para o início da missão.
-### Actors
-Player
-#### Primary
-Player
-#### Secondary
-None
-
-## Use Case 4 Name
 *Unlock Sector*
 ### Description
-Este use case tem o propósito de mostrar que o jogador pode desbloquear um novo sector. Para tal, o jogador deve ter começado uma missão num sector, e deve ter conquistado esse mesmo sector, sobrevivendo a todos as ondas de ataques de inimigos e protegendo a sua base. 
+This use case has the purpose to show that the player can unlock a new sector. For that, they must have conquered a sector where they were playing a mission, by surviving all wave attacks and protecting their base.
 ### Actors
 Player
 #### Primary
 Player
 #### Secondary
 None
+
+---
+
+## Use Case 4 Name
+*View Tech Tree*
+### Description
+It is possible to represent the action of the player to view the progression tree of the campaign by this use case. The player must choose a planet to inspect the *tech tree* of that planet. By default, the planet chosen is *Serpulo*.
+### Actors
+Player
+#### Primary
+Player
+#### Secondary
+None
+
+---
 
 ## Use Case 5 Name
-*Inspect Tech Tree*
-### Description
-Através deste use case, é possível representar a interação de visualização do jogador com a árvore de progresso do jogo. Para tal, deve-se selecionar o **Planet**, cujo se quer conhecer o progresso atual. Por defeito, o planeta selecionado inicialmente é o **Serpulo**.
-### Actors
-Player
-#### Primary
-Player
-#### Secondary
-None
-
-## Use Case 6 Name
 *Inspect Tech Node*
 ### Description
-Este use case permite que o jogador consiga inspecionar cada item da árvore de progresso do jogo. Para tal, requer que o jogador esteja com a árvore de jogo aberta.
+This use case allows the action of the player to inspect each item of the campaign progression tree. It requires that the player must have opened the campaign tech tree.
 ### Actors
 Player
 #### Primary
@@ -74,10 +73,12 @@ Player
 #### Secondary
 None
 
-## Use Case 7 Name
+---
+
+## Use Case 6 Name
 *Inspect Core Database*
 ### Descritpion
-Este use case permite que o jogador consiga visualizar todos os itens desbloqueados de ambos os planetas (por defeito) no seu progresso. Para tal, requer que o jogador esteja com a árvore de jogo aberta e depende do estado da base de dados do jogo.
+The goal of this use case is to show all *current* unlocked items for both planets. This use case requires that the tech tree is opened and depends on the progress saved so far.
 ### Actors
 Player
 #### Primary
@@ -85,13 +86,28 @@ Player
 #### Secondary
 None
 
-## Use Case 8 name
-*Store Progress*
+---
+
+## Use Case 7 Name
+*Save Progress*
 ### Description
-This use case represents the storage of the game progress in the game's data base. It is important, since the viewing the game progression depends on the state of the game progression and this can be achieved and stored by the data base.
+This use case represents the storage of the game progress in the game's data base. It is important, since viewing the campaign progression depends on it. The saving can be made automatically.
 ### Actors
-Data Base
+Player
 #### Primary
-Data Base
+Player
 #### Secondary
+None
+
+---
+
+## Use Case 8 Name
+*Auto Save*
+### Description
+The purpose of this use case is to demonstrate that the time can automatically save progression, contributing effectively to the *Save Progress* use case.
+### Actors
+Time
+### Primary
+Time
+### Secondary
 None
