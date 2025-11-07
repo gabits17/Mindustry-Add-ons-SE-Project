@@ -1,4 +1,4 @@
-# Code Smell Review
+# Design Pattern Review
 ## Reviewers
 
 - Carolina Ferreira (67804)
