@@ -147,10 +147,10 @@ None
 
 ---
 In previous versions of this document, the Mod Management system was also present. Since Game management had enough use cases, I had removed it,
-but for the sake of having a more complete Set of use case diagrams overall, the diagram can be seen below, but does not have to be evaluated.
+but for the sake of having a more complete set of use case diagrams overall, the diagram can be seen below, but does not have to be evaluated.
 
 Note: After feedback, actors like the mod server, Github and anything relating to functionality that happened exclusively outside of the game or without actor input was removed.
-This includes Mod developers since publishing mods happens outside of interaction with the game itself, but with Github, which is external infrastructure.
+This includes mod developers since publishing mods happens outside of interaction with the game itself, but with Github, which is external infrastructure.
 ![UseCaseDiagramMod.svg](Assets/UseCaseDiagramMod.svg)
 
 # Use Cases - Mod Management System
