@@ -5,7 +5,8 @@
 ## Metrics Source
 To avoid any changes made by added files and code modification undertaken by project members, data was collected from
 a clone of the last version of the Mindustry Repository before the project management files were added:
-![img.png](img.png)
+![screenshotOfRepoCommitHistory.png](img.png)
+
 The changes I noticed were mostly small percentage amounts, but for accuracy I still felt it was better to do it this way.
 
 The metrics were collected at a project level using MetricsReloaded, giving the following result: 
@@ -13,6 +14,7 @@ The metrics were collected at a project level using MetricsReloaded, giving the 
 | MOOD metrics | AHF | AIF | CF | MHF | MIF | PF |
 | --- | --- |---------| --- | --- | --- | --- |
 | project | 24.27% |  95.45% | 2.60% | 22.14% | 93.10% | 1.84% |
+Since this is a system / sub-system level metric, collecting metrics at other scopes risks bad metrics, as will be shown later on.
 
 To learn about MOOD metrics, among other sites, I read part of the following paper:
 http://ctp.di.fct.unl.pt/~mgoul/papers/Metrics/TOOLS96.pdf
@@ -28,11 +30,14 @@ I made an attempt to break down subsystems as follows. The data is in the data f
 | core/src/mindustry       | 23.53% | 95.50% | 2.74%   | 20.74%   | 93.32%   | 1.77%    |
 | core/src/mindustry/ai   | 38.01% | 55.57% | 83.74%  | 24.22%   | 76.55%   | 85.00%   |
 | core/src/mindustry/async | 31.58% | 0.00%  | 400.00% | 3.70% | 6.90% | 91.67%   |
-| desktop/src/mindustry.deskotop | 38.51% | 72.18% | 493.33% | 18.58% | 35.65% | 100.00%  |
+| core/src/mindustry/entities         | 30.04% | 0.00% | 0.20% | 35.86% | 0.00% | 100.00% |
+| desktop/src/mindustry.desktop | 38.51% | 72.18% | 493.33% | 18.58% | 35.65% | 100.00%  |
 | server                  | 52.63% | 0.00%  | 5600%   | 15.38%   | 65.79%   | 100.00%  |
 
+
 As such, seen that the plugin doesn't seem to generate data per class, given this possibility of invalid scoping (since the metric is usually applied system level),
-I have no graphs to present alongside my analysis.
+I have little to present in the form of graphs to support my analysis. The generalised metrics also don't seem to support finding specific trouble spots in the code
+without significant further data.
 
 ## Contemplating the results produced by a bad scope - Analysing Coupling Factor (CF)
 
@@ -45,7 +50,7 @@ the denominator used in this metric's formula is still calculated on a package l
 Where according to "The Design of Eiffel Programs: Quantitative Evaluation Using the MOOD Metrics" by Fernando Brito e Abreu, Rita Esteves and Miguel Goulão,
 the formula for the coupling factor is defined as:
 
-$ CF = Actual number of couplings/ Maximum possible number of couplings $
+- CF = Actual Couplings/ MaxCouplings
 
 With the denominator as *"the maximum number of non-inheritance couplings in a system with TC classes"* (Brito e Abreu et al., 1996, p. 9):
 
@@ -70,7 +75,15 @@ by the analysis of the Eiffel Libraries (Brito e Abreu et al. 1996):
 | lower-limit | 19.2%  | 63.3%  | 1.3% | 15.4% | 60.6% | 5.3% |
 | upper-limit | 35.5%  | 81.5%  | 5.5%  | 38.7% | 77.1% | 10.8% |
 
+However, I am doing this with the awareness of the "Criticizing the Results" section in the article, which comments on the fact that sampling from
+a larger population introduces randomness into the results. Therefore, any judgements will also take into account the conventions used for this project,
+specified in CONTRIBUTING.md. They will also consider the following table of reference values from multiple sources taken from https://www.aivosto.com/project/help/pm-oo-mood.html:
+
+![img_3.png](img_3.png)
+
 ### Analysing the Coupling Factor (CF)
+![img_1.png](img_1.png)
+
 Good design means strongly cohesive, weakly couples, therefore a low value is usually better.
 The calculated value of 2.60% falls within the confidence interval, suggesting a good value compare to those calculated for the Eiffel libraries.
 On the other hand, as seen in the wrongly-scoped table, values can be significantly higher for a given class.
@@ -84,15 +97,18 @@ In example:
 As such, these classes built en-mass to implement slight variations of some in-game functionality, when brought to project-scale, will further
 decrease the overall average (since on a project scale, the denominator should be larger, but, per class, the number of couplings numerator should remain the same).
 
-While the overall Coupling Factor is low due to the sheer number of similar narrow focus classes, the main logic of the game happens in several classes with strong coupling
+While the overall Coupling Factor is low compare to the standards from the reference table (ranging between 7 and 9% with the exception of GNu reference at 2.8%), this seems
+to be brought on by the many implementations of game content classes like units and bullets with narrow focus classes.
+
+On the other hand, the main logic of the game happens in several classes with strong coupling
 due to the use of message chains and system convention of using public attributes where possible.
 
 Additionally, from my understanding of the metric, the existence of the Vars allows access to static public variables from anywhere in the project. This indirect access
 of variables wouldn't contribute in the same way towards perceived coupling in MOOD. In this specific instance, I believe the 
 "Access to Foreign Data" metric in the Lanza-Marinescu Metrics Set from MetricsTree is more helpful in identifying indirect connections between classes.
 
-
 ### Analysing the Attribute Hiding Factor (AHF)
+![img_4.png](img_4.png)
 
 This metric should be as high as possible to guarantee encapsulation of class functionality. The article that uses MOOD to evaluate the Eifel libraries suggests that
 "For attributes (AHF) we want this mechanism to be used as much as possible." (Brito e Abreu et al., 1996, p. 13). Despite being within the 90% confidence interval within the Eifel libraries example,
@@ -109,12 +125,36 @@ to the next class. However, due to the presence of import * statements in classe
 On the other hand, subsystems outside of the main gameplay loop have better encapsulation, such as the /server module with a factor of 52.63%
 of Attributes hidden. This is a result of being a more isolated functionality, that performs services related to multiplayer functionality instead of storing data variables other classes may need to access.
 
-To conclude, despite the low metric score being a result of a pattern enforced by the programmer to reduce simple getter/setter methods in classes with dozens of attributes,
-the decision nonetheless breaks encapsulation and makes extracting meaning out of arbitrary snippets of code more difficult.
+To conclude, the metric score is within the exemplified bounds, but a lot lower than reference values that argue for significantly higher AHF (>60%). Additionally, it occurs as a result of a design decision decided upon by the programmer to reduce bloating.
+This reason is justified as classes with dozens of attributes would require many such getters/setters and even more service delegation methods (to avoid message chains).
+However, the decision nonetheless breaks encapsulation and makes extracting meaning out of arbitrary snippets of code more difficult.
 
-### Analysing the Method Inheritance Factor MIF
+### Analysing the Polymorphism Factor
+![img_2.png](img_2.png)
 
-## Bibliography
-Brito e Abreu, F., Goulão, M, Esteves, R.(1996).The Design of Eiffel Programs: Quantitative Evaluation Using the MOOD Metrics. _Proceedings of TOOLS'96, 9 - 13_,
+As mentioned in the aivosto article that summarises the formula From Brito e Abreu et al., PF can be defined as:
+
+- PF = overrides / sum for each class(new methods * descendants) 
+
+Where a value of 100% means that every method overrides everything. According to all reference values, the project has low polymorphism.
+
+However, even it's existing value of 1.84% can be offset slightly by the use of Refused Bequest, as exemplified by Gabriel Falcão as a code smell in DrawPart.
+Overriding a function and having an empty method body would contribute positively to the Polymorphism factor by adding to the number of overriding without
+actually providing that functionality.
+
+On the other hand, dead code methods in superclasses would contribute negatively towards the same metric, adding to the count of methods that can be overridden
+without the expectation that they'll be used by subclasses.
+
+With this single piece of data, it's difficult to point out a particular trouble spot. In particular, analyzing sub systems also doesn't seem to provide reliable statistics because
+classes can extend other classes from outside the package.
+
+What I can conclude, however, is that further abstraction could be performed that would then contribute towards polymorphism,
+since the reference values aren't being met. In example, the switch statement code smell related to the TileOp class identified in the code smells section explains this further.
+Refactoring the TileOp and TileOpData classes as abstract classes for numerous subclasses would contribute positively towards abstraction in the program that would increase the Polymorphism Factor.
+
+## Article mentioned
+Brito e Abreu, F., Goulão, M, Esteves, R.(1996).The Design of Eiffel Programs: Quantitative Evaluation Using the MOOD Metrics. _Proceedings of TOOLS'96, 8 - 13_,
 http://ctp.di.fct.unl.pt/~mgoul/papers/Metrics/TOOLS96.pdf
 
+## Website mentioned
+Aivosto. (n.d.). Mood and mood2 metrics. Project Metrics Help - MOOD and MOOD2 metrics. https://www.aivosto.com/project/help/pm-oo-mood.html 
