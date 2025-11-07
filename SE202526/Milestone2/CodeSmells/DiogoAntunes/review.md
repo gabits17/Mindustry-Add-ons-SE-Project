@@ -2,11 +2,12 @@
 ## Reviewers
 - Gabriel Matias Falcão (67775)
 - Gabriela Silva (67286)
-- #REVIEWER NAME (#STUDENT ID)
+- Dinis Neves (68130)
 
 # Change Log
 - Gabriel Matias Falcão (67775) -
 - Gabriela Silva (67286) 05/11/2025 12:15
+- Dinis neves (68130) 07/11/2025
 
 # Review
 
@@ -29,3 +30,10 @@ The code smell detected is well analysed.
 This code smell here violates both the **Open/Close** and the **Single Responsibility** design principles. If a new ``TileOp`` is to be added, it is necessary to change the ``DrawOperation`` class to extend a new switch case in both methods ``getTile()`` and ``setTile()``.
 
 I would say the proposed solution is well designed. From what I undertsood, it mostly follows the **Strategy** GoF design pattern. However, I believe it would be better if some *code examples* for the solution were pointed out, in order to make it more clear.
+
+## Review of Divergent Class
+#### Author
+- Dinis Neves 68130
+
+#### Review
+I mostly agree with the code smell found the World class is way to large and does deal with a lot at the same time. The proposed solution of Separation of Concerns is correct and well applied. I still believe the code smell is dealt with but not to its totality.

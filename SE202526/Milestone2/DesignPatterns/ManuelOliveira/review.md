@@ -3,11 +3,12 @@
 
 - Carolina Ferreira (67804)
 - Gabriela Silva (67286)
-- #REVIEWR NAME (#STUDENT ID)
+- Dinis Neves (68130)
 
 # Change Log
 - Carolina Ferreira (67804) 07/11/2025 21:00
 - Gabriela Silva (67286) 07/11/2025 22:45
+- Dinis Neves (68130) 07/11/2025 23:21
 
 # Review
 
@@ -30,3 +31,9 @@ On this implementation of the **Strategy** design pattern, the **Strategy** inte
 
 Another topic is the lack of context and information about the said Design pattern that I think would be nice to add, but not entirely crucial, being an option to the author to consider.
 
+## Review of Observer Design pattern
+#### Author
+- Dinis Neves 68130
+
+#### Review
+This was also discussed in class and asked about. This observer design pattern is well argued for. It is a deeper observer design pattern but it in my eyes can be considered one.

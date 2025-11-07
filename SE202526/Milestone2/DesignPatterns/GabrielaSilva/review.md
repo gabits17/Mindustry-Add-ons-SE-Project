@@ -2,7 +2,7 @@
 ## Reviewers
 - Diogo Antunes (67763)
 - Gabriel Matias (67775)
-- #REVIEWER NAME (#STUDENT ID)
+- Dinis Neves (68130)
 
 ## Change log
 - Diogo Antunes (67763) (04/11/2025 10:32)
@@ -37,3 +37,10 @@ I actually would propose the **Builder**, although not correctly implemented (as
 ![factory_method_review3.png](Review-Assets/factory_method_review3.png)
 ### Proposed 2
 A **Decorator** since nodes can be *decorated* with other nodes.
+
+## Review of Facade Design pattern
+#### Author
+- Dinis Neves 68130
+
+#### Review
+I believe this is a clear correct identification of a facade pattern. It is well described how the world interacts with the with map coordinates and how the world class receives the position information and returns a deeper more complex object, the tile. (in the tileWorld function)
