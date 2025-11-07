@@ -1679,7 +1679,6 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
     /** Remove everything from the queue in a selection. */
     protected void removeSelection(int x1, int y1, int x2, int y2, boolean flush, int maxLength){
         System.out.println("I broke stuff");
-        Queue<BuildPlan> building = new Queue<>();
         NormalizeResult result = Placement.normalizeArea(x1, y1, x2, y2, rotation, false, maxLength);
         for(int x = 0; x <= Math.abs(result.x2 - result.x); x++){
             for(int y = 0; y <= Math.abs(result.y2 - result.y); y++){
@@ -1691,7 +1690,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
                 if(tile == null) continue;
 
                 if(!flush){
-                    tryBreakBlock(wx, wy, building);
+                    tryBreakBlock(wx, wy);
                 }else if(validBreak(tile.x, tile.y) && !selectPlans.contains(r -> r.tile() != null && r.tile() == tile)){
                     selectPlans.add(new BuildPlan(tile.x, tile.y));
                 }
@@ -1708,7 +1707,6 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
                 var plan = it.next();
                 if(!plan.breaking && plan.bounds(Tmp.r2).overlaps(Tmp.r1)){
                     it.remove();
-                    building.add(new BuildPlan(plan.x, plan.y));
                 }
             }
 
@@ -1742,7 +1740,6 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
         if(removed.size > 0 && net.active()){
             Call.deletePlans(player, removed.toArray());
         }
-        buildStack.add(building);
     }
 
     protected void updateLine(int x1, int y1, int x2, int y2){
@@ -2143,12 +2140,6 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
         }
     }
 
-    public void tryBreakBlock(int x, int y, Queue<BuildPlan> building){
-        if(validBreak(x, y)){
-            breakBlock(x, y, building);
-        }
-    }
-
     public boolean validPlace(int x, int y, Block type, int rotation){
         return validPlace(x, y, type, rotation, null);
     }
@@ -2186,29 +2177,6 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
         Tile tile = world.tile(x, y);
         if(tile != null && tile.build != null) tile = tile.build.tile;
         player.unit().addBuild(new BuildPlan(tile.x, tile.y));
-    }
-
-    public void breakBlock(int x, int y, Queue<BuildPlan> building){
-        if(!player.isBuilder()) return;
-
-        Tile tile = world.tile(x, y);
-        if(tile != null && tile.build != null) tile = tile.build.tile;
-        BuildPlan plan = new BuildPlan(tile.x, tile.y);
-        plan.rotation = tile.build.rotation;
-        plan.config = tile.build.config();
-        player.unit().addBuild(plan);
-        boolean add = true;
-
-        for (var n : building) {
-            if (n.x == plan.x && n.y == plan.y) {
-                add = false;
-                break;
-            }
-        }
-        if (add) {
-            BuildPlan copy = plan.copy();
-            building.add(copy);
-        }
     }
 
     public void drawArrow(Block block, int x, int y, int rotation){

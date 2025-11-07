@@ -1,6 +1,6 @@
 package mindustry.input;
 
-public class RemoveSelectionCommand extends CommandAbstract{
+public class RemoveSelectionCommand extends CommandAbstract {
 
     private InputHandler input;
     private int selectX, selectY, cursorX, cursorY, maxSize;
@@ -18,7 +18,6 @@ public class RemoveSelectionCommand extends CommandAbstract{
         this.maxSize = maxSize;
         this.input = input;
     }
-
 
     @Override
     public void execute() {
