@@ -14,6 +14,7 @@ The metrics were collected at a project level using MetricsReloaded, giving the 
 | MOOD metrics | AHF | AIF | CF | MHF | MIF | PF |
 | --- | --- |---------| --- | --- | --- | --- |
 | project | 24.27% |  95.45% | 2.60% | 22.14% | 93.10% | 1.84% |
+
 Since this is a system / sub-system level metric, collecting metrics at other scopes risks bad metrics, as will be shown later on.
 
 To learn about MOOD metrics, among other sites, I read part of the following paper:
