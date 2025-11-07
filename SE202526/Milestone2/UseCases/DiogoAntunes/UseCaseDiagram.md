@@ -122,7 +122,7 @@ Player (0 or more) - other players in the map that affect gameplay.
 
 # External Save File System
 ## SubDiagram
-![UseCaseDiagramFileSave.svg](UseCaseDiagramFileSave.svg)
+![UseCaseDiagramFileSave.svg](Assets/UseCaseDiagramFileSave.svg)
 ## Import save
 
 ### Description
@@ -138,6 +138,109 @@ None
 
 ### Description
 The player stores a generated file from a game save.
+### Actors
+
+#### Primary
+Player
+#### Secondary
+None
+
+---
+In previous versions of this document, the Mod Management system was also present. Since Game management had enough use cases, I had removed it,
+but for the sake of having a more complete Set of use case diagrams overall, the diagram can be seen below, but does not have to be evaluated.
+
+Note: After feedback, actors like the mod server, Github and anything relating to functionality that happened exclusively outside of the game or without actor input was removed.
+This includes Mod developers since publishing mods happens outside of interaction with the game itself, but with Github, which is external infrastructure.
+![UseCaseDiagramMod.svg](Assets/UseCaseDiagramMod.svg)
+
+# Use Cases - Mod Management System
+Use Case Diagram pertaining to:
+- Adding/Removing mods
+
+#### Actors
+Player - Mindustry game user.
+
+## Delete mod
+
+### Description
+The player deletes a mod out of those currently activated.
+### Actors
+
+#### Primary
+Player
+#### Secondary
+None
+
+## Add mod (abstract)
+
+### Description
+The player installs a mod to change game content.
+### Actors
+
+#### Primary
+Player
+#### Secondary
+None
+
+## Restart game (included use case - behavior fragment)
+
+### Description
+The game processes new content on closing and opening.
+### Actors
+
+#### Primary
+None
+#### Secondary
+None
+
+## Start app
+
+### Description
+The player launches the game application.
+### Actors
+
+#### Primary
+Player
+#### Secondary
+None
+
+## Import mod (abstract)
+
+### Description
+The player installs a mod from a chosen source to change game content.
+### Actors
+
+#### Primary
+Player
+#### Secondary
+None
+
+## Add mod from files
+
+### Description
+The player installs a mod from an external file in a local device.
+### Actors
+
+#### Primary
+Player
+#### Secondary
+None
+
+## Add community mod
+
+### Description
+The player installs a mod offered within the game.
+### Actors
+
+#### Primary
+Player
+#### Secondary
+None
+
+## Add mod from Github link
+
+### Description
+The player installs a mod from an external file in a remote repository.
 ### Actors
 
 #### Primary
