@@ -7,7 +7,7 @@ My intention was to describe most of the possible interactions a **Player** can 
 Please note that this does **not** include interactions with other units, or interactions other units can have player placed blocks, hence, for example, why the player cannot directly damage blocks.
 
 ## Diagram
-![Use_Case.svg](Assets/Use_Case.svg)
+![Use_Case.png](Assets/Use_Case.png)
 
 
 ## Select Placed Block
