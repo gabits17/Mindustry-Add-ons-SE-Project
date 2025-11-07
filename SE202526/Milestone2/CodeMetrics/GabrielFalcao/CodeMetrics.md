@@ -1,35 +1,26 @@
 # Code metrics Report
 ## Author
-- #STUDENT NAME (#STUDENT ID)
+- Gabriel Falcao (67775)
+# Dependency Metrics
 
----
-## To-do
-1. A data file with the collected metrics.
-2. A report explaining the collected metrics.
-3. Identification of potential trouble spots in the codebase. (Hint: look for the extreme
-values in the collected metrics - boxplots, or other data visualisation techniques are useful
-here).
-4. A short discussion on how these metrics might relate to the identified code smells, where
-applicable.
+## Analysis of collected metrics
+The dependency metrics reveal a great deal about how this project is structured and confirm some of the suspicions and code smells the group identified in the codebase. The most notable outlier in the dataset ([[CodeMetrics.xlsx]]) is the `Vars.java` class, which is used extensively throughout the project to provide and store values for many other classes. Both **Dpt** and **Dcy** indicate several issues with this class—specifically, that it creates excessive **coupling** and represents a clear case of a **Large Class**.  
 
+Unfortunately, the **Cyclic**, **Dcy\***, and **Dpt\*** metrics don’t provide much useful data, as most of their values are extremely high. This is primarily because many classes import `Vars.java`, which itself depends on numerous other classes—creating transitive dependencies across much of the codebase.
 
-**Important: Each student should collect at least 3 metrics. Where appropriate, a metric can be collected at different levels (e.g. class vs method) and counted as 2 metrics analysis**
+The observations above can also be corroborated by examining the **PDcy** and **PDpt** metrics (particularly **PDpt**) provided in the dataset. These values show that the package containing `Vars` (`mindustry`) once again exhibits very high dependency values, indicating that this package depends on far too many others.
 
-Collect the metrics on that metrics set and save them to a file (e.g. a spreadsheet)
+Several other cases can also be identified, such as `Blocks.java`, `Tile.java`, `UnlockableContent.java`, and others, which can be easily found by sorting the table by either the **Dpt** or **Dcy** metrics. Some of these high values are expected—such as in `UnlockableContent.java`, which is naturally used by many items and buildings, throughout the game.
 
-Produce a visualisation of those metrics (e.g. with a chart, such as a bar chart or a box plot) to support the analysis.
+## Relevant graphs
+Relevant graphs for the collected metrics are shown in the provided data sheet, so that it may be easier to visualise values while sorting them.
+Although some relevant ones are:
+### Dpt Metric
+Bar Chart sorted by highest **Dpt** metric value.
+Here we see that Vars is the class most dependent on others.
+![DptSortHighLow.png](DptSortHighLow.png)
+### PDpt Metric
+Bar Chart sorted by highest **PDpt** metric value.
+Here we see that Vars is once again on top.
+![[PDptSortHighLow.png]]
 
-Analyse the collected metrics, focusing on identifying values that are not normal (i.e., outliers and extreme values). In particular, it is common for software repositories to contain artefacts (e.g., classes) that stand out in these metric distributions due to having extreme values (e.g., a very high complexity compared to other classes). These classes can be identified by their metrics and are worthy of further scrutiny, as they are often much more complex than average classes. Indeed, they are commonly a good place to look for code smells and to focus testing efforts. The analysis of the metrics done by a student also assumes that the student has to do a bit of research on the chosen metrics so that the student can frame the analysis and interpretation of those metrics' values in light of the rationale that led to those metrics creation.
-
-You should add metrics visualisation and discussion in the report (your MD file). The long tables with raw data values can be found in the Git repository if they don't fit easily into the report. Charts and their discussion should be in the report.
-
----
-(*Everything above is to be removed.*)
-
-# (*Code Metrics Set name*)
-
-## (*Analysis of collected metrics*)
-
-## (*Relevant graphs*)
-
-(...)
