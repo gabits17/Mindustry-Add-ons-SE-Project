@@ -3,33 +3,65 @@
 - Dinis Neves (68130)
 
 ---
-## To-do
-1. A data file with the collected metrics.
-2. A report explaining the collected metrics.
-3. Identification of potential trouble spots in the codebase. (Hint: look for the extreme
-values in the collected metrics - boxplots, or other data visualisation techniques are useful
-here).
-4. A short discussion on how these metrics might relate to the identified code smells, where
-applicable.
+# Code metrics Report
+## Author
+- Dinis Neves (68130)
+
+# Martin Package
+
+#### Small summary of Martin Package Metrics
+Martin Package Metrics are made to measure package design quality, measure how well code is organized in its different packages. It measures package:
+
+Afferent Coupling (Ca): how many other packages depend on this package. (depended on)
+
+Efferent Coupling (Ce): how many other packages this package depends on. (depends on)
+
+Instability (I): formula to measure ratio of dependencies. Ce / (Ce + Ca). *X axis* 0 to 1 values
+
+Abstractness (A): formula to measure ration of (abstract classes + interfaces) / total amount of classes. *Y axis* 0 to 1 values
 
 
-**Important: Each student should collect at least 3 metrics. Where appropriate, a metric can be collected at different levels (e.g. class vs method) and counted as 2 metrics analysis**
+Depending on the package, the closer it is in a Abstract, Instability graph to the main sequence (a line that crosses (1 fully abstract, 0 Stable), (0 fully concrete, 1 unstable)) the better.
 
-Collect the metrics on that metrics set and save them to a file (e.g. a spreadsheet)
+Distance (D): is the distance to the Main Sequence.
 
-Produce a visualisation of those metrics (e.g. with a chart, such as a bar chart or a box plot) to support the analysis.
 
-Analyse the collected metrics, focusing on identifying values that are not normal (i.e., outliers and extreme values). In particular, it is common for software repositories to contain artefacts (e.g., classes) that stand out in these metric distributions due to having extreme values (e.g., a very high complexity compared to other classes). These classes can be identified by their metrics and are worthy of further scrutiny, as they are often much more complex than average classes. Indeed, they are commonly a good place to look for code smells and to focus testing efforts. The analysis of the metrics done by a student also assumes that the student has to do a bit of research on the chosen metrics so that the student can frame the analysis and interpretation of those metrics' values in light of the rationale that led to those metrics creation.
+The smaller the distance the better below is (asset_01) shows not balanced packages as packages with D > 0.5 and well design packages as packages with D < 0.5.
 
-You should add metrics visualisation and discussion in the report (your MD file). The long tables with raw data values can be found in the Git repository if they don't fit easily into the report. Charts and their discussion should be in the report.
 
----
-(*Everything above is to be removed.*)
+## Analysis of collected metrics
 
-# (*Martin Package*)
+The packages in the Mindustry game tend to have well balanced packages with exceptions like the *mindustry/entities/comp* being a very different from all other packages. Being composed of almost all classes being abstract and depending on many other packages.
+From the same parent package *mindustry/entities* parent package, other sub packages tend to be balanced towards the other extreme not abstract, and few depending on them.
 
-## (*Analysis of collected metrics*)
+The packages have a tendency of being not abstract, as seen in (asset_01) the scatter diagram is heavily weighed down with most dots hugging or coming close to hugging the x axis (Instability axis).
 
-## (*Relevant graphs*)
+The same conclusions about the bias in the packages can be seen across different Martin Package graphs. Packages tend to be not very abstract. Some packages like the *mindustry/ui* and *mindustry/world* also tend to be not very balanced, being very depended on for its level of abstraction.
 
-(...)
+## Relevant graphs
+
+### Analysis of graphs
+(asset_01) MetricsTree graph shows that by majority packages do not tend to stray away from the Main sequence having usually a small distance in between. Outlier packages are *mindustry/entities/comp* that contains all abstract classes, and depends on other classes while other classes do not depend on it putting it in the Zone of Uselessness.
+
+Other graphs confirm the assumptions and conclusions from (asset_01) but have filtered information.
+
+Graphs from MetricsTree and MetricsReloaded have slightly different values but do not differ from each other significatly.
+In the *SE202526/Milestone2/CodeMetrics/DinisNeves/assets* folder more graphs and the full table of Martin Package values for every package is available.
+
+MetricsTree Graph (asset_01)
+![asset_01.png](assets/asset_01.png)
+
+(parent packages that have greater than 0.5 distance)
+MetricsReloaded MainPackagesBad (asset_02)
+![asset_02.png](assets/asset_02.png)
+
+(sub packages that have greater than 0.5 distance with *mindustry/entities/comp* being in the top right corner)
+MetricsReloaded SubPackagesBad (asset_03)
+![asset_03.png](assets/asset_03.png)
+
+(close to asset_01 but ignoring child packages)
+MetricsReloaded MainPackages (asset_04)
+![asset_04.png](assets/asset_04.png)
+
+MetricsReloaded parent package table (asset_05)
+![asset_05.png](assets/asset_05.png)
