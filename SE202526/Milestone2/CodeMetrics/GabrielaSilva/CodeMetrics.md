@@ -1,6 +1,6 @@
 # Code metrics Report
 ## Author
-- #STUDENT NAME (#STUDENT ID)
+- Gabriela Silva (67286)
 
 ---
 ## To-do
@@ -26,7 +26,17 @@ You should add metrics visualisation and discussion in the report (your MD file)
 ---
 (*Everything above is to be removed.*)
 
-# (*Code Metrics Set name*)
+# Complexity Metrics Set
+This metrics set is composed by four metrics:
+- **Cognitive Complexity** (CogC)
+- **Cyclomatic Complexity** (v(G))
+- **Design Complexity** (iv(G))
+- **Essential Cyclomatic Complexity** (ev(G))
+
+This report will analyse the project by the metrics **Cognitive**, **Cyclomatic** and **Design** complexities.
+
+
+
 
 ## (*Analysis of collected metrics*)
 
