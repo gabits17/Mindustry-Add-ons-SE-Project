@@ -62,7 +62,7 @@ public class WaveInfoDialog extends BaseDialog{
                     Core.app.setClipboardText(maps.writeWaves(groups));
                     dialog.hide();
                 }).disabled(b -> groups == null || groups.isEmpty()).marginLeft(12f).row();
-
+ 
                 t.button("@waves.load", Icon.download, style, () -> {
                     try{
                         groups = maps.readWaves(Core.app.getClipboardText());
