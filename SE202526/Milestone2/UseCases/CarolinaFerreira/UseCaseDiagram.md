@@ -5,7 +5,7 @@
 # Use Cases - Game Settings
 This Use Case Diagram addresses the functionalities associated with the Game Settings menu, and deepens on two of those use cases.
 ## Diagram
-![UserCaseDiagram.svg](UserCaseDiagram.svg)
+![UserCaseDiagram.svg](Assets/UserCaseDiagram.svg)
 ## Configure Game Options
 
 ### Description
