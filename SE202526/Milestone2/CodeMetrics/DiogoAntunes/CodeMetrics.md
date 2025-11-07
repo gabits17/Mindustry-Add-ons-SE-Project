@@ -5,7 +5,7 @@
 ## Metrics Source
 To avoid any changes made by added files and code modification undertaken by project members, data was collected from
 a clone of the last version of the Mindustry Repository before the project management files were added:
-![screenshotOfRepoCommitHistory.png](img.png)
+![screenshotOfRepoCommitHistory.png](Assets/img.png)
 
 The changes I noticed were mostly small percentage amounts, but for accuracy I still felt it was better to do it this way.
 
@@ -79,10 +79,10 @@ However, I am doing this with the awareness of the "Criticizing the Results" sec
 a larger population introduces randomness into the results. Therefore, any judgements will also take into account the conventions used for this project,
 specified in CONTRIBUTING.md. They will also consider the following table of reference values from multiple sources taken from https://www.aivosto.com/project/help/pm-oo-mood.html:
 
-![img_3.png](img_3.png)
+![img_3.png](Assets/img_3.png)
 
 ### Analysing the Coupling Factor (CF)
-![img_1.png](img_1.png)
+![img_1.png](Assets/img_1.png)
 
 Good design means strongly cohesive, weakly couples, therefore a low value is usually better.
 The calculated value of 2.60% falls within the confidence interval, suggesting a good value compare to those calculated for the Eiffel libraries.
@@ -108,7 +108,7 @@ of variables wouldn't contribute in the same way towards perceived coupling in M
 "Access to Foreign Data" metric in the Lanza-Marinescu Metrics Set from MetricsTree is more helpful in identifying indirect connections between classes.
 
 ### Analysing the Attribute Hiding Factor (AHF)
-![img_4.png](img_4.png)
+![img_4.png](Assets/img_4.png)
 
 This metric should be as high as possible to guarantee encapsulation of class functionality. The article that uses MOOD to evaluate the Eifel libraries suggests that
 "For attributes (AHF) we want this mechanism to be used as much as possible." (Brito e Abreu et al., 1996, p. 13). Despite being within the 90% confidence interval within the Eifel libraries example,
@@ -130,7 +130,7 @@ This reason is justified as classes with dozens of attributes would require many
 However, the decision nonetheless breaks encapsulation and makes extracting meaning out of arbitrary snippets of code more difficult.
 
 ### Analysing the Polymorphism Factor
-![img_2.png](img_2.png)
+![img_2.png](Assets/img_2.png)
 
 As mentioned in the aivosto article that summarises the formula From Brito e Abreu et al., PF can be defined as:
 
