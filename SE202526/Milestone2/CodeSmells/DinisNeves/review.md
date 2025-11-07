@@ -1,10 +1,11 @@
 # Code Smell Review
 ## Reviewers
 - Carolina Ferreira (67804)
-- #REVIEWR NAME (#STUDENT ID)
+- Manel Oliveira (68547)
 
 ## Change Log
 - Carolina Ferreira 67804 (07/11/2025 21:19)
+- Manel Oliveira 68547 (07/11/2025 23:33)
 
 # Reviews
 
@@ -17,3 +18,11 @@ By viewing the provided cone snippets, I agree it is a Primitive Obsession code 
 In order to do so, we need to study the code and understand the use of these primitives, and check if solving a problem doesn't result in a bigger one, in which case it's better to leave what's done.
 
 With this said, some information about the code smell would be a good add, but not a crucial one.
+
+## Review of Duplicated Code
+#### Author
+- Manel Oliveira 68547
+
+This is, unfortunately a quite common and standard code smell for this codebase.
+
+In this case there is repeated code to a degree, but there is a crucial difference in purpose in the two functions, so the solution purposed might introduce more problems than the ones that it solves.
