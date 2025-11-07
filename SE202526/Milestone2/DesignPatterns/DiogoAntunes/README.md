@@ -18,7 +18,7 @@ SaveSlots store data in a file they store as an attribute via the abstraction Fi
 However, SaveIO is used as an intermediary in this interaction to actually read and write to the file.
 
 The diagram below shows the associated classes and main methods to exemplify usage:
-![img.png](Assets/img_2.png)
+![img_2.png](Assets/img_2.png)
 SaveIO, SaveMeta - core/src/mindustry/io  
 Saves (SaveSlot is a nested class) - core/src/mindustry/game  
 Control - core/src/mindustry/core  
@@ -55,7 +55,7 @@ for purposes other than just achievement updates.
 
 The diagram below examplifies the communication between the Logic class that handles logic for entities and waves,
 and the GameService class.
-![img_3.png](Assets2/img_3.png)
+![img_2.png](Assets2/img_2.png)
 *Note: Visual Paradigm doesn't seem to like the use of > in the generic parameter names, so it's missing one after Enum\<T>*
 
 ### Rationale
