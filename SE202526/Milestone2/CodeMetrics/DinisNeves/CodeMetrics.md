@@ -2,11 +2,6 @@
 ## Author
 - Dinis Neves (68130)
 
----
-# Code metrics Report
-## Author
-- Dinis Neves (68130)
-
 # Martin Package
 
 #### Small summary of Martin Package Metrics
