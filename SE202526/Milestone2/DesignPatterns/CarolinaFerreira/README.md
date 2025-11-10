@@ -2,12 +2,6 @@
 ## Author
 - Carolina Ferreira (#67804)
 # Design Patterns
-- Attach a picture of the block of code with the Design Pattern
-- Reference the file in which the Pattern was found
-- Possible improvements you found
-- Possible blocks of code you believe a Pattern could be implemented
-    - Picture of said blocks
-
 ## Composite
 The Composite, a structural design pattern, allows to compose objects into tree structures and use them as individual objects (https://refactoring.guru/design-patterns/composite).
 
