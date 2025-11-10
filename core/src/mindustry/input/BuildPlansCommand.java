@@ -2,8 +2,10 @@ package mindustry.input;
 
 import arc.struct.Seq;
 import mindustry.entities.units.BuildPlan;
+import mindustry.game.Schematic;
 
 import static mindustry.Vars.player;
+import static mindustry.Vars.schematics;
 
 public class BuildPlansCommand extends CommandAbstract{
 
