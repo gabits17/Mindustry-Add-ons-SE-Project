@@ -1693,7 +1693,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
                 if(!flush){
                     if (tryBreakBlock(wx, wy)) {
                         Building build = world.build(wx, wy);
-                        if (build != null) removedBuilds.add(new BuildPlan(wx, wy, build.rotation, build.block));
+                        if (build != null) removedBuilds.add(new BuildPlan(wx, wy, build.rotation, build.block, build.config()));
 
                     }
                 }else if(validBreak(tile.x, tile.y) && !selectPlans.contains(r -> r.tile() != null && r.tile() == tile)){
