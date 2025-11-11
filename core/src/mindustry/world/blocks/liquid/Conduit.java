@@ -41,6 +41,7 @@ public class Conduit extends LiquidBlock implements Autotiler{
     /** If true, the liquid region is padded at corners, so it doesn't stick out. */
     public boolean padCorners = true;
     public boolean leaks = true;
+    public boolean isLeaking;
     public @Nullable Block junctionReplacement, bridgeReplacement, rotBridgeReplacement;
 
     public Conduit(String name){
@@ -53,6 +54,8 @@ public class Conduit extends LiquidBlock implements Autotiler{
         noUpdateDisabled = true;
         canOverdrive = false;
         priority = TargetPriority.transport;
+
+        isLeaking = false;
     }
 
     @Override
@@ -149,6 +152,18 @@ public class Conduit extends LiquidBlock implements Autotiler{
         return new TextureRegion[]{Core.atlas.find("conduit-bottom"), topRegions[0]};
     }
 
+    /**
+     * Change conduit color depending on whether it is leaking (there is a break in the pipe) or not
+     */
+    @Override
+    public int minimapColor(Tile tile){
+        if (isLeaking){
+            return Pal.leakingWarn.rgba();
+        } else {
+            return super.minimapColor(tile);
+        }
+    }
+
     public class ConduitBuild extends LiquidBuild implements ChainedBuilding{
         public float smoothLiquid;
         public int blendbits, xscl = 1, yscl = 1, blending;
@@ -230,12 +245,30 @@ public class Conduit extends LiquidBlock implements Autotiler{
         public void updateTile(){
             smoothLiquid = Mathf.lerpDelta(smoothLiquid, liquids.currentAmount() / liquidCapacity, 0.05f);
 
+            this.checkLeaks();
             if(liquids.currentAmount() > 0.0001f && timer(timerFlow, 1)){
                 moveLiquidForward(leaks, liquids.current());
                 noSleep();
             }else{
                 sleep();
             }
+        }
+
+        private void checkLeaks() {
+            //Check on tick 1 for updates in leaks
+            System.out.println(timer(timerFlow, 1));
+            /*
+            if(timer(timerFlow, 1)) {
+                if(liquids.currentAmount() > 0.0001f) {
+                    Tile next = tile.nearby(this.rotation);
+                    isLeaking = !next.block().solid;
+                    System.out.printf("%b %b %b\n", isLeaking, !next.block().solid, !next.block().hasLiquids);
+                } else {
+                    isLeaking = false;
+                }
+            }
+
+             */
         }
 
         @Nullable

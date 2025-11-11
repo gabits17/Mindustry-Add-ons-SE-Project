@@ -163,6 +163,8 @@ public class Pal{
     blastAmmoFront = Color.valueOf("eeab89"),
 
     thoriumAmmoBack = Color.valueOf("f595be"),
-    thoriumAmmoFront = Color.white.cpy()
+    thoriumAmmoFront = Color.white.cpy(),
+
+    leakingWarn = Color.valueOf("ff0000")
     ;
 }
