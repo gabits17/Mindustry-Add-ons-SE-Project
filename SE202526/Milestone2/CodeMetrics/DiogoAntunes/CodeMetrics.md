@@ -85,7 +85,7 @@ specified in CONTRIBUTING.md. They will also consider the following table of ref
 ### Analysing the Coupling Factor (CF)
 ![img_1.png](Assets/img_1.png)
 
-Good design means strongly cohesive, weakly couples, therefore a low value is usually better.
+Good design means strongly cohesive, weakly coupled, therefore a low value is usually better.
 The calculated value of 2.60% falls within the confidence interval, suggesting a good value compare to those calculated for the Eiffel libraries.
 On the other hand, as seen in the wrongly-scoped table, values can be significantly higher for a given class.
 
@@ -98,7 +98,7 @@ In example:
 As such, these classes built en-mass to implement slight variations of some in-game functionality, when brought to project-scale, will further
 decrease the overall average (since on a project scale, the denominator should be larger, but, per class, the number of couplings numerator should remain the same).
 
-While the overall Coupling Factor is low compare to the standards from the reference table (ranging between 7 and 9% with the exception of GNu reference at 2.8%), this seems
+While the overall Coupling Factor is low compare to the standards from the reference table (ranging between 7 and 9% with the exception of GNU reference at 2.8%), this seems
 to be brought on by the many implementations of game content classes like units and bullets with narrow focus classes.
 
 On the other hand, the main logic of the game happens in several classes with strong coupling
@@ -139,7 +139,7 @@ As mentioned in the aivosto article that summarises the formula From Brito e Abr
 
 Where a value of 100% means that every method overrides everything. According to all reference values, the project has low polymorphism.
 
-However, even it's existing value of 1.84% can be offset slightly by the use of Refused Bequest, as exemplified by Gabriel Falcão as a code smell in DrawPart.
+However, even its existing value of 1.84% can be offset slightly by the use of Refused Bequest, as exemplified by Gabriel Falcão as a code smell in DrawPart.
 Overriding a function and having an empty method body would contribute positively to the Polymorphism factor by adding to the number of overriding without
 actually providing that functionality.
 
@@ -150,7 +150,9 @@ With this single piece of data, it's difficult to point out a particular trouble
 classes can extend other classes from outside the package.
 
 What I can conclude, however, is that further abstraction could be performed that would then contribute towards polymorphism,
-since the reference values aren't being met. In example, the switch statement code smell related to the TileOp class identified in the code smells section explains this further.
+since the reference values aren't being met.
+
+In example, the switch statement code smell related to the TileOp class identified in the code smells section explains this further.
 Refactoring the TileOp and TileOpData classes as abstract classes for numerous subclasses would contribute positively towards abstraction in the program that would increase the Polymorphism Factor.
 
 ## Article mentioned
