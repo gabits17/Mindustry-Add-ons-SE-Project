@@ -11,12 +11,17 @@ public class Commander {
         undone = new Seq<>();
     }
 
-    protected void addCommand(Command command){
+    private void addCommand(Command command){
         commands.add(command);
     }
 
-    protected void executeTop() {
+    private void executeTop() {
         commands.peek().execute();
+    }
+
+    protected void execute(Command command) {
+        addCommand(command);
+        executeTop();
     }
 
     protected void undoTop(){

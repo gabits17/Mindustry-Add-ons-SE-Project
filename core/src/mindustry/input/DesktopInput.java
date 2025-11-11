@@ -755,17 +755,15 @@ public class DesktopInput extends InputHandler{
                 }else{
                     //Should check if the event was just a rotation
                     Command c = new BuildPlansCommand(linePlans, this);
-                    commander.addCommand(c);
-                    commander.executeTop();
+                    commander.execute(c);
                 }
 
                 linePlans.clear(); //This will need to be handled some other way
                 Events.fire(new LineConfirmEvent());
             }else if(mode == breaking){ //touch up while breaking, break everything in selection
                 int maxSize = !Core.input.keyDown(Binding.schematicSelect) ? maxLength : Vars.maxSchematicSize;
-                Command c = new RemoveSelectionCommand(selectX, selectY, cursorX, cursorY, maxSize, this);
-                commander.addCommand(c);
-                commander.executeTop();
+                Command c = new RemoveSelectionCommand(selectX, selectY, cursorX, cursorY, maxSize, false, this);
+                commander.execute(c);
                 if(lastSchematic != null){
                     useSchematic(lastSchematic);
                     lastSchematic = null;

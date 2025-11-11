@@ -1677,8 +1677,9 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
     }
 
     /** Remove everything from the queue in a selection. */
-    protected void removeSelection(int x1, int y1, int x2, int y2, boolean flush, int maxLength){
+    protected Seq<BuildPlan> removeSelection(int x1, int y1, int x2, int y2, boolean flush, int maxLength){
         System.out.println("I broke stuff");
+        Seq<BuildPlan> removedBuilds = new Seq<>();
         NormalizeResult result = Placement.normalizeArea(x1, y1, x2, y2, rotation, false, maxLength);
         for(int x = 0; x <= Math.abs(result.x2 - result.x); x++){
             for(int y = 0; y <= Math.abs(result.y2 - result.y); y++){
@@ -1690,7 +1691,11 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
                 if(tile == null) continue;
 
                 if(!flush){
-                    tryBreakBlock(wx, wy);
+                    if (tryBreakBlock(wx, wy)) {
+                        Building build = world.build(wx, wy);
+                        if (build != null) removedBuilds.add(new BuildPlan(wx, wy, build.rotation, build.block));
+
+                    }
                 }else if(validBreak(tile.x, tile.y) && !selectPlans.contains(r -> r.tile() != null && r.tile() == tile)){
                     selectPlans.add(new BuildPlan(tile.x, tile.y));
                 }
@@ -1740,6 +1745,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
         if(removed.size > 0 && net.active()){
             Call.deletePlans(player, removed.toArray());
         }
+        return removedBuilds;
     }
 
     protected void updateLine(int x1, int y1, int x2, int y2){
@@ -2134,10 +2140,12 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
         }
     }
 
-    public void tryBreakBlock(int x, int y){
+    public boolean tryBreakBlock(int x, int y){
         if(validBreak(x, y)){
             breakBlock(x, y);
+            return  true;
         }
+        return false;
     }
 
     public boolean validPlace(int x, int y, Block type, int rotation){

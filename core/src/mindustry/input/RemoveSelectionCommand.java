@@ -9,6 +9,7 @@ public class RemoveSelectionCommand extends CommandAbstract {
 
     private InputHandler input;
     private int selectX, selectY, cursorX, cursorY, maxSize;
+    private boolean flush;
     private Seq<BuildPlan> removed;
 
     protected RemoveSelectionCommand(int selectX,
@@ -16,26 +17,24 @@ public class RemoveSelectionCommand extends CommandAbstract {
                                      int cursorX,
                                      int cursorY,
                                      int maxSize,
+                                     boolean flush,
                                      InputHandler input) {
 
-        this.removed = new Seq<>();
-        var schematic = schematics.create(selectX, selectY, cursorX, cursorY);
-        double d1 = selectX + cursorX;
-        d1 /= 2;
-        double d2 = selectY + cursorY;
-        d2 /= 2;
-        this.removed.addAll(schematics.toPlans(schematic, (int) Math.ceil(d1), (int) Math.ceil(d2)));
+        System.out.println(selectX + " " + selectY);
+        System.out.println(cursorX + " " + cursorY);
         this.selectX = selectX;
         this.selectY = selectY;
         this.cursorX = cursorX;
         this.cursorY = cursorY;
         this.maxSize = maxSize;
+        this.flush = flush;
         this.input = input;
     }
 
     @Override
     public void execute() {
-        this.input.removeSelection(this.selectX, this.selectY, this.cursorX, this.cursorY, this.maxSize);
+        this.removed = this.input.removeSelection(this.selectX, this.selectY, this.cursorX, this.cursorY, this.flush, this.maxSize);
+        removed.reverse();
     }
 
     @Override
@@ -45,7 +44,7 @@ public class RemoveSelectionCommand extends CommandAbstract {
 
     @Override
     public boolean canUndo() {
-        return true;
+        return this.removed != null;
     }
 
     @Override
