@@ -21,6 +21,8 @@ It is obvious that a *Long Method* or a *Large Class* elevates the cognitive eff
 
 The ``build()`` method in ``FragmentPlacement`` class (``core/src/mindustry/ui/fragments``) is the method with the **highest **CogC**** metric value in the whole project code base: **461**. Since the *MetricsReloaded* plugin gives a warning for when this metric is greater than 15, it is pretty clear why this is an extreme case. A **CogC** value this high indicates that the method is extremely difficult for a human to understand, safely modify, refactor or debug. **This method should be refactored massively.**
 
+Looking at project level, this is not uncommon. There are severely methods that has a *CogC* value as big as the method above. **There is at least 32 methods with a *CogC* value higher than a 100!** Given this fact, it is possible to conclude that the *CogC* is higher in this project and that it needs a closer eye to make it better. I believe this was a mistake from these project's developers, since at this point it is really hard to make the project easier to understand and cleaner. 
+
 ---
 
 ## *v(G)* Metric
@@ -59,6 +61,8 @@ Here, **only 6% of the methods in the package are the extreme causes of its tota
 
 The main difference here is that the ``comp`` package handles components behavioral complexity, spreading accross many components, while the ``maps`` one focus on generators algorithmic complexity, having massive heavy methods (``generate()`` as pointed out). 
 
+---
+
 As stated when analysing design patterns and code smells by the entire group work, some design principles where not respected in every spot in the code, which can happen since we're talking about an entire game's code logic. We, as a group, can be considered a good example of how a high ***CogC*** value can be exaustive, since we had to work and analyse this code base.
 
 The main solution for these values to decrease is to **refactor** the code blocks that increase the human cognitive effort to understand and work on. To do that, developers should follow some design principles, emphasizing the *SRP* - **Single Responsibility Principle**.
@@ -68,3 +72,9 @@ The main solution for these values to decrease is to **refactor** the code block
 To produce this report and analyse this data, I learned from these two web materials that explain Cognitive Complexity and Cyclomatic Complexity:
 - https://getdx.com/blog/cognitive-complexity/
 - https://www.sonarsource.com/resources/library/cyclomatic-complexity/
+
+---
+## Change Log
+_Created_: 07/11/2025
+
+_Improved after Manuel's review on in_: 12/11/2025 19:00

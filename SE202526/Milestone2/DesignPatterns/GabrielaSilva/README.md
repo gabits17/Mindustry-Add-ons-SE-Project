@@ -85,47 +85,20 @@ For clarification, not all methods are specified in the diagram.
 
 Although this pattern is intented to simplify several subsystems with a central and clear interface, the Facade pattern here provides a **parcial abstraction**. This happens because it is dealing with a large and complex system as ``Mindustry`` is. For instance, any method that has a ``Sector`` parameter, such as ``loadSector(Sector)`` and ``setSectorRules(Sector, boolean)``, requires the client to *already possess* a valid ``Sector`` object.
 
-## 3. Factory Method
+## 3. Builder
 
-The *Factory Method* provides a central *Creator* interface that handles the delegation of product creations, allowing subclasses to alter the type of products that will be created.
+When identifying this design pattern for the first time, I understood it as the **Factory Method**. After further research and consideration, Gabriel's review helped me understand that it fits the **Builder** design pattern better, although not talked about in class. 
 
-Here, the ``TechTree`` class can act as that central *Creator* Interface, allowing concrete creators (``ErekirTechTree`` and ``SerpuloTechTree``) to produce ``TechNode`` objects.
+The **Builder** _GoF_ design pattern lets a _Director_ manage the building of something, transmitting building steps' informations to concrete _Builders_. These _Builders_ produce a _Product_ according to the _Director_'s orders.
 
-``TechTree`` follows the *Factory Method* principle to replace direct object construction calls (with the operator ``new``) with calls to a special **factory method**: ``node()``, ``nodeRoot()``, ``nodeProduce()``. This demonstrates the isolation of object creation and that, although the product created is always of the same type, it can be configured in different ways as needed.
+In ``core/src/mindustry/content``, there are the classes ``TechNode``, ``TechTree``, ``ErekirTechTree`` and ``SerpuloTechTree``. It is possible to relate these classes according to the **Builder** _GoF_ design pattern definition:
+- _Directors_: Classes ``SerpuloTechTree`` and ``ErekirTechTree``.
+- _Builder_: Class ``TechTree``.
+- _Product_: Also class ``TechTree``, along with its corresponding ``TechNode`` objects.
 
-````Java
-public static TechNode node(UnlockableContent content, ItemStack[] requirements, Seq<Objective> objectives, Runnable children){
-    TechNode node = new TechNode(context, content, requirements);
-    if(objectives != null){
-        node.objectives.addAll(objectives);
-    }
+As Gabriel mentioned in his review, the class ``TechTree`` would run the same role: _Builder_ and _Product_, along with ``TechNode``.
 
-    if(context != null && context.content instanceof SectorPreset preset && !node.objectives.contains(o -> o instanceof SectorComplete sc && sc.preset == preset)){
-        node.objectives.insert(0, new SectorComplete(preset));
-    }
-
-    TechNode prev = context;
-    context = node;
-    children.run();
-    context = prev;
-
-    return node;
-}
-
-public static TechNode nodeProduce(UnlockableContent content, Seq<Objective> objectives, Runnable children){
-    return node(content, content.researchRequirements(), objectives.add(new Produce(content)), children);
-}
-
-public static TechNode nodeRoot(String name, UnlockableContent content, boolean requireUnlock, Runnable children){
-    var root = node(content, content.researchRequirements(), children);
-    root.name = name;
-    root.requiresUnlock = requireUnlock;
-    roots.add(root);
-    return root;
-}
-````
-
-The concrete creators ``ErekirTechTree`` and ``SerpuloTechTree`` repeatedly call the **factory methods** to create specific trees with ``TechNode`` nodes, which represent the progress of the player in its specific planet during the game. 
+As mentioned on the previous version of this report, the classes ``SerpuloTechTree`` and ``ErekirTechTree`` both repeatedly call the functions ``node()``, ``nodeRoot()`` and ``nodeProduce()`` to _build_ a progression tree for its planet (_Erekir_ and _Serpulo_).
 
 ````Java
 public class SerpuloTechTree{
@@ -137,7 +110,7 @@ public class SerpuloTechTree{
                         node(advancedLaunchPad, Seq.with(new SectorComplete(extractionOutpost)), () -> {
                             node(landingPad, () -> {
                                 node(interplanetaryAccelerator, Seq.with(new SectorComplete(planetaryTerminal)), () -> {
-        (...)
+        // (...)
     }
 }
 
@@ -151,20 +124,28 @@ public class ErekirTechTree{
                 node(ductRouter, () -> {
                     node(ductBridge, () -> {
                         node(armoredDuct, () -> {
-        (...)
+        // (...)
     }
 }
 ````
 
-However, this *Factory Method* instance is not consistent with its *GoF* definition: it does not include a central interface for the *Product* created and the ``TechTree`` is not an abstract class or an interface for ``ErekirTechTree`` and ``SerpuloTechTree`` to extend or implement.
+These classes avoid the use of ``new``, isolating the building from the client. Although the product is always of the same type, it is built from different configurations, which is exactly what the motivation for the _Builder_ design pattern refers to in [Refactoring Guru Builder Pattern](https://refactoring.guru/design-patterns/builder) (the reference Gabriel recommended me to read).
 
-To make it more accurate to its *GoF* definition, ``TechTree`` should be transformed into an **abstract class** that has a protected method called **``factoryMethod()``** to create the ``TechNode`` objects. The concrete creators would extend that class and implement its own method to instanciate different variants or configurations. It would be also necessary to build a **Product** interface to have several variants ``TechNode`` *products*.
+It is important to notice (again) that ``SerpuloTechTree`` and ``ErekirTechTree`` classes **are not** implementations of a ``TechTree`` interface or abstract class, which breaks the encapsulation of both _Factory Method_ and _Builder_ design patterns and makes the UML diagram difficult to illustrate correctly its principles.
+
 
 ### UML Diagram
 The following UML diagram translates this pattern with the classes mentioned. ``ErekirTechTree`` and ``SerpuloTechTree`` uses the three specified methods of ``TechTree`` to create ``TechNode`` objects, when calling the ``load()`` function.  
 
-Since it is not consistent with its *GoF* definition as explained above, it has some crucial differences that feel like it is not that well designed. 
+Since it is not consistent with its *GoF* definition as explained above, it has some crucial differences that feel like it is not that well designed, such as that ``SerpuloTechTree`` and ``ErekirTechTree`` classes **are not** implementations of a ``TechTree`` interface or abstract class.
 
-![factory method](Assets/factory-method.svg)
+![builder](Assets/builder.svg)
 
+---
 
+## Change log
+_Created_: 29/10/2025 00:23
+
+_Last modified before milestone2_: 04/11/2025 00:36
+
+_Improved according to Gabriel's review_: 12/11/2025 20:35

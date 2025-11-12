@@ -10,9 +10,9 @@
 
 ---
 
-## 1. *Play Mission on Sector*
+## 1. *{abstract} Play Mission on Sector*
 ### Description
-This use case represents the act of playing a mission on a planet sector. For that, the player must choose a planet where the sector is located, and they can load an ongoing mission or launch a new one.
+The player plays a mission on a sector of a planet.
 ### Actors
 Player
 #### Primary
@@ -22,9 +22,93 @@ None
 
 ---
 
-## 2. *Unlock Item*
+## 1.1. *Load Mission*
 ### Description
-The goal of this use case is to show an interaction between a player and their progress, by unlocking new items of the game. These items can be **Units**, **Effects**, **Ores**, **Blocks** and **Liquids**. They can be unlocked when the player is exploring during a mission.
+The player loads a mission previously started to play.
+### Actors
+Player
+#### Primary
+Player
+#### Secondary
+None
+
+---
+
+## 1.2. *Start Mission*
+### Description
+The player starts a new mission to play.
+### Actors
+Player
+#### Primary
+Player
+#### Secondary
+None
+
+---
+
+## 2. *{abstract} Unlock Item*
+### Description
+The player unlocks a new item in their game progression, while exploring. The item can be _Units_, _Effects_, _Ores_, _Blocks_ and _Liquids_.
+### Actors
+Player
+#### Primary
+Player
+#### Secondary
+None
+
+---
+
+## 2.1. *Unlock Effect*
+### Description
+The player unlocks a new Effect in their game progression, while exploring.
+### Actors
+Player
+#### Primary
+Player
+#### Secondary
+None
+
+---
+
+## 2.2. *Unlock Unit*
+### Description
+The player unlocks a new Unit in their game progression, while exploring.
+### Actors
+Player
+#### Primary
+Player
+#### Secondary
+None
+
+---
+
+## 2.3. *Unlock Liquid*
+### Description
+The player unlocks a new Liquid in their game progression, while exploring.
+### Actors
+Player
+#### Primary
+Player
+#### Secondary
+None
+
+---
+
+## 2.4. *Unlock Ore*
+### Description
+The player unlocks a new Ore in their game progression, while exploring.
+### Actors
+Player
+#### Primary
+Player
+#### Secondary
+None
+
+---
+
+## 2.5. *Unlock Block*
+### Description
+The player unlocks a new Block in their game progression, while exploring.
 ### Actors
 Player
 #### Primary
@@ -36,7 +120,7 @@ None
 
 ## 3. *Unlock Sector*
 ### Description
-This use case has the purpose to show that the player can unlock a new sector. For that, they must have conquered a sector where they were playing a mission, by surviving all wave attacks and protecting their base.
+The player unlocks a new sector of a planet, by surviving all mission's wave attacks and protecting their base.
 ### Actors
 Player
 #### Primary
@@ -48,7 +132,7 @@ None
 
 ## 4. *View Tech Tree*
 ### Description
-It is possible to represent the action of the player to view the progression tree of the campaign by this use case. The player must choose a planet to inspect the *tech tree* of that planet. By default, the planet chosen is *Serpulo*.
+The player views their campaign progression tree, regarding a selected planet.
 ### Actors
 Player
 #### Primary
@@ -60,7 +144,7 @@ None
 
 ## 5. *Inspect Tech Node*
 ### Description
-This use case allows the action of the player to inspect each item of the campaign progression tree. It requires that the player must have opened the campaign tech tree.
+The player inspects an item of their campaign progression tree.
 ### Actors
 Player
 #### Primary
@@ -71,8 +155,8 @@ None
 ---
 
 ## 6. *Inspect Core Database*
-### Descritpion
-The goal of this use case is to show all *current* unlocked items for both planets. This use case requires that the tech tree is opened and depends on the progress saved so far.
+### Description
+The player inspects all current unlocked items for both planets.
 ### Actors
 Player
 #### Primary
@@ -84,7 +168,7 @@ None
 
 ## 7. *Save Progress*
 ### Description
-This use case represents the storage of the game progress in the game's data base. It is important, since viewing the campaign progression depends on it. The saving can be made automatically.
+The player saves their progress on the campaign.
 ### Actors
 Player
 #### Primary
@@ -96,10 +180,16 @@ None
 
 ## 8. *Auto Save*
 ### Description
-The purpose of this use case is to demonstrate that the time can automatically save progression, contributing effectively to the *Save Progress* use case.
+The passage of time automatically saves the progression of the campaign.
 ### Actors
 Time
 ### Primary
 Time
 ### Secondary
 None
+
+---
+
+## Change log
+_Created_: 07/11/2025 01:51
+_Improved after Diogo's review_: 12/11/2025 21:35
