@@ -1724,8 +1724,6 @@ public abstract class InputHandler implements InputProcessor, GestureListener {
                 int wy = y1 + y * Mathf.sign(y2 - y1);
 
                 Tile tile = world.tileBuilding(wx, wy);
-                System.out.println(tile);
-                System.out.println(world.build(wx, wy));
 
                 if (tile == null) continue;
 
