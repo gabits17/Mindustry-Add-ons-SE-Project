@@ -81,7 +81,6 @@ public class EventType{
      */
     public static class LineConfirmEvent{
         public LineConfirmEvent(){
-            System.out.println("Line confirm Event");
         }
     }
     /** Called when a turret receives ammo, but only when the tutorial is active! */
@@ -532,7 +531,6 @@ public class EventType{
             this.build = build;
             this.unit = unit;
             this.previous = previous;
-            System.out.println("Block rorated");
         }
     }
 

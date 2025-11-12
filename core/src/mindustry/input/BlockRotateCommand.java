@@ -1,0 +1,34 @@
+package mindustry.input;
+
+import mindustry.gen.Building;
+import mindustry.gen.Call;
+import mindustry.gen.Player;
+
+import static mindustry.Vars.player;
+
+public class BlockRotateCommand extends CommandAbstract{
+
+    private Building cursorBuild;
+    private boolean direction;
+
+    public BlockRotateCommand(Building cursorBuild, boolean direction){
+        this.cursorBuild = cursorBuild;
+        this.direction = direction;
+    }
+
+
+    @Override
+    public void execute() {
+        Call.rotateBlock(player, this.cursorBuild, this.direction);
+    }
+
+    @Override
+    public boolean canUndo() {
+        return true;
+    }
+
+    @Override
+    public void undo() {
+        Call.rotateBlock(player, this.cursorBuild, !this.direction);
+    }
+}

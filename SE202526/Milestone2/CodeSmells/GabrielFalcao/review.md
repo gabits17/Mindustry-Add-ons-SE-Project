@@ -33,7 +33,7 @@ The proposed solution might be the best one accross the possibilities. Since the
 
 Overall, this code smell report is really well structured. There's only room for improvement to consider in the random *enters* done during a sentence and the frequent use of the expression "*I believe*". I recommend reviewing it.
 
-# Review of Data Clumps
+### Review of Data Clumps
 - Manuel Oliveira (68547)
 
 I personally have also encountered this same code smell, specifically applied to the same, or very similar, coordinates set, throughout the code base in distinct instances from the ones showcased. And even if they serve slightly different purposes each time they appear, these 4 variables truly do appear consistently together.

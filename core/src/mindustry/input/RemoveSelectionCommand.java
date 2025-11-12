@@ -33,6 +33,9 @@ public class RemoveSelectionCommand extends CommandAbstract {
 
     @Override
     public void execute() {
+        //Should this take into account the first removal??? should it take into account the last removal??? This is probably is not relevant as thr commands are a stack
+        //This is important as it wont take non built plans into account maybe this should either see a little more about remove selection
+        //Ok this now takes non built things into account
         this.removed = this.input.removeSelection(this.selectX, this.selectY, this.cursorX, this.cursorY, this.flush, this.maxSize);
         removed.reverse();
     }

@@ -13,20 +13,26 @@ public class BuildPlansCommand extends CommandAbstract{
     private InputHandler input;
 
     protected BuildPlansCommand(Seq<BuildPlan> plans, InputHandler input){
-        this.plans = plans.copy();
+        this.plans = new Seq<>(plans.size);
+        for (BuildPlan plan : plans) {
+            this.plans.add(plan.copy());
+        }
+        System.out.println(this.plans.get(0).x + " " + this.plans.get(0).y);
         this.input = input;
     }
 
 
     @Override
     public void execute() {
-        this.input.flushPlans(this.plans);
+        this.plans = this.input.flushPlans(this.plans);
     }
 
     @Override
     public void undo() {
+        System.out.println(this.plans.get(0).x + " " + this.plans.get(0).y);
         for (BuildPlan plan : this.plans ) {
             this.input.tryBreakBlock(plan.x, plan.y);
+            player.unit().removeBuild(plan.x, plan.y, false);
         }
     }
 

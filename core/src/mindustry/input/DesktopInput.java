@@ -669,7 +669,8 @@ public class DesktopInput extends InputHandler{
             if(Core.input.keyDown(Binding.breakBlock)){
                 mode = none;
             }else if(!selectPlans.isEmpty()){
-                flushPlans(selectPlans);
+                Command c = new BuildPlansCommand(selectPlans, this);
+                commander.execute(c);
                 movedPlan = true;
             }else if(isPlacing()){
                 selectX = cursorX;
@@ -873,7 +874,9 @@ public class DesktopInput extends InputHandler{
             }
 
             if(cursor.build != null && cursor.interactable(player.team()) && !isPlacing() && Math.abs(Core.input.axisTap(Binding.rotate)) > 0 && Core.input.keyDown(Binding.rotatePlaced) && cursor.block().rotate && cursor.block().quickRotate){
-                Call.rotateBlock(player, cursor.build, Core.input.axisTap(Binding.rotate) > 0);
+                //This rotates a block in r mode
+                Command c = new BlockRotateCommand(cursor.build, Core.input.axisTap(Binding.rotate) > 0);
+                commander.execute(c);
             }
         }
     }
