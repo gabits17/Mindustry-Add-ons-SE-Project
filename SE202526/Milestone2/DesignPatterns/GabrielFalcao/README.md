@@ -9,6 +9,11 @@
     - Picture of said blocks
 
 ## Command Pattern
+As per [Refactoring Guru Command Pattern](https://refactoring.guru/design-patterns/command).
+> Command is a behavioral design pattern that turns a request into a stand-alone object that contains all information about the request.
+
+
+
 The **Command** pattern isn’t immediately evident here, as its implementation differs somewhat from the version presented in class. Its presence is mainly suggested by the undo and redo functionality, as well as the `OperationStack` (`core/src/mindustry/editor`) class, which stores `DrawOperation`(`core/src/mindustry/editor`)   objects. However, it could also be mistaken for the **Memento** pattern—though that doesn’t seem to be the case, since the state of the `MapEditor` (`core/src/mindustry/editor`) itself is not stored.
 
 Another unusual aspect of this implementation is that the **MapEditor** class appears to serve as both the _Invoker_ and the _Receiver_. Although some operations are indeed invoked by external elements such as `EditorTile`, the `MapEditor` is responsible for invoking operations through the `addTileOp` method, which adds operations to the current one. It also applies the operation’s changes via the `updateStatic` (`EditorRender` this class could also be considered a *Receiver*) method (acting as the Invoker) directly on itself (acting as the Receiver). Finally, the resulting operation is added to the `OperationStack` through the `flushOp` method, which is invoked either by the `MapEditor` itself (in the seemingly unused `addClifs` method) or by the `MapView`, which appears to handle editor input.
@@ -238,3 +243,6 @@ foreshadow = new ItemTurret("foreshadow"){{
 ```
 ### Diagram
 ![StrategyPattern.svg](Assets/StrategyPattern.svg)
+
+# Change Log
+I have updated the report on the Command design pattern. (67775) (12/11/2025) (17:49)
