@@ -140,7 +140,7 @@ perform this added functionality for the ops that require it, so that it could b
 Example code implementation for OpBlock, which would extend a class called TileUpdateOp that would have the additional
 logic mentioned above:
 
-```
+````Java
 public class OpBlock extends TileUpdateOp implements TileOp {
     public OpBlock() {
         ...
@@ -162,4 +162,4 @@ public class OpBlock extends TileUpdateOp implements TileOp {
         super.setTile(tile, to);
     }
 }
-```
+````
