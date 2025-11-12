@@ -72,3 +72,9 @@ The main solution for these values to decrease is to **refactor** the code block
 To produce this report and analyse this data, I learned from these two web materials that explain Cognitive Complexity and Cyclomatic Complexity:
 - https://getdx.com/blog/cognitive-complexity/
 - https://www.sonarsource.com/resources/library/cyclomatic-complexity/
+
+---
+## Change Log
+_Created_: 07/11/2025
+
+_Improved after Manuel's review on in_: 12/11/2025 19:00
