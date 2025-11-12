@@ -7,7 +7,7 @@
 
 ## Diagram
 
-![[TileEditingSystem.svg]]
+![TileEditingSystem](./Assets/TileEditingSystem.svg)
 **Note**: This Diagram only shows a tiny amount of the use cases offered by the built in editor, Tile Editing is the one shown here, but, the system also offers: 
 - Wave Editing
 - Map Sharing
