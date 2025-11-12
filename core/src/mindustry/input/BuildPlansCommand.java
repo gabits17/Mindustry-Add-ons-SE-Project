@@ -15,7 +15,7 @@ public class BuildPlansCommand extends CommandAbstract{
     protected BuildPlansCommand(Seq<BuildPlan> plans, InputHandler input){
         this.plans = new Seq<>(plans.size);
         for (BuildPlan plan : plans) {
-            this.plans.add(plan.clone());
+            this.plans.add(plan.copy());
         }
         System.out.println(this.plans.get(0).x + " " + this.plans.get(0).y);
         this.input = input;
@@ -24,7 +24,7 @@ public class BuildPlansCommand extends CommandAbstract{
 
     @Override
     public void execute() {
-        this.input.flushPlans(this.plans);
+        this.plans = this.input.flushPlans(this.plans);
     }
 
     @Override

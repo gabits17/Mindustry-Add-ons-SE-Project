@@ -1621,14 +1621,17 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
      * Looks to be used when building
      * @param plans
      */
-    protected void flushPlans(Seq<BuildPlan> plans){
+    protected Seq<BuildPlan> flushPlans(Seq<BuildPlan> plans){
+        Seq<BuildPlan> builtPlans = new Seq<>();
         for(var plan : plans){
             if(plan.block != null && validPlace(plan.x, plan.y, plan.block, plan.rotation, null, true)){
                 BuildPlan copy = plan.copy();
                 plan.block.onNewPlan(copy);
                 player.unit().addBuild(copy);
+                builtPlans.add(copy);
             }
         };
+        return builtPlans;
     }
 
     protected void drawOverPlan(BuildPlan plan){
