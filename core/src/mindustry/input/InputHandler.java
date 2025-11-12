@@ -1713,6 +1713,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
             while(it.hasNext()){
                 var plan = it.next();
                 if(!plan.breaking && plan.bounds(Tmp.r2).overlaps(Tmp.r1)){
+                    removedBuilds.add(plan);
                     it.remove();
                 }
             }
