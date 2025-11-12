@@ -258,19 +258,14 @@ public class Conduit extends LiquidBlock implements Autotiler{
             //System.out.println(isLeaking);
             if(liquids.currentAmount() > 0) {
                 Tile next = tile.nearby(this.rotation);
-
-                // If the block is solid, it can plug a leak
-                // If the block can contain liquids, then handling the leak becomes that block's problem
-                if (!next.block().solid && !next.block().hasLiquids && !this.isLeaking) {
-                    this.isLeaking = true;
-                    System.out.printf(" %d %d Started Leaking\n", tile.x, tile.y);
+                boolean wasLeaking = this.isLeaking;
+                // Solid block plugs leak, next block with liquids delegates verifying leak to that block
+                this.isLeaking = !next.block().solid && !next.block().hasLiquids;
+                // Transition from not leaking to leaking and vice-versa
+                if (isLeaking ^ wasLeaking)
                     renderer.minimap.updatePixel(tile);
-                } else if ((next.block().solid || next.block().hasLiquids) && this.isLeaking) {
-                    this.isLeaking = false;
-                    System.out.printf(" %d %d Leak plugged\n", tile.x, tile.y);
-                    renderer.minimap.updatePixel(tile);
-                }
-                //System.out.printf("%b %b %b\n", isLeaking, !next.block().solid, !next.block().hasLiquids);
+            } else if (this.isLeaking) {
+                isLeaking = false;
             }
         }
 
