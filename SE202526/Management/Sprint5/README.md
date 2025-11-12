@@ -28,7 +28,7 @@ Dinis Neves 68130
 ## Relevant resources
 
 ### Scrum Board at the beginning of the sprint
-![Screenshot 2025-11-11 224913.png](assets/Screenshot%202025-11-11%20224913.png)
+![Screenshot 2025-11-11 232738.png](assets/Screenshot%202025-11-11%20232738.png)
 (super special notes: backlog unfinished work from previous weeks is still being carried out)
 
 ### Scrum Board in the middle of the sprint
