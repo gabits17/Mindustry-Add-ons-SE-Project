@@ -31,8 +31,8 @@ Went over what some tasks that can be unnecessary, and add tasks related to impl
 ![asset_01.png](assets/asset_01.png)
 
 ### Scrum Board in the middle of the sprint
+![asset_02.png](assets/asset_02.png)
 
-Please add the scrumboard picture here.
 
 ### Scrum Board at the end of the sprint
 
