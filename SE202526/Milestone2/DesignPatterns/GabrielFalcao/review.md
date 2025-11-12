@@ -27,7 +27,8 @@ Spelling error in "functionlalities" -> functionalities
 
 - I have updated the report and fixed what was mentioned here (67775)
 
-## Review of Command Design Pattern 
+## Review of Command Design Pattern
+- Carolina Ferreira (67804)
 
 A small explanation of the design pattern would be a nice add to the beginning of first paragraph. 
 With that said, I agree with the taken conclusions and have no further comments.
