@@ -17,7 +17,7 @@ These will not be portrayed here as the system would become to large for whats n
 
 ## Choose Tile
 ### Description
-The player chooses a tile to build with.
+The Map Maker chooses a tile to build with.
 ## Search Tile (Extending Use Case)
 ### Description
 If the Map Maker clicks the search icon while choosing tiles, he/she may search for tiles by name.
@@ -77,7 +77,7 @@ The Map Maker toggles between showing or not showing terrain.
 ## Redo
 ### Description
 The Map Maker *redos* the previously undone action.
-**Note**: Some actions may not be *redoble*
+**Note**: Some actions may not be *redoable*
 
 ## Undo
 ### Description
@@ -88,3 +88,6 @@ The Map Maker *undos* the previously done action.
 **Note**: Use cases did not include actors as the only actor in this system is the **Map Maker**, taking the role of primary actor in all the use cases.
 
 Map Maker - Someone that makes maps using the build in mindustry map editor
+
+# Change Log
+I have updated the report according to the review given by Carolina (67775) (12/11/2025) (18:02)
