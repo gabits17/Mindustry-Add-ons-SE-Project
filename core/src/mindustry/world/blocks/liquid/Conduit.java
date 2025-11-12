@@ -243,20 +243,19 @@ public class Conduit extends LiquidBlock implements Autotiler{
         public void updateTile(){
             smoothLiquid = Mathf.lerpDelta(smoothLiquid, liquids.currentAmount() / liquidCapacity, 0.05f);
 
-            if (tile.build.team == player.team())
-                checkLeak();
-
             if(liquids.currentAmount() > 0.0001f && timer(timerFlow, 1)){
                 moveLiquidForward(leaks, liquids.current());
                 noSleep();
             }else{
                 sleep();
             }
+
+            if (tile.build.team == player.team())
+                checkLeak();
         }
 
         private void checkLeak() {
-            //System.out.println(isLeaking);
-            if(liquids.currentAmount() > 0) {
+            if(liquids.currentAmount() > 0.0001f) {
                 Tile next = tile.nearby(this.rotation);
                 boolean wasLeaking = this.isLeaking;
                 // Solid block plugs leak, next block with liquids delegates verifying leak to that block
@@ -264,8 +263,9 @@ public class Conduit extends LiquidBlock implements Autotiler{
                 // Transition from not leaking to leaking and vice-versa
                 if (isLeaking ^ wasLeaking)
                     renderer.minimap.updatePixel(tile);
-            } else if (this.isLeaking) {
+            } else {
                 isLeaking = false;
+                renderer.minimap.updatePixel(tile);
             }
         }
 
