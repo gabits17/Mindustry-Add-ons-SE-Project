@@ -43,10 +43,9 @@ through the binding names.
 ![img_2.png](Assets/proposedSolutionLongMethod.png)
 
 ## Data Clump
-The abstract class **InputHandler.java**, class **DesktopInput.java**,
+The abstract class **InputHandler.java**, class **DesktopInput.java** and
 class **MobileInput.java**, all employ the use of **4 variables** that are
-usually passed around together (they may have different
-names in which one of the classes, but they seem to have similar purposes.
+usually passed around together (they may have different names in which one of the classes, but they seem to have similar purposes).
 
 ### Evidence
 
@@ -103,5 +102,7 @@ subclass of **DrawPart.java** ,which only **RegionPart.java** would inherit, wit
 # Change Log
 I have updated my review of the Long Method code smell. (67775) (12/11/2025) (17:32)
 I have updated my review of the Refused Bequest code smell. (67775) (12/11/2025) (17:39)
+I have updated my review of the Data Clumps code smell. (67775) (12/11/2025) (17:43)
+
 
 
