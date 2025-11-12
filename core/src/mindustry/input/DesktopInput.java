@@ -669,7 +669,8 @@ public class DesktopInput extends InputHandler{
             if(Core.input.keyDown(Binding.breakBlock)){
                 mode = none;
             }else if(!selectPlans.isEmpty()){
-                flushPlans(selectPlans);
+                Command c = new BuildPlansCommand(selectPlans, this);
+                commander.execute(c);
                 movedPlan = true;
             }else if(isPlacing()){
                 selectX = cursorX;

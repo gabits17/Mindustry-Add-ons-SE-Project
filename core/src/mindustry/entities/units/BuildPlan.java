@@ -12,7 +12,7 @@ import mindustry.world.*;
 import static mindustry.Vars.*;
 
 /** Class for storing build plans. Can be either a place or remove plan. */
-public class BuildPlan implements Position, QuadTreeObject{
+public class BuildPlan implements Position, QuadTreeObject, Cloneable{
     /** Position and rotation of this plan. */
     public int x, y, rotation;
     /** Block being placed. If null, this is a breaking plan.*/
@@ -197,5 +197,15 @@ public class BuildPlan implements Position, QuadTreeObject{
         ", initialized=" + initialized +
         ", config=" + config +
         '}';
+    }
+
+    @Override
+    public BuildPlan clone(){
+        try {
+            BuildPlan clone = (BuildPlan) super.clone();
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
