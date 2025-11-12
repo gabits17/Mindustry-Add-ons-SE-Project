@@ -23,13 +23,12 @@ Dinis Neves 68130
 - focus on undo/redo and leakage implementations
 
 ### Sprint Retrospective Meeting: 
-*(This meeting happens after the sprint review and before the next sprint planning meeting. The team reflects on what went well, what needs improvement, and how to enhance their processes for future sprints.)*
+Went over what some tasks that can be unnecessary, and add tasks related to implementing the new features. Organize what work has been done this week and what is still be done by who and when.
 
 ## Relevant resources
 
 ### Scrum Board at the beginning of the sprint
-![Screenshot 2025-11-11 232738.png](assets/Screenshot%202025-11-11%20232738.png)
-(super special notes: backlog unfinished work from previous weeks is still being carried out)
+![asset_01.png](assets/asset_01.png)
 
 ### Scrum Board in the middle of the sprint
 

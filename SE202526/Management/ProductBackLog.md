@@ -54,3 +54,10 @@ As an aspiring software engineer, I want to make a report on the code’s metric
 US9: 
 As an aspiring software engineer, I want to create use case diagrams about the code base, so that I may be able to understand and communicate on how to interact with the game.
 
+## Sprint 5
+
+US10: As an aspiring software engineer, I want to go through reviews I got from colleagues in milestone 2, so that I can check any faults or mistakes that I made.
+
+US11: As an aspiring software engineer, I want to research about, start  and or plan about Use cases based on current implementations, so that I may able to explain what they do with greater ease.
+
+US12: As an aspiring software engineer, I want to research about and start about sequence diagrams based on potential Use Cases, so that I may able to later on have an easier time making the Sequence Diagrams.
