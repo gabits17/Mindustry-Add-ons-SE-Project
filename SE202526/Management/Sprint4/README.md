@@ -17,29 +17,29 @@ The meeting was held as usual
 - We defined that there were still 4/5 main tasks to complete until the end of the week
 
 ### Sprint Review Meeting: 
-Not held yet.
+The meeting was held as usual
+- We discussed what was not done in this sprint 
+- Checked everyone's work along the week
 
 ### Sprint Retrospective Meeting: 
-Not held yet.
+The meeting was held as usual
+- Discussed the next steps
+- Define new user stories and tasks
 
 ## Relevant resources
 
 ### Scrum Board at the beginning of the sprint
-
-Please add the scrumboard picture here.
+![sprint4_start_scrum_board.png](sprint4_start_scrum_board.png)
 
 ### Scrum Board in the middle of the sprint
-
-Please add the scrumboard picture here.
+![sprint4_mid_scrum_board.png](sprint4_mid_scrum_board.png)
 
 ### Scrum Board at the end of the sprint
-
-Please add the scrumboard picture here.
+![sprint4_end_scrum_board.png](sprint4_end_scrum_board.png)
 
 ### Burndown Chart for the sprint
 
 Please add the burndown chart here.
 
 ### Gantt Chart
-
-Please add the Gantt chart here.
+![sprint4_gantt_chart.png](sprint4_gantt_chart.png)
