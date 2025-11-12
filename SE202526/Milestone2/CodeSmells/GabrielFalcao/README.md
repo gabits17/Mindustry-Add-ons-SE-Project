@@ -94,8 +94,14 @@ But do not override it with new functionality (since it had none to begin with).
 ![img.png](Assets/hoverPartRefusedBequest.png)
 
 ### Proposed Solution
-Find where this method is used and, if possible, remove it from the abstract class.
+~~Find where this method is used and, if possible, remove it from the abstract class.~~
+As proposed by Diogo the best solution here instead of removing the method from the abstract class completely
+would be to separate the **DrawPart.java** class into two, one that has most methods used by all its children, another
+subclass of **DrawPart.java** ,which only **RegionPart.java** would inherit, with the load method.
+
 
 # Change Log
 I have updated my review of the Long Method code smell. (67775) (12/11/2025) (17:32)
+I have updated my review of the Refused Bequest code smell. (67775) (12/11/2025) (17:39)
+
 
