@@ -48,7 +48,7 @@ These metrics allude to a class wide in responsibility, given the number of meth
 as well as the number of methods called in response to a class.  
 In this case it is a result of several distinct responsibilities, which include:
 - Building
-- 
+
 ![img_4.png](Assets2/img_4.png)
 
 - Loading maps
