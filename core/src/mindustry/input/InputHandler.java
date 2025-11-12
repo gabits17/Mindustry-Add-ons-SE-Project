@@ -1628,7 +1628,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener{
                 BuildPlan copy = plan.copy();
                 plan.block.onNewPlan(copy);
                 player.unit().addBuild(copy);
-                builtPlans.add(copy);
+                builtPlans.add(plan);
             }
         };
         return builtPlans;

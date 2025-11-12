@@ -875,7 +875,7 @@ public class DesktopInput extends InputHandler{
 
             if(cursor.build != null && cursor.interactable(player.team()) && !isPlacing() && Math.abs(Core.input.axisTap(Binding.rotate)) > 0 && Core.input.keyDown(Binding.rotatePlaced) && cursor.block().rotate && cursor.block().quickRotate){
                 //This rotates a block in r mode
-                Command c = new BlockRotateCommand(player, cursor.build, Core.input.axisTap(Binding.rotate) > 0);
+                Command c = new BlockRotateCommand(cursor.build, Core.input.axisTap(Binding.rotate) > 0);
                 commander.execute(c);
             }
         }
