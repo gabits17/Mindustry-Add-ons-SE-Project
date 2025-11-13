@@ -24,7 +24,10 @@ Given that **BulletType** for example has about 1000 lines of code, quite a few 
 
 ## Strategy
 The case of **Strategy** that I want to talk about is in **core/src/mindustry/entities/Sized.java**. As many examples in this Codebase, this one doesn't fit exactly in the textbook standard of the **Strategy** design pattern.
+
 That said, what is happening is that we have the interface **Sized**, witch would be our **Strategy**, that only declares one method, **hitSize()**, witch is then implemented in different ways in a variety of classes depending on the class's purpose.
+
+For the **Context** I considered the class **OverlayRenderer** in **core/src/mindustry/graphics/OverlayRenderer.java**, which I know is not a perfect fit for this role, but it does use a **Sized** object that can have many concrete classes of **Sized**.
 
 //note: possible context in core/src/mindustry/graphics/OverlayRenderer.java
 
@@ -45,9 +48,15 @@ Here, as stated above the **Sized** declares the **hitSize()** function, witch i
 
 ![Strategy_3.png](Assets/Strategy_3.png)
 
+- The **Sized** object being declared in **OverlayRenderer**
+
+![Strategy_4.png](Assets/Strategy_4.png)
+
 
 ### Diagram
-As often, quite a few methods were omitted for simplification
+As often, quite a few methods were omitted for simplification. In addition to this, the **Context**, **OverlayRenderer**, doesn't have a method using the **Sized** interface because the only method it has using it, is fairly convoluted for our purposes and wouldn't contribute much, but it's the **drawTop()**.
+
+In addition to this, there is no **Client** class represented, because the ones I found didn't use **Sized** to a major degree, so once again it would be very hard to illustrate properly how it is a **Client** in this situation.
 
 ![Strategy_diagram.png](Assets/Strategy_diagram.png)
 
