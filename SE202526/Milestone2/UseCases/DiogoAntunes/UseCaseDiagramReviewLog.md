@@ -25,5 +25,5 @@ The only thing I can question is in the relation between a **Player** and **Join
 Despite being extra, I also checked your diagram on Mod Management and also seems good to me.
 
 ### Review Response - Diogo Antunes
-A player can't join multiple games simultaneously. As mentioned in the use case. One of the players is the one joining the external game, the others are other players
+I'm not entirely sure I understand, but A player can't join multiple games simultaneously. As mentioned in the use case, one of the players is the one joining the external game, the others are other players
 that the user interacts with.
