@@ -4,7 +4,7 @@
 # Design Patterns
 
 ## Template Method
-The example of **Template Method** I found is in **core/src/mindustry/entities/abilities/bullet** and consists of all the bullet types that exist in the game. 
+The example of **Template Method** I found is in **core/src/mindustry/entities/bullet** and consists of all the bullet types that exist in the game. 
 What is happening here is that each class represents a different type of bullet and to achieve this, nearly all classes in this package extend the **BulletType** class, or the **BasicBulletType** class, that itself extends the **BulletType** class, and modify some methods from it while keeping the basis for the implementation of a bullet. This way the responsibility of implementing a bullet is spread out, and **BulletType** implements the more common and fundamental aspects and the rest of the classes specify upon it.
 
 For example the method **draw**, it is implemented for the "first" time in **BulletType**, but as needed it is reimplemented in classes that extend **BulletType**:
@@ -32,11 +32,15 @@ I believe this still counts as a **Strategy** design pattern because it still ap
 Here, as stated above the **Sized** declares the **hitSize()** function, witch is then implemented by abstract class **HitboxComp** and **BuildingComp** for example
 
 - The first declaration in **Sized**
+
 ![Strategy_1.png](Assets/Strategy_1.png)
 
 - Implementation in **HitboxComp**
+
 ![Strategy_2.png](Assets/Strategy_2.png)
+
 - A different implementation in **BuildingComp**
+
 ![Strategy_3.png](Assets/Strategy_3.png)
 
 
