@@ -4,7 +4,7 @@
 # Design Patterns
 
 ## Template Method
-The example of **Template Method** I found is in **core/src/mindustry/entities/abilities/bullet** and consists of all the bullet types that exist in the game. 
+The example of **Template Method** I found is in **core/src/mindustry/entities/bullet** and consists of all the bullet types that exist in the game. 
 What is happening here is that each class represents a different type of bullet and to achieve this, nearly all classes in this package extend the **BulletType** class, or the **BasicBulletType** class, that itself extends the **BulletType** class, and modify some methods from it while keeping the basis for the implementation of a bullet. This way the responsibility of implementing a bullet is spread out, and **BulletType** implements the more common and fundamental aspects and the rest of the classes specify upon it.
 
 For example the method **draw**, it is implemented for the "first" time in **BulletType**, but as needed it is reimplemented in classes that extend **BulletType**:
@@ -24,24 +24,39 @@ Given that **BulletType** for example has about 1000 lines of code, quite a few 
 
 ## Strategy
 The case of **Strategy** that I want to talk about is in **core/src/mindustry/entities/Sized.java**. As many examples in this Codebase, this one doesn't fit exactly in the textbook standard of the **Strategy** design pattern.
-That said, what is happening is that we have the interface **Sized**, witch would be our **Context**, that only declares one method, **hitSize()**, witch is then implemented in different ways in a variety of classes depending on the class's purpose.
 
-I believe this still counts as a **Strategy** design pattern because it still applies the basic principles of the pattern. The situation is still the **Context** establishing the basic guidelines for implementation of a **Strategy**, and then the **Context** delegates the work of implementing it to a **linked Strategy object**.
+That said, what is happening is that we have the interface **Sized**, witch would be our **Strategy**, that only declares one method, **hitSize()**, witch is then implemented in different ways in a variety of classes depending on the class's purpose.
+
+For the **Context** I considered the class **OverlayRenderer** in **core/src/mindustry/graphics/OverlayRenderer.java**, which I know is not a perfect fit for this role, but it does use a **Sized** object that can have many concrete classes of **Sized**.
+
+//note: possible context in core/src/mindustry/graphics/OverlayRenderer.java
+
+I believe this still counts as a **Strategy** design pattern because it still applies the basic principles of the pattern. The situation is still the **Strategy** establishing the basic guidelines for implementation, and then the **Context** delegates the work of implementing it to a **linked Strategy object**.
 
 ### Example
 Here, as stated above the **Sized** declares the **hitSize()** function, witch is then implemented by abstract class **HitboxComp** and **BuildingComp** for example
 
 - The first declaration in **Sized**
+
 ![Strategy_1.png](Assets/Strategy_1.png)
 
 - Implementation in **HitboxComp**
+
 ![Strategy_2.png](Assets/Strategy_2.png)
+
 - A different implementation in **BuildingComp**
+
 ![Strategy_3.png](Assets/Strategy_3.png)
+
+- The **Sized** object being declared in **OverlayRenderer**
+
+![Strategy_4.png](Assets/Strategy_4.png)
 
 
 ### Diagram
-As often, quite a few methods were omitted for simplification
+As often, quite a few methods were omitted for simplification. In addition to this, the **Context**, **OverlayRenderer**, doesn't have a method using the **Sized** interface because the only method it has using it, is fairly convoluted for our purposes and wouldn't contribute much, but it's the **drawTop()**.
+
+In addition to this, there is no **Client** class represented, because the ones I found didn't use **Sized** to a major degree, so once again it would be very hard to illustrate properly how it is a **Client** in this situation.
 
 ![Strategy_diagram.png](Assets/Strategy_diagram.png)
 

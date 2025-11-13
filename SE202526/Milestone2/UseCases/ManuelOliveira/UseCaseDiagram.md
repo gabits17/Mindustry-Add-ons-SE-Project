@@ -86,9 +86,9 @@ Player
 #### Secondary
 None
 
-## Clicks Built Block
+## Hovers Over Built Block
 ### Description
-The player clicks in a block built in the game world.
+The player hovers the mouse over a block built in the game world.
 ### Actors
 #### Primary
 Player
