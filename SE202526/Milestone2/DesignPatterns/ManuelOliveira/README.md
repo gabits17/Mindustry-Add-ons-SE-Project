@@ -24,9 +24,11 @@ Given that **BulletType** for example has about 1000 lines of code, quite a few 
 
 ## Strategy
 The case of **Strategy** that I want to talk about is in **core/src/mindustry/entities/Sized.java**. As many examples in this Codebase, this one doesn't fit exactly in the textbook standard of the **Strategy** design pattern.
-That said, what is happening is that we have the interface **Sized**, witch would be our **Context**, that only declares one method, **hitSize()**, witch is then implemented in different ways in a variety of classes depending on the class's purpose.
+That said, what is happening is that we have the interface **Sized**, witch would be our **Strategy**, that only declares one method, **hitSize()**, witch is then implemented in different ways in a variety of classes depending on the class's purpose.
 
-I believe this still counts as a **Strategy** design pattern because it still applies the basic principles of the pattern. The situation is still the **Context** establishing the basic guidelines for implementation of a **Strategy**, and then the **Context** delegates the work of implementing it to a **linked Strategy object**.
+//note: possible context in core/src/mindustry/graphics/OverlayRenderer.java
+
+I believe this still counts as a **Strategy** design pattern because it still applies the basic principles of the pattern. The situation is still the **Strategy** establishing the basic guidelines for implementation, and then the **Context** delegates the work of implementing it to a **linked Strategy object**.
 
 ### Example
 Here, as stated above the **Sized** declares the **hitSize()** function, witch is then implemented by abstract class **HitboxComp** and **BuildingComp** for example
