@@ -184,6 +184,8 @@ public class DesktopInput extends InputHandler{
             drawOverPlan(plan, plan.cachedValid);
         }
 
+        Leaks.getInstance().drawLocalLeaks();
+
         if(player.isBuilder()){
             //draw things that may be placed soon
             if(mode == placing && block != null){
