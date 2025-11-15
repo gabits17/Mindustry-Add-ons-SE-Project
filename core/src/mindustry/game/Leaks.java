@@ -1,6 +1,5 @@
 package mindustry.game;
-import arc.graphics.g2d.Draw;
-import arc.math.Mathf;
+import arc.Events;
 import arc.math.geom.QuadTree;
 import arc.math.geom.Rect;
 import mindustry.Vars;
@@ -11,15 +10,13 @@ import mindustry.world.blocks.liquid.Conduit;
 
 import java.util.HashSet;
 
-import static mindustry.Vars.*;
-
 /** Class that manages leaks for display.*/
 public class Leaks {
     // Constants
     /**
      * Minimum range for which leaks are identified with circles.
      */
-    private static final float MIN_RANGE = 10;
+    private static final float MIN_RANGE = 10 * Vars.tilesize;
     /**
      * Minimum diameter for which leaks are identified with circles. (to avoid multiplying radius by 2 every time diameter is needed)
      */
@@ -44,6 +41,12 @@ public class Leaks {
     public Leaks() {
         this.leakTree = new QuadTree<>(Vars.world.getQuadBounds(new Rect()));
         this.leakSet = new HashSet<>();
+
+        //Clear leaks when an event occurs (entering/leaving a map)
+        Events.on(EventType.ResetEvent.class, e -> {
+            leakTree.clear();
+            leakSet.clear();
+        });
     }
 
     public static Leaks getInstance() {
@@ -90,30 +93,21 @@ public class Leaks {
             }
             // Either transition needs a minimap update
             if (isLeaking ^ wasLeaking)
-                renderer.minimap.updatePixel(tile);
+                Vars.renderer.minimap.updatePixel(tile);
         } else { // Stop leak due to lack of liquid to flow
             removeLeak(tile);
-            renderer.minimap.updatePixel(tile);
+            Vars.renderer.minimap.updatePixel(tile);
         }
     }
 
     /** Draw dotted circles around all leaks in a certain player distance. */
-    /** Functionality based on Units class use of Quadtree */
     public void drawLocalLeaks(){
-        float x = Vars.player.x / Vars.tilesize;
-        float y = Vars.player.y / Vars.tilesize;
-        for (Tile tile : leakTree.objects) {
-            if(Mathf.dst2(tile.x, tile.y, x, y) < MIN_RANGE*MIN_RANGE) {
-                Drawf.dashCircle(tile.x * Vars.tilesize, tile.y * Vars.tilesize, MIN_RANGE * Vars.tilesize, Pal.leakingWarn);
-            }
-        }
-
+        float x = Vars.player.x;
+        float y = Vars.player.y;
         // Intersects with square around player x and y
         this.leakTree.intersect(x - MIN_RANGE , y - MIN_RANGE, MIN_DIAM, MIN_DIAM, tile -> {
-            System.out.println("HELLOOOOO2222");
             if(tile.within(x, y, MIN_RANGE)) {
-                System.out.println("HELLOOOO3333");
-                Drawf.dashCircle(tile.x * Vars.tilesize, tile.y * Vars.tilesize, MIN_RANGE, Pal.leakingWarn);
+                Drawf.dashCircle(tile.getX(), tile.getY(), MIN_RANGE, Pal.leakingWarn);
             }
         });
     }
