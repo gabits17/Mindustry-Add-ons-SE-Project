@@ -12,6 +12,7 @@ import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.entities.*;
 import mindustry.entities.units.*;
+import mindustry.game.Leaks;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.input.*;
@@ -154,7 +155,7 @@ public class Conduit extends LiquidBlock implements Autotiler{
      */
     @Override
     public int minimapColor(Tile tile){
-        if (tile.build instanceof ConduitBuild conduitBuild && conduitBuild.isLeaking) {
+        if (Leaks.getInstance().isLeaking(tile)) {
             return Pal.leakingWarn.rgba();
         } else {
             return super.minimapColor(tile);
@@ -165,7 +166,6 @@ public class Conduit extends LiquidBlock implements Autotiler{
         public float smoothLiquid;
         public int blendbits, xscl = 1, yscl = 1, blending;
         public boolean capped, backCapped = false;
-        private boolean isLeaking = false;
 
         @Override
         public void draw(){
@@ -250,23 +250,8 @@ public class Conduit extends LiquidBlock implements Autotiler{
                 sleep();
             }
 
-            if (tile.build.team == player.team())
-                checkLeak();
-        }
-
-        private void checkLeak() {
-            if(liquids.currentAmount() > 0.0001f) {
-                Tile next = tile.nearby(this.rotation);
-                boolean wasLeaking = this.isLeaking;
-                // Solid block plugs leak, next block with liquids delegates verifying leak to that block
-                this.isLeaking = !next.block().solid && !next.block().hasLiquids;
-                // Transition from not leaking to leaking and vice-versa
-                if (isLeaking ^ wasLeaking)
-                    renderer.minimap.updatePixel(tile);
-            } else {
-                isLeaking = false;
-                renderer.minimap.updatePixel(tile);
-            }
+            //check for leaks
+            Leaks.getInstance().checkLeak(this);
         }
 
         @Nullable
