@@ -23,7 +23,7 @@ Dinis Neves 68130
 - focus on undo/redo and leakage implementations
 
 ### Sprint Retrospective Meeting: 
-Went over what some tasks that can be unnecessary, and add tasks related to implementing the new features. Organize what work has been done this week and what is still be done by who and when.
+Issues with assigning work and understanding what was needed to start with M3, reached conclusion that, working on implementation and after doing Use Cases and Sequence diagrams related to that implementation. Would be good to get ahead in implementation.
 
 ## Relevant resources
 
@@ -35,13 +35,10 @@ Went over what some tasks that can be unnecessary, and add tasks related to impl
 
 
 ### Scrum Board at the end of the sprint
-
-Please add the scrumboard picture here.
+![asset_03.png](assets/asset_03.png)
 
 ### Burndown Chart for the sprint
-
-Please add the burndown chart here.
+![asset_04.png](assets/asset_04.png)
 
 ### Gantt Chart
-
-Please add the Gantt chart here.
+![asset_05.png](assets/asset_05.png)
