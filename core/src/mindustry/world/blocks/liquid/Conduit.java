@@ -12,6 +12,7 @@ import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.entities.*;
 import mindustry.entities.units.*;
+import mindustry.game.Leaks;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.input.*;
@@ -149,6 +150,18 @@ public class Conduit extends LiquidBlock implements Autotiler{
         return new TextureRegion[]{Core.atlas.find("conduit-bottom"), topRegions[0]};
     }
 
+    /**
+     * Change conduit color depending on whether it is leaking (there is a break in the pipe) or not
+     */
+    @Override
+    public int minimapColor(Tile tile){
+        if (Leaks.getInstance().isLeaking(tile)) {
+            return Pal.leakingWarn.rgba();
+        } else {
+            return super.minimapColor(tile);
+        }
+    }
+
     public class ConduitBuild extends LiquidBuild implements ChainedBuilding{
         public float smoothLiquid;
         public int blendbits, xscl = 1, yscl = 1, blending;
@@ -236,6 +249,9 @@ public class Conduit extends LiquidBlock implements Autotiler{
             }else{
                 sleep();
             }
+
+            //check for leaks
+            Leaks.getInstance().checkLeak(this);
         }
 
         @Nullable
