@@ -102,6 +102,10 @@ public class Turret extends ReloadTurret{
     public boolean alwaysShooting = false;
     /** Whether this turret predicts unit movement. */
     public boolean predictTarget = true;
+    /** Currently targeting mode. Default: Closest */                                                           // US3 CHANGES HERE
+    public TargetingMode targetingMode = TargetingMode.CLOSEST_FIRST;
+    private static final TargetingMode[] modes = TargetingMode.values();
+
     /** Function for choosing which unit to target. */
     public Sortf unitSort = UnitSorts.closest;
     /** Filter for types of units to attack. */
@@ -281,6 +285,8 @@ public class Turret extends ReloadTurret{
         public BlockUnitc unit = (BlockUnitc)UnitTypes.block.create(team);
         public boolean wasShooting;
         public int queuedBullets = 0;
+
+        public TargetingMode targetingMode = Turret.this.targetingMode;                                                     // US3 CHANGES HERE
 
         public float heatReq;
         public float[] sideHeat = new float[4];
@@ -579,6 +585,20 @@ public class Turret extends ReloadTurret{
             super.handleLiquid(source, liquid, amount);
         }
 
+        /** to return the units sorted according to the targeting mode */                                                   // US3 CHANGE HERE
+        protected Sortf unitSorter() {
+            Sortf unitTarget = null;
+            switch(targetingMode) {
+                // case CLOSEST_FIRST -> unitTarget = UnitSorts.closest;
+                case FARTHEST_FIRST -> unitTarget = UnitSorts.farthest;
+                case STRONGEST_FIRST -> unitTarget = UnitSorts.strongest;
+                case WEAKEST_FIRST -> unitTarget = UnitSorts.weakest;
+                // the rest of the modes need more logic involved, not done yet.
+                default -> unitTarget = UnitSorts.closest;
+            }
+            return unitTarget;
+        }
+
         protected boolean validateTarget(){
             return !Units.invalidateTarget(target, canHeal() ? Team.derelict : team, x, y) || isControlled() || logicControlled();
         }
@@ -588,14 +608,17 @@ public class Turret extends ReloadTurret{
         }
 
         protected Posc findEnemy(float range){
+
+            Sortf sort = unitSorter();
+
             if(targetAir && !targetGround){
-                return Units.bestEnemy(team, x, y, range, e -> !e.dead() && !e.isGrounded() && unitFilter.get(e), unitSort);
+                return Units.bestEnemy(team, x, y, range, e -> !e.dead() && !e.isGrounded() && unitFilter.get(e), sort);
             }else{
                 var ammo = peekAmmo();
                 boolean buildings = targetGround && targetBlocks && (ammo == null || ammo.targetBlocks), missiles = ammo == null || ammo.targetMissiles;
                 return Units.bestTarget(team, x, y, range,
                     e -> !e.dead() && unitFilter.get(e) && (e.isGrounded() || targetAir) && (!e.isGrounded() || targetGround) && (missiles || !(e instanceof TimedKillc)),
-                    b -> buildings && buildingFilter.get(b), unitSort);
+                    b -> buildings && buildingFilter.get(b), sort);
             }
         }
 
@@ -776,6 +799,7 @@ public class Turret extends ReloadTurret{
             super.write(write);
             write.f(reloadCounter);
             write.f(rotation);
+            write.s(this.targetingMode.ordinal()); // saving the ordinal of the enum
         }
 
         @Override
@@ -786,11 +810,15 @@ public class Turret extends ReloadTurret{
                 reloadCounter = read.f();
                 rotation = read.f();
             }
+
+            if(revision >= 2)
+                this.targetingMode = Turret.modes[read.s()];
         }
 
         @Override
         public byte version(){
-            return 1;
+            //return 1;
+            return 2; // new version because of targetingMode being added; older save files must be handled differently
         }
 
         @Override
