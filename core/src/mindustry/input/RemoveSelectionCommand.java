@@ -5,7 +5,7 @@ import mindustry.entities.units.BuildPlan;
 
 import static mindustry.Vars.schematics;
 
-public class RemoveSelectionCommand extends CommandAbstract {
+public class RemoveSelectionCommand implements Command {
 
     private InputHandler input;
     private int selectX, selectY, cursorX, cursorY, maxSize;

@@ -6,7 +6,7 @@ import mindustry.gen.Player;
 
 import static mindustry.Vars.player;
 
-public class BlockRotateCommand extends CommandAbstract{
+public class BlockRotateCommand implements Command{
 
     private Building cursorBuild;
     private boolean direction;
@@ -24,6 +24,11 @@ public class BlockRotateCommand extends CommandAbstract{
 
     @Override
     public boolean canUndo() {
+        return true;
+    }
+
+    @Override
+    public boolean canRedo() {
         return true;
     }
 

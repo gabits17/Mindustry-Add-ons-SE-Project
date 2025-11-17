@@ -44,15 +44,20 @@ public class Commander {
         executeTop();
     }
 
+    protected boolean hasUndone(){
+        return undoneCommands.size != 0;
+    }
+    protected boolean hasDone(){
+        return doneCommands.size != 0;
+    }
+
     protected void undoTop(){
         try {
             if (doneCommands.peek().canUndo()) {
                 doneCommands.peek().undo();
                 addUndone(doneCommands.pop());
-                System.out.println("Undid");
             } else {
                 doneCommands.pop();
-                System.out.println("Command does not undo");
             }
         } catch (IllegalStateException e) {
             System.out.println("Nothing to undo");
