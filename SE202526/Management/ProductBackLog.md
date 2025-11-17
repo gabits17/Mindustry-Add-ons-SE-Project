@@ -61,3 +61,11 @@ US10: As an aspiring software engineer, I want to go through reviews I got from 
 US11: As an aspiring software engineer, I want to research about, start  and or plan about Use cases based on current implementations, so that I may able to explain what they do with greater ease.
 
 US12: As an aspiring software engineer, I want to research about and start about sequence diagrams based on potential Use Cases, so that I may able to later on have an easier time making the Sequence Diagrams.
+
+## Sprint 6
+
+US13: As an aspiring software engineer, I want to implement an US defined in milestone 1, so that I can accomplish my group's work.
+
+US14: As an aspiring software engineer, I want to illustrate an US implementation with a use case and a sequence diagram, so that I can detail about my group's work.
+
+US15: As an aspiring software engineer, I want to think about an US implementation class diagram representation, so that my group is able to design it.
