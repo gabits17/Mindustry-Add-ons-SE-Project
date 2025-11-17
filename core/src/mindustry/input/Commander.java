@@ -15,6 +15,11 @@ public class Commander {
         commands.add(command);
     }
 
+    public void clear() {
+        commands.clear();
+        undone.clear();
+    }
+
     private void executeTop() {
         commands.peek().execute();
     }

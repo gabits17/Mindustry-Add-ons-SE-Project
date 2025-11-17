@@ -70,6 +70,10 @@ public class DesktopInput extends InputHandler{
                 (!isBuilding && !Core.settings.getBool("buildautopause") || player.unit().isBuilding() || !player.dead() && !player.unit().spawnedByCore());
     }
 
+    public DesktopInput() {
+        Events.on(ResetEvent.class, e -> this.commander.clear());
+    }
+
     @Override
     public void buildUI(Group group){
         //building and respawn hints
