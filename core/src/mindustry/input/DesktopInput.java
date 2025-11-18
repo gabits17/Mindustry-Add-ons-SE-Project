@@ -63,6 +63,9 @@ public class DesktopInput extends InputHandler{
     private float buildPlanMouseOffsetX, buildPlanMouseOffsetY;
     private boolean changedCursor, pressedCommandRect;
 
+    /** History of last selected schematics*/
+    //private CopyHist copyHist = new CopyHist();
+
     private Commander commander = new Commander();
 
     boolean showHint(){
@@ -605,6 +608,25 @@ public class DesktopInput extends InputHandler{
                 useSchematic(lastSchematic);
                 if(selectPlans.isEmpty()){
                     lastSchematic = null;
+                }
+                else {
+                    // This code executes when an actual building is selected
+                    //copyHist.copy(lastSchematic);
+                    System.out.println("DSFGJNDFOGI");
+                }
+                //if left cotrl and mouse wheel are used, intended to navigate through the history
+                if (Core.input.keyDown(Binding.diagonalPlacement) && (int)Core.input.axisTap(Binding.rotate) != 0) {
+                    //get aproach
+                    //useSchematic(copyHist.get((int)Core.input.axisTap(Binding.rotate));
+
+
+                    //Iterator aproach
+                    //Iterator<Schematics> it = copyHist.Iterator();
+                    /*
+                    while(it.hasNext()) {
+                        useSchematic(it.next());
+                     }
+                     */
                 }
                 schemX = -1;
                 schemY = -1;
