@@ -7,6 +7,7 @@ import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.math.geom.*;
+import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
@@ -830,6 +831,20 @@ public class Turret extends ReloadTurret{
 
             rotation = oldRot;
             reloadCounter = oldReload;
+        }
+
+        @Override
+        public void buildConfiguration(Table t) {
+            super.buildConfiguration(t);
+            /* TODO:
+             * - Create a button to click and allow the change of targeting mode
+             * - Implement a way to change between the targeting modes, having consideration
+             *   about air, ground and naval attacks (if the turret can't attack some units,
+             *   the targeting mode shouldn't be allowed).
+             * - Test if the button is working, then test if the logic is working
+             * - Analyze turrets behaviour according to changes
+             * - Implement the extra logic needed to implement the different modes TargetingMode enum has.
+             */
         }
     }
 
