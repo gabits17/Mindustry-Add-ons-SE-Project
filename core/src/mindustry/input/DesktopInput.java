@@ -64,9 +64,10 @@ public class DesktopInput extends InputHandler{
     private boolean changedCursor, pressedCommandRect;
 
     /** History of last selected schematics*/
-    //private CopyHist copyHist = new CopyHist();
+    private CopyHist copyHist = new CopyHist();
 
     private Commander commander = new Commander();
+
 
     boolean showHint(){
         return ui.hudfrag.shown && Core.settings.getBool("hints") && selectPlans.isEmpty() && !player.dead() &&
@@ -611,23 +612,14 @@ public class DesktopInput extends InputHandler{
                 }
                 else {
                     // This code executes when an actual building is selected
-                    //copyHist.copy(lastSchematic);
+                    copyHist.copy(lastSchematic);
                     System.out.println("DSFGJNDFOGI");
                 }
                 //if left cotrl and mouse wheel are used, intended to navigate through the history
                 if (Core.input.keyDown(Binding.diagonalPlacement) && (int)Core.input.axisTap(Binding.rotate) != 0) {
-                    //get aproach
-                    //useSchematic(copyHist.get((int)Core.input.axisTap(Binding.rotate));
-
-
-                    //Iterator aproach
-                    //Iterator<Schematics> it = copyHist.Iterator();
-                    /*
-                    while(it.hasNext()) {
-                        useSchematic(it.next());
-                     }
-                     */
+                    useSchematic(copyHist.get((int) Core.input.axisTap(Binding.rotate)));
                 }
+
                 schemX = -1;
                 schemY = -1;
             }else if(input.keyRelease(Binding.rebuildSelect)){
@@ -636,6 +628,10 @@ public class DesktopInput extends InputHandler{
                 schemX = -1;
                 schemY = -1;
             }
+        }
+
+        if(Core.input.keyTap(Binding.ctrl) && Core.input.keyTap(Binding.paste)){
+            System.out.println("DSFGJNDFOGI");
         }
 
         if(!selectPlans.isEmpty()){
