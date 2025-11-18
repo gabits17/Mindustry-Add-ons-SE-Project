@@ -42,10 +42,11 @@ With this in mind, I will omit the sections of logic of such methods unrelated t
 *(Please add your implementation summary review here)*
 ### Class diagrams
 (*Class diagrams and their discussion in natural language.*)
-#### Update minimap
+#### Update leak display
 ![img.png](img.png)
-This class diagram is related to the frequent calling of the minimap update method that ensures pending updates are drawn to the minimap.
-In the user story scenario, these are tiles labelled as leaking in the ``Leaks`` singleton class.
+This class diagram is related to the frequent calling of the renderer update method that updates the minimap, ensuring pending updates are drawn it.
+In the user story scenario, these updates concern tiles labelled as leaking in the ``Leaks`` singleton class.
+It also covers drawing the rendering of the overlay that shows leaks close to the player.
 
 The ``DesktopLauncher`` is executed to launch the game and start running it. It is a specialization of ``ClientLauncher``, which during setup,
 adds an instance of ``Renderer`` (an implementation of ``ApplicationListener``), among other modules, to the ``ApplicationCore`` super class.
@@ -53,6 +54,8 @@ adds an instance of ``Renderer`` (an implementation of ``ApplicationListener``),
 As such:
 - The game runs with an instance of ``Renderer`` (which contains a ``MinimapRenderer`` attribute), and frequently calls its ``update()`` method.
 - If the game is not in a menu state, it needs to update the minimap, which it does by calling the ``update()`` method in the ``MinimapRenderer`` instance **minimap**.
+
+#### Minimap Update
 - ``update()`` in ``MinimapRenderer`` goes through pending updates for world positions that were sent for update
   (the global Vars can translate these into tiles, and then blocks, from which a color can be fetched).
 - Adding to pending updates is described in another use case, but as shown in the diagram involves the ``updateTile`` method in ``ConduitBuild`` I modified to allow this.
@@ -63,10 +66,21 @@ What I'm omitting in the diagram to condense the logic is the following:
 
 - The ``Vars`` class has an attribute of class ``World`` that stores the tiles of the active map and can get a tile given an ``int`` position value using a method ``Tile(int pos)``.
  
-**New functionality**
+**Relevant case for minimap**
 - The relevant case here is when the tile corresponds to a ``Block`` specialization ``Conduit``. Getting the color for display is done using ``minimapColor(Tile tile)`` I overrode in ``Conduit``
-to return a light blue color ``Pal.leakingWarn`` if the tile is leaking (``super`` otherwise).
-- This is quickly checked by using the ``isLeaking(tile Tile)`` method in the singleton ``Leaks``, which checks if it has the tile stored.
+to return a light blue color ``Pal.leakingWarn`` if the tile is leaking (``super`` otherwise). The ``rgba()`` method is called on this instance of ``Color`` to obtain a value that can stored in the int buffer that represents the colors to put to screen.
+- This presence of a leak is quickly checked by using the ``isLeaking(tile Tile)`` method in the singleton ``Leaks``, which checks if it has the tile stored.
+- Note: ``Pal`` is the palette class that stores used colors of the ``Color`` class. The pixel map and such buffers that the application uses after getting 
+the color from a block to place each color were also omitted to avoid confusion.
+
+#### Showing local leaks (going back to ``update`` in ``Renderer``)
+- The ``update()`` method in ``Renderer`` also calls the own class's ``draw()`` method if the ``boolean pixelate`` from the ``Renderer`` static instance in ``Vars`` is turned off (decided in settings).
+- This method performs ``drawBottom()`` in ``OverlayRenderer``, which calls a method of the same name in ``DesktopInput``(assuming playing in Desktop).
+- in ``DesktopInput``, the **new functionality** is finally called on the instance of the ``Leaks`` singleton: ``drawLocalLeaks``.
+- This method uses the player's x and y coordinates from the static ``Player`` instance in ``Vars`` to find all leaks within a 10 block radius of the player
+and show a blue-dashed ring as below (drawn using the static ``dashCircle(float x, float y, float rad, Color color)`` method in the ``Drawf`` class):
+![img_1.png](img_1.png)
+
 ### Review
 *(Please add your class diagram review here)*
 ### Sequence diagrams

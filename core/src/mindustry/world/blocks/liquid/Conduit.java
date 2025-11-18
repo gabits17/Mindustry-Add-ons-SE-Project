@@ -156,7 +156,7 @@ public class Conduit extends LiquidBlock implements Autotiler{
     @Override
     public int minimapColor(Tile tile){
         if (Leaks.getInstance().isLeaking(tile)) {
-            return Pal.leakingWarn.rgba();
+            return Leaks.getLeakColorValue();
         } else {
             return super.minimapColor(tile);
         }
