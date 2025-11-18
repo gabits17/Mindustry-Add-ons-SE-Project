@@ -42,6 +42,28 @@ With this in mind, I will omit the sections of logic of such methods unrelated t
 *(Please add your implementation summary review here)*
 ### Class diagrams
 (*Class diagrams and their discussion in natural language.*)
+
+#### Enter map
+![img_2.png](img_2.png)
+This class diagram is related to the player action of joining a map. It's worth noting that selecting a map to play in the code is different from
+selecting a map to play in the campaign. However, within the use case context, the interaction is the same since the use case doesn't involve the map selection, but instead what happens afterwards.
+
+- The ``show`` method in the class ``MapPlayDialog`` handles the press of a button to play the map, which calls the ``playMap`` method in the
+instance of the ``Control`` class present in ``Vars`` (a class that connects many classes with a wide variety of purposes).
+- This ``playMap`` method calls for a logic ``reset`` in the ``Logic`` instance in ``Vars``. This ``Logic`` class handles entities and waves, but doesn't store
+the game state as indicated in its documentation. To perform a reset on logic, it fires a ``ResetEvent`` which causes the ``Events`` class to go over
+logic that other classes have set up to handle this event (``Leaks`` being among them).
+
+#### Leave map
+![img_3.png](img_3.png)
+Quitting a map works has the same flow as above (in terms of calling logic ``reset``), except that the action is confirmed in the method ``showQuitConfirm()`` in the class ``PausedDialog``
+that calls ``runExitSave()`` of the same class, which then calls for a ``reset()`` on the instance of the ``Logic`` class in Vars instead of calling ``Control``.
+
+#### Clear leaks
+![img_4.png](img_4.png)
+This class diagram represents the behaviour fragment common to the two use cases above. It describes how in the constructor, ``Leaks`` sets up a response to a ``ResetEvent``
+that is stored in ``Events`` and performed whenever the event is fired (in the cases above, fired in the ``reset()`` method of the ``Logic`` class). It involves calling ``clear()`` for the attributes leakSet and leakTree to avoid having identified leaks carry over into other maps.
+
 #### Update leak display
 ![img.png](img.png)
 This class diagram is related to the frequent calling of the renderer update method that updates the minimap, ensuring pending updates are drawn it.
@@ -68,7 +90,8 @@ What I'm omitting in the diagram to condense the logic is the following:
  
 **Relevant case for minimap**
 - The relevant case here is when the tile corresponds to a ``Block`` specialization ``Conduit``. Getting the color for display is done using ``minimapColor(Tile tile)`` I overrode in ``Conduit``
-to return a light blue color ``Pal.leakingWarn`` if the tile is leaking (``super`` otherwise). The ``rgba()`` method is called on this instance of ``Color`` to obtain a value that can stored in the int buffer that represents the colors to put to screen.
+to return the int value for the light blue color ``Pal.leakingWarn`` if the tile is leaking (``super`` otherwise).
+- This color is obtained by calling the static ``getLeakColorValue()`` method in Leaks. The integer value returned by the ``rgba()`` called on this color is stored in the int buffer that represents the colors to display on the minimap.
 - This presence of a leak is quickly checked by using the ``isLeaking(tile Tile)`` method in the singleton ``Leaks``, which checks if it has the tile stored.
 - Note: ``Pal`` is the palette class that stores used colors of the ``Color`` class. The pixel map and such buffers that the application uses after getting 
 the color from a block to place each color were also omitted to avoid confusion.
@@ -76,7 +99,7 @@ the color from a block to place each color were also omitted to avoid confusion.
 #### Showing local leaks (going back to ``update`` in ``Renderer``)
 - The ``update()`` method in ``Renderer`` also calls the own class's ``draw()`` method if the ``boolean pixelate`` from the ``Renderer`` static instance in ``Vars`` is turned off (decided in settings).
 - This method performs ``drawBottom()`` in ``OverlayRenderer``, which calls a method of the same name in ``DesktopInput``(assuming playing in Desktop).
-- in ``DesktopInput``, the **new functionality** is finally called on the instance of the ``Leaks`` singleton: ``drawLocalLeaks``.
+- In ``DesktopInput``, the **new functionality** is finally called on the instance of the ``Leaks`` singleton: ``drawLocalLeaks``.
 - This method uses the player's x and y coordinates from the static ``Player`` instance in ``Vars`` to find all leaks within a 10 block radius of the player
 and show a blue-dashed ring as below (drawn using the static ``dashCircle(float x, float y, float rad, Color color)`` method in the ``Drawf`` class):
 ![img_1.png](img_1.png)
