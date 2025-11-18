@@ -2,21 +2,41 @@ package mindustry.input;
 
 import arc.struct.Seq;
 
+
 public class Commander {
-    private Seq<Command> commands;
-    private Seq<Command> undone;
+
+    private static final int maxDone = 10;
+    private static final int maxUndone = 10;
+
+    private Seq<Command> doneCommands;
+    private Seq<Command> undoneCommands;
 
     protected  Commander(){
-        commands = new Seq<>();
-        undone = new Seq<>();
+        doneCommands = new Seq<>(true, maxDone);
+        undoneCommands = new Seq<>(true, maxUndone);
     }
 
     private void addCommand(Command command){
-        commands.add(command);
+        if(doneCommands.size == maxDone){
+            doneCommands.remove(0);
+        }
+        doneCommands.add(command);
+    }
+
+    private void addUndone(Command command){
+        if(undoneCommands.size == maxUndone){
+            undoneCommands.remove(0);
+        }
+        undoneCommands.add(command);
+    }
+
+    public void clear() {
+        doneCommands.clear();
+        undoneCommands.clear();
     }
 
     private void executeTop() {
-        commands.peek().execute();
+        doneCommands.peek().execute();
     }
 
     protected void execute(Command command) {
@@ -26,12 +46,12 @@ public class Commander {
 
     protected void undoTop(){
         try {
-            if (commands.peek().canUndo()) {
-                commands.peek().undo();
-                addUndone(commands.pop());
+            if (doneCommands.peek().canUndo()) {
+                doneCommands.peek().undo();
+                addUndone(doneCommands.pop());
                 System.out.println("Undid");
             } else {
-                commands.pop();
+                doneCommands.pop();
                 System.out.println("Command does not undo");
             }
         } catch (IllegalStateException e) {
@@ -41,20 +61,15 @@ public class Commander {
 
     protected void redoTop(){
         try {
-            if (undone.peek().canRedo()) {
-                undone.peek().execute();
-                addCommand(undone.pop());
+            if (undoneCommands.peek().canRedo()) {
+                undoneCommands.peek().execute();
+                addCommand(undoneCommands.pop());
             } else {
-                undone.pop();
+                undoneCommands.pop();
             }
         } catch (IllegalStateException e) {
             System.out.println("Nothing to redo");
         }
     }
-
-    private void addUndone(Command command){
-        undone.add(command);
-    }
-
 
 }

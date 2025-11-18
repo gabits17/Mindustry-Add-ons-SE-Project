@@ -1,5 +1,6 @@
 package mindustry.game;
 import arc.Events;
+import arc.graphics.Color;
 import arc.math.geom.QuadTree;
 import arc.math.geom.Rect;
 import mindustry.Vars;
@@ -21,6 +22,11 @@ public class Leaks {
      * Minimum diameter for which leaks are identified with circles. (to avoid multiplying radius by 2 every time diameter is needed)
      */
     private static final float MIN_DIAM = 2 * MIN_RANGE;
+
+    /**
+     * Color for leaking related display.
+     */
+    private static final Color LEAK_COLOR = Pal.leakingWarn;
 
     // Static Vars
     /**
@@ -54,6 +60,10 @@ public class Leaks {
             leaks = new Leaks();
         }
         return leaks;
+    }
+
+    public static int getLeakColorValue() {
+        return Pal.leakingWarn.rgba();
     }
     
     public void addLeak(Tile tile) {
@@ -107,7 +117,7 @@ public class Leaks {
         // Intersects with square around player x and y
         this.leakTree.intersect(x - MIN_RANGE , y - MIN_RANGE, MIN_DIAM, MIN_DIAM, tile -> {
             if(tile.within(x, y, MIN_RANGE)) {
-                Drawf.dashCircle(tile.getX(), tile.getY(), MIN_RANGE, Pal.leakingWarn);
+                Drawf.dashCircle(tile.getX(), tile.getY(), MIN_RANGE, LEAK_COLOR);
             }
         });
     }

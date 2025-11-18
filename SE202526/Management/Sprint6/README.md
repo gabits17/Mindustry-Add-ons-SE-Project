@@ -6,11 +6,17 @@
 
 ## Scrum master
 
-Student name and number
+Gabriela Silva (67286)
 
 ## Management info
 ### Sprint Planning Meeting: 
-*(This meeting is held at the beginning of the sprint to define the primary purpose and goal of the sprint. The Scrum team, comprising the product manager, development team, and Scrum Master, selects and commits to a set of product backlog items (PBIs) referred to as the sprint backlog. You can use this section to log what happened during this meeting. A few bullet points should be enough.)*
+- Set subgroups for implementing each user story
+  - US1: Gabriel Falcão
+  - US2: Diogo Antunes
+  - US3: Dinis Neves and Gabriela Silva
+  - US4: Carolina Ferreria e Manuel Oliveira
+- Essentially, it was decided to *first* do the code implementation for each user storie, *only then* focus on its details: sequence diagrams and (extensive) use cases
+- Continue doing the work from last sprint 
 
 ### Sprint Review Meeting: 
 *(Held at the end of the sprint, this meeting is attended by all stakeholders to demo the completed work and validate if the sprint goal has been met.)*
