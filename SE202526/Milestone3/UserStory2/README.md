@@ -56,13 +56,29 @@ logic that other classes have set up to handle this event (``Leaks`` being among
 
 #### Leave map
 ![img_3.png](img_3.png)
-Quitting a map works has the same flow as above (in terms of calling logic ``reset``), except that the action is confirmed in the method ``showQuitConfirm()`` in the class ``PausedDialog``
-that calls ``runExitSave()`` of the same class, which then calls for a ``reset()`` on the instance of the ``Logic`` class in Vars instead of calling ``Control``.
+In this case the action is confirmed in the method ``showQuitConfirm()`` in the class ``PausedDialog`` that calls ``runExitSave()`` of the same class.
+This method directly calls for a ``reset()`` on the instance of the ``Logic`` class in ``Vars``.
 
 #### Clear leaks
 ![img_4.png](img_4.png)
 This class diagram represents the behaviour fragment common to the two use cases above. It describes how in the constructor, ``Leaks`` sets up a response to a ``ResetEvent``
 that is stored in ``Events`` and performed whenever the event is fired (in the cases above, fired in the ``reset()`` method of the ``Logic`` class). It involves calling ``clear()`` for the attributes leakSet and leakTree to avoid having identified leaks carry over into other maps.
+
+#### Update building
+![img_5.png](img_5.png)
+This class diagram shows how Buildings are updated in mindustry.
+The ``DesktopLauncher`` is executed to launch the game and start running it. It is a specialization of ``ClientLauncher``, which during setup,
+adds an instance of ``Logic`` (an implementation of ``ApplicationListener``), among other modules, to the ``ApplicationCore`` super class.
+
+As such, when ``ClientLauncher`` calls ``update()`` at a regular interval(which involves calling ``super.update()``),
+it calls the saved ``Logic`` instance's ``update()`` method too. This gets passed on as:  
+``Logic``-->``Groups``-->``EntityGroup<Entityc>``
+
+``EntityGroup<Entityc>`` then calls the ``update()`` method on each instance of ``Entityc`` that it holds, which includes buildings that passing around liquid.
+As seen in the diagram, one of these ``Entityc`` can be implemented by a ``Building``, which will call the ``updateTile()`` method during ``update()``.
+The content of this method differs greatly with the purpose of the block type, but for ``ConduitBuild``, it involves sending the liquid forward, and
+for the **new functionality**, checking for leaks (updating the ``Leaks`` singleton).  
+That functionality was separated into a Behavior fragment due to being common to 2 use cases.
 
 #### Update leak display
 ![img.png](img.png)
@@ -86,7 +102,7 @@ I won't go further into detail of the many intermediate classes that the rendere
 
 What I'm omitting in the diagram to condense the logic is the following: 
 
-- The ``Vars`` class has an attribute of class ``World`` that stores the tiles of the active map and can get a tile given an ``int`` position value using a method ``Tile(int pos)``.
+- The ``Vars`` class has an attribute of class ``World`` that stores the tiles of the active map and can get a tile given an ``int`` position value using a method ``tile(int pos)``.
  
 **Relevant case for minimap**
 - The relevant case here is when the tile corresponds to a ``Block`` specialization ``Conduit``. Getting the color for display is done using ``minimapColor(Tile tile)`` I overrode in ``Conduit``
@@ -102,8 +118,13 @@ the color from a block to place each color were also omitted to avoid confusion.
 - In ``DesktopInput``, the **new functionality** is finally called on the instance of the ``Leaks`` singleton: ``drawLocalLeaks``.
 - This method uses the player's x and y coordinates from the static ``Player`` instance in ``Vars`` to find all leaks within a 10 block radius of the player
 and show a blue-dashed ring as below (drawn using the static ``dashCircle(float x, float y, float rad, Color color)`` method in the ``Drawf`` class):
+
+
 ![img_1.png](img_1.png)
 
+- However, it tests that the pipe still exists using the ``tile(int x, int y)`` method in the instance of ``World`` in ``Vars``
+. If the tile was broken by the player it should be removed from the leaks. I wasn't able to do this immediately in the ``breakBlock(int x, int y)`` method in the ``InputHandler`` as after removing the tile
+from leaks, an ``updateTile()`` call would place it back in the Data Structure, leading to "hovering" fake leaks that appeared in the overlay but not on the minimap.
 ### Review
 *(Please add your class diagram review here)*
 ### Sequence diagrams
