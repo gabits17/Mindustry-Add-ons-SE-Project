@@ -5,7 +5,7 @@ Undo and Redo
 ## Reviewer(s)
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story
-[User Story 1](../../Milestone1/UserStory1)
+[User Story 1](../../Milestone1/UserStory1.md)
 ### Review
 *(Please add your user story review here)*
 ## Use case diagram
