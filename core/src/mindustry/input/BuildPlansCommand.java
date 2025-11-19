@@ -5,7 +5,7 @@ import mindustry.entities.units.BuildPlan;
 
 import static mindustry.Vars.player;
 
-public class BuildPlansCommand implements Command{
+public class BuildPlansCommand implements Command {
 
     private Seq<BuildPlan> plans;
     private InputHandler input;
@@ -27,8 +27,8 @@ public class BuildPlansCommand implements Command{
     @Override
     public void undo() {
         for (BuildPlan plan : this.plans ) {
-            this.input.tryBreakBlock(plan.x, plan.y);
-            player.unit().removeBuild(plan.x, plan.y, false);
+            this.input.tryBreakBlock(plan.x, plan.y); //Remove blocks that were already built
+            player.unit().removeBuild(plan.x, plan.y, false); //Remove plans that are yet to build
         }
     }
 

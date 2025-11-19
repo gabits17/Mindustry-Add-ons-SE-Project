@@ -2,11 +2,13 @@ package mindustry.input;
 
 import mindustry.gen.Building;
 import mindustry.gen.Call;
-import mindustry.gen.Player;
 
 import static mindustry.Vars.player;
 
-public class BlockRotateCommand implements Command{
+/**
+ * Command used to rotate a building
+ */
+public class BlockRotateCommand implements Command {
 
     private Building cursorBuild;
     private boolean direction;

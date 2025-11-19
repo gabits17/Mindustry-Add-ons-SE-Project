@@ -1639,11 +1639,6 @@ public abstract class InputHandler implements InputProcessor, GestureListener {
         buildStack.add(building);
     }
 
-    /**
-     * Looks to be used when building
-     *
-     * @param plans
-     */
     protected Seq<BuildPlan> flushPlans(Seq<BuildPlan> plans) {
         Seq<BuildPlan> builtPlans = new Seq<>();
         for (var plan : plans) {
@@ -1654,7 +1649,6 @@ public abstract class InputHandler implements InputProcessor, GestureListener {
                 builtPlans.add(plan);
             }
         }
-        ;
         return builtPlans;
     }
 

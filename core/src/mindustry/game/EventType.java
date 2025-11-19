@@ -374,7 +374,6 @@ public class EventType{
         public BuildDamageEvent set(Building build, Bullet source){
             this.build = build;
             this.source = source;
-            System.out.println("Building Damaged");
             return this;
         }
     }

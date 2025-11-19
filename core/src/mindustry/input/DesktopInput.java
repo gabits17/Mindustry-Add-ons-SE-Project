@@ -72,7 +72,7 @@ public class DesktopInput extends InputHandler{
     }
 
     public DesktopInput() {
-        Events.on(ResetEvent.class, e -> this.commander.clear());
+        Events.on(ResetEvent.class, e -> {this.commander.clear(); });
     }
 
     @Override
@@ -119,6 +119,7 @@ public class DesktopInput extends InputHandler{
             }).margin(6f);
         });
 
+        //Nothing to undo error top screen
         group.fill(t -> {
             t.name = "NothingToUndo";
             t.touchable = Touchable.disabled;
@@ -129,12 +130,13 @@ public class DesktopInput extends InputHandler{
             .labelAlign(Align.center, Align.center))
             .margin(6f)
             .update(u -> u.color.a = Mathf.lerpDelta(u.color.a, Mathf.num(ui.hudfrag.shown &&
-                    !Core.input.keyDown(Binding.boost) &&
+                    !Core.input.keyDown(Binding.boost) && //So that both undo and redo don't overlap
                     Core.input.keyDown(Binding.control) &&
                     Core.input.keyDown(Binding.undo) &&
                     !commander.hasDone()), 0.1f)).get().color.a = 0f;;
         });
 
+        //Nothing to redo error top screen
         group.fill(t -> {
             t.name = "NothingToRedo";
             t.touchable = Touchable.disabled;

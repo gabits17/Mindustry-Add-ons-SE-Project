@@ -1,17 +1,17 @@
 # User story 1
-(*Please add a user story short title here*)
+Undo and Redo
 ## Author(s)
-(*Please add the user story author(s) here, one in each line, providing the authors' name and surname, along with their student number*)
+- Gabriel Matias (67775)
 ## Reviewer(s)
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story:
-(*Please add your User Story here.*)
+![[UserStory1]]
 ### Review
 *(Please add your user story review here)*
 ## Use case diagram
-(*Please add the use case diagram here.*)
+![Use Case](Assets/UseCases.drawio.svg)
 ## Use case textual description
-(*Please add the use case textual description here.*)
+![[US1 Use Case Textual Description]]
 ### Review
 *(Please add your use case review here)*
 ## Implementation documentation
@@ -21,6 +21,7 @@
 #### Review
 *(Please add your implementation summary review here)*
 ### Class diagrams
+![[US1 Class Diagrams]]
 (*Class diagrams and their discussion in natural language.*)
 ### Review
 *(Please add your class diagram review here)*
