@@ -640,7 +640,7 @@ public class DesktopInput extends InputHandler{
                 useSchematic(copyHist.get((int) Core.input.axisTap(Binding.rotate)));
             }
 
-
+            useSchematic(copyHist.get());
         }
 
         if(!selectPlans.isEmpty()){

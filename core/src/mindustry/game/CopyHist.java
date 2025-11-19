@@ -38,9 +38,12 @@ public class CopyHist {
     // history of copies
     private final Seq<Schematic> history;
 
+    private int lastPos;
+
     public CopyHist() {
         // check if arrayList, LinkedList or Seq
         this.history = new Seq<>(MAX_SIZE);
+        this.lastPos = INIT_POS;
 
         Events.on(EventType.ClientLoadEvent.class, event -> {
             // to-do
@@ -76,6 +79,14 @@ public class CopyHist {
      * @param pos: the position of the desired schematic
      */
     public Schematic get(int pos) {
-        return history.get((pos % MAX_SIZE));
+        lastPos = (pos + lastPos) % MAX_SIZE;
+        return history.get(lastPos);
+    }
+
+    /**
+     * Gets the schematic of the last visited position
+     */
+    public Schematic get(){
+        return history.get(lastPos);
     }
 }
