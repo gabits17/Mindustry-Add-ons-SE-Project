@@ -25,12 +25,31 @@ This user story extends existing user interaction with the game by showing leaks
 For example, the act of breaking/placing of a block stays the same. However, at some point in the logic that handles the update for this scenario, if the block is a leaking liquid-carrying block, or is adjacent to one such block,
 the new functionality is triggered.
 
-Many of the methods that are passed by to reach this new functionality take care of much more than what this user story covers.
-With this in mind, I will omit the sections of logic of such methods unrelated to this particular topic, except for key steps that connect to the next relevant method.
+This means that despite the work document specifying (in the case of class diagrams) to include classes modified or implemented, that alone isn't
+enough to describe many of the use cases that eventually access the new functionality. As such, I will include the main pathway of class methods used to reach that point
+if it is necessary to explain the added functionality.
 
 ## Use case diagram
 (*Please add the use case diagram here.*)
+#### Note
+The use cases in the *Leak identification system* contain the new functionality. Meanwhile, the use cases in *Leak interaction system* contain the supplementary
+use cases that need describing before the new functionality occurs (since it's an extension of existing gameplay mechanics).
+
 ## Use case textual description
+### Leak interaction system
+#### Enter map
+
+#### Leave map
+
+#### Update building
+
+### Leak identification system
+#### Update leakable block tile
+
+#### Clear leaks (behavior fragment)
+
+#### Update leak display
+
 (*Please add the use case textual description here.*)
 ### Review
 *(Please add your use case review here)*
@@ -45,6 +64,7 @@ With this in mind, I will omit the sections of logic of such methods unrelated t
 
 #### Enter map
 ![img_2.png](img_2.png)
+
 This class diagram is related to the player action of joining a map. It's worth noting that selecting a map to play in the code is different from
 selecting a map to play in the campaign. However, within the use case context, the interaction is the same since the use case doesn't involve the map selection, but instead what happens afterwards.
 
@@ -56,16 +76,36 @@ logic that other classes have set up to handle this event (``Leaks`` being among
 
 #### Leave map
 ![img_3.png](img_3.png)
+
 In this case the action is confirmed in the method ``showQuitConfirm()`` in the class ``PausedDialog`` that calls ``runExitSave()`` of the same class.
 This method directly calls for a ``reset()`` on the instance of the ``Logic`` class in ``Vars``.
 
-#### Clear leaks
+#### Clear leaks (behavior fragment)
 ![img_4.png](img_4.png)
+
 This class diagram represents the behaviour fragment common to the two use cases above. It describes how in the constructor, ``Leaks`` sets up a response to a ``ResetEvent``
 that is stored in ``Events`` and performed whenever the event is fired (in the cases above, fired in the ``reset()`` method of the ``Logic`` class). It involves calling ``clear()`` for the attributes leakSet and leakTree to avoid having identified leaks carry over into other maps.
 
+#### Break block, Place block, Request tile update (included use case)
+![img_7.png](img_7.png)
+
+I joined the class diagram because ``BreakBlock`` and ``PlaceBlock`` only call slightly different methods, and ``Request tile update`` is a behavior fragment
+included in both that makes more sens in context.
+
+Involvement of classes:  
+- When a player places/breaks a block, this creates a call for ``beginPlace/beginBreak`` respectively, which calls a static method of the same name in ``Build``.
+- From here, the ``world`` attribute (``World`` instance) of ``Vars`` is accessed to obtain the tile at position *(x, y)*, from which the building in that tile can be obtained.
+- With this ``Building`` instance, after processing other logic not relevant to the use case (unrelated to added functionality), the methods ``setConstruct`` (for place) or ``setDeconstruct`` (for break) are called,
+leading to a request to update the tile.
+- The ``updateTile(Tile tile)`` method in the ``Pathfinder`` instance of Vars calls ``updateTile(Tile tile)`` in the ``ControlPathFinder`` instance also of ``Vars``.
+- This updateTile in ``ControlPathfinder``calls ``updateSingleTile(Tile t)`` for each tile in the building (a building can have multiple tiles), adding the position of each tile
+to a queue of updates.
+- The ``updateTile()`` is custom defined for each building and has no logic in its original definition. However, the logic for the specific
+case of leakable tiles (conduits) can be seen in the use case "Update leakable block tile".
+
 #### Update building
 ![img_5.png](img_5.png)
+
 This class diagram shows how Buildings are updated in mindustry.
 The ``DesktopLauncher`` is executed to launch the game and start running it. It is a specialization of ``ClientLauncher``, which during setup,
 adds an instance of ``Logic`` (an implementation of ``ApplicationListener``), among other modules, to the ``ApplicationCore`` super class.
@@ -80,8 +120,21 @@ The content of this method differs greatly with the purpose of the block type, b
 for the **new functionality**, checking for leaks (updating the ``Leaks`` singleton).  
 That functionality was separated into a Behavior fragment due to being common to 2 use cases.
 
+#### Update leakable block tile
+![img_6.png](img_6.png)
+
+This class diagram reflects the extended behaviour of ``updateTile()`` for a conduit building. After pushing forward contained liquid,
+it communicates with the ``Leaks`` singleton by calling ``checkLeak(this)`` to tell the singleton that changes may have occurred.  
+The ``checkLeak`` method, checks for a transition from *not leaking -> leaking* and vice versa and in such case adds/removes the tile
+from the data structures ``leakTree`` and ``leakSet`` using the ``addLeak(Tile tile)`` or ``removeLeak(Tile tile)`` methods respectively.
+This is so that in the **Update leak display** use case leaks can be displayed based on player proximity.
+Either of the two transitions mentioned above also leads to requesting for an update in the minimap for the pixel that represents the tile.
+``Leaks`` communicates with a ``MinimapRenderer`` instance stored in the ``Renderer`` instance in ``Vars``.
+It then sets the tile as pending for an update in the next minimap update using ``updatePixel(Tile tile)``, to change the colour and indicate a leak.
+
 #### Update leak display
 ![img.png](img.png)
+
 This class diagram is related to the frequent calling of the renderer update method that updates the minimap, ensuring pending updates are drawn it.
 In the user story scenario, these updates concern tiles labelled as leaking in the ``Leaks`` singleton class.
 It also covers drawing the rendering of the overlay that shows leaks close to the player.
@@ -93,7 +146,7 @@ As such:
 - The game runs with an instance of ``Renderer`` (which contains a ``MinimapRenderer`` attribute), and frequently calls its ``update()`` method.
 - If the game is not in a menu state, it needs to update the minimap, which it does by calling the ``update()`` method in the ``MinimapRenderer`` instance **minimap**.
 
-#### Minimap Update
+#### - Minimap Update
 - ``update()`` in ``MinimapRenderer`` goes through pending updates for world positions that were sent for update
   (the global Vars can translate these into tiles, and then blocks, from which a color can be fetched).
 - Adding to pending updates is described in another use case, but as shown in the diagram involves the ``updateTile`` method in ``ConduitBuild`` I modified to allow this.
@@ -112,7 +165,7 @@ to return the int value for the light blue color ``Pal.leakingWarn`` if the tile
 - Note: ``Pal`` is the palette class that stores used colors of the ``Color`` class. The pixel map and such buffers that the application uses after getting 
 the color from a block to place each color were also omitted to avoid confusion.
 
-#### Showing local leaks (going back to ``update`` in ``Renderer``)
+#### - Showing local leaks (going back to ``update`` in ``Renderer``)
 - The ``update()`` method in ``Renderer`` also calls the own class's ``draw()`` method if the ``boolean pixelate`` from the ``Renderer`` static instance in ``Vars`` is turned off (decided in settings).
 - This method performs ``drawBottom()`` in ``OverlayRenderer``, which calls a method of the same name in ``DesktopInput``(assuming playing in Desktop).
 - In ``DesktopInput``, the **new functionality** is finally called on the instance of the ``Leaks`` singleton: ``drawLocalLeaks``.
@@ -135,3 +188,7 @@ from leaks, an ``updateTile()`` call would place it back in the Data Structure, 
 (*Test cases specification and pointers to their implementation, where adequate.*)
 ### Review
 *(Please add your test specification review here)*
+
+### Tour report
+
+It should be noted that the feature was only implemented with Des
