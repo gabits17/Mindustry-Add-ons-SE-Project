@@ -594,6 +594,8 @@ public class Turret extends ReloadTurret{
                 case FARTHEST_FIRST -> unitTarget = UnitSorts.farthest;
                 case STRONGEST_FIRST -> unitTarget = UnitSorts.strongest;
                 case WEAKEST_FIRST -> unitTarget = UnitSorts.weakest;
+                case FASTEST_FIRST -> unitTarget = UnitSorts.fastest;
+                case SLOWEST_FIRST -> unitTarget = UnitSorts.slowest;
                 // the rest of the modes need more logic involved, not done yet.
                 default -> unitTarget = UnitSorts.closest;
             }
@@ -839,11 +841,9 @@ public class Turret extends ReloadTurret{
             /* TODO:
              * - Create a button to click and allow the change of targeting mode
              * - Implement a way to change between the targeting modes, having consideration
-             *   about air, ground and naval attacks (if the turret can't attack some units,
-             *   the targeting mode shouldn't be allowed).
              * - Test if the button is working, then test if the logic is working
              * - Analyze turrets behaviour according to changes
-             * - Implement the extra logic needed to implement the different modes TargetingMode enum has.
+             * - Check if worth to implement the modes that focus on grounder, flying or naval units first
              */
         }
     }
