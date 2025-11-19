@@ -14,9 +14,10 @@ Gabriela Silva (67286)
   - US1: Gabriel Falcão
   - US2: Diogo Antunes
   - US3: Dinis Neves and Gabriela Silva
-  - US4: Carolina Ferreria e Manuel Oliveira
+  - US4: Carolina Ferreria and Manuel Oliveira
 - Essentially, it was decided to *first* do the code implementation for each user storie, *only then* focus on its details: sequence diagrams and (extensive) use cases
-- Continue doing the work from last sprint 
+- Class diagrams can start being made for US1 and US2
+- Continue doing the work from last sprint
 
 ### Sprint Review Meeting: 
 *(Held at the end of the sprint, this meeting is attended by all stakeholders to demo the completed work and validate if the sprint goal has been met.)*
