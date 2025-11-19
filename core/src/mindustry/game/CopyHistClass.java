@@ -62,7 +62,8 @@ public class CopyHistClass implements CopyHist {
 
         if (!history.contains(scheme)){
             history.add(INIT_POS, scheme);
-            this.size++;
+            if(size != MAX_SIZE)
+                this.size++;
         }
     }
 

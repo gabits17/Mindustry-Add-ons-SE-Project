@@ -610,13 +610,6 @@ public class DesktopInput extends InputHandler{
                 if(selectPlans.isEmpty()){
                     lastSchematic = null;
                 }
-                else {
-                }
-                // Copy the chosen schematic to history, bind to ctrl + alt
-                if(/*Core.input.keyDown(Binding.ctrl) &&*/ Core.input.keyDown(Binding.tab)) {//assim so funciona se o tab tiver ativamente a ser pressionado quando algo e selecionado
-                    System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                    copyHistClass.copy(lastSchematic);
-                }
 
                 schemX = -1;
                 schemY = -1;
@@ -625,6 +618,26 @@ public class DesktopInput extends InputHandler{
                 rebuildArea(schemX, schemY, rawCursorX, rawCursorY);
                 schemX = -1;
                 schemY = -1;
+            }
+        }
+
+        // Copy the chosen schematic to history, bind set to ctrl + alt
+        if(Core.input.keyDown(Binding.ctrl) && Core.input.keyTap(Binding.tab) && !selectPlans.isEmpty()) {
+            System.out.println("COPIED");
+            copyHistClass.copy(lastSchematic);
+        }
+
+        if(!copyHistClass.isEmpty() && !selectPlans.isEmpty()) {
+            if (Core.input.keyDown(Binding.paste)) {
+                if ((int) Core.input.axisTap(Binding.rotate) > 0) {
+                    System.out.println("PASTE_NEXT");
+                    lastSchematic = copyHistClass.getNext();
+                    useSchematic(lastSchematic);//get((int) Core.input.axisTap(Binding.rotate)));
+                } else if ((int) Core.input.axisTap(Binding.rotate) < 0) {
+                    System.out.println("PASTE_PREVIOUS");
+                    lastSchematic = copyHistClass.getPrevious();
+                    useSchematic(lastSchematic);
+                }
             }
         }
 

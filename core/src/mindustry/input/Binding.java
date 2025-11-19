@@ -16,6 +16,7 @@ public class Binding{
     paste = KeyBind.add("paste", KeyCode.insert),
     ctrl = KeyBind.add("ctrl", KeyCode.controlLeft),
     tab = KeyBind.add("alt", KeyCode.tab),
+    alt = KeyBind.add("alt", KeyCode.altLeft),
     next = KeyBind.add("next", KeyCode.end),
     previous = KeyBind.add("previous", KeyCode.del),
 
