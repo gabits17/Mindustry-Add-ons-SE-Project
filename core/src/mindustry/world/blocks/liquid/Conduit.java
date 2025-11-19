@@ -249,7 +249,6 @@ public class Conduit extends LiquidBlock implements Autotiler{
             }else{
                 sleep();
             }
-
             //check for leaks
             Leaks.getInstance().checkLeak(this);
         }
