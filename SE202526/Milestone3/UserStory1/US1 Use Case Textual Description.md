@@ -8,7 +8,7 @@
 	- *Secondary*: None
 - **Pre-Conditions**: None
 - **Main Flow**:
-	1. The use case starts when the player requests an action to be undone (keybind for example)
+	1. The use case starts when the player requests an action to be undone (keybind, for example)
 	2. <mark style="background: #FFB86CA6;">The system removes the done action from its stack</mark>
 	3. <mark style="background: #FFB86CA6;">The system adds the action as undone to its stack</mark>
 	4. The system executes the action just added
@@ -21,14 +21,14 @@
 
 - **Name**: No Done Action
 - **ID**: AF1
-- **Description**: The player tried to undo an action and no action had been done
+- **Description**: The player tried to undo an action, but no action had been done
 - **Actors**:
 	- *Main*: Player
 	- *Secondary*: None
 - **Pre-Conditions**: 
 - **Main Flow**:
 	1. The use case starts before step 2 of the main flow
-	2. The system displays an error message saying that there does not exist an action to undo
+	2. The system displays an error message saying that there is no action to undo
 	3. The use case and the main flow end
 - **Alternative Flows**
 	- None
@@ -60,7 +60,7 @@
 	- *Secondary*: None
 - **Pre-Conditions**: None
 - **Main Flow**:
-	1. The use case starts when the player requests an action to be redone (keybind for example)
+	1. The use case starts when the player requests an action to be redone (keybind, for example)
 	2. <mark style="background: #FFB86CA6;">The system removes the undone action from its stack</mark>
 	3. <mark style="background: #BBFABBA6;">Include Add Done Action</mark>
 - **Alternative Flows**
@@ -69,14 +69,14 @@
 ### No Undone Action
 - **Name**: No Undone Action
 - **ID**: AF3
-- **Description**: The player tried to redo an action and no action had been undone
+- **Description**: The player tried to redo an action, and no action had been undone
 - **Actors**:
 	- *Main*: Player
 	- *Secondary*: None
 - **Pre-Conditions**: 
 - **Main Flow**:
 	1. The use case starts before step 2 of the main flow
-	2. The system displays an error message saying that there does not exist an action to redo
+	2. The system displays an error message saying that there is no action to redo
 	3. The use case and the main flow end
 - **Alternative Flows**
 	- None
@@ -134,7 +134,7 @@
 - **Actors**:
 	- *Main*: Player
 	- *Secondary*: None
-- **Pre-Conditions**: The player has its cursor on a building to be rotated
+- **Pre-Conditions**: The player has their cursor on a building to be rotated
 - **Main Flow**:
 	1. The use case starts after the player requests to rotate a building
 	2. The system creates an action to rotate the building
@@ -146,13 +146,13 @@
 ## Enter Map
 - **Name**: Enter Map
 - **ID**: UC7
-- **Description**: The player enters a map, be it a sector, a custom map a server...
+- **Description**: The player enters a map, be it a sector, a custom map, a server...
 - **Actors**:
 	- *Main*: Player
 	- *Secondary*: None
 - **Pre-Conditions**: None
 - **Main Flow**:
-	1. The use case starts when the player enters a map (sector, a custom map a server...)
+	1. The use case starts when the player enters a map (sector, a custom map, a server...)
 	2. <mark style="background: #BBFABBA6;">Include Reset Action Commander</mark>
 - **Alternative Flows**
 	- None
@@ -160,13 +160,13 @@
 ## Leave Map
 - **Name**: Leave Map
 - **ID**: UC8
-- **Description**: The player leaves a map, be it a sector, a custom map a server...
+- **Description**: The player leaves a map, be it a sector, a custom map, a server...
 - **Actors**:
 	- *Main*: Player
 	- *Secondary*: None
 - **Pre-Conditions**: None
 - **Main Flow**:
-	1. The use case starts when the player leaves a map (sector, a custom map a server...)
+	1. The use case starts when the player leaves a map (sector, a custom map, a server...)
 	2. <mark style="background: #BBFABBA6;">Include Reset Action Commander</mark>
 - **Alternative Flows**
 	- None
@@ -175,13 +175,13 @@
 ## Add Done Action
 - **Name**: Add Done Action
 - **ID**: IUC1
-- **Description**: This use case adds a done action to the systems memory
+- **Description**: This use case adds a done action to the system's memory
 - **Actors**:
 	- *Main*: Player
 	- *Secondary*: None
 - **Pre-Conditions**: None 
 - **Main Flow**:
-	1. The use  case starts when the player performs any request to add a done action (redo, placing for example)
+	1. The use  case starts when the player performs any request to add a done action (redo, placing, for example)
 	2. <mark style="background: #FFB86CA6;">The system adds the done action to its stack</mark>
 	3. The system executes the action just added
 - **Alternative Flows**
@@ -198,20 +198,20 @@
 - **Main Flow**:
 	1. The use case starts after step 2 of the main flow
 	2. The system removes the stack's last element
-	3. return to step 2 of the main flow
+	3. Return to step 2 of the main flow
 - **Alternative Flows**
 	- None
 - **Post-Conditions**: The done stack is not full
 ## Reset Action Commander
 - **Name**: Reset Action Commander
 - **ID**: IC2
-- **Description**: The use case clears the system's memory about actions
+- **Description**: The use case clears the system's memory of actions
 - **Actors**:
 	- *Main*: Player
 	- *Secondary*: None
 - **Pre-Conditions**: None
 - **Main Flow**:
-	1. The use case when the player requests to reset the action commander
+	1. The use case starts when the player requests to reset the action commander
 	2. The system clears the done action stack
 	3. The system clears the undone action stack
 - **Alternative Flows**
