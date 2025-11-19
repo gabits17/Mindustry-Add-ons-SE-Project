@@ -9,9 +9,9 @@ Some key points to take going into the next descriptions are:
 - `Commander` belongs to a composite association with `DesktopInput`
 - `Commander` has two stacks one for done `Command`'s (`doneCommands`), another for undone `Command`'s (`undoneCommands`)
 ##  Undo
-![[Assets/UndoClass.drawio.svg]]
+![](Assets/UndoClass.drawio.svg)
 ##  Redo
-![[Assets/RedoClass.drawio.svg]]
+![](Assets/RedoClass.drawio.svg)
 # Actions
 ## Paste Schematic
 **The description of the two following diagrams will only be given here, as pasting schematics and building buildings use the same implementation.**
@@ -22,16 +22,16 @@ And employs the global variable class `Vars` to access important methods in the 
 - Execute/Redo $\rightarrow$ `flushPlans`
 - Undo $\rightarrow$ `tryBreakBlock`, `removeBuild`
 The command keeps a list of `BuildPlan`'s, a list that will be used by `flushPlans` to create a plan in the world for the player to build.
-![[Assets/PasteSchematic_BuildBuildingClass.drawio.svg]]
+![](Assets/PasteSchematic_BuildBuildingClass.drawio.svg)
 ## Build Building
-![[Assets/PasteSchematic_BuildBuildingClass.drawio.svg]]
+![]Assets/PasteSchematic_BuildBuildingClass.drawio.svg
 ## Remove Selection
 `RemoveSelectionCommand`implements the `Command` interface. This is the command created by `DesktopInput` when a player requests to remove a selection. 
 This command uses methods present in the superclass of `DesktopInput`, `InputHandler`.
 - Execute/Redo $\rightarrow$ `removeSelection`
 - Undo $\rightarrow$ `flushPlans`, ``
 The command keeps a list of `BuildPlan`'s (`removed`), a list that will be used in the case that the player decides to undo the remove.
-![[Assets/RemoveSelectionClass.drawio.svg]]
+![](Assets/RemoveSelectionClass.drawio.svg)
 ## Rotate Building
 `BlockRotateCommand`implements the `Command` interface. This is the command created by `DesktopInput` when a player either needs to build a building or paste a schematic. 
 This command uses methods present in the `Call` class.
@@ -39,7 +39,7 @@ And employs the global variable class `Vars` to access the `Player`.
 - Execute/Redo $\rightarrow$ `rotateBlock`
 - Undo $\rightarrow$ `rotateBlock`
 The command keeps the `Building` that was bellow the cursor upon its creation.
-![[Assets/RotateBuildingClass.drawio.svg]]
+![](Assets/RotateBuildingClass.drawio.svg)
 # Map
 ## Enter Map
 The `DesktopInput`, when instantiated, class uses the `on` method in `Events`, to make itself an observer of the `ResetEvent`, and associates the following lambda function to its firing:
@@ -60,10 +60,10 @@ public void clear() {
 }
 ```
 The `Control` and `JoinDialog` classes are shown as they trigger `reset` upon the player loading a map and joining an online game. Note that other classes do indeed trigger this method; some may also trigger it upon the player entering maps under different circumstances. For example, `Control` also possesses the method `playSector`, which triggers this event upon entering a sector (sectors are campaign maps).
-![[EnterMapClass.drawio.svg]]
+![](Assets/EnterMapClass.drawio.svg)
 ## Leave Map
 Continuing the description given above, the only difference this diagram has is that instead of `Control` or `JoinDialog`, the `reset` method is, when leaving a game, called by the `PauseDialog` class.
-![[LeaveMapClass.drawio.svg]]
+![](Assets/LeaveMapClass.drawio.svg)
 # Includes
 ## Add Done Action
 #TODO ?
