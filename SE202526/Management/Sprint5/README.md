@@ -30,12 +30,14 @@ Issues with assigning work and understanding what was needed to start with M3, r
 ### Scrum Board at the beginning of the sprint
 ![asset_01.png](assets/asset_01.png)
 
+
 ### Scrum Board in the middle of the sprint
 ![asset_02.png](assets/asset_02.png)
 
 
 ### Scrum Board at the end of the sprint
 ![asset_03.png](assets/asset_03.png)
+
 
 ### Burndown Chart for the sprint
 ![asset_04.png](assets/asset_04.png)

@@ -1,5 +1,6 @@
 package mindustry.game;
 import arc.Events;
+import arc.graphics.Color;
 import arc.math.geom.QuadTree;
 import arc.math.geom.Rect;
 import mindustry.Vars;
@@ -9,6 +10,8 @@ import mindustry.world.Tile;
 import mindustry.world.blocks.liquid.Conduit;
 
 import java.util.HashSet;
+
+import static mindustry.Vars.world;
 
 /** Class that manages leaks for display.*/
 public class Leaks {
@@ -21,6 +24,11 @@ public class Leaks {
      * Minimum diameter for which leaks are identified with circles. (to avoid multiplying radius by 2 every time diameter is needed)
      */
     private static final float MIN_DIAM = 2 * MIN_RANGE;
+
+    /**
+     * Color for leaking related display.
+     */
+    private static final Color LEAK_COLOR = Pal.leakingWarn;
 
     // Static Vars
     /**
@@ -55,15 +63,27 @@ public class Leaks {
         }
         return leaks;
     }
+
+    public static int getLeakColorValue() {
+        return Pal.leakingWarn.rgba();
+    }
     
     public void addLeak(Tile tile) {
-        leakTree.insert(tile);
-        leakSet.add(tile);
+        if (leakSet.add(tile)) {
+            //only adds to QuadTree if removing from the HashSet was a success.
+            leakTree.insert(tile);
+        }
     }
 
+    /**
+     * Removes a leaking tile from the data structures if it is there.
+     * @param tile the tile indicated to be leaking
+     */
     public void removeLeak(Tile tile) {
-        leakTree.remove(tile);
-        leakSet.remove(tile);
+        if (leakSet.remove(tile)) {
+            //only removes from the QuadTree if removing from the HashSet was a success.
+            leakTree.remove(tile);
+        }
     }
     
     public boolean isLeaking(Tile tile) {
@@ -106,8 +126,11 @@ public class Leaks {
         float y = Vars.player.y;
         // Intersects with square around player x and y
         this.leakTree.intersect(x - MIN_RANGE , y - MIN_RANGE, MIN_DIAM, MIN_DIAM, tile -> {
-            if(tile.within(x, y, MIN_RANGE)) {
-                Drawf.dashCircle(tile.getX(), tile.getY(), MIN_RANGE, Pal.leakingWarn);
+            //Ensure the tile really is leaking (if the block was broken, it shouldn't be registered as a leak)
+            if(!(world.tile(tile.x, tile.y).build instanceof Conduit.ConduitBuild)){
+                removeLeak(tile);
+            } else if(tile.within(x, y, MIN_RANGE)) {
+                Drawf.dashCircle(tile.getX(), tile.getY(), MIN_RANGE, LEAK_COLOR);
             }
         });
     }
