@@ -11,7 +11,7 @@ Undo and Redo
 ## Use case diagram
 ![Use Case](Assets/UseCases.drawio.svg)
 ## Use case textual description
-![[US1 Use Case Textual Description]]
+[Textual Description](US1%20Use%20Case%20Textual%20Description.md)
 ### Review
 *(Please add your use case review here)*
 ## Implementation documentation
@@ -21,8 +21,7 @@ Undo and Redo
 #### Review
 *(Please add your implementation summary review here)*
 ### Class diagrams
-![[US1 Class Diagrams]]
-(*Class diagrams and their discussion in natural language.*)
+[Class Diagrams](US1%20Class%20Diagrams.md)
 ### Review
 *(Please add your class diagram review here)*
 ### Sequence diagrams
