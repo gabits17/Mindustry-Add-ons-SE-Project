@@ -795,7 +795,6 @@ public class DesktopInput extends InputHandler{
                 if(input.keyDown(Binding.boost)){
                     flushPlansReverse(linePlans);
                 }else{
-                    //Should check if the event was just a rotation
                     Command c = new BuildPlansCommand(linePlans, this);
                     commander.execute(c);
                 }
