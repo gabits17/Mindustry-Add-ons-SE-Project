@@ -611,14 +611,16 @@ public class DesktopInput extends InputHandler{
                     lastSchematic = null;
                 }
                 else {
-                    // This code executes when an actual building is selected
+                    // Copy the chosen schematic to history e decidir se queremos com control+c ou não
                     copyHist.copy(lastSchematic);
                     System.out.println("DSFGJNDFOGI");
                 }
                 //if left cotrl and mouse wheel are used, intended to navigate through the history
+                /**
                 if (Core.input.keyDown(Binding.diagonalPlacement) && (int)Core.input.axisTap(Binding.rotate) != 0) {
                     useSchematic(copyHist.get((int) Core.input.axisTap(Binding.rotate)));
                 }
+                */
 
                 schemX = -1;
                 schemY = -1;
@@ -630,8 +632,15 @@ public class DesktopInput extends InputHandler{
             }
         }
 
+        /**
+         * Paste the chosen schematic to the world
+         */
         if(Core.input.keyTap(Binding.ctrl) && Core.input.keyTap(Binding.paste)){
-            System.out.println("DSFGJNDFOGI");
+            if (Core.input.keyDown(Binding.diagonalPlacement) && (int)Core.input.axisTap(Binding.rotate) != 0) {
+                useSchematic(copyHist.get((int) Core.input.axisTap(Binding.rotate)));
+            }
+
+
         }
 
         if(!selectPlans.isEmpty()){
