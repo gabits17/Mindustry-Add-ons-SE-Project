@@ -64,7 +64,7 @@ public class DesktopInput extends InputHandler{
     private boolean changedCursor, pressedCommandRect;
 
     /** History of last selected schematics*/
-    private CopyHist copyHist = new CopyHist();
+    private CopyHistClass copyHistClass = new CopyHistClass();
 
     private Commander commander = new Commander();
 
@@ -611,9 +611,11 @@ public class DesktopInput extends InputHandler{
                     lastSchematic = null;
                 }
                 else {
-                    // Copy the chosen schematic to history e decidir se queremos com control+c ou não
-                    copyHist.copy(lastSchematic);
+                }
+                // Copy the chosen schematic to history, bind to ctrl + alt
+                if(/*Core.input.keyDown(Binding.ctrl) &&*/ Core.input.keyDown(Binding.tab)) {//assim so funciona se o tab tiver ativamente a ser pressionado quando algo e selecionado
                     System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    copyHistClass.copy(lastSchematic);
                 }
 
                 schemX = -1;
@@ -629,18 +631,19 @@ public class DesktopInput extends InputHandler{
         /**
          * Paste the chosen schematic to the world
          */
-        if(Core.input.keyTap(Binding.ctrl) && Core.input.keyTap(Binding.paste)){
-            if (Core.input.keyDown(Binding.diagonalPlacement) && (int)Core.input.axisTap(Binding.rotate) != 0) {
-                useSchematic(copyHist.get((int) Core.input.axisTap(Binding.rotate)));
-                lastSchematic = copyHist.get();
-                System.out.println("PASTE");
+         //if(Core.input.keyTap(Binding.paste)){
+            if(!copyHistClass.isEmpty()) {
+                if (/*Core.input.keyDown(Binding.ctrl) &&*/ Core.input.keyTap(Binding.next)  ){//&& (int) Core.input.axisTap(Binding.rotate) != 0) {
+                    System.out.println("PASTE_NEXT");
+                    lastSchematic = copyHistClass.getNext();
+                    useSchematic(lastSchematic);//get((int) Core.input.axisTap(Binding.rotate)));
+                } else if(Core.input.keyTap(Binding.previous)){
+                    System.out.println("PASTE_PREVIOUS");
+                    lastSchematic = copyHistClass.getPrevious();
+                    useSchematic(lastSchematic);
+                }
             }
-            else {
-                useSchematic(copyHist.get());
-                lastSchematic = copyHist.get();
-                System.out.println("PASTE");
-            }
-        }
+        //}
 
         if(!selectPlans.isEmpty()){
             if(Core.input.keyTap(Binding.schematicFlipX)){

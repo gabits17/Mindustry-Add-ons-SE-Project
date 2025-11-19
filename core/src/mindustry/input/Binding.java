@@ -13,8 +13,11 @@ public class Binding{
     //Undo stuff
     undo = KeyBind.add("undo", KeyCode.z),
 
-    paste = KeyBind.add("paste", KeyCode.v),
+    paste = KeyBind.add("paste", KeyCode.insert),
     ctrl = KeyBind.add("ctrl", KeyCode.controlLeft),
+    tab = KeyBind.add("alt", KeyCode.tab),
+    next = KeyBind.add("next", KeyCode.end),
+    previous = KeyBind.add("previous", KeyCode.del),
 
     moveX = KeyBind.add("move_x", new Axis(KeyCode.a, KeyCode.d), "general"),
     moveY = KeyBind.add("move_y", new Axis(KeyCode.s, KeyCode.w)),
