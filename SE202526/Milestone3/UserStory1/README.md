@@ -4,8 +4,8 @@ Undo and Redo
 - Gabriel Matias (67775)
 ## Reviewer(s)
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
-## User Story:
-![[UserStory1]]
+## User Story
+[User Story 1](../../Milestone1/UserStory1)
 ### Review
 *(Please add your user story review here)*
 ## Use case diagram
