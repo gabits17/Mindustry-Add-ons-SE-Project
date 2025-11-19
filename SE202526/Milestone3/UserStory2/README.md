@@ -29,28 +29,179 @@ This means that despite the work document specifying (in the case of class diagr
 enough to describe many of the use cases that eventually access the new functionality. As such, I will include the main pathway of class methods used to reach that point
 if it is necessary to explain the added functionality.
 
+Additionally, only the Desktop version of the game is considered, since that is the version readily available for testing.
+
 ## Use case diagram
-(*Please add the use case diagram here.*)
-#### Note
-The use cases in the *Leak identification system* contain the new functionality. Meanwhile, the use cases in *Leak interaction system* contain the supplementary
-use cases that need describing before the new functionality occurs (since it's an extension of existing gameplay mechanics).
+![LeakIdentificationSystem.svg](LeakIdentificationSystem.svg)
 
 ## Use case textual description
-### Leak interaction system
-#### Enter map
+# Leak interaction system
+(Supplementary to new functionality)
+Note - included steps are those relating to reaching the **new functionality**, unrelated steps are omitted.
+## Enter map
+- **Name**: Enter map
+- **ID**: UC1
+- **Description**: The player enters a game map
+- **Actors**:
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**: The player has selected a map to play.
+- **Main Flow**:
+    1. The use case starts when the player presses the button to play the selected map
+    2. The system resets the game state.
+    3. The system resets the game logic.
+    4. <mark style="background: #BBFABBA6;">Include (Clear Leaks)</mark>
+- **Alternative Flows**
+  - None
+- **Post-Conditions**: The player is within the map. No traces from other maps are present.
+## Leave map
+- **Name**: Leave map
+- **ID**: UC2
+- **Description**: The player leaves a game map
+- **Actors**:
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**: The player is on the pause menu of an active map.
+- **Main Flow**:
+    1. The use case starts when the player presses the button to quit the map.
+    2. The system resets the game logic.
+    3.  <mark style="background: #BBFABBA6;">Include (Clear Leaks)</mark>
+- **Alternative Flows**
+    - None
+- **Post-Conditions**: The player is at a menu outside a loaded game.
 
-#### Leave map
+## Place block
+- **Name**: Place block
+- **ID**: UC3
+- **Description**: The player puts a block onto the map.
+- **Actors**:
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**:
+  - The player is in an unpaused map.
+  - The player has a selected block.
+  - The player has the required building resources.
+  - The player is in a valid building location.
+- **Main Flow**:
+    1. The use case starts when the player performs the gesture mapped to block placement.
+    2. The system constructs the block.
+    3. <mark style="background: #BBFABBA6;">Include (Request tile update)</mark> 
+- **Alternative Flows**
+    - None
+- **Post-Conditions**: A new block is on the map.
+## Break block
+- **Name**: Break block
+- **ID**: UC4
+- **Description**: The player breaks a block on the map.
+- **Actors**:
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**:
+    - The player is in an unpaused map.
+    - The block can be destroyed by player action.
+- **Main Flow**:
+    1. The use case starts when the player performs the gesture mapped to block breaking.
+    2. The system deconstructs the block.
+    3. <mark style="background: #BBFABBA6;">Include (Request tile update)</mark>
+- **Alternative Flows**
+    - None
+- **Post-Conditions**: The map floor is present where the block was located.
+## Request tile update (behavior fragment)
+- **Name**: Request tile update
+- **ID**: UC5
+- **Description**: A map tile is modified.
+- **Actors**:
+    - *Main*: None
+    - *Secondary*: None
+- **Pre-Conditions**: None
+- **Main Flow**:
+    1. The use case starts when an action is performed by a player on a block.
+    2. The system puts the update for all tile of the block in a queue.
+  
+Extension point: Update leakable block tile
+- **Alternative Flows**
+    - None
+- **Post-Conditions**: None.
+## Update building
+- **Name**: Update building
+- **ID**: UC6
+- **Description**: A building's parameters are modified according to current game events.
+- **Actors**:
+    - *Main*: Time
+    - *Secondary*: None
+- **Pre-Conditions**: The game is in an active, unpaused map.
+- **Main Flow**:
+    1. The use case starts when a fixed interval of time (game ticks) passes.
+    2. The system updates the active building according to its traits.
+    3. The system updates the main tile belonging to the building.
+  
+Extension point: Update leakable block tile
+- **Alternative Flows**
+    - None
+- **Post-Conditions**: The building remains active in the unpaused map.
+# Leak identification system
+(new functionality use cases)
+## Clear leaks (behavior fragment)
+- **Name**: Clear leaks
+- **ID**: UC7
+- **Description**: Delete all registered leaks.
+- **Actors**:
+    - *Main*: None
+    - *Secondary*: None
+- **Pre-Conditions**: None.
+- **Main Flow**:
+    1. The use case starts when a game logic reset event is triggered.
+    2. The system clears the consultation set of known leaking tiles.
+    3. The system clears the map grid of known leaking tiles.
 
-#### Update building
+- **Alternative Flows**
+    - None
+- **Post-Conditions**: No leaks are registered.
+## Update leakable block tile
+- **Name**: Clear leaks
+- **ID**: UC8
+- **Description**: The tile's liquid is pushed forward, and checked for leaks.
+- **Actors**:
+    - *Main*: None
+    - *Secondary*: None
+- **Pre-Conditions for segment1**: A building that can leak is having its tiles updated.
+- **Segment 1 Flow**:
+    1. The use case starts when a game logic reset event is triggered.
+    2. The system forwards liquid in the tile to the next connected tile.
+    3. If the system verifies that the tile has started leaking.
+       1. The system registers the tile as leaking.
+    4. If the system verifies that the tile has been plugged by a block.
+       1. The system removes the register of the tile as leaking.
+    5. If the system verifies a transition from not leaking to leaking in either direction.
+       1. The system sets up a minimap update for the pixel corresponding to the tile.
+    6. If the system verifies liquid stopped flowing in the tile.
+       1. The system removes the register of the tile as leaking.
+       2. The system sets up a minimap update for the pixel corresponding to the tile.
 
-### Leak identification system
-#### Update leakable block tile
+- **Alternative Flows**
+    - None
+- **Post-Conditions**: The system has an accurate register of all active leaks.
+## Update leak display
+- **Name**: Update leak display
+- **ID**: UC9
+- **Description**: Displays active leaks in the minimap and local leaks in the overworld.
+- **Actors**:
+    - *Main*: Time
+    - *Secondary*: None
+- **Pre-Conditions**: None.
+- **Main Flow**:
+    1. The use case starts when the time interval corresponding to a display update has passed.
+    2. The system starts handling pending pixel updates for the minimap.
+    3. The system gets the color for new pixels on the minimap (pixels in leaking tiles shown as a light blue).
+    4. The system removes local leaks belonging to removed blocks.
+    5. The system draws dashes rings around the leaks.
 
-#### Clear leaks (behavior fragment)
+- **Alternative Flows**
+    - None
+- **Post-Conditions**:
+  - All active leaks are identified in the minimap.
+  - All active local leaks are identified visually on-screen.
 
-#### Update leak display
-
-(*Please add the use case textual description here.*)
 ### Review
 *(Please add your use case review here)*
 ## Implementation documentation
@@ -178,6 +329,7 @@ and show a blue-dashed ring as below (drawn using the static ``dashCircle(float 
 - However, it tests that the pipe still exists using the ``tile(int x, int y)`` method in the instance of ``World`` in ``Vars``
 . If the tile was broken by the player it should be removed from the leaks. I wasn't able to do this immediately in the ``breakBlock(int x, int y)`` method in the ``InputHandler`` as after removing the tile
 from leaks, an ``updateTile()`` call would place it back in the Data Structure, leading to "hovering" fake leaks that appeared in the overlay but not on the minimap.
+(the place that handles removing blocks using ``BuildPlans`` is within auto-generated code that can't be modified)
 ### Review
 *(Please add your class diagram review here)*
 ### Sequence diagrams
