@@ -613,14 +613,8 @@ public class DesktopInput extends InputHandler{
                 else {
                     // Copy the chosen schematic to history e decidir se queremos com control+c ou não
                     copyHist.copy(lastSchematic);
-                    System.out.println("DSFGJNDFOGI");
+                    System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 }
-                //if left cotrl and mouse wheel are used, intended to navigate through the history
-                /**
-                if (Core.input.keyDown(Binding.diagonalPlacement) && (int)Core.input.axisTap(Binding.rotate) != 0) {
-                    useSchematic(copyHist.get((int) Core.input.axisTap(Binding.rotate)));
-                }
-                */
 
                 schemX = -1;
                 schemY = -1;
@@ -638,9 +632,14 @@ public class DesktopInput extends InputHandler{
         if(Core.input.keyTap(Binding.ctrl) && Core.input.keyTap(Binding.paste)){
             if (Core.input.keyDown(Binding.diagonalPlacement) && (int)Core.input.axisTap(Binding.rotate) != 0) {
                 useSchematic(copyHist.get((int) Core.input.axisTap(Binding.rotate)));
+                lastSchematic = copyHist.get();
+                System.out.println("PASTE");
             }
-
-            useSchematic(copyHist.get());
+            else {
+                useSchematic(copyHist.get());
+                lastSchematic = copyHist.get();
+                System.out.println("PASTE");
+            }
         }
 
         if(!selectPlans.isEmpty()){

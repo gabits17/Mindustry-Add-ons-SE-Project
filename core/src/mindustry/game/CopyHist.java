@@ -5,11 +5,8 @@ import arc.struct.Seq;
 import java.util.Iterator;
 // import mindustry.input.DesktopInput;
 
-/**
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
- */
 
 /**
  * TO-DO:
@@ -35,14 +32,21 @@ public class CopyHist {
 
     private static final int INIT_POS = 0;
 
+    private static final int LAST_POS = 4;
+
+    private static final int PLUS = 1;
+
     // history of copies
-    private final Seq<Schematic> history;
+    private final List<Schematic> history;
+
+    private int size;
 
     private int lastPos;
 
     public CopyHist() {
         // check if arrayList, LinkedList or Seq
-        this.history = new Seq<>(MAX_SIZE);
+        this.history = new ArrayList<>(MAX_SIZE);
+        this.size = 0;
         this.lastPos = INIT_POS;
 
         Events.on(EventType.ClientLoadEvent.class, event -> {
@@ -55,16 +59,19 @@ public class CopyHist {
      * @param scheme: the selected schematic
      */
     public void copy(Schematic scheme){
-        if (history.size == MAX_SIZE ){
-            /** is this logic correct?
-            for(int i = 0; i < MAX_SIZE - 1; i++){
-                Schematic iScheme = history.get(i + 1);
-                history.set(i, iScheme);
-            }*/
-            history.remove(INIT_POS);
-        }
+        if (this.size != INIT_POS)
+            queueIt();
 
-        history.addUnique(scheme);
+        if (!history.contains(scheme)){
+            history.add(INIT_POS, scheme);
+            this.size++;
+        }
+    }
+
+    private void queueIt(){
+        for (int i = INIT_POS; i == this.size - 1; i++){
+            history.add(i + PLUS, history.get(i));
+        }
     }
 
     /**
