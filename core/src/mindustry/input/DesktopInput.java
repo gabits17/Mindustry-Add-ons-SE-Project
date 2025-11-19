@@ -437,7 +437,7 @@ public class DesktopInput extends InputHandler{
         if(!player.dead() && !state.isPaused() && !scene.hasField() && !locked){
             updateMovement(player.unit());
 
-            if(Core.input.keyTap(Binding.respawn)){
+            if(Core.input.keyTap(Binding.respawn) && !Core.input.keyDown(Binding.ctrl)){
                 controlledType = null;
                 recentRespawnTimer = 1f;
                 Call.unitClear(player);
@@ -467,7 +467,7 @@ public class DesktopInput extends InputHandler{
         if(state.isMenu() || Core.scene.hasDialog()) return;
 
         //zoom camera
-        if((!Core.scene.hasScroll() || Core.input.keyDown(Binding.diagonalPlacement)) && !ui.chatfrag.shown() && !ui.consolefrag.shown() && Math.abs(Core.input.axisTap(Binding.zoom)) > 0
+        if(!Core.input.keyDown(Binding.paste) && (!Core.scene.hasScroll() || Core.input.keyDown(Binding.diagonalPlacement)) && !ui.chatfrag.shown() && !ui.consolefrag.shown() && Math.abs(Core.input.axisTap(Binding.zoom)) > 0
             && !Core.input.keyDown(Binding.rotatePlaced) && (Core.input.keyDown(Binding.diagonalPlacement) ||
                 !Binding.zoom.value.equals(Binding.rotate.value) || ((!player.isBuilder() || !isPlacing() || !block.rotate) && selectPlans.isEmpty()))){
             renderer.scaleCamera(Core.input.axisTap(Binding.zoom));
@@ -622,13 +622,15 @@ public class DesktopInput extends InputHandler{
         }
 
         // Copy the chosen schematic to history, bind set to ctrl + alt
-        if(Core.input.keyDown(Binding.ctrl) && Core.input.keyTap(Binding.tab) && !selectPlans.isEmpty()) {
+        if(Core.input.keyDown(Binding.ctrl) && Core.input.keyTap(Binding.copy) && !selectPlans.isEmpty()) {
             System.out.println("COPIED");
             copyHistClass.copy(lastSchematic);
         }
 
-        if(!copyHistClass.isEmpty() && !selectPlans.isEmpty()) {
-            if (Core.input.keyDown(Binding.paste)) {
+        if(!copyHistClass.isEmpty()) {
+            if (Core.input.keyDown(Binding.paste) && Core.input.keyDown(Binding.ctrl)) {
+                lastSchematic = copyHistClass.getCurrent();
+                useSchematic(lastSchematic);
                 if ((int) Core.input.axisTap(Binding.rotate) > 0) {
                     System.out.println("PASTE_NEXT");
                     lastSchematic = copyHistClass.getNext();
@@ -775,7 +777,7 @@ public class DesktopInput extends InputHandler{
         }
 
         if(mode == placing && block != null){
-            if(!overrideLineRotation && !Core.input.keyDown(Binding.diagonalPlacement) && (selectX != cursorX || selectY != cursorY) && ((int)Core.input.axisTap(Binding.rotate) != 0)){
+            if(!overrideLineRotation && !Core.input.keyDown(Binding.diagonalPlacement) && (selectX != cursorX || selectY != cursorY) && ((int)Core.input.axisTap(Binding.rotate) != 0) ){
                 rotation = ((int)((Angles.angle(selectX, selectY, cursorX, cursorY) + 45) / 90f)) % 4;
                 overrideLineRotation = true;
             }

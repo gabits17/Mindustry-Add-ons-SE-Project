@@ -11,11 +11,6 @@ public interface CopyHist {
     void copy(Schematic scheme);
 
     /**
-     * Returns an Iterator of the schematics saved
-     */
-    Iterator<Schematic> Iterator();
-
-    /**
      * Gets the schematic in a given position
      * @param pos: the position of the desired schematic
      */
@@ -24,7 +19,7 @@ public interface CopyHist {
     /**
      * Gets the schematic of the last visited position
      */
-    Schematic get();
+    Schematic getCurrent();
 
     /**
      * Gets the next Schematic stored in the history
