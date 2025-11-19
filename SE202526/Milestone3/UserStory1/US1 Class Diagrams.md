@@ -41,7 +41,7 @@ This command uses methods present in the `Call` class.
 And employs the global variable class `Vars` to access the `Player`.
 - Execute/Redo $\rightarrow$ `rotateBlock`
 - Undo $\rightarrow$ `rotateBlock`
-The command keeps the `Building` that was bellow the cursor upon its creation.
+The command keeps the `Building` that was below the cursor upon its creation.
 ![](Assets/RotateBuildingClass.drawio.svg)
 # Map
 ## Enter Map
@@ -68,7 +68,4 @@ The `Control` and `JoinDialog` classes are shown as they trigger `reset` upon th
 Continuing the description given above, the only difference this diagram has is that instead of `Control` or `JoinDialog`, the `reset` method is, when leaving a game, called by the `PauseDialog` class.
 ![](Assets/LeaveMapClass.drawio.svg)
 # Includes
-## Add Done Action
-#TODO ?
-## Reset Action Commander
-#TODO ?
+No class diagrams are necessary for the included use cases, as the diagrams above already cover the elements they would contain.
