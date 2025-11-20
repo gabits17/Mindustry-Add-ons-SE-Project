@@ -624,16 +624,20 @@ public class DesktopInput extends InputHandler{
         /**
          * Copy the selected schematic and insert in the history
          */
-        if(Core.input.keyDown(Binding.ctrl) && Core.input.keyTap(Binding.copy) && !selectPlans.isEmpty()) {
-            copyHistClass.copy(lastSchematic);
-            Vars.ui.showInfoFade("Copied!", 2f);
+        if(Core.input.keyDown(Binding.ctrl) && Core.input.keyTap(Binding.copy)) {
+            if (!selectPlans.isEmpty() && lastSchematic != null) {
+                copyHistClass.copy(lastSchematic);
+                Vars.ui.showInfoFade("Copied!", 2f);
+            }
+            else
+                Vars.ui.showInfoFade("Nothing to copy!", 2f);
         }
 
         /**
          * Insert a kept schematic on to the world
          */
-        if(!copyHistClass.isEmpty()) {
-            if (Core.input.keyDown(Binding.paste) && Core.input.keyDown(Binding.ctrl)) {
+        if (Core.input.keyDown(Binding.paste) && Core.input.keyDown(Binding.ctrl)) {
+            if(!copyHistClass.isEmpty()) {
                 Vars.ui.showInfoFade("Scroll to access other copied schematics!", 7f);
                 Schematic current = copyHistClass.getCurrent();
 
@@ -649,6 +653,8 @@ public class DesktopInput extends InputHandler{
                 useSchematic(current);
                 lastSchematic = null;
             }
+            else
+                Vars.ui.showInfoFade("Nothing to Paste!", 2f);
         }
 
 
