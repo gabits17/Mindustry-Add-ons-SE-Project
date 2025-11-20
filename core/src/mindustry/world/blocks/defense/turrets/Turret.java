@@ -103,9 +103,14 @@ public class Turret extends ReloadTurret{
     public boolean alwaysShooting = false;
     /** Whether this turret predicts unit movement. */
     public boolean predictTarget = true;
+
     /** Currently targeting mode. Default: Closest */                                                           // US3 CHANGES HERE
     public TargetingMode targetingMode = TargetingMode.CLOSEST_FIRST;
     private static final TargetingMode[] modes = TargetingMode.values();
+
+    /** Current targeting class. Default: Any for turrets that target both air and ground */
+    public TargetingClass targetingClass = TargetingClass.ANY;
+    private static final TargetingClass[] targetClasses = TargetingClass.values();
 
     /** Function for choosing which unit to target. */
     public Sortf unitSort = UnitSorts.closest;
@@ -170,6 +175,20 @@ public class Turret extends ReloadTurret{
         visualRotationOffset = -90f;
         regionRotated1 = 1;
         regionRotated2 = 2;
+        fixTargetingClass();
+    }
+
+    /**
+     * Fixes the targeting class of the turret.
+     * I.e., Turrets that *only* targets air, fixes targetingClass in AIR_FIRST
+     * and turrets that *only* targets ground fixes targetingClass in GROUND_FIRST
+     * For turrets that target both air and ground, it stays in ANY (default)
+     */
+    private void fixTargetingClass() {
+        if(targetAir && !targetGround)
+            targetingClass = TargetingClass.AIR_FIRST;
+        else if(!targetAir && targetGround)
+            targetingClass = TargetingClass.GROUND_FIRST;
     }
 
     @Override
@@ -288,6 +307,7 @@ public class Turret extends ReloadTurret{
         public int queuedBullets = 0;
 
         public TargetingMode targetingMode = Turret.this.targetingMode;                                                     // US3 CHANGES HERE
+        public TargetingClass targetingClass = Turret.this.targetingClass;
 
         public float heatReq;
         public float[] sideHeat = new float[4];
@@ -586,20 +606,32 @@ public class Turret extends ReloadTurret{
             super.handleLiquid(source, liquid, amount);
         }
 
-        /** to return the units sorted according to the targeting mode */                                                   // US3 CHANGE HERE
+        /** Returns the units sorted according to the targeting mode and class */                                                   // US3 CHANGE HERE
         protected Sortf unitSorter() {
-            Sortf unitTarget = null;
+            Sortf mode = getSortf();
+            // if targeting is focused on air units (for turrets that targets both air and ground targets)
+            if(targetingClass == TargetingClass.AIR_FIRST)
+                return UnitSorts.airFirst(mode);
+            // if targeting is focused on ground units (for turrets that targets both air and ground targets)
+            else if(targetingClass == TargetingClass.GROUND_FIRST)
+                return UnitSorts.groundFirst(mode);
+
+            // if targeting is not focused on any, only return the sorted according to mode
+            return mode;
+        }
+
+        /** Gets the current targeting mode **/
+        private Sortf getSortf() {
+            Sortf mode = null;
             switch(targetingMode) {
-                // case CLOSEST_FIRST -> unitTarget = UnitSorts.closest;
-                case FARTHEST_FIRST -> unitTarget = UnitSorts.farthest;
-                case STRONGEST_FIRST -> unitTarget = UnitSorts.strongest;
-                case WEAKEST_FIRST -> unitTarget = UnitSorts.weakest;
-                case FASTEST_FIRST -> unitTarget = UnitSorts.fastest;
-                case SLOWEST_FIRST -> unitTarget = UnitSorts.slowest;
-                // the rest of the modes need more logic involved, not done yet.
-                default -> unitTarget = UnitSorts.closest;
+                case CLOSEST_FIRST -> mode = UnitSorts.closest;
+                case FARTHEST_FIRST -> mode = UnitSorts.farthest;
+                case STRONGEST_FIRST -> mode = UnitSorts.strongest;
+                case WEAKEST_FIRST -> mode = UnitSorts.weakest;
+                case FASTEST_FIRST -> mode = UnitSorts.fastest;
+                case SLOWEST_FIRST -> mode = UnitSorts.slowest;
             }
-            return unitTarget;
+            return mode;
         }
 
         protected boolean validateTarget(){
@@ -803,6 +835,7 @@ public class Turret extends ReloadTurret{
             write.f(reloadCounter);
             write.f(rotation);
             write.s(this.targetingMode.ordinal()); // saving the ordinal of the enum
+            write.s(this.targetingClass.ordinal());
         }
 
         @Override
@@ -814,14 +847,16 @@ public class Turret extends ReloadTurret{
                 rotation = read.f();
             }
 
-            if(revision >= 2)
+            if(revision >= 2) {
                 this.targetingMode = Turret.modes[read.s()];
+                this.targetingClass = Turret.targetClasses[read.s()];
+            }
         }
 
         @Override
         public byte version(){
             //return 1;
-            return 2; // new version because of targetingMode being added; older save files must be handled differently
+            return 2; // new version because of targetingMode and targetingClass being added
         }
 
         @Override
