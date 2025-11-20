@@ -29,7 +29,7 @@ Gabriela Silva (67286)
 
 ### Scrum Board at the beginning of the sprint
 
-Please add the scrumboard picture here.
+![sprint6_initial_scrum_board](assets/sprint6_initial_scrum_board.png)
 
 ### Scrum Board in the middle of the sprint
 
