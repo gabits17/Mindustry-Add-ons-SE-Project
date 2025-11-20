@@ -634,7 +634,7 @@ public class DesktopInput extends InputHandler{
          */
         if(!copyHistClass.isEmpty()) {
             if (Core.input.keyDown(Binding.paste) && Core.input.keyDown(Binding.ctrl)) {
-                Vars.ui.showInfoFade("Scroll to access other copied schematics!", 2f);
+                Vars.ui.showInfoFade("Scroll to access other copied schematics!", 7f);
                 Schematic current = copyHistClass.getCurrent();
 
                 if ((int) Core.input.axisTap(Binding.rotate) > 0) {

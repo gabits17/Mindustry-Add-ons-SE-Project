@@ -48,10 +48,6 @@ public class CopyHistClass implements CopyHist {
         this.history = new ArrayList<>(MAX_SIZE);
         this.size = 0;
         this.lastPos = INIT_POS;
-
-        Events.on(EventType.ClientLoadEvent.class, event -> {
-            // to-do
-        });
     }
 
 
@@ -68,6 +64,8 @@ public class CopyHistClass implements CopyHist {
     }
 
     private void queueIt(){
+        if (size == MAX_SIZE)
+            history.remove(LAST_POS);
         for (int i = INIT_POS; i == this.size - 1; i++){
             history.add(i + PLUS, history.get(i));
         }
