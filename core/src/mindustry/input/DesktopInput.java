@@ -621,44 +621,36 @@ public class DesktopInput extends InputHandler{
             }
         }
 
-        // Copy the chosen schematic to history, bind set to ctrl + alt
+        /**
+         * Copy the selected schematic and insert in the history
+         */
         if(Core.input.keyDown(Binding.ctrl) && Core.input.keyTap(Binding.copy) && !selectPlans.isEmpty()) {
-            System.out.println("COPIED");
             copyHistClass.copy(lastSchematic);
-        }
-
-        if(!copyHistClass.isEmpty()) {
-            if (Core.input.keyDown(Binding.paste) && Core.input.keyDown(Binding.ctrl)) {
-                lastSchematic = copyHistClass.getCurrent();
-                useSchematic(lastSchematic);
-                if ((int) Core.input.axisTap(Binding.rotate) > 0) {
-                    System.out.println("PASTE_NEXT");
-                    lastSchematic = copyHistClass.getNext();
-                    useSchematic(lastSchematic);//get((int) Core.input.axisTap(Binding.rotate)));
-                } else if ((int) Core.input.axisTap(Binding.rotate) < 0) {
-                    System.out.println("PASTE_PREVIOUS");
-                    lastSchematic = copyHistClass.getPrevious();
-                    useSchematic(lastSchematic);
-                }
-            }
+            Vars.ui.showInfoFade("Copied!", 2f);
         }
 
         /**
-         * Paste the chosen schematic to the world
+         * Insert a kept schematic on to the world
          */
-         //if(Core.input.keyTap(Binding.paste)){
-            if(!copyHistClass.isEmpty()) {
-                if (/*Core.input.keyDown(Binding.ctrl) &&*/ Core.input.keyTap(Binding.next)  ){//&& (int) Core.input.axisTap(Binding.rotate) != 0) {
+        if(!copyHistClass.isEmpty()) {
+            if (Core.input.keyDown(Binding.paste) && Core.input.keyDown(Binding.ctrl)) {
+                Vars.ui.showInfoFade("Scroll to access other copied schematics!", 2f);
+                Schematic current = copyHistClass.getCurrent();
+
+                if ((int) Core.input.axisTap(Binding.rotate) > 0) {
                     System.out.println("PASTE_NEXT");
-                    lastSchematic = copyHistClass.getNext();
-                    useSchematic(lastSchematic);//get((int) Core.input.axisTap(Binding.rotate)));
-                } else if(Core.input.keyTap(Binding.previous)){
+                    current = copyHistClass.getNext();
+
+                } else if ((int) Core.input.axisTap(Binding.rotate) < 0) {
                     System.out.println("PASTE_PREVIOUS");
-                    lastSchematic = copyHistClass.getPrevious();
-                    useSchematic(lastSchematic);
+                    current = copyHistClass.getPrevious();
                 }
+
+                useSchematic(current);
+                lastSchematic = null;
             }
-        //}
+        }
+
 
         if(!selectPlans.isEmpty()){
             if(Core.input.keyTap(Binding.schematicFlipX)){
@@ -798,7 +790,6 @@ public class DesktopInput extends InputHandler{
         }
 
         if(Core.input.keyRelease(Binding.breakBlock) || Core.input.keyRelease(Binding.select)){
-
             //Handle placing of blocks
             if(mode == placing && block != null){ //touch up while placing, place everything in selection
                 if(input.keyDown(Binding.boost)){

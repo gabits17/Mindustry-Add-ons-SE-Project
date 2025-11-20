@@ -164,6 +164,7 @@ public class SchematicsDialog extends BaseDialog{
                                         ui.showInfo(Core.bundle.format("mod.item.remove", s.mod.meta.displayName));
                                     }else{
                                         ui.showConfirm("@confirm", "@schematic.delete.confirm", () -> {
+                                            System.out.println("tas aqui maré");
                                             schematics.remove(s);
                                             rebuildPane.run();
                                         });
