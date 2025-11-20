@@ -63,7 +63,7 @@ Note - included steps are those relating to reaching the **new functionality**, 
     - *Secondary*: None
 - **Pre-Conditions**: The player is on the pause menu of an active map.
 - **Main Flow**:
-    1. The use case starts when the player presses the button to quit the map.
+    1. The use case starts when the player presses the button to quit the map on the pause menu.
     2. The system resets the game logic.
     3.  <mark style="background: #BBFABBA6;">Include (Clear Leaks)</mark>
 - **Alternative Flows**
@@ -103,6 +103,8 @@ Note - included steps are those relating to reaching the **new functionality**, 
     1. The use case starts when the player performs the gesture mapped to block breaking.
     2. The system deconstructs the block.
     3. <mark style="background: #BBFABBA6;">Include (Request tile update)</mark>
+    4. If the system verifies that the tile of the block is leaking.
+       1. The system explicitly removes the tile from known leaks.
 - **Alternative Flows**
     - None
 - **Post-Conditions**: The map floor is present where the block was located.
@@ -193,8 +195,7 @@ Extension point: Update leakable block tile
     1. The use case starts when the time interval corresponding to a display update has passed.
     2. The system starts handling pending pixel updates for the minimap.
     3. The system gets the color for new pixels on the minimap (pixels in leaking tiles shown as a light blue).
-    4. The system removes local leaks belonging to removed blocks.
-    5. The system draws dashes rings around the leaks.
+    4. The system draws dashes rings around the leaks.
 
 - **Alternative Flows**
     - None
@@ -323,13 +324,7 @@ the color from a block to place each color were also omitted to avoid confusion.
 - This method uses the player's x and y coordinates from the static ``Player`` instance in ``Vars`` to find all leaks within a 10 block radius of the player
 and show a blue-dashed ring as below (drawn using the static ``dashCircle(float x, float y, float rad, Color color)`` method in the ``Drawf`` class):
 
-
 ![img_1.png](img_1.png)
-
-- However, it tests that the pipe still exists using the ``tile(int x, int y)`` method in the instance of ``World`` in ``Vars``
-. If the tile was broken by the player it should be removed from the leaks. I wasn't able to do this immediately in the ``breakBlock(int x, int y)`` method in the ``InputHandler`` as after removing the tile
-from leaks, an ``updateTile()`` call would place it back in the Data Structure, leading to "hovering" fake leaks that appeared in the overlay but not on the minimap.
-(the place that handles removing blocks using ``BuildPlans`` is within auto-generated code that can't be modified)
 ### Review
 *(Please add your class diagram review here)*
 ### Sequence diagrams
@@ -340,7 +335,3 @@ from leaks, an ``updateTile()`` call would place it back in the Data Structure, 
 (*Test cases specification and pointers to their implementation, where adequate.*)
 ### Review
 *(Please add your test specification review here)*
-
-### Tour report
-
-It should be noted that the feature was only implemented with Des
