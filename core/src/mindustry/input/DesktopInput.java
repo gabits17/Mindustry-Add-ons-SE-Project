@@ -782,7 +782,7 @@ public class DesktopInput extends InputHandler{
             schemY = -1;
         }
 
-        if (Core.input.keyDown(Binding.control) && Core.input.keyDown(Binding.boost) &&Core.input.keyTap(Binding.undo)) {
+        if (Core.input.keyDown(Binding.control) && Core.input.keyDown(Binding.boost) && Core.input.keyTap(Binding.undo)) {
             commander.redoTop();
         } else if (Core.input.keyDown(Binding.control) && Core.input.keyTap(Binding.undo)) {
             commander.undoTop();
