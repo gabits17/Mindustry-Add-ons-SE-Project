@@ -226,6 +226,22 @@ My reasoning for this is, when a player enters a map with a pre-existing leak, t
 
 Other than this the diagram and every use case report seemed very comprehensible and represents very well what I experienced personally testing this feature.
 
+**Author** : Diogo Antunes (67763), 21/11/2025 23:44
+Review response:
+I intended on organising the folder once I had the final version (especially for class diagrams) as putting images into folders early would lead to duplicate names when pasting new images.
+However, I should name them properly, instead of just numbering them.
+
+Regarding break block and place block, as mentioned in the use case, break block has an extra step not present in place block.
+The player interaction is set off under different circumstance, so grouping the two doesn't feel like it follows specification,
+even if the two use cases are quite similar.  
+Enter map and Leave map have very similar logic, but different ways of starting the interaction, so once again, I feel I shouldn't group them.
+Regarding enter map loading all tiles, which would add them to the leaks registered. However, I feel this goes under the update buildings use case,
+as the focus for the use case of entering a map and leaving a map is purely the logic reset that happens as a result on directly entering the map.
+
+Anything that happens afterwards would be considered map loading, which I feel goes beyond the use case, and more into enqueuing updates for buildings,
+which would be handled by time.
+
+I would appreciate feedback regarding the structure of the extended use-case write up, to ensure it meets specifications.
 
 *(Please add your use case review here)*
 ## Implementation documentation
