@@ -3,6 +3,10 @@ Leak identification via minimap and proximity
 ## Author(s)
 Diogo Antunes 67763
 ## Reviewer(s)
+
+Gabriel Matias Falcão 67775
+Manuel Oliveira 68547
+
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story:
 As a USER WITH AN IN-GAME BASE THAT COVERS A WIDE AREA,
@@ -15,8 +19,17 @@ in a busy game environment.
 
 #### Note (regarding changes from Milestone 1)
 - Did not go forward with the decision to add leak messages because when extending an existing leaking pipe, this would be considered
-a new leak, resulting in messages being sent often during casual base-building when setting up liquid flow systems.
+  a new leak, resulting in messages being sent often during casual base-building when setting up liquid flow systems.
 ### Review
+
+Gabriel Matias Falcão (67775), 24/10/2025
+
+*This could be developed further as a sort of alert system, using the chat or some user interface, in which the player could sort between alerts (destroyed units, pipes, blocks...)*
+
+Manuel Oliveira (68547), 24/10/2025
+
+*The feature looks worth implementing if not too worksome for our timeframe.*
+
 *(Please add your user story review here)*
 ## Note about content of the following work
 
@@ -52,7 +65,7 @@ Note - included steps are those relating to reaching the **new functionality**, 
     3. The system resets the game logic.
     4. <mark style="background: #BBFABBA6;">Include (Clear Leaks)</mark>
 - **Alternative Flows**
-  - None
+    - None
 - **Post-Conditions**: The player is within the map. No traces from other maps are present.
 ## Leave map
 - **Name**: Leave map
@@ -78,14 +91,14 @@ Note - included steps are those relating to reaching the **new functionality**, 
     - *Main*: Player
     - *Secondary*: None
 - **Pre-Conditions**:
-  - The player is in an unpaused map.
-  - The player has a selected block.
-  - The player has the required building resources.
-  - The player is in a valid building location.
+    - The player is in an unpaused map.
+    - The player has a selected block.
+    - The player has the required building resources.
+    - The player is in a valid building location.
 - **Main Flow**:
     1. The use case starts when the player performs the gesture mapped to block placement.
     2. The system constructs the block.
-    3. <mark style="background: #BBFABBA6;">Include (Request tile update)</mark> 
+    3. <mark style="background: #BBFABBA6;">Include (Request tile update)</mark>
 - **Alternative Flows**
     - None
 - **Post-Conditions**: A new block is on the map.
@@ -104,7 +117,7 @@ Note - included steps are those relating to reaching the **new functionality**, 
     2. The system deconstructs the block.
     3. <mark style="background: #BBFABBA6;">Include (Request tile update)</mark>
     4. If the system verifies that the tile of the block is leaking.
-       1. The system explicitly removes the tile from known leaks.
+        1. The system explicitly removes the tile from known leaks.
 - **Alternative Flows**
     - None
 - **Post-Conditions**: The map floor is present where the block was located.
@@ -118,7 +131,7 @@ Note - included steps are those relating to reaching the **new functionality**, 
 - **Pre-Conditions**: None
 - **Main Flow**:
     1. The system sets up the update of all block tiles, enqueuing them.
-  
+
 Extension point: Update leakable block tile
 - **Alternative Flows**
     - None
@@ -135,7 +148,7 @@ Extension point: Update leakable block tile
     1. The use case starts when a fixed interval of time (game ticks) passes.
     2. The system updates the active building according to its traits.
     3. The system updates the main tile belonging to the building.
-  
+
 Extension point: Update leakable block tile
 - **Alternative Flows**
     - None
@@ -170,14 +183,14 @@ Extension point: Update leakable block tile
     1. The use case starts when a game logic reset event is triggered.
     2. The system forwards liquid in the tile to the next connected tile.
     3. If the system verifies that the tile has started leaking.
-       1. The system registers the tile as leaking.
+        1. The system registers the tile as leaking.
     4. If the system verifies that the tile has been plugged by a block.
-       1. The system removes the register of the tile as leaking.
+        1. The system removes the register of the tile as leaking.
     5. If the system verifies a transition from not leaking to leaking in either direction.
-       1. The system sets up a minimap update for the pixel corresponding to the tile.
+        1. The system sets up a minimap update for the pixel corresponding to the tile.
     6. If the system verifies liquid stopped flowing in the tile.
-       1. The system removes the register of the tile as leaking.
-       2. The system sets up a minimap update for the pixel corresponding to the tile.
+        1. The system removes the register of the tile as leaking.
+        2. The system sets up a minimap update for the pixel corresponding to the tile.
 
 - **Alternative Flows**
     - None
@@ -199,10 +212,21 @@ Extension point: Update leakable block tile
 - **Alternative Flows**
     - None
 - **Post-Conditions**:
-  - All active leaks are identified in the minimap.
-  - All active local leaks are identified visually on-screen.
+    - All active leaks are identified in the minimap.
+    - All active local leaks are identified visually on-screen.
 
 ### Review
+**Author** : Manel Oliveira (68547), 21/11/2025 20:00
+A simple note about the document and folder's organization. Maybe split this readme into different files akin to what Gabriel did, and an Assets folder. It really isn't that big of an issue, but it's important to keep things organized.
+
+**Break block** and **Place block** maybe should be generalised to a possible **Interact With Block**. This may not be the case, but from my point of view in this situation they seem to have the same effect on the system. The same could be said to **Enter map** and **Leave map**.
+
+Shouldn't **Enter map** include **Update leakable block tile**?
+My reasoning for this is, when a player enters a map with a pre-existing leak, they didn't break or place blocks, but a leak is still displayed.
+
+Other than this the diagram and every use case report seemed very comprehensible and represents very well what I experienced personally testing this feature.
+
+
 *(Please add your use case review here)*
 ## Implementation documentation
 (*Please add the class diagram(s) illustrating your code evolution, along with a technical description of the changes made by your team. The description may include code snippets if adequate.*)
@@ -222,10 +246,10 @@ This class diagram is related to the player action of joining a map. It's worth 
 selecting a map to play in the campaign. However, within the use case context, the interaction is the same since the use case doesn't involve the map selection, but instead what happens afterwards.
 
 - The ``show`` method in the class ``MapPlayDialog`` handles the press of a button to play the map, which calls the ``playMap`` method in the
-instance of the ``Control`` class present in ``Vars`` (a class that connects many classes with a wide variety of purposes).
+  instance of the ``Control`` class present in ``Vars`` (a class that connects many classes with a wide variety of purposes).
 - This ``playMap`` method calls for a logic ``reset`` in the ``Logic`` instance in ``Vars``. This ``Logic`` class handles entities and waves, but doesn't store
-the game state as indicated in its documentation. To perform a reset on logic, it fires a ``ResetEvent`` which causes the ``Events`` class to go over
-logic that other classes have set up to handle this event (``Leaks`` being among them).
+  the game state as indicated in its documentation. To perform a reset on logic, it fires a ``ResetEvent`` which causes the ``Events`` class to go over
+  logic that other classes have set up to handle this event (``Leaks`` being among them).
 
 #### Leave map
 ![img_3.png](img_3.png)
@@ -245,17 +269,17 @@ that is stored in ``Events`` and performed whenever the event is fired (in the c
 I joined the class diagram because ``BreakBlock`` and ``PlaceBlock`` only call slightly different methods, and ``Request tile update`` is a behavior fragment
 included in both that makes more sens in context.
 
-Involvement of classes:  
+Involvement of classes:
 - When a player places/breaks a block, this creates a call for ``beginPlace/beginBreak`` respectively, which calls a static method of the same name in ``Build``.
 - From here, the ``world`` attribute (``World`` instance) of ``Vars`` is accessed to obtain the tile at position *(x, y)*, from which the building in that tile can be obtained.
 - (when breaking a block, it also explicitly attempts to ``removeLeak`` with the ``Leaks`` singleton instance to avoid keeping leaks for destroyed blocks).
 - With this ``Building`` instance, after processing other logic not relevant to the use case (unrelated to added functionality), the methods ``setConstruct`` (for place) or ``setDeconstruct`` (for break) are called,
-leading to a request to update the tile.
+  leading to a request to update the tile.
 - The **Request tile update** simply represents calling ``updateTile(Tile tile)`` method in the ``Pathfinder`` instance of Vars calls ``updateTile(Tile tile)`` in the ``ControlPathFinder`` instance also of ``Vars``.
 - This updateTile in ``ControlPathfinder``calls ``updateSingleTile(Tile t)`` for each tile in the building (a building can have multiple tiles), adding the position of each tile
-to a queue of updates.
+  to a queue of updates.
 - The ``updateTile()`` is custom defined for each building and has no logic in its original definition. However, the logic for the specific
-case of leakable tiles (conduits) can be seen in the use case "Update leakable block tile".
+  case of leakable tiles (conduits) can be seen in the use case "Update leakable block tile".
 
 #### Update building
 ![img_5.png](img_5.png)
@@ -298,7 +322,7 @@ adds an instance of ``Renderer`` (an implementation of ``ApplicationListener``),
 
 As such:
 - The game runs with an instance of ``Renderer`` (which contains a ``MinimapRenderer`` attribute), and frequently calls its ``update()`` method.
-- If the game is not in a menu state, it needs to update the minimap, which it does by calling the ``update()`` method in the ``MinimapRenderer`` instance **minimap**.  
+- If the game is not in a menu state, it needs to update the minimap, which it does by calling the ``update()`` method in the ``MinimapRenderer`` instance **minimap**.
 
 Note on stereotypes:  
 I consider the renderers to be of the **control** stereotype as they communicate with the lower
@@ -313,24 +337,24 @@ Pal instantiates colors and nothing else, so it doesn't perform a specific funct
 
 I won't go further into detail of the many intermediate classes that the renderer goes through to get the Block and color avoid confusion.
 
-What I'm omitting in the diagram to condense the logic is the following: 
+What I'm omitting in the diagram to condense the logic is the following:
 
 - The ``Vars`` class has an attribute of class ``World`` that stores the tiles of the active map and can get a tile given an ``int`` position value using a method ``tile(int pos)``.
- 
+
 **Relevant case for minimap**
 - The relevant case here is when the tile corresponds to a ``Block`` specialization ``Conduit``. Getting the color for display is done using ``minimapColor(Tile tile)`` I overrode in ``Conduit``
-to return the int value for the light blue color ``Pal.leakingWarn`` if the tile is leaking (``super`` otherwise).
+  to return the int value for the light blue color ``Pal.leakingWarn`` if the tile is leaking (``super`` otherwise).
 - This color is obtained by calling the static ``getLeakColorValue()`` method in Leaks. The integer value returned by the ``rgba()`` called on this color is stored in the int buffer that represents the colors to display on the minimap.
 - This presence of a leak is quickly checked by using the ``isLeaking(tile Tile)`` method in the singleton ``Leaks``, which checks if it has the tile stored.
-- Note: ``Pal`` is the palette class that stores used colors of the ``Color`` class. The pixel map and such buffers that the application uses after getting 
-the color from a block to place each color were also omitted to avoid confusion.
+- Note: ``Pal`` is the palette class that stores used colors of the ``Color`` class. The pixel map and such buffers that the application uses after getting
+  the color from a block to place each color were also omitted to avoid confusion.
 
 #### - Showing local leaks (going back to ``update`` in ``Renderer``)
 - The ``update()`` method in ``Renderer`` also calls the own class's ``draw()`` method if the ``boolean pixelate`` from the ``Renderer`` static instance in ``Vars`` is turned off (decided in settings).
 - This method performs ``drawBottom()`` in ``OverlayRenderer``, which calls a method of the same name in ``DesktopInput``(assuming playing in Desktop).
 - In ``DesktopInput``, the **new functionality** is finally called on the instance of the ``Leaks`` singleton: ``drawLocalLeaks``.
 - This method uses the player's x and y coordinates from the static ``Player`` instance in ``Vars`` to find all leaks within a 10 block radius of the player
-and show a blue-dashed ring as below (drawn using the static ``dashCircle(float x, float y, float rad, Color color)`` method in the ``Drawf`` class):
+  and show a blue-dashed ring as below (drawn using the static ``dashCircle(float x, float y, float rad, Color color)`` method in the ``Drawf`` class):
 
 ![img_1.png](img_1.png)
 Note: I cnsidered the InputHandler and DesktopInput here as control and not as boundary because they perform multiple functions,
