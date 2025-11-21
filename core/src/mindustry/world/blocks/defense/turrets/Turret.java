@@ -7,6 +7,9 @@ import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.math.geom.*;
+import arc.scene.ui.Button;
+import arc.scene.ui.ButtonGroup;
+import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
@@ -878,7 +881,23 @@ public class Turret extends ReloadTurret{
 
             Runnable swapTargeting = () -> targetingMode = targetingMode.next();
 
-            table.button("Swap Target", swapTargeting).width(180f);
+
+            //table.button(() -> targetingMode.name(), () -> targetingMode = targetingMode.next()).width(300f);
+
+            // Create a ButtonGroup so only one button can be active at a time
+
+            Button button = table.button((targetingMode.toString().split("_")[0].toLowerCase()), swapTargeting).get();
+
+            table.add(button);
+
+            //button.update();
+
+
+
+                // Dynamically set button state
+            // button.update(() -> button.setChecked(command == item || (command == null && unit.defaultCommand == item)));
+
+
 
             /* TODO:
              * - Create a button to click and allow the change of targeting mode
