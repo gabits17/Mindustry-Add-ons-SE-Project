@@ -37,6 +37,7 @@ public class RemoveSelectionCommand implements Command {
 
     @Override
     public void undo() {
+
         this.input.flushPlans(removed);
     }
 

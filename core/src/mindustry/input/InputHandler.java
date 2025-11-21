@@ -1642,11 +1642,16 @@ public abstract class InputHandler implements InputProcessor, GestureListener {
     protected Seq<BuildPlan> flushPlans(Seq<BuildPlan> plans) {
         Seq<BuildPlan> builtPlans = new Seq<>();
         for (var plan : plans) {
-            if (plan.block != null && validPlace(plan.x, plan.y, plan.block, plan.rotation, null, true)) {
+            if (plan.block != null ) {
+                if (world.build(plan.x, plan.y) != null && Objects.equals(world.build(plan.x, plan.y).block.name, plan.block.name)) {
+                    player.unit().removeBuild(plan.x, plan.y, true); //This is used in undo, why? because when undoing a build action one needs to remove the remove buildplans that were there
+                    //And make sure that it does not remove the remove plans of blocks that are not equal to the planned block
+                }
+                if (validPlace(plan.x, plan.y, plan.block, plan.rotation, null, true)) {
                 BuildPlan copy = plan.copy();
                 plan.block.onNewPlan(copy);
                 player.unit().addBuild(copy);
-                builtPlans.add(plan);
+                builtPlans.add(plan);}
             }
         }
         return builtPlans;
