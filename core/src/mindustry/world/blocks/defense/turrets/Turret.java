@@ -28,6 +28,7 @@ import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;
+import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.draw.*;
 import mindustry.world.meta.*;
 
@@ -176,6 +177,7 @@ public class Turret extends ReloadTurret{
         regionRotated1 = 1;
         regionRotated2 = 2;
         fixTargetingClass();
+        configurable = true;
     }
 
     /**
@@ -871,8 +873,13 @@ public class Turret extends ReloadTurret{
         }
 
         @Override
-        public void buildConfiguration(Table t) {
-            super.buildConfiguration(t);
+        public void buildConfiguration(Table table) {
+            super.buildConfiguration(table);
+
+            Runnable swapTargeting = () -> targetingMode = targetingMode.next();
+
+            table.button("Swap Target", swapTargeting).width(180f);
+
             /* TODO:
              * - Create a button to click and allow the change of targeting mode
              * - Implement a way to change between the targeting modes, having consideration
@@ -881,6 +888,17 @@ public class Turret extends ReloadTurret{
              * - Check if worth to implement the modes that focus on grounder, flying or naval units first
              */
         }
+
+        @Override
+        public void display(Table t){
+            //String CurrentMode = targetingMode.toString().split("_")[0].toLowerCase();
+            super.display(t);
+            t.row();
+            t.add("Targeting: " + targetingMode.toString().split("_")[0].toLowerCase());
+            t.row();
+            t.bottom();
+        }
+
     }
 
     public static class BulletEntry{
