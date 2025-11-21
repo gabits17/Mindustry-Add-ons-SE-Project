@@ -63,7 +63,7 @@ Note - included steps are those relating to reaching the **new functionality**, 
     - *Secondary*: None
 - **Pre-Conditions**: The player is on the pause menu of an active map.
 - **Main Flow**:
-    1. The use case starts when the player presses the button to quit the map.
+    1. The use case starts when the player presses the button to quit the map on the pause menu.
     2. The system resets the game logic.
     3.  <mark style="background: #BBFABBA6;">Include (Clear Leaks)</mark>
 - **Alternative Flows**
@@ -103,6 +103,8 @@ Note - included steps are those relating to reaching the **new functionality**, 
     1. The use case starts when the player performs the gesture mapped to block breaking.
     2. The system deconstructs the block.
     3. <mark style="background: #BBFABBA6;">Include (Request tile update)</mark>
+    4. If the system verifies that the tile of the block is leaking.
+       1. The system explicitly removes the tile from known leaks.
 - **Alternative Flows**
     - None
 - **Post-Conditions**: The map floor is present where the block was located.
@@ -115,8 +117,7 @@ Note - included steps are those relating to reaching the **new functionality**, 
     - *Secondary*: None
 - **Pre-Conditions**: None
 - **Main Flow**:
-    1. The use case starts when an action is performed by a player on a block.
-    2. The system puts the update for all tile of the block in a queue.
+    1. The system sets up the update of all block tiles, enqueuing them.
   
 Extension point: Update leakable block tile
 - **Alternative Flows**
@@ -193,8 +194,7 @@ Extension point: Update leakable block tile
     1. The use case starts when the time interval corresponding to a display update has passed.
     2. The system starts handling pending pixel updates for the minimap.
     3. The system gets the color for new pixels on the minimap (pixels in leaking tiles shown as a light blue).
-    4. The system removes local leaks belonging to removed blocks.
-    5. The system draws dashes rings around the leaks.
+    4. The system draws dashes rings around the leaks.
 
 - **Alternative Flows**
     - None
@@ -212,6 +212,8 @@ Extension point: Update leakable block tile
 *(Please add your implementation summary review here)*
 ### Class diagrams
 (*Class diagrams and their discussion in natural language.*)
+The **boundary** stereotype is used for modelling communication boundaries, not to be mistaken with interface,
+which is used in the diagram to show java interfaces that are implemented by classes.
 
 #### Enter map
 ![img_2.png](img_2.png)
@@ -246,9 +248,10 @@ included in both that makes more sens in context.
 Involvement of classes:  
 - When a player places/breaks a block, this creates a call for ``beginPlace/beginBreak`` respectively, which calls a static method of the same name in ``Build``.
 - From here, the ``world`` attribute (``World`` instance) of ``Vars`` is accessed to obtain the tile at position *(x, y)*, from which the building in that tile can be obtained.
+- (when breaking a block, it also explicitly attempts to ``removeLeak`` with the ``Leaks`` singleton instance to avoid keeping leaks for destroyed blocks).
 - With this ``Building`` instance, after processing other logic not relevant to the use case (unrelated to added functionality), the methods ``setConstruct`` (for place) or ``setDeconstruct`` (for break) are called,
 leading to a request to update the tile.
-- The ``updateTile(Tile tile)`` method in the ``Pathfinder`` instance of Vars calls ``updateTile(Tile tile)`` in the ``ControlPathFinder`` instance also of ``Vars``.
+- The **Request tile update** simply represents calling ``updateTile(Tile tile)`` method in the ``Pathfinder`` instance of Vars calls ``updateTile(Tile tile)`` in the ``ControlPathFinder`` instance also of ``Vars``.
 - This updateTile in ``ControlPathfinder``calls ``updateSingleTile(Tile t)`` for each tile in the building (a building can have multiple tiles), adding the position of each tile
 to a queue of updates.
 - The ``updateTile()`` is custom defined for each building and has no logic in its original definition. However, the logic for the specific
@@ -295,8 +298,14 @@ adds an instance of ``Renderer`` (an implementation of ``ApplicationListener``),
 
 As such:
 - The game runs with an instance of ``Renderer`` (which contains a ``MinimapRenderer`` attribute), and frequently calls its ``update()`` method.
-- If the game is not in a menu state, it needs to update the minimap, which it does by calling the ``update()`` method in the ``MinimapRenderer`` instance **minimap**.
+- If the game is not in a menu state, it needs to update the minimap, which it does by calling the ``update()`` method in the ``MinimapRenderer`` instance **minimap**.  
 
+Note on stereotypes:  
+I consider the renderers to be of the **control** stereotype as they communicate with the lower
+structures that hold the data for the on-screen pixels.  
+I also consider *Block* to be control as there's one per type of block in the game for which
+it performs a set of functionalities, while there's an instance of building, per building block in the game.
+Pal instantiates colors and nothing else, so it doesn't perform a specific function aside from holding **Colors**.
 #### - Minimap Update
 - ``update()`` in ``MinimapRenderer`` goes through pending updates for world positions that were sent for update
   (the global Vars can translate these into tiles, and then blocks, from which a color can be fetched).
@@ -323,13 +332,10 @@ the color from a block to place each color were also omitted to avoid confusion.
 - This method uses the player's x and y coordinates from the static ``Player`` instance in ``Vars`` to find all leaks within a 10 block radius of the player
 and show a blue-dashed ring as below (drawn using the static ``dashCircle(float x, float y, float rad, Color color)`` method in the ``Drawf`` class):
 
-
 ![img_1.png](img_1.png)
+Note: I cnsidered the InputHandler and DesktopInput here as control and not as boundary because they perform multiple functions,
+and in this use case they aren't handling direct input, but instead managing a portion fo the logic regarding drawing overlays in the map.
 
-- However, it tests that the pipe still exists using the ``tile(int x, int y)`` method in the instance of ``World`` in ``Vars``
-. If the tile was broken by the player it should be removed from the leaks. I wasn't able to do this immediately in the ``breakBlock(int x, int y)`` method in the ``InputHandler`` as after removing the tile
-from leaks, an ``updateTile()`` call would place it back in the Data Structure, leading to "hovering" fake leaks that appeared in the overlay but not on the minimap.
-(the place that handles removing blocks using ``BuildPlans`` is within auto-generated code that can't be modified)
 ### Review
 *(Please add your class diagram review here)*
 ### Sequence diagrams
@@ -340,7 +346,3 @@ from leaks, an ``updateTile()`` call would place it back in the Data Structure, 
 (*Test cases specification and pointers to their implementation, where adequate.*)
 ### Review
 *(Please add your test specification review here)*
-
-### Tour report
-
-It should be noted that the feature was only implemented with Des

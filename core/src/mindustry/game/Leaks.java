@@ -127,9 +127,7 @@ public class Leaks {
         // Intersects with square around player x and y
         this.leakTree.intersect(x - MIN_RANGE , y - MIN_RANGE, MIN_DIAM, MIN_DIAM, tile -> {
             //Ensure the tile really is leaking (if the block was broken, it shouldn't be registered as a leak)
-            if(!(world.tile(tile.x, tile.y).build instanceof Conduit.ConduitBuild)){
-                removeLeak(tile);
-            } else if(tile.within(x, y, MIN_RANGE)) {
+            if(tile.within(x, y, MIN_RANGE)) {
                 Drawf.dashCircle(tile.getX(), tile.getY(), MIN_RANGE, LEAK_COLOR);
             }
         });
