@@ -33,7 +33,7 @@ Gabriela Silva (67286)
 
 ### Scrum Board in the middle of the sprint
 
-Please add the scrumboard picture here.
+![sprint6_mid_scrum_board](assets/sprint6_mid_scrum_board.png)
 
 ### Scrum Board at the end of the sprint
 
