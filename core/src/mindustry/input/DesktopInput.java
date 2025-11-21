@@ -642,11 +642,9 @@ public class DesktopInput extends InputHandler{
                 Schematic current = copyHistClass.getCurrent();
 
                 if ((int) Core.input.axisTap(Binding.rotate) > 0) {
-                    System.out.println("PASTE_NEXT");
                     current = copyHistClass.getNext();
 
                 } else if ((int) Core.input.axisTap(Binding.rotate) < 0) {
-                    System.out.println("PASTE_PREVIOUS");
                     current = copyHistClass.getPrevious();
                 }
 

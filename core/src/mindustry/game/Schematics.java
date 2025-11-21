@@ -353,7 +353,6 @@ public class Schematics implements Loadable{
 
         checkLoadout(schematic, true);
         all.sort();
-        System.out.println("schematic checkpoint 1");
     }
 
     public void remove(Schematic s){
@@ -368,7 +367,6 @@ public class Schematics implements Loadable{
             previews.remove(s);
         }
         all.sort();
-        System.out.println("schematic checkpoint 2");
     }
 
     /** Creates a schematic from a world selection. */
@@ -432,7 +430,6 @@ public class Schematics implements Loadable{
                 }
             }
         }
-        System.out.println("schematic checkpoint 3");
         return new Schematic(tiles, new StringMap(), width, height);
     }
 
