@@ -35,8 +35,6 @@ import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.draw.*;
 import mindustry.world.meta.*;
 
-import java.util.Arrays;
-
 import static mindustry.Vars.*;
 
 public class Turret extends ReloadTurret{
