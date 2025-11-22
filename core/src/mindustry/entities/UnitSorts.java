@@ -4,7 +4,6 @@ import arc.math.*;
 import mindustry.content.*;
 import mindustry.entities.Units.*;
 import mindustry.gen.*;
-import mindustry.world.blocks.defense.turrets.TargetingClass;
 
 public class UnitSorts{
     private static final float NEGATIVE_WEIGHT = 6400f;

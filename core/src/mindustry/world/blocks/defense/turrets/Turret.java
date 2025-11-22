@@ -7,9 +7,6 @@ import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.math.geom.*;
-import arc.scene.ui.Button;
-import arc.scene.ui.ButtonGroup;
-import arc.scene.ui.ImageButton;
 import arc.scene.ui.TextButton;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
@@ -32,7 +29,6 @@ import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;
-import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.draw.*;
 import mindustry.world.meta.*;
 
@@ -113,9 +109,9 @@ public class Turret extends ReloadTurret{
     public TargetingMode targetingMode = TargetingMode.CLOSEST_FIRST;
     private static final TargetingMode[] modes = TargetingMode.values();
 
-    /** Current targeting class. Default: Any for turrets that target both air and ground */
-    public TargetingClass targetingClass = TargetingClass.ANY;
-    private static final TargetingClass[] targetClasses = TargetingClass.values();
+    /** Current targeting class. **/
+    public TargetingType targetingType;
+    private static final TargetingType[] targetClasses = TargetingType.values();
 
     /** Function for choosing which unit to target. */
     public Sortf unitSort = UnitSorts.closest;
@@ -180,21 +176,7 @@ public class Turret extends ReloadTurret{
         visualRotationOffset = -90f;
         regionRotated1 = 1;
         regionRotated2 = 2;
-        fixTargetingClass();
         configurable = true;
-    }
-
-    /**
-     * Fixes the targeting class of the turret.
-     * I.e., Turrets that *only* targets air, fixes targetingClass in AIR_FIRST
-     * and turrets that *only* targets ground fixes targetingClass in GROUND_FIRST
-     * For turrets that target both air and ground, it stays in ANY (default)
-     */
-    private void fixTargetingClass() {
-        if(targetAir && !targetGround)
-            targetingClass = TargetingClass.AIR_FIRST;
-        else if(!targetAir && targetGround)
-            targetingClass = TargetingClass.GROUND_FIRST;
     }
 
     @Override
@@ -294,6 +276,12 @@ public class Turret extends ReloadTurret{
         }
     }
 
+    public String defaultTargetingToString() {
+        String tModeText = targetingMode.toString();
+        int idx = tModeText.indexOf('_');
+        return tModeText.substring(0, idx);
+    }
+
     public class TurretBuild extends ReloadTurretBuild implements ControlBlock{
         //TODO storing these as instance variables is horrible design
         /** Turret sprite offset, based on recoil. Updated every frame. */
@@ -313,7 +301,7 @@ public class Turret extends ReloadTurret{
         public int queuedBullets = 0;
 
         public TargetingMode targetingMode = Turret.this.targetingMode;                                                     // US3 CHANGES HERE
-        public TargetingClass targetingClass = Turret.this.targetingClass;
+        public TargetingType targetingType = Turret.this.targetingType;
 
         public float heatReq;
         public float[] sideHeat = new float[4];
@@ -321,6 +309,35 @@ public class Turret extends ReloadTurret{
         public @Nullable SoundLoop soundLoop = (loopSound == Sounds.none ? null : new SoundLoop(loopSound, loopSoundVolume));
 
         float lastRangeChange;
+
+        public TurretBuild() {
+            super();
+            targetingType = fixTargetingClass();
+        }
+
+        /**
+         * Fixes the targeting class of the turret.
+         * Turrets that *only* targets air, returns AIR_FIRST
+         * and turrets that *only* targets ground returns GROUND_FIRST
+         * For turrets that target *both air and ground*, returns ANY
+         */
+        private TargetingType fixTargetingClass() {
+            if(targetAir && !targetGround)
+                return TargetingType.AIR_FIRST;
+
+            else if(!targetAir && targetGround)
+                return TargetingType.GROUND_FIRST;
+
+            else return TargetingType.ANY;
+        }
+
+        /**
+         * Checks if the turret targets both types of enemies
+         * Returns true if it does; otherwise, returns false
+         */
+        private boolean targetsBoth() {
+            return targetAir == targetGround;
+        }
 
         @Override
         public void remove(){
@@ -616,10 +633,10 @@ public class Turret extends ReloadTurret{
         protected Sortf unitSorter() {
             Sortf mode = getSortf();
             // if targeting is focused on air units (for turrets that targets both air and ground targets)
-            if(targetingClass == TargetingClass.AIR_FIRST)
+            if(targetingType == TargetingType.AIR_FIRST)
                 return UnitSorts.airFirst(mode);
             // if targeting is focused on ground units (for turrets that targets both air and ground targets)
-            else if(targetingClass == TargetingClass.GROUND_FIRST)
+            else if(targetingType == TargetingType.GROUND_FIRST)
                 return UnitSorts.groundFirst(mode);
 
             // if targeting is not focused on any, only return the sorted according to mode
@@ -841,7 +858,7 @@ public class Turret extends ReloadTurret{
             write.f(reloadCounter);
             write.f(rotation);
             write.s(this.targetingMode.ordinal()); // saving the ordinal of the enum
-            write.s(this.targetingClass.ordinal());
+            write.s(this.targetingType.ordinal());
         }
 
         @Override
@@ -855,7 +872,7 @@ public class Turret extends ReloadTurret{
 
             if(revision >= 2) {
                 this.targetingMode = Turret.modes[read.s()];
-                this.targetingClass = Turret.targetClasses[read.s()];
+                this.targetingType = Turret.targetClasses[read.s()];
             }
         }
 
@@ -880,24 +897,43 @@ public class Turret extends ReloadTurret{
             return targetingMode.next();
         }
 
+        public TargetingType nextTargetingType() {
+            return targetingType.next();
+        }
+
         private String getCurrentTargetingModeString(){
             return targetingMode.toString().split("_")[0].toLowerCase();
+        }
+
+        private String getCurrentTargetingTypeString(){
+            return targetingType.toString().split("_")[0].toLowerCase();
         }
 
         @Override
         public void buildConfiguration(Table table) {
             super.buildConfiguration(table);
 
-            Runnable swapTargeting = () -> targetingMode = targetingMode.next();
+            Runnable swapTargetingMode = () -> targetingMode = targetingMode.next();
+            Runnable swapTargetingType = () -> {
+                if(targetsBoth()) targetingType = nextTargetingType();
+                // else, targetingType stays the same
+            };
 
-            TextButton button = table.button(getCurrentTargetingModeString(), swapTargeting).get();
-
-
-            button.update(() -> {
-                button.setText(getCurrentTargetingModeString());
+            TextButton modeButton = table.button(getCurrentTargetingModeString(), swapTargetingMode).get();
+            // Updating each time it is pressed
+            modeButton.update(() -> {
+                modeButton.setText(getCurrentTargetingModeString());
             });
 
-            table.add(button).width(200f).tooltip("Swap targeting mode");
+            TextButton typeButton = table.button(getCurrentTargetingTypeString(), swapTargetingType).get();
+            // typeButton is not clickable if the turret only targets one type of enemies
+            typeButton.setDisabled(!targetsBoth());
+            // Updating each time it is pressed
+            typeButton.update( () -> typeButton.setText(getCurrentTargetingTypeString()));
+
+
+            table.add(modeButton).width(200f).tooltip("Swap targeting mode");
+            table.add(typeButton).width(200f).tooltip("Swap targeting type");
         }
 
         @Override
@@ -905,7 +941,7 @@ public class Turret extends ReloadTurret{
             //String CurrentMode = targetingMode.toString().split("_")[0].toLowerCase();
             super.display(t);
             t.row();
-            t.add("Targeting: " + targetingMode.toString().split("_")[0].toLowerCase());
+            t.add("Targeting: " + getCurrentTargetingModeString());
             t.row();
             t.bottom();
         }
