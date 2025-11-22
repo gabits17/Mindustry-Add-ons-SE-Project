@@ -35,6 +35,8 @@ import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.draw.*;
 import mindustry.world.meta.*;
 
+import java.util.Arrays;
+
 import static mindustry.Vars.*;
 
 public class Turret extends ReloadTurret{
@@ -277,6 +279,12 @@ public class Turret extends ReloadTurret{
         if(drawMinRange){
             Drawf.dashCircle(x * tilesize + offset, y * tilesize + offset, minRange, Pal.placing);
         }
+    }
+
+    public String defaultTargetingToString() {
+        String tModeText = targetingMode.toString();
+        int idx = tModeText.indexOf('_');
+        return tModeText.substring(0, idx);
     }
 
     public static abstract class AmmoEntry{
@@ -875,14 +883,18 @@ public class Turret extends ReloadTurret{
             reloadCounter = oldReload;
         }
 
+        public TargetingMode nextTargetingMode(){
+            return targetingMode.next();
+        }
+
         @Override
         public void buildConfiguration(Table table) {
             super.buildConfiguration(table);
 
-            Runnable swapTargeting = () -> targetingMode = targetingMode.next();
+            Runnable swapTargeting = () -> targetingMode = nextTargetingMode();
 
 
-            //table.button(() -> targetingMode.name(), () -> targetingMode = targetingMode.next()).width(300f);
+            //table.button(() -> targetingMode.name(), () -> targetingMode = nextTargetingMode()).width(300f);
 
             // Create a ButtonGroup so only one button can be active at a time
 
