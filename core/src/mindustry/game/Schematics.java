@@ -430,7 +430,6 @@ public class Schematics implements Loadable{
                 }
             }
         }
-
         return new Schematic(tiles, new StringMap(), width, height);
     }
 

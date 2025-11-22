@@ -64,7 +64,11 @@ public class DesktopInput extends InputHandler{
     private float buildPlanMouseOffsetX, buildPlanMouseOffsetY;
     private boolean changedCursor, pressedCommandRect;
 
+    /** History of last selected schematics*/
+    private CopyHistClass copyHistClass = new CopyHistClass();
+
     private Commander commander = new Commander();
+
 
     boolean showHint(){
         return ui.hudfrag.shown && Core.settings.getBool("hints") && selectPlans.isEmpty() && !player.dead() &&
@@ -72,7 +76,7 @@ public class DesktopInput extends InputHandler{
     }
 
     public DesktopInput() {
-        Events.on(ResetEvent.class, e -> {this.commander.clear(); });
+        Events.on(ResetEvent.class, e -> this.commander.clear());
     }
 
     @Override
@@ -468,7 +472,7 @@ public class DesktopInput extends InputHandler{
         if(!player.dead() && !state.isPaused() && !scene.hasField() && !locked){
             updateMovement(player.unit());
 
-            if(Core.input.keyTap(Binding.respawn)){
+            if(Core.input.keyTap(Binding.respawn) && !Core.input.keyDown(Binding.ctrl)){
                 controlledType = null;
                 recentRespawnTimer = 1f;
                 Call.unitClear(player);
@@ -498,7 +502,7 @@ public class DesktopInput extends InputHandler{
         if(state.isMenu() || Core.scene.hasDialog()) return;
 
         //zoom camera
-        if((!Core.scene.hasScroll() || Core.input.keyDown(Binding.diagonalPlacement)) && !ui.chatfrag.shown() && !ui.consolefrag.shown() && Math.abs(Core.input.axisTap(Binding.zoom)) > 0
+        if(!Core.input.keyDown(Binding.paste) && (!Core.scene.hasScroll() || Core.input.keyDown(Binding.diagonalPlacement)) && !ui.chatfrag.shown() && !ui.consolefrag.shown() && Math.abs(Core.input.axisTap(Binding.zoom)) > 0
             && !Core.input.keyDown(Binding.rotatePlaced) && (Core.input.keyDown(Binding.diagonalPlacement) ||
                 !Binding.zoom.value.equals(Binding.rotate.value) || ((!player.isBuilder() || !isPlacing() || !block.rotate) && selectPlans.isEmpty()))){
             renderer.scaleCamera(Core.input.axisTap(Binding.zoom));
@@ -651,6 +655,41 @@ public class DesktopInput extends InputHandler{
             }
         }
 
+        /**
+         * Copy the selected schematic and insert in the history
+         */
+        if(Core.input.keyDown(Binding.ctrl) && Core.input.keyTap(Binding.copy)) {
+            if (!selectPlans.isEmpty() && lastSchematic != null) {
+                copyHistClass.copy(lastSchematic);
+                Vars.ui.showInfoFade("Copied!", 2f);
+            }
+            else
+                Vars.ui.showInfoFade("Nothing to copy!", 2f);
+        }
+
+        /**
+         * Insert a kept schematic on to the world
+         */
+        if (Core.input.keyDown(Binding.paste) && Core.input.keyDown(Binding.ctrl)) {
+            if(!copyHistClass.isEmpty()) {
+                Vars.ui.showInfoFade("Scroll to access other copied schematics!", 7f);
+                Schematic current = copyHistClass.getCurrent();
+
+                if ((int) Core.input.axisTap(Binding.rotate) > 0) {
+                    current = copyHistClass.getNext();
+
+                } else if ((int) Core.input.axisTap(Binding.rotate) < 0) {
+                    current = copyHistClass.getPrevious();
+                }
+
+                useSchematic(current);
+                lastSchematic = null;
+            }
+            else
+                Vars.ui.showInfoFade("Nothing to Paste!", 2f);
+        }
+
+
         if(!selectPlans.isEmpty()){
             if(Core.input.keyTap(Binding.schematicFlipX)){
                 flipPlans(selectPlans, true);
@@ -768,7 +807,7 @@ public class DesktopInput extends InputHandler{
         }
 
         if(mode == placing && block != null){
-            if(!overrideLineRotation && !Core.input.keyDown(Binding.diagonalPlacement) && (selectX != cursorX || selectY != cursorY) && ((int)Core.input.axisTap(Binding.rotate) != 0)){
+            if(!overrideLineRotation && !Core.input.keyDown(Binding.diagonalPlacement) && (selectX != cursorX || selectY != cursorY) && ((int)Core.input.axisTap(Binding.rotate) != 0) ){
                 rotation = ((int)((Angles.angle(selectX, selectY, cursorX, cursorY) + 45) / 90f)) % 4;
                 overrideLineRotation = true;
             }
