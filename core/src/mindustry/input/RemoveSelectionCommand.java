@@ -3,9 +3,7 @@ package mindustry.input;
 import arc.struct.Seq;
 import mindustry.entities.units.BuildPlan;
 
-import static mindustry.Vars.schematics;
-
-public class RemoveSelectionCommand extends CommandAbstract {
+public class RemoveSelectionCommand implements Command {
 
     private InputHandler input;
     private int selectX, selectY, cursorX, cursorY, maxSize;
@@ -19,9 +17,6 @@ public class RemoveSelectionCommand extends CommandAbstract {
                                      int maxSize,
                                      boolean flush,
                                      InputHandler input) {
-
-        System.out.println(selectX + " " + selectY);
-        System.out.println(cursorX + " " + cursorY);
         this.selectX = selectX;
         this.selectY = selectY;
         this.cursorX = cursorX;
@@ -42,13 +37,14 @@ public class RemoveSelectionCommand extends CommandAbstract {
 
     @Override
     public void undo() {
+
         this.input.flushPlans(removed);
     }
 
     @Override
     public boolean canUndo() {
-        return this.removed != null;
-    }
+        return this.removed != null && !this.removed.isEmpty();
+    } //If nothing was removed can't "undo"
 
     @Override
     public boolean canRedo() {

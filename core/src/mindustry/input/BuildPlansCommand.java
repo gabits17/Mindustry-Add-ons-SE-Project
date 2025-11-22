@@ -2,12 +2,10 @@ package mindustry.input;
 
 import arc.struct.Seq;
 import mindustry.entities.units.BuildPlan;
-import mindustry.game.Schematic;
 
 import static mindustry.Vars.player;
-import static mindustry.Vars.schematics;
 
-public class BuildPlansCommand extends CommandAbstract{
+public class BuildPlansCommand implements Command {
 
     private Seq<BuildPlan> plans;
     private InputHandler input;
@@ -17,7 +15,6 @@ public class BuildPlansCommand extends CommandAbstract{
         for (BuildPlan plan : plans) {
             this.plans.add(plan.copy());
         }
-        System.out.println(this.plans.get(0).x + " " + this.plans.get(0).y);
         this.input = input;
     }
 
@@ -29,10 +26,9 @@ public class BuildPlansCommand extends CommandAbstract{
 
     @Override
     public void undo() {
-        System.out.println(this.plans.get(0).x + " " + this.plans.get(0).y);
         for (BuildPlan plan : this.plans ) {
-            this.input.tryBreakBlock(plan.x, plan.y);
-            player.unit().removeBuild(plan.x, plan.y, false);
+            this.input.tryBreakBlock(plan.x, plan.y); //Remove blocks that were already built
+            player.unit().removeBuild(plan.x, plan.y, false); //Remove plans that are yet to build
         }
     }
 

@@ -64,6 +64,7 @@ public class Build{
         }
 
         Events.fire(new BlockBuildBeginEvent(tile, team, unit, true));
+        Leaks.getInstance().removeLeak(tile);
     }
 
     /** Places a ConstructBlock at this location. To preserve bandwidth, a config is only passed in the case of instant-place blocks. */

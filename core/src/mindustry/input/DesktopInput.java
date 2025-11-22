@@ -10,6 +10,7 @@ import arc.input.KeyCode.*;
 import arc.math.*;
 import arc.math.geom.*;
 import arc.scene.*;
+import arc.scene.event.Touchable;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
@@ -120,6 +121,40 @@ public class DesktopInput extends InputHandler{
                     a.button("@schematic.add", Icon.save, this::showSchematicSave).colspan(2).size(250f, 50f).disabled(f -> lastSchematic == null || lastSchematic.file != null);
                 });
             }).margin(6f);
+        });
+
+        //Nothing to undo error top screen
+        group.fill(t -> {
+            t.name = "NothingToUndo";
+            t.touchable = Touchable.disabled;
+            t.top()
+            .marginTop(36f)
+            .table(Styles.black6, c -> c.add("Nothing to undo")
+            .update(l -> l.setColor(Tmp.c1.set(Color.white).lerp(Color.scarlet, Mathf.absin(Time.time, 10f, 1f))))
+            .labelAlign(Align.center, Align.center))
+            .margin(6f)
+            .update(u -> u.color.a = Mathf.lerpDelta(u.color.a, Mathf.num(ui.hudfrag.shown &&
+                    !Core.input.keyDown(Binding.boost) && //So that both undo and redo don't overlap
+                    Core.input.keyDown(Binding.control) &&
+                    Core.input.keyDown(Binding.undo) &&
+                    !commander.hasDone()), 0.1f)).get().color.a = 0f;;
+        });
+
+        //Nothing to redo error top screen
+        group.fill(t -> {
+            t.name = "NothingToRedo";
+            t.touchable = Touchable.disabled;
+            t.top()
+            .marginTop(36f)
+            .table(Styles.black6, c -> c.add("Nothing to redo")
+            .update(l -> l.setColor(Tmp.c1.set(Color.white).lerp(Color.scarlet, Mathf.absin(Time.time, 10f, 1f))))
+            .labelAlign(Align.center, Align.center))
+            .margin(6f)
+            .update(u -> u.color.a = Mathf.lerpDelta(u.color.a, Mathf.num(ui.hudfrag.shown &&
+                    Core.input.keyDown(Binding.boost) &&
+                    Core.input.keyDown(Binding.control) &&
+                    Core.input.keyDown(Binding.undo) &&
+                    !commander.hasUndone()), 0.1f)).get().color.a = 0f;;
         });
     }
 
@@ -610,7 +645,6 @@ public class DesktopInput extends InputHandler{
                 if(selectPlans.isEmpty()){
                     lastSchematic = null;
                 }
-
                 schemX = -1;
                 schemY = -1;
             }else if(input.keyRelease(Binding.rebuildSelect)){
@@ -787,19 +821,19 @@ public class DesktopInput extends InputHandler{
             schemY = -1;
         }
 
-        if (Core.input.keyDown(Binding.control) && Core.input.keyDown(Binding.boost) &&Core.input.keyTap(Binding.undo)) {
+        if (Core.input.keyDown(Binding.control) && Core.input.keyDown(Binding.boost) && Core.input.keyTap(Binding.undo)) {
             commander.redoTop();
         } else if (Core.input.keyDown(Binding.control) && Core.input.keyTap(Binding.undo)) {
             commander.undoTop();
         }
 
         if(Core.input.keyRelease(Binding.breakBlock) || Core.input.keyRelease(Binding.select)){
+
             //Handle placing of blocks
             if(mode == placing && block != null){ //touch up while placing, place everything in selection
                 if(input.keyDown(Binding.boost)){
                     flushPlansReverse(linePlans);
                 }else{
-                    //Should check if the event was just a rotation
                     Command c = new BuildPlansCommand(linePlans, this);
                     commander.execute(c);
                 }
