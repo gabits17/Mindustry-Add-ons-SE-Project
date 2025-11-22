@@ -1,5 +1,5 @@
 # User story 3
-Swaping Turret's Targeting Priorities
+Swapping turret's targeting priorities
 ## Author(s)
 - Dinis Neves (68130)
 - Gabriela Silva (67286)
