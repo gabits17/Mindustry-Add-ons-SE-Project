@@ -52,8 +52,7 @@ public class Leaks {
 
         //Clear leaks when an event occurs (entering/leaving a map)
         Events.on(EventType.ResetEvent.class, e -> {
-            leakTree.clear();
-            leakSet.clear();
+            leaks.clear();
         });
     }
 
@@ -66,6 +65,11 @@ public class Leaks {
 
     public static int getLeakColorValue() {
         return Pal.leakingWarn.rgba();
+    }
+
+    public void clear() {
+        leakTree.clear();
+        leakSet.clear();
     }
     
     public void addLeak(Tile tile) {
