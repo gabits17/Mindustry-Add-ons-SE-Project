@@ -1,17 +1,18 @@
 # User story 3
-(*Please add a user story short title here*)
+Swapping turret's targeting priorities
 ## Author(s)
-(*Please add the user story author(s) here, one in each line, providing the authors' name and surname, along with their student number*)
+- Dinis Neves (68130)
+- Gabriela Silva (67286)
 ## Reviewer(s)
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story:
-(*Please add your User Story here.*)
+[User Story 3: Swap Targeting](../../Milestone1/UserStory3.md)
 ### Review
 *(Please add your user story review here)*
 ## Use case diagram
-(*Please add the use case diagram here.*)
+![us3-UCD](./assets/swap-targeting-ucd.svg)
 ## Use case textual description
-(*Please add the use case textual description here.*)
+[Textual description from Swap Targeting's use case diagram](./USECASE-TEMPLATE.md)
 ### Review
 *(Please add your use case review here)*
 ## Implementation documentation
