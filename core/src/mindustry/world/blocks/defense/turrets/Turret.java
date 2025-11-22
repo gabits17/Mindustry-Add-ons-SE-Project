@@ -10,6 +10,7 @@ import arc.math.geom.*;
 import arc.scene.ui.Button;
 import arc.scene.ui.ButtonGroup;
 import arc.scene.ui.ImageButton;
+import arc.scene.ui.TextButton;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
@@ -874,43 +875,26 @@ public class Turret extends ReloadTurret{
             rotation = oldRot;
             reloadCounter = oldReload;
         }
+        private String getCurrentTargetingModeString(){
+            return targetingMode.toString().split("_")[0].toLowerCase();
+        }
 
         @Override
         public void buildConfiguration(Table table) {
             super.buildConfiguration(table);
-
             Runnable swapTargeting = () -> targetingMode = targetingMode.next();
 
+            TextButton button = table.button(getCurrentTargetingModeString(), swapTargeting).get();
 
-            //table.button(() -> targetingMode.name(), () -> targetingMode = targetingMode.next()).width(300f);
+            button.update(() -> {
+                button.setText(getCurrentTargetingModeString());
+            });
 
-            // Create a ButtonGroup so only one button can be active at a time
-
-            Button button = table.button((targetingMode.toString().split("_")[0].toLowerCase()), swapTargeting).get();
-
-            table.add(button);
-
-            //button.update();
-
-
-
-                // Dynamically set button state
-            // button.update(() -> button.setChecked(command == item || (command == null && unit.defaultCommand == item)));
-
-
-
-            /* TODO:
-             * - Create a button to click and allow the change of targeting mode
-             * - Implement a way to change between the targeting modes, having consideration
-             * - Test if the button is working, then test if the logic is working
-             * - Analyze turrets behaviour according to changes
-             * - Check if worth to implement the modes that focus on grounder, flying or naval units first
-             */
+            table.add(button).width(200f).tooltip("Swap targeting mode");
         }
 
         @Override
         public void display(Table t){
-            //String CurrentMode = targetingMode.toString().split("_")[0].toLowerCase();
             super.display(t);
             t.row();
             t.add("Targeting: " + targetingMode.toString().split("_")[0].toLowerCase());
