@@ -87,7 +87,7 @@ Anything that happens afterward involves loading the map save and retrieving dat
 *(Please add your class diagram review here)*
 
 ### Sequence diagrams
-(*Sequence diagrams and their discussion in natural language.*)
+[Sequence Diagrams](US2%20Sequence%20Diagrams.md)
 #### Review
 *(Please add your sequence diagram review here)*
 ## Test specifications
