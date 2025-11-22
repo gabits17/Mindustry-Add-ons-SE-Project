@@ -900,9 +900,6 @@ public class Turret extends ReloadTurret{
             table.add(button).width(200f).tooltip("Swap targeting mode");
         }
 
-
-        }
-
         @Override
         public void display(Table t){
             //String CurrentMode = targetingMode.toString().split("_")[0].toLowerCase();
