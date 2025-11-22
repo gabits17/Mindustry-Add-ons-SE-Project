@@ -875,6 +875,11 @@ public class Turret extends ReloadTurret{
             rotation = oldRot;
             reloadCounter = oldReload;
         }
+
+        public TargetingMode nextTargetingMode(){
+            return targetingMode.next();
+        }
+
         private String getCurrentTargetingModeString(){
             return targetingMode.toString().split("_")[0].toLowerCase();
         }
@@ -882,9 +887,11 @@ public class Turret extends ReloadTurret{
         @Override
         public void buildConfiguration(Table table) {
             super.buildConfiguration(table);
+
             Runnable swapTargeting = () -> targetingMode = targetingMode.next();
 
             TextButton button = table.button(getCurrentTargetingModeString(), swapTargeting).get();
+
 
             button.update(() -> {
                 button.setText(getCurrentTargetingModeString());
@@ -893,8 +900,12 @@ public class Turret extends ReloadTurret{
             table.add(button).width(200f).tooltip("Swap targeting mode");
         }
 
+
+        }
+
         @Override
         public void display(Table t){
+            //String CurrentMode = targetingMode.toString().split("_")[0].toLowerCase();
             super.display(t);
             t.row();
             t.add("Targeting: " + targetingMode.toString().split("_")[0].toLowerCase());
