@@ -280,6 +280,12 @@ public class Turret extends ReloadTurret{
         }
     }
 
+    public String defaultTargetingToString() {
+        String tModeText = targetingMode.toString();
+        int idx = tModeText.indexOf('_');
+        return tModeText.substring(0, idx);
+    }
+
     public static abstract class AmmoEntry{
         public int amount;
 
@@ -905,7 +911,7 @@ public class Turret extends ReloadTurret{
             //String CurrentMode = targetingMode.toString().split("_")[0].toLowerCase();
             super.display(t);
             t.row();
-            t.add("Targeting: " + targetingMode.toString().split("_")[0].toLowerCase());
+            t.add("Targeting: " + getCurrentTargetingModeString());
             t.row();
             t.bottom();
         }
