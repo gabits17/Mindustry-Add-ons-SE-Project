@@ -33,6 +33,9 @@ However, I'm also unable to suggest a better word at this point, maybe (for mode
 With that in mind, the functionality is an easy to understand extension to the turret mechanics. I personally just think the wording for **type** and **mode** could be clearer,
 as well as the deselection being considered part of the **Select placed turret** use case.
 
+---
+_The use case diagram's textual description was modified according to this review._
+
 ## Implementation documentation
 (*Please add the class diagram(s) illustrating your code evolution, along with a technical description of the changes made by your team. The description may include code snippets if adequate.*)
 ### Implementation summary
