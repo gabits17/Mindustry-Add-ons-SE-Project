@@ -9,7 +9,24 @@ Undo and Redo
 ## User Story
 [User Story 1](../../Milestone1/UserStory1.md)
 ### Review
-*(Please add your user story review here)*
+**Author** : Diogo Antunes (67763), 23/11/2025 23:10
+In **Undo**, I think it'd be useful to create a local variable that stores the result of ``hasDone()``
+so that this result can be used as the condition in opt. This goes for other cases throughout the diagrams.
+
+Also, I think the sequence diagram referenced in **ref** should be within the label as "ref <name>".
+
+Typo of "DesktopInpu" in description.
+
+**Add Undone** and check inn all diagrams after **Add Command**
+Minor formatting comment - The text starts immediately after the image, should have an ``Enter`` there.
+Typo "refereed" -> referreed
+
+**Remove Selection**
+My own understanding of the vertical rectangles that indicate an activity are limited, but it may be useful to include one after ``execute()`` to show the activity roughly taking place.
+
+This isn't a diagram type I have as much knowledge of the specification on, so I may be lacking in some of my comments, and may
+have missed potential issues.
+
 ## Use case diagram
 ![Use Case](Assets/UseCases.drawio.svg)
 ## Use case textual description
