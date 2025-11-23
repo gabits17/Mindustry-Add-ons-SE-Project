@@ -20,12 +20,12 @@
 ### No Done Action
 
 - **Name**: No Done Action
-- **ID**: AF1
+- **ID**: UC1.AF1
 - **Description**: The player tried to undo an action, but no action had been done
 - **Actors**:
 	- *Main*: Player
 	- *Secondary*: None
-- **Pre-Conditions**: 
+- **Pre-Conditions**: None
 - **Main Flow**:
 	1. The use case starts before step 2 of the main flow
 	2. The system displays an error message saying that there is no action to undo
@@ -36,11 +36,11 @@
 
 ###  Undone Stack Full
 - **Name**: Undone Stack Full
-- **ID**: AF2
+- **ID**: UC1.AF2
 - **Description**: The stack used to store the actions undone by the player is full
 - **Actors**:
 	- *Main*: Player
-	- *Secondary*: 
+	- *Secondary*: None
 - **Pre-Conditions**: None 
 - **Main Flow**:
 	1. The use case starts before step 3 of the main flow
@@ -49,7 +49,7 @@
 	4. Return to step 3 of the main flow
 - **Alternative Flows**
 	- None
-- **Post-Conditions**: Undone Stack not Full
+- **Post-Conditions**: None
 
 ##  Redo
 - **Name**: Redo
@@ -68,12 +68,12 @@
 - **Post-Conditions**: The redone action is recorded
 ### No Undone Action
 - **Name**: No Undone Action
-- **ID**: AF3
+- **ID**:UC2. AF1
 - **Description**: The player tried to redo an action, and no action had been undone
 - **Actors**:
 	- *Main*: Player
 	- *Secondary*: None
-- **Pre-Conditions**: 
+- **Pre-Conditions**: None
 - **Main Flow**:
 	1. The use case starts before step 2 of the main flow
 	2. The system displays an error message saying that there is no action to redo
@@ -152,7 +152,7 @@
 	- *Secondary*: None
 - **Pre-Conditions**: None
 - **Main Flow**:
-	1. The use case starts when the player enters a map (sector, a custom map, a server...)
+	1. The use case starts when the player enters a map (a sector, a custom map, a server...)
 	2. <mark style="background: #BBFABBA6;">Include Reset Action Commander</mark>
 - **Alternative Flows**
 	- None
@@ -166,7 +166,7 @@
 	- *Secondary*: None
 - **Pre-Conditions**: None
 - **Main Flow**:
-	1. The use case starts when the player leaves a map (sector, a custom map, a server...)
+	1. The use case starts when the player leaves a map (a sector, a custom map, a server...)
 	2. <mark style="background: #BBFABBA6;">Include Reset Action Commander</mark>
 - **Alternative Flows**
 	- None
@@ -189,7 +189,7 @@
 - **Post-Conditions**: The done action is recorded
 ### Done Stack Full
 - **Name**: Done Stack Full
-- **ID**: AF4
+- **ID**: IUC1. AF1
 - **Description**: The stack used to store the actions done by the player is full
 - **Actors**:
 	- *Main*: Player
@@ -204,7 +204,7 @@
 - **Post-Conditions**: The done stack is not full
 ## Reset Action Commander
 - **Name**: Reset Action Commander
-- **ID**: IC2
+- **ID**: IUC2
 - **Description**: The use case clears the system's memory of actions
 - **Actors**:
 	- *Main*: Player
@@ -216,4 +216,7 @@
 	3. The system clears the undone action stack
 - **Alternative Flows**
 	- None
-- **Post-Conditions**: None
+- **Post-Conditions**: The done and undone stack are empty
+
+# Log
+(67775) (23/11/2025) (16:37) - I have updated the file, according to the review given by Gabriela

@@ -128,8 +128,7 @@ public class DesktopInput extends InputHandler{
         group.fill(t -> {
             t.name = "NothingToUndo";
             t.touchable = Touchable.disabled;
-            t.top()
-            .marginTop(36f)
+            t.center()
             .table(Styles.black6, c -> c.add("Nothing to undo")
             .update(l -> l.setColor(Tmp.c1.set(Color.white).lerp(Color.scarlet, Mathf.absin(Time.time, 10f, 1f))))
             .labelAlign(Align.center, Align.center))
@@ -145,8 +144,7 @@ public class DesktopInput extends InputHandler{
         group.fill(t -> {
             t.name = "NothingToRedo";
             t.touchable = Touchable.disabled;
-            t.top()
-            .marginTop(36f)
+            t.center()
             .table(Styles.black6, c -> c.add("Nothing to redo")
             .update(l -> l.setColor(Tmp.c1.set(Color.white).lerp(Color.scarlet, Mathf.absin(Time.time, 10f, 1f))))
             .labelAlign(Align.center, Align.center))
