@@ -7,6 +7,7 @@ import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.math.geom.*;
+import arc.scene.ui.Label;
 import arc.scene.ui.TextButton;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
@@ -260,12 +261,6 @@ public class Turret extends ReloadTurret{
         if(drawMinRange){
             Drawf.dashCircle(x * tilesize + offset, y * tilesize + offset, minRange, Pal.placing);
         }
-    }
-
-    public String defaultTargetingToString() {
-        String tModeText = targetingMode.toString();
-        int idx = tModeText.indexOf('_');
-        return tModeText.substring(0, idx);
     }
 
     public static abstract class AmmoEntry{
@@ -942,12 +937,18 @@ public class Turret extends ReloadTurret{
             table.add(typeButton).width(200f).tooltip("Swap targeting type");
         }
 
+        private String getDisplayTargetingString(){
+            return "Targeting: " + getCurrentTargetingModeString();
+        }
+
         @Override
         public void display(Table t){
             //String CurrentMode = targetingMode.toString().split("_")[0].toLowerCase();
             super.display(t);
+            Label label = new Label(getDisplayTargetingString());
             t.row();
-            t.add("Targeting: " + getCurrentTargetingModeString());
+            t.add(label);
+            label.update(() -> label.setText(getDisplayTargetingString()));
             t.row();
             t.bottom();
         }
