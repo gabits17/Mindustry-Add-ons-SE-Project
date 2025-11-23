@@ -27,6 +27,7 @@ import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.ConstructBlock.*;
+import mindustry.world.blocks.defense.turrets.Turret;
 import mindustry.world.meta.*;
 
 import static mindustry.Vars.*;
@@ -414,6 +415,16 @@ public class PlacementFragment{
                                     req.row();
                                 }
                             }).growX().left().margin(3);
+
+                            // space bellow the requirements to build
+                            if(displayBlock instanceof Turret tur) {
+                                topTable.row(); topTable.table(info -> { info.left();
+
+                                    String defaultTargetingInfo = tur.defaultTargetingToString();
+
+                                    info.labelWrap(() -> "Targeting Mode: " + defaultTargetingInfo).width(200f).left();
+                                }).padTop(4f).left();
+                            }
 
                             if((!displayBlock.isPlaceable() || !player.isBuilder()) && !state.rules.editor){
                                 topTable.row();

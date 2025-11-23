@@ -95,6 +95,8 @@ public class Binding{
     blockSelect09 = KeyBind.add("block_select_09", KeyCode.num9),
     blockSelect10 = KeyBind.add("block_select_10", KeyCode.num0),
 
+    swapTargetMode = KeyBind.add("swap_target_mode", KeyCode.q),
+
     zoom = KeyBind.add("zoom", new Axis(KeyCode.scroll), "view"),
     detachCamera = KeyBind.add("detach_camera", KeyCode.unset),
     menu = KeyBind.add("menu", Vars.android ? KeyCode.back : KeyCode.escape),
