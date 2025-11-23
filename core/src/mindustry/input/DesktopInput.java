@@ -23,6 +23,7 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.ui.*;
 import mindustry.world.*;
+import mindustry.world.blocks.defense.turrets.Turret;
 
 import static arc.Core.*;
 import static mindustry.Vars.*;
@@ -722,6 +723,13 @@ public class DesktopInput extends InputHandler{
                 player.shooting = false;
             }
         }
+
+        if(Core.input.keyTap(Binding.swapTargetMode)) {
+            //  TODO:
+            //  - make the target mode change according to pressing
+            //  the q key while the turret building is selected to be built.
+        }
+
 
         if(isPlacing() && mode == placing && (cursorX != lastLineX || cursorY != lastLineY || Core.input.keyTap(Binding.diagonalPlacement) || Core.input.keyRelease(Binding.diagonalPlacement))){
             updateLine(selectX, selectY);
