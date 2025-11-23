@@ -13,6 +13,12 @@ public class Binding{
     //Undo stuff
     undo = KeyBind.add("undo", KeyCode.z),
 
+    paste = KeyBind.add("paste", KeyCode.v),
+    ctrl = KeyBind.add("ctrl", KeyCode.controlLeft),
+    copy = KeyBind.add("copy", KeyCode.c),
+    alt = KeyBind.add("alt", KeyCode.altLeft),
+    next = KeyBind.add("next", KeyCode.end),
+    previous = KeyBind.add("previous", KeyCode.del),
 
     moveX = KeyBind.add("move_x", new Axis(KeyCode.a, KeyCode.d), "general"),
     moveY = KeyBind.add("move_y", new Axis(KeyCode.s, KeyCode.w)),
@@ -88,6 +94,8 @@ public class Binding{
     blockSelect08 = KeyBind.add("block_select_08", KeyCode.num8),
     blockSelect09 = KeyBind.add("block_select_09", KeyCode.num9),
     blockSelect10 = KeyBind.add("block_select_10", KeyCode.num0),
+
+    swapTargetMode = KeyBind.add("swap_target_mode", KeyCode.q),
 
     zoom = KeyBind.add("zoom", new Axis(KeyCode.scroll), "view"),
     detachCamera = KeyBind.add("detach_camera", KeyCode.unset),

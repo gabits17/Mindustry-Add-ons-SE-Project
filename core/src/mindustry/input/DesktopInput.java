@@ -10,6 +10,7 @@ import arc.input.KeyCode.*;
 import arc.math.*;
 import arc.math.geom.*;
 import arc.scene.*;
+import arc.scene.event.Touchable;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
@@ -22,6 +23,7 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.ui.*;
 import mindustry.world.*;
+import mindustry.world.blocks.defense.turrets.Turret;
 
 import static arc.Core.*;
 import static mindustry.Vars.*;
@@ -63,11 +65,19 @@ public class DesktopInput extends InputHandler{
     private float buildPlanMouseOffsetX, buildPlanMouseOffsetY;
     private boolean changedCursor, pressedCommandRect;
 
+    /** History of last selected schematics*/
+    private CopyHistClass copyHistClass = new CopyHistClass();
+
     private Commander commander = new Commander();
+
 
     boolean showHint(){
         return ui.hudfrag.shown && Core.settings.getBool("hints") && selectPlans.isEmpty() && !player.dead() &&
                 (!isBuilding && !Core.settings.getBool("buildautopause") || player.unit().isBuilding() || !player.dead() && !player.unit().spawnedByCore());
+    }
+
+    public DesktopInput() {
+        Events.on(ResetEvent.class, e -> this.commander.clear());
     }
 
     @Override
@@ -112,6 +122,40 @@ public class DesktopInput extends InputHandler{
                     a.button("@schematic.add", Icon.save, this::showSchematicSave).colspan(2).size(250f, 50f).disabled(f -> lastSchematic == null || lastSchematic.file != null);
                 });
             }).margin(6f);
+        });
+
+        //Nothing to undo error top screen
+        group.fill(t -> {
+            t.name = "NothingToUndo";
+            t.touchable = Touchable.disabled;
+            t.top()
+            .marginTop(36f)
+            .table(Styles.black6, c -> c.add("Nothing to undo")
+            .update(l -> l.setColor(Tmp.c1.set(Color.white).lerp(Color.scarlet, Mathf.absin(Time.time, 10f, 1f))))
+            .labelAlign(Align.center, Align.center))
+            .margin(6f)
+            .update(u -> u.color.a = Mathf.lerpDelta(u.color.a, Mathf.num(ui.hudfrag.shown &&
+                    !Core.input.keyDown(Binding.boost) && //So that both undo and redo don't overlap
+                    Core.input.keyDown(Binding.control) &&
+                    Core.input.keyDown(Binding.undo) &&
+                    !commander.hasDone()), 0.1f)).get().color.a = 0f;;
+        });
+
+        //Nothing to redo error top screen
+        group.fill(t -> {
+            t.name = "NothingToRedo";
+            t.touchable = Touchable.disabled;
+            t.top()
+            .marginTop(36f)
+            .table(Styles.black6, c -> c.add("Nothing to redo")
+            .update(l -> l.setColor(Tmp.c1.set(Color.white).lerp(Color.scarlet, Mathf.absin(Time.time, 10f, 1f))))
+            .labelAlign(Align.center, Align.center))
+            .margin(6f)
+            .update(u -> u.color.a = Mathf.lerpDelta(u.color.a, Mathf.num(ui.hudfrag.shown &&
+                    Core.input.keyDown(Binding.boost) &&
+                    Core.input.keyDown(Binding.control) &&
+                    Core.input.keyDown(Binding.undo) &&
+                    !commander.hasUndone()), 0.1f)).get().color.a = 0f;;
         });
     }
 
@@ -429,7 +473,7 @@ public class DesktopInput extends InputHandler{
         if(!player.dead() && !state.isPaused() && !scene.hasField() && !locked){
             updateMovement(player.unit());
 
-            if(Core.input.keyTap(Binding.respawn)){
+            if(Core.input.keyTap(Binding.respawn) && !Core.input.keyDown(Binding.ctrl)){
                 controlledType = null;
                 recentRespawnTimer = 1f;
                 Call.unitClear(player);
@@ -459,7 +503,7 @@ public class DesktopInput extends InputHandler{
         if(state.isMenu() || Core.scene.hasDialog()) return;
 
         //zoom camera
-        if((!Core.scene.hasScroll() || Core.input.keyDown(Binding.diagonalPlacement)) && !ui.chatfrag.shown() && !ui.consolefrag.shown() && Math.abs(Core.input.axisTap(Binding.zoom)) > 0
+        if(!Core.input.keyDown(Binding.paste) && (!Core.scene.hasScroll() || Core.input.keyDown(Binding.diagonalPlacement)) && !ui.chatfrag.shown() && !ui.consolefrag.shown() && Math.abs(Core.input.axisTap(Binding.zoom)) > 0
             && !Core.input.keyDown(Binding.rotatePlaced) && (Core.input.keyDown(Binding.diagonalPlacement) ||
                 !Binding.zoom.value.equals(Binding.rotate.value) || ((!player.isBuilder() || !isPlacing() || !block.rotate) && selectPlans.isEmpty()))){
             renderer.scaleCamera(Core.input.axisTap(Binding.zoom));
@@ -612,6 +656,41 @@ public class DesktopInput extends InputHandler{
             }
         }
 
+        /**
+         * Copy the selected schematic and insert in the history
+         */
+        if(Core.input.keyDown(Binding.ctrl) && Core.input.keyTap(Binding.copy)) {
+            if (!selectPlans.isEmpty() && lastSchematic != null) {
+                copyHistClass.copy(lastSchematic);
+                Vars.ui.showInfoFade("Copied!", 2f);
+            }
+            else
+                Vars.ui.showInfoFade("Nothing to copy!", 2f);
+        }
+
+        /**
+         * Insert a kept schematic on to the world
+         */
+        if (Core.input.keyDown(Binding.paste) && Core.input.keyDown(Binding.ctrl)) {
+            if(!copyHistClass.isEmpty()) {
+                Vars.ui.showInfoFade("Scroll to access other copied schematics!", 7f);
+                Schematic current = copyHistClass.getCurrent();
+
+                if ((int) Core.input.axisTap(Binding.rotate) > 0) {
+                    current = copyHistClass.getNext();
+
+                } else if ((int) Core.input.axisTap(Binding.rotate) < 0) {
+                    current = copyHistClass.getPrevious();
+                }
+
+                useSchematic(current);
+                lastSchematic = null;
+            }
+            else
+                Vars.ui.showInfoFade("Nothing to Paste!", 2f);
+        }
+
+
         if(!selectPlans.isEmpty()){
             if(Core.input.keyTap(Binding.schematicFlipX)){
                 flipPlans(selectPlans, true);
@@ -644,6 +723,13 @@ public class DesktopInput extends InputHandler{
                 player.shooting = false;
             }
         }
+
+        if(Core.input.keyTap(Binding.swapTargetMode)) {
+            //  TODO:
+            //  - make the target mode change according to pressing
+            //  the q key while the turret building is selected to be built.
+        }
+
 
         if(isPlacing() && mode == placing && (cursorX != lastLineX || cursorY != lastLineY || Core.input.keyTap(Binding.diagonalPlacement) || Core.input.keyRelease(Binding.diagonalPlacement))){
             updateLine(selectX, selectY);
@@ -729,7 +815,7 @@ public class DesktopInput extends InputHandler{
         }
 
         if(mode == placing && block != null){
-            if(!overrideLineRotation && !Core.input.keyDown(Binding.diagonalPlacement) && (selectX != cursorX || selectY != cursorY) && ((int)Core.input.axisTap(Binding.rotate) != 0)){
+            if(!overrideLineRotation && !Core.input.keyDown(Binding.diagonalPlacement) && (selectX != cursorX || selectY != cursorY) && ((int)Core.input.axisTap(Binding.rotate) != 0) ){
                 rotation = ((int)((Angles.angle(selectX, selectY, cursorX, cursorY) + 45) / 90f)) % 4;
                 overrideLineRotation = true;
             }
@@ -743,7 +829,7 @@ public class DesktopInput extends InputHandler{
             schemY = -1;
         }
 
-        if (Core.input.keyDown(Binding.control) && Core.input.keyDown(Binding.boost) &&Core.input.keyTap(Binding.undo)) {
+        if (Core.input.keyDown(Binding.control) && Core.input.keyDown(Binding.boost) && Core.input.keyTap(Binding.undo)) {
             commander.redoTop();
         } else if (Core.input.keyDown(Binding.control) && Core.input.keyTap(Binding.undo)) {
             commander.undoTop();
@@ -756,7 +842,6 @@ public class DesktopInput extends InputHandler{
                 if(input.keyDown(Binding.boost)){
                     flushPlansReverse(linePlans);
                 }else{
-                    //Should check if the event was just a rotation
                     Command c = new BuildPlansCommand(linePlans, this);
                     commander.execute(c);
                 }
