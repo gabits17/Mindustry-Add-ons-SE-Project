@@ -84,7 +84,7 @@ public class Commander {
      * Undoes the topmost done command, and adds it to the undone stack
      */
     protected void undoTop(){
-        try {
+        if(hasUndone()) {
             if (doneCommands.peek().canUndo()) {
                 doneCommands.peek().undo();
                 addUndone(doneCommands.pop());
@@ -92,8 +92,6 @@ public class Commander {
                 doneCommands.pop();
                 //call the undo again probably until an undoable is found?
             }
-        } catch (IllegalStateException e) {
-            System.out.println("Nothing to undo");
         }
     }
 
@@ -101,7 +99,7 @@ public class Commander {
      * Redoes the topmost command, and adds it to the done stack
      */
     protected void redoTop(){
-        try {
+        if(hasDone()) {
             if (undoneCommands.peek().canRedo()) {
                 undoneCommands.peek().execute();
                 addCommand(undoneCommands.pop());
@@ -109,8 +107,6 @@ public class Commander {
                 undoneCommands.pop();
                 //call the redo again probably until an redoable is found?
             }
-        } catch (IllegalStateException e) {
-            System.out.println("Nothing to redo");
         }
     }
 
