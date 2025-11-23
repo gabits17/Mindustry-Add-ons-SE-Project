@@ -6,8 +6,6 @@ Diogo Antunes 67763
 
 Gabriel Matias Falcão 67775
 Manuel Oliveira 68547
-
-(*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story:
 As a USER WITH AN IN-GAME BASE THAT COVERS A WIDE AREA,
 I want to be instantly informed of the location of any leaks of
