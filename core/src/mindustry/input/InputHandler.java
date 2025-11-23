@@ -1646,6 +1646,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener {
                 if (world.build(plan.x, plan.y) != null && Objects.equals(world.build(plan.x, plan.y).block.name, plan.block.name)) {
                     player.unit().removeBuild(plan.x, plan.y, true); //This is used in undo, why? because when undoing a build action one needs to remove the remove buildplans that were there
                     //And make sure that it does not remove the remove plans of blocks that are not equal to the planned block
+                    builtPlans.add(plan);
                 }
                 if (validPlace(plan.x, plan.y, plan.block, plan.rotation, null, true)) {
                 BuildPlan copy = plan.copy();
