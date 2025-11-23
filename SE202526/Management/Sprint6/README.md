@@ -20,10 +20,15 @@ Gabriela Silva (67286)
 - Continue doing the work from last sprint
 
 ### Sprint Review Meeting: 
-*(Held at the end of the sprint, this meeting is attended by all stakeholders to demo the completed work and validate if the sprint goal has been met.)*
+- Each subgroup presented their sprint work
+- A 5th user story was thought about and analyzed
+- Discusion about how to do the unit testing assignments
+- Debate about possible future improvements in every field
 
 ### Sprint Retrospective Meeting: 
-*(This meeting happens after the sprint review and before the next sprint planning meeting. The team reflects on what went well, what needs improvement, and how to enhance their processes for future sprints.)*
+- The sprint was well structured and organized
+- Most work left undone was reviewing tasks from colleagues
+- Tasks should be done a little sooner, so other colleagues can have enough time to review work
 
 ## Relevant resources
 
