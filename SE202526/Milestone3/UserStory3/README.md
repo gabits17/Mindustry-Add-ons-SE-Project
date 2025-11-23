@@ -4,6 +4,8 @@ Swapping turret's targeting priorities
 - Dinis Neves (68130)
 - Gabriela Silva (67286)
 ## Reviewer(s)
+- Diogo Antunes (67763)
+
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story:
 [User Story 3: Swap Targeting](../../Milestone1/UserStory3.md)
@@ -15,6 +17,7 @@ Swapping turret's targeting priorities
 [Textual description from Swap Targeting's use case diagram](./USECASE-TEMPLATE.md)
 ### Review
 **Author** : Diogo Antunes (67763), 23/11/2025 16:13
+
 **Select placed turret** steps 3 and 4 allude to a separate interaction from the current use case.
 The player doesn't seem to have to deselect, it can happen at some point. Therefore, I think it would make more sense for deselection
 to be a separate use case since it seems to originate from a separate interaction by the player.
