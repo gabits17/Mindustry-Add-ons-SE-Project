@@ -36,7 +36,7 @@ public class CopyHistClass implements CopyHist {
 
     private static final int PLUS = 1;
 
-    // history of copies
+    /** history of copies */
     private final List<Schematic> history;
 
     private int size;
@@ -44,12 +44,10 @@ public class CopyHistClass implements CopyHist {
     private int lastPos;
 
     public CopyHistClass() {
-        // check if arrayList, LinkedList or Seq
         this.history = new ArrayList<>(MAX_SIZE);
         this.size = 0;
         this.lastPos = INIT_POS;
     }
-
 
     @Override
     public void copy(Schematic scheme){
