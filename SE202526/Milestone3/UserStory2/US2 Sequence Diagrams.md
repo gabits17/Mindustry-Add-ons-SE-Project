@@ -30,8 +30,8 @@ game started running (if a map has been ).
 ## Place block
 ![seqPlaceBlock.svg](assets/seqPlaceBlock.svg)
 
-A Call is created when a user places a block, and the method ``beginPlace`` is called, which is forwarded to the control class
-Build using a static method of the same name and parameters.
+A ``Call`` occurs when a user places a block, and the method ``beginPlace`` is called, which is forwarded to the control class
+``Build`` using a static method of the same name and parameters.
 The corresponding tile is obtained from the ``World`` instance, and the block the tile represents (previous) is retrieved from the tile.
 A block of the same size as the one desired (result) is obtained from ``ConstructBlock``.
 The current building in that tile is also retrieved from the tile (previous).
@@ -41,8 +41,8 @@ This case wasn't considered in the use case as it assumes the block can be place
 ## Break block
 ![seqBreakBlock.svg](assets/seqBreakBlock.svg)
 
-A Call is created when a user breaks a block, and the method ``beginBreak`` is called, which is forwarded to the control class
-Build using a static method of the same name and parameters.
+A ``Call`` occurs when a user breaks a block, and the method ``beginBreak`` is called, which is forwarded to the control class
+``Build`` using a static method of the same name and parameters.
 The corresponding tile is obtained from the ``World`` instance, and the block the tile represents (previous) is retrieved from the tile.
 The building is also retrieved from the tile, so that ``setDeconstruct`` can perform the block removal, but, more importantly for the use case,
 leading to checking for leaks in the surrounding blocks.
@@ -65,15 +65,15 @@ attempt to check for leaks will occur (in ``UpdateLeakableBlock``).
 At a specific time interval, the ``update()`` method in the ``ApplicationCore`` that ``DesktopLauncher`` extends is called.
 This involves updating each listener in the modules (eg: renderers), but in this diagram we're focusing on the use case, which relates to the ``Logic`` update.
 Updating the logic includes updating ``Groups``, which stores all entities. These entities implement an interface ``Entityc``.
-However, in this use case, we're only interested in the ``Building`` type entities. These are updated by calling ``update()``, which itself calls ``updateTile(9``, where we make
-an exception for Buildings that are instances of Conduit, which are leakable buildings. By default ``updateTile()`` will depend on the subClass functionality, since it is empty in base.
-In the case of Buildings of leakable block types, it interacts with the added functionality of **Leak Identification** (this reflects the extension point).
+However, in this use case, we're only interested in the ``Building`` type entities. These are updated by calling ``update()``, which itself calls ``updateTile()``, where we make
+an exception for ``Building`` that are instances of ``Conduit``, which are leakable buildings. By default ``updateTile()`` will depend on the subClass functionality, since it is empty in base.
+In the case of ``Building`` of leakable block types, it interacts with the added functionality of **Leak Identification** (this reflects the extension point).
 
 ## Update leakable block tile
 ![seqUpdateLeakableBlockTile.svg](assets/seqUpdateLeakableBlockTile.svg)
 
 This is a sequence diagram reusable component, which corresponds to a behavior fragment in the use cases.
-It starts when ``updateTile()`` is called on the ConduitBuild in particular, since it is the type of ``Building`` that can create leaks.
+It starts when ``updateTile()`` is called on the ``ConduitBuild`` in particular, since it is the type of ``Building`` that can create leaks.
 To identify a leak in the tile ``checkLeak()`` is called on the singleton instance.
 
 It's first relevant to know whether the tile is in the ``Player`` team, as the leaks displayed are only those in buildings belonging to the player team.
@@ -94,7 +94,7 @@ In either of those cases, the minimap needs an update in that tile -> ``updatePi
 ![seqUpdateLeakDisplay.svg](assets/seqUpdateLeakDisplay.svg)
 
 This sequence diagrams covers the update of display elements related to leaks (minimap and local leaks circle overlays).  
-Similar to ``Logic`` updates, ``Renderer`` is one of the ApplicationListener modules updated at a regular interval.
+Similar to ``Logic`` updates, ``Renderer`` is one of the ``ApplicationListener`` modules updated at a regular interval.
 The two renderers within this instance we will be covering are the ``MinimapRenderer`` and the ``OverlayRenderer`` with respect
 to their functionality regarding ``Leaks``.  
 The loop checks for the listener that instantiates ``Renderer`` since it´s the one covered in this use case.
