@@ -65,7 +65,7 @@ public class DesktopInput extends InputHandler{
     private boolean changedCursor, pressedCommandRect;
 
     /** History of last selected schematics*/
-    private CopyHistClass copyHistClass = new CopyHistClass();
+    private CopyHist copyHist;
 
     private Commander commander = new Commander();
 
@@ -77,6 +77,8 @@ public class DesktopInput extends InputHandler{
 
     public DesktopInput() {
         Events.on(ResetEvent.class, e -> this.commander.clear());
+        // To prevent crashes when the game is initialized
+        copyHist = new CopyHistClass();
     }
 
     @Override
@@ -479,7 +481,13 @@ public class DesktopInput extends InputHandler{
             }
         }
 
+
         if(state.isGame() && !scene.hasDialog() && !scene.hasField()){
+
+            if(state.rules.sector != null && state.rules.sector.planet != null){
+                copyHist = state.rules.sector.planet.getHist();
+            }
+
             if(Core.input.keyTap(Binding.minimap)) ui.minimapfrag.toggle();
             if(Core.input.keyTap(Binding.planetMap) && state.isCampaign()) ui.planet.toggle();
             if(Core.input.keyTap(Binding.research) && state.isCampaign()) ui.research.toggle();
@@ -660,7 +668,7 @@ public class DesktopInput extends InputHandler{
          */
         if(Core.input.keyDown(Binding.ctrl) && Core.input.keyTap(Binding.copy)) {
             if (!selectPlans.isEmpty() && lastSchematic != null) {
-                copyHistClass.copy(lastSchematic);
+                copyHist.copy(lastSchematic);
                 Vars.ui.showInfoFade("Copied!", 2f);
             }
             else
@@ -671,15 +679,15 @@ public class DesktopInput extends InputHandler{
          * Insert a kept schematic on to the world
          */
         if (Core.input.keyDown(Binding.paste) && Core.input.keyDown(Binding.ctrl)) {
-            if(!copyHistClass.isEmpty()) {
+            if(!copyHist.isEmpty()) {
                 Vars.ui.showInfoFade("Scroll to access other copied schematics!", 7f);
-                Schematic current = copyHistClass.getCurrent();
+                Schematic current = copyHist.getCurrent();
 
                 if ((int) Core.input.axisTap(Binding.rotate) > 0) {
-                    current = copyHistClass.getNext();
+                    current = copyHist.getNext();
 
                 } else if ((int) Core.input.axisTap(Binding.rotate) < 0) {
-                    current = copyHistClass.getPrevious();
+                    current = copyHist.getPrevious();
                 }
 
                 useSchematic(current);
