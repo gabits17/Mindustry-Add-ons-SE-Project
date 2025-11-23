@@ -42,7 +42,7 @@ Despite that, I have some things to point out:
 ### Review
 *(Please add your class diagram review here)*
 ### Sequence diagrams
-(*Sequence diagrams and their discussion in natural language.*)
+[Sequence Diagrams](US1%20Sequence%20Diagrams.md)
 #### Review
 *(Please add your sequence diagram review here)*
 ## Test specifications

@@ -23,10 +23,14 @@ public class Commander {
      * @param command command to add
      */
     private void addCommand(Command command){
-        if(doneCommands.size == maxDone){
+        if(isDoneFull()){
             doneCommands.remove(0);
         }
         doneCommands.add(command);
+    }
+
+    private boolean isDoneFull() {
+        return doneCommands.size == maxDone;
     }
 
     /**
@@ -34,10 +38,14 @@ public class Commander {
      * @param command command to add
      */
     private void addUndone(Command command){
-        if(undoneCommands.size == maxUndone){
+        if(isUndoneFull()){
             undoneCommands.remove(0);
         }
         undoneCommands.add(command);
+    }
+
+    private boolean isUndoneFull() {
+        return undoneCommands.size == maxUndone;
     }
 
     /**
