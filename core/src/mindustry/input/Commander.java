@@ -84,30 +84,38 @@ public class Commander {
      * Undoes the topmost done command, and adds it to the undone stack
      */
     protected void undoTop(){
-        if(hasUndone()) {
+        if(hasDone()) {
             if (doneCommands.peek().canUndo()) {
                 doneCommands.peek().undo();
-                addUndone(doneCommands.pop());
+                addUndone(removeTopDone());
             } else {
-                doneCommands.pop();
+                removeTopDone();
                 //call the undo again probably until an undoable is found?
             }
         }
+    }
+
+    private Command removeTopDone() {
+        return doneCommands.pop();
     }
 
     /**
      * Redoes the topmost command, and adds it to the done stack
      */
     protected void redoTop(){
-        if(hasDone()) {
+        if(hasUndone()) {
             if (undoneCommands.peek().canRedo()) {
                 undoneCommands.peek().execute();
-                addCommand(undoneCommands.pop());
+                addCommand(removeTopUndone());
             } else {
-                undoneCommands.pop();
+                removeTopUndone();
                 //call the redo again probably until an redoable is found?
             }
         }
+    }
+
+    private Command removeTopUndone() {
+        return undoneCommands.pop();
     }
 
 }
