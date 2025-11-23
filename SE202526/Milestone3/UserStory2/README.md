@@ -45,7 +45,7 @@ if it is necessary to explain the added functionality.
 Additionally, only the Desktop version of the game is considered, since that is the version readily available for testing.
 
 ## Use case diagram
-![LeakIdentificationSystem.svg](LeakIdentificationSystem.svg)
+![LeakIdentificationSystem.svg](assets/LeakIdentificationSystem.svg)
 
 ## Use case textual description
 [Textual Description](US2%20Use%20Case%20Textual%20Description.md)

@@ -131,6 +131,7 @@ Extension point: Update leakable block tile
     1. The use case starts when a game logic reset event is triggered.
     2. The system forwards liquid in the tile to the next connected tile.
     3. If the system verifies that the leaking building tile belongs to the player team.
+       1. The system checks if the tile connected to the current is solid (to know if it's leaking)
        1. If the system verifies that the tile has started leaking.
            1. The system registers the tile as leaking.
        2. If the system verifies that the tile has been plugged by a block.
