@@ -92,6 +92,8 @@ public class Commander {
                 removeTopDone();
                 //call the undo again probably until an undoable is found?
             }
+        } else {
+            System.out.println("Nothing to undo");
         }
     }
 
@@ -111,6 +113,8 @@ public class Commander {
                 removeTopUndone();
                 //call the redo again probably until an redoable is found?
             }
+        } else {
+            System.out.println("Nothing to redo");
         }
     }
 
