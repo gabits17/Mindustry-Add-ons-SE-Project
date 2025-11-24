@@ -110,7 +110,7 @@ public class Turret extends ReloadTurret{
     public TargetingMode targetingMode = TargetingMode.CLOSEST_FIRST;
 
     /** Current targeting class. **/
-    public TargetingType targetingType;
+    public TargetingEnvironment targetingEnv = TargetingEnvironment.ANY;
 
     /** Function for choosing which unit to target. */
     public Sortf unitSort = UnitSorts.closest;
@@ -176,6 +176,7 @@ public class Turret extends ReloadTurret{
         regionRotated1 = 1;
         regionRotated2 = 2;
         configurable = true;
+        //targetingEnvironment = fixTargetingClass();
     }
 
     @Override
@@ -301,8 +302,8 @@ public class Turret extends ReloadTurret{
 
         public TargetingMode targetingMode = Turret.this.targetingMode;
         public TargetingMode[] tModes = TargetingMode.values();
-        public TargetingType targetingType = Turret.this.targetingType;
-        public TargetingType[] tTypes = TargetingType.values();
+        public TargetingEnvironment targetingEnv = Turret.this.targetingEnv;
+        public TargetingEnvironment[] tEnvironments = TargetingEnvironment.values();
 
         public float heatReq;
         public float[] sideHeat = new float[4];
@@ -313,7 +314,7 @@ public class Turret extends ReloadTurret{
 
         public TurretBuild() {
             super();
-            targetingType = fixTargetingClass();
+            targetingEnv = fixTargetingEnv();
         }
 
         /**
@@ -322,14 +323,14 @@ public class Turret extends ReloadTurret{
          * and turrets that *only* targets ground returns GROUND_FIRST
          * For turrets that target *both air and ground*, returns ANY
          */
-        private TargetingType fixTargetingClass() {
+        private TargetingEnvironment fixTargetingEnv() {
             if(targetAir && !targetGround)
-                return TargetingType.AIR_FIRST;
+                return TargetingEnvironment.AIR_FIRST;
 
             else if(!targetAir && targetGround)
-                return TargetingType.GROUND_FIRST;
+                return TargetingEnvironment.GROUND_FIRST;
 
-            else return TargetingType.ANY;
+            else return TargetingEnvironment.ANY;
         }
 
         /**
@@ -337,7 +338,7 @@ public class Turret extends ReloadTurret{
          * Returns true if it does; otherwise, returns false
          */
         private boolean targetsBoth() {
-            return targetAir == targetGround;
+            return targetAir && targetGround;
         }
 
         @Override
@@ -634,10 +635,10 @@ public class Turret extends ReloadTurret{
         protected Sortf unitSorter() {
             Sortf mode = getSortf();
             // if targeting is focused on air units (for turrets that targets both air and ground targets)
-            if(targetingType == TargetingType.AIR_FIRST)
+            if(targetingEnv == TargetingEnvironment.AIR_FIRST)
                 return UnitSorts.airFirst(mode);
             // if targeting is focused on ground units (for turrets that targets both air and ground targets)
-            else if(targetingType == TargetingType.GROUND_FIRST)
+            else if(targetingEnv == TargetingEnvironment.GROUND_FIRST)
                 return UnitSorts.groundFirst(mode);
 
             // if targeting is not focused on any, only return the sorted according to mode
@@ -858,31 +859,36 @@ public class Turret extends ReloadTurret{
             super.write(write);
             write.f(reloadCounter);
             write.f(rotation);
-//            write.s(this.targetingMode.ordinal()); // saving the ordinal of the enum
-//            write.s(this.targetingType.ordinal());
+            /** Snippet code to handle saving configurations between loads and saves **/
+            /* write.i(targetingMode.ordinal());
+            write.i(targetingEnv.ordinal()); */
         }
 
         @Override
         public void read(Reads read, byte revision){
             super.read(read, revision);
 
-            if(revision >= 1){
+            if(revision >= 1) {
                 reloadCounter = read.f();
                 rotation = read.f();
             }
 
-//            if(revision >= 2) {
-//                int k = read.s();
-//                targetingMode = tModes[k];
-//                int t = read.s();
-//                targetingType = tTypes[t];
-//            }
+            /** Snippet code to handle saving configurations between loads and saves **/
+            /* if(revision >= 2) {
+                targetingMode = tModes[read.i()];
+                targetingEnv = tEnvironments[read.i()];
+            }
+            else {
+                targetingMode = TargetingMode.CLOSEST_FIRST;
+                targetingEnv = fixTargetingEnv();
+            } */
         }
 
         @Override
         public byte version(){
             return 1;
-            //return 2; // new version because of targetingMode and targetingClass being added
+            /** Snippet code to handle saving configurations between loads and saves **/
+            /* return 2; */
         }
 
         @Override
@@ -900,8 +906,8 @@ public class Turret extends ReloadTurret{
             return targetingMode.next();
         }
 
-        public TargetingType nextTargetingType() {
-            return targetingType.next();
+        public TargetingEnvironment nextTargetingEnv() {
+            return targetingEnv.next();
         }
 
         private String getCurrentTargetingModeString(){
@@ -909,17 +915,17 @@ public class Turret extends ReloadTurret{
         }
 
         private String getCurrentTargetingTypeString(){
-            return targetingType.toString().split("_")[0].toLowerCase();
+            return targetingEnv.toString().split("_")[0].toLowerCase();
         }
 
         @Override
         public void buildConfiguration(Table table) {
             super.buildConfiguration(table);
 
-            Runnable swapTargetingMode = () -> targetingMode = targetingMode.next();
-            Runnable swapTargetingType = () -> {
-                if(targetsBoth()) targetingType = nextTargetingType();
-                // else, targetingType stays the same
+            Runnable swapTargetingMode = () -> targetingMode = nextTargetingMode();
+            Runnable swapTargetingEnv = () -> {
+                if(targetsBoth()) targetingEnv = nextTargetingEnv();
+                // else, targetingEnv stays the same
             };
 
             TextButton modeButton = table.button(getCurrentTargetingModeString(), swapTargetingMode).get();
@@ -928,15 +934,15 @@ public class Turret extends ReloadTurret{
                 modeButton.setText(getCurrentTargetingModeString());
             });
 
-            TextButton typeButton = table.button(getCurrentTargetingTypeString(), swapTargetingType).get();
-            // typeButton is not clickable if the turret only targets one type of enemies
-            typeButton.setDisabled(!targetsBoth());
+            TextButton envButton = table.button(getCurrentTargetingTypeString(), swapTargetingEnv).get();
+            // envButton is not clickable if the turret only targets one type of enemies
+            envButton.setDisabled(!targetsBoth());
             // Updating each time it is pressed
-            typeButton.update( () -> typeButton.setText(getCurrentTargetingTypeString()));
+            envButton.update( () -> envButton.setText(getCurrentTargetingTypeString()));
 
 
             table.add(modeButton).width(200f).tooltip("Swap targeting mode");
-            table.add(typeButton).width(200f).tooltip("Swap targeting type");
+            table.add(envButton).width(200f).tooltip("Swap targeting environment");
         }
 
         private String getDisplayTargetingString(){
