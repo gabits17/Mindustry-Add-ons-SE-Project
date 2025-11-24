@@ -51,7 +51,7 @@ Concluding, the Class Diagram is correct and I only have a small difference in p
 ### Sequence diagrams
 [Sequence Diagrams](US1%20Sequence%20Diagrams.md)
 ### Review
-**Author** : Diogo Antunes (67763), 23/11/2025 23:10
+**Author** : Diogo Antunes (67763), 23/11/2025 23:10  
 In **Undo**, I think it'd be useful to create a local variable that stores the result of ``hasDone()``
 so that this result can be used as the condition in opt. This goes for other cases throughout the diagrams.
 

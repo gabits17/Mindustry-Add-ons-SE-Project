@@ -1,4 +1,11 @@
 # Sequence Diagrams
+### Notation use
+Underlined classifiers: specific classifier instances.
+Specific as they're usually the instance that can be statically accessed from the singleton ``Vars``.
+Or, in the case of ``ApplicationListener`` in ``ApplicationCore``, the instances are processed once during setup.
+
+Classifiers without ``:`` : Statically accessed. Eg: ``Events``, a mediator class.
+
 ## Enter map
 ![seqEnterMap.svg](assets/seqEnterMap.svg)
 
@@ -22,10 +29,12 @@ with ``runExitSve()``. During this exit, the logic is reset, which leads to clea
 When the ``Logic`` reset is triggered in the previous use cases, this involves firing a ``ResetEvent``.
 I didn't consider this event as an entity since it carries no data and is used to trigger a list of functionalities registered
 to this event type.
-Additionally, while ``get(type)`` is called in Events, it's called on an interface ``Cons`` that contains the function/method to be called,
+Additionally, while ``get(type)`` is called in ``Events``, it's called on an interface ``Cons`` that contains the function/method to be called,
 to handle the event, which in this case is **clear()** belonging to ``Leaks``.
 This only happens if ``Leaks`` has been instantiated, that is, if the singleton's ``getInstance()`` method has been called at any point since the
 game started running (if a map has been ).
+
+Note: ``Events`` is a mediator class that allows classes to create custom logic as a response to an event corresponding to a specific kind of occurrence.
 
 ## Place block
 ![seqPlaceBlock.svg](assets/seqPlaceBlock.svg)
