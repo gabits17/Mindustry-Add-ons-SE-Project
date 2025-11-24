@@ -36,6 +36,8 @@ to handle the event, which in this case is **clear()** belonging to ``Leaks``. T
 (mostly lambda expressions).
 This only happens if ``Leaks`` has been instantiated, that is, if the singleton's ``getInstance()`` method has been called at any point since the
 game started running (if a map has been ).
+In such a case the ``clear()`` method wipes the stored leaks (I didn't include a sub-activity vertical rectangle for clear as it is the sole activity being performed in ``Leaks``
+for this functionality).
 
 Note: ``Events`` is a mediator class that allows classes to create custom logic as a response to an event corresponding to a specific kind of occurrence.
 
@@ -68,8 +70,8 @@ When a tile is to be updated in the scenario where a block is broken or placed, 
 (both instances are static attributes in a class ``Vars``). From here, the tiles of the block (multiple if the block occupies multiple tiles) are enqueued for update.
 (``updateSingleTile()`` is applied per tile in the linked tiles as part of the ``getLinkedTiles()`` method).
 
-Later on, these tiles corresponding to buildings that are activated are updated, some being tiles that can leak, in which case the
-attempt to check for leaks will occur (in ``UpdateLeakableBlock``).
+Later on (omission of correspondence between many intermediate classes), these tiles corresponding to active buildings that are updated, the tiles of those buildings that can leak, result
+in the attempt to check for leaks that may have occurred/stopped (in ``UpdateLeakableBlock``).
 
 ## Update building
 ![seqUpdateBuilding.svg](assets/seqUpdateBuilding.svg)
