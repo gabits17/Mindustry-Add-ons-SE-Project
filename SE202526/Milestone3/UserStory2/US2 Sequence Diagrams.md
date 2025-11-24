@@ -80,7 +80,7 @@ At a specific time interval, the ``update()`` method in the ``ApplicationCore`` 
 This involves updating each listener in the modules (eg: renderers), but in this diagram we're focusing on the use case, which relates to the ``Logic`` update.
 Updating the logic includes updating ``Groups``, which stores all entities. These entities implement an interface ``Entityc``.
 However, in this use case, we're only interested in the ``Building`` type entities. These are updated by calling ``update()``, which itself calls ``updateTile()``, where we make
-an exception for ``Building`` that are instances of ``Conduit``, which are leakable buildings. By default ``updateTile()`` will depend on the subClass functionality, since it is empty in base.
+an exception for ``Building`` that are instances of ``ConduitBuild``, which are leakable buildings. By default ``updateTile()`` will depend on the subClass functionality, since it is empty in base.
 In the case of ``Building`` of leakable block types, it interacts with the added functionality of **Leak Identification** (this reflects the extension point).
 
 ## Update leakable block tile
