@@ -5,7 +5,12 @@ Diogo Antunes 67763
 ## Reviewer(s)
 
 Gabriel Matias Falcão 67775
+
 Manuel Oliveira 68547
+
+Carolina Ferreira (67804)  
+
+(*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story:
 As a USER WITH AN IN-GAME BASE THAT COVERS A WIDE AREA,
 I want to be instantly informed of the location of any leaks of
@@ -43,7 +48,7 @@ if it is necessary to explain the added functionality.
 Additionally, only the Desktop version of the game is considered, since that is the version readily available for testing.
 
 ## Use case diagram
-![LeakIdentificationSystem.svg](assets/LeakIdentificationSystem.svg)
+![LeakIdentificationSystem.svg](LeakIdentificationSystem.svg)
 
 ## Use case textual description
 [Textual Description](US2%20Use%20Case%20Textual%20Description.md)
@@ -82,10 +87,15 @@ Anything that happens afterward involves loading the map save and retrieving dat
 ### Class diagrams
 [Class Diagrams](US2%20Class%20Diagrams.md)
 #### Review
-*(Please add your class diagram review here)*
+**Author** : Carolina Ferreira (67804) 23/11/2025 19:11
+
+Besides a little punctuation error in the **Update leakable block tile** section - "The ``checkLeak`` method, checks for a transition from *not leaking -> leaking* and vice versa and in such case adds/removes the tile
+from the data structures ``leakTree`` and ``leakSet`` using the ``addLeak(Tile tile)`` or ``removeLeak(Tile tile)`` methods (missing the comma - **,**) respectively." - there are no other elements to correct, in my opinion.
+
+During my review, Diogo corrected the **Clear leaks** diagram, which is confirmed by the commits made in the past few hours. Therefore, I have no further comment on his report. It's a comprehensive report that provides the desired information.
 
 ### Sequence diagrams
-[Sequence Diagrams](US2%20Sequence%20Diagrams.md)
+(*Sequence diagrams and their discussion in natural language.*)
 #### Review
 *(Please add your sequence diagram review here)*
 ## Test specifications

@@ -72,12 +72,6 @@ public class CopyHistClass implements CopyHist {
     }
 
     @Override
-    public Schematic get(int pos) {
-        lastPos = (pos + lastPos) % MAX_SIZE;
-        return history.get(lastPos);
-    }
-
-    @Override
     public Schematic getCurrent(){
         return history.get(lastPos);
     }
