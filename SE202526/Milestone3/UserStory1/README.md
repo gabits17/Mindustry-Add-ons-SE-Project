@@ -30,7 +30,10 @@ Despite that, I have some things to point out:
 - The expression "*(a sector, a custom map, a server, etc)*" should be consistent every time it is written in *Enter Map* and *Leave Map*
 - *Reset Action Commander* should have some post-conditions statement, such as "*The system's memory of actions is empty/reset*"
 - The post conditions field in *Undone Action* is probably wrong. If it removes the last stack's element to add the most recent action undone, it should still be full. As I understood, the element from the stack that was removed was replaced by the most recent undone action, which maintains the stack full.
+#### Answer
+Gabriel Falcão (67775), 24/11/2025 10:17
 
+I have updated the diagram's description, given the points above.
 ## Implementation documentation
 (*Please add the class diagram(s) illustrating your code evolution, along with a technical description of the changes made by your team. The description may include code snippets if adequate.*)
 ### Implementation summary
@@ -48,6 +51,13 @@ A small nitpick that I have is that for ease of traversing through the code to c
 
 Concluding, the Class Diagram is correct and I only have a small difference in preference for the explanation document layout of the Class Diagram.
 
+
+#### Answer
+Gabriel Falcão (67775), 24/11/2025 10:14
+
+I don't agree with the first point as it is my personal preference to have the document structured as is, maybe we can ask for the group's opinion on it.
+
+I did not understand the second point, where would you like me to write the path?
 ### Sequence diagrams
 [Sequence Diagrams](US1%20Sequence%20Diagrams.md)
 ### Review
