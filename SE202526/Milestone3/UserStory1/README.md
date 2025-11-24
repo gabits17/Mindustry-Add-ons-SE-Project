@@ -66,7 +66,7 @@ I did not understand the second point, where would you like me to write the path
 In **Undo**, I think it'd be useful to create a local variable that stores the result of ``hasDone()``
 so that this result can be used as the condition in opt. This goes for other cases throughout the diagrams.
 
-Also, I think the sequence diagram referenced in **ref** should be within the label as "ref <name>".
+Also, I think the sequence diagram referenced in **ref** should be within the label as "ref \<name\>".
 
 Typo of "DesktopInpu" in description.
 
@@ -86,3 +86,4 @@ It might also be worth checking out notation in terms of underlining classifiers
 (*Test cases specification and pointers to their implementation, where adequate.*)
 ### Review
 *(Please add your test specification review here)*
+
