@@ -1,219 +1,221 @@
-# Main Functionalities
-###  *Select tiles*
+# Copy history
+### Note on Schematics
+Just for clarification, in the game there is an element called "Schematics" that are player made constructions that are kept in files.
+On the other hand, in the codebase for the game, a schematic is a selection of blocks that can be saved to a file, but a schematic in this context is also used for many other purposes.
+
+In our case we used schematics as the main way of keeping a collection of selections that were copied.
+
+For that reason, except for titles, throughout this document we'll be referring to the schematics used in the code as **"schematics"**, with lower case, and schematics that are saved to a file as **"Schematics"**, with higher case.
+
+## Main Functionalities
+###  **Select tiles**
 - **Name**: Select tiles
 - **ID**: UC1
-- **Description**: This Player select the desired tiles.
+- **Description**: This Player selects the desired tiles.
 - **Actors**:
 	- *Main*: Player
 	- *Secondary*: None
-- **Pre-Conditions**: None
+- **Pre-Conditions**: The Player is in a valid game and map.
 - **Main Flow**:
-	1. The use case starts when the player requests an action to be undone (keybind, for example)
-	2. <mark style="background: #FFB86CA6;">The system removes the done action from its stack</mark>
-	3. <mark style="background: #FFB86CA6;">The system adds the action as undone to its stack</mark>
-	4. The system executes the action just added
-	5. The use case ends
-- **Alternative Flows**
-	- No Done Action
-	- Undone Stack Full
-- **Post-Conditions**: The undone action is recorded
-### No Done Action
+  1. The player moves the cursor to one fo the corners of the intended selection.
+  2. The player presses the binding defined for selection(default is the "F" key).
+  3. The player drags the mouse until the corner of the selection opposite of the initial corner.
+  4. The player stops pressing the selection key, defining the schematic selected.
+  5. If the player presses the "Save Schematic" button.
+     1. Then the menu to save a Schematic is open.
+  6. If the player presses the keybind to copy a schematic (default is "ctrl + c").
+     1. Then the schematic selected is copied to the history of copied schematics.
+  7. The use case ends.
 
-- **Name**: No Done Action
-- **ID**: AF1
-- **Description**: The player tried to undo an action, but no action had been done
-- **Actors**:
-	- *Main*: Player
-	- *Secondary*: None
-- **Pre-Conditions**: 
-- **Main Flow**:
-	1. The use case starts before step 2 of the main flow
-	2. The system displays an error message saying that there is no action to undo
-	3. The use case and the main flow end
+Extension point: Save Schematic
+
+Extension point: Copy Schematic
+
 - **Alternative Flows**
 	- None
-- **Post-Conditions**: None
+- **Post-Conditions**: The tiles selected are displayed.
 
-###  Undone Stack Full
-- **Name**: Undone Stack Full
-- **ID**: AF2
-- **Description**: The stack used to store the actions undone by the player is full
-- **Actors**:
-	- *Main*: Player
-	- *Secondary*: 
-- **Pre-Conditions**: None 
-- **Main Flow**:
-	1. The use case starts before step 3 of the main flow
-	2. The system removes the stack's last element
-	3. The system adds the undone action to the stack
-	4. Return to step 3 of the main flow
-- **Alternative Flows**
-	- None
-- **Post-Conditions**: Undone Stack not Full
-
-##  Redo
-- **Name**: Redo
+###  **Terminate Game**
+- **Name**: Terminate Game
 - **ID**: UC2
-- **Description**: This UC redoes the last action undone by the player.
+- **Description**: The player quits the game.
 - **Actors**:
-	- *Main*: Player
-	- *Secondary*: None
+    - *Main*: Player
+    - *Secondary*: None
 - **Pre-Conditions**: None
 - **Main Flow**:
-	1. The use case starts when the player requests an action to be redone (keybind, for example)
-	2. <mark style="background: #FFB86CA6;">The system removes the undone action from its stack</mark>
-	3. <mark style="background: #BBFABBA6;">Include Add Done Action</mark>
+  1. The player quits the game, shutting down the application.
+  2. <mark style="background: #BBFABBA6;">Include (Eliminate History).</mark>
 - **Alternative Flows**
-	- No Undone Action
-- **Post-Conditions**: The redone action is recorded
-### No Undone Action
-- **Name**: No Undone Action
-- **ID**: AF3
-- **Description**: The player tried to redo an action, and no action had been undone
-- **Actors**:
-	- *Main*: Player
-	- *Secondary*: None
-- **Pre-Conditions**: 
-- **Main Flow**:
-	1. The use case starts before step 2 of the main flow
-	2. The system displays an error message saying that there is no action to redo
-	3. The use case and the main flow end
-- **Alternative Flows**
-	- None
-- **Post-Conditions**: None
-# Actions
-## Paste Schematic
-- **Name**: Paste Schematic
+    - None
+- **Post-Conditions**: The game ends and the application stops running.
+
+###  **Change Planet**
+- **Name**: Change Planet
 - **ID**: UC3
-- **Description**: The player pastes a schematic
+- **Description**: The player selects a planet.
 - **Actors**:
-	- *Main*: Player
-	- *Secondary*: None
-- **Pre-Conditions**: The player has a schematic selected to be placed 
-- **Main Flow**:
-	1.  The use case starts after the player requests to paste a schematic
-	2. The system creates an action to paste the schematic
-	3. <mark style="background: #BBFABBA6;">Include Add Done Action</mark>
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**: None
+  - **Main Flow**:
+    1. The Player Selects a planet to play.
+    2. The game loads the planet chosen and respective Copy History.
+    3. <mark style="background: #BBFABBA6;">Include (Load Planet's History).</mark>
 - **Alternative Flows**
-	- None
-- **Post-Conditions**: The done action is recorded
-## Build Building
-- **Name**: Build Building
+    - None
+- **Post-Conditions**: The game displays the planet selected.
+
+###  **Change Copy**
+- **Name**: Change Copy
 - **ID**: UC4
-- **Description**: The player builds a building
+- **Description**: The player chooses what copied schematic they want to build.
 - **Actors**:
-	- *Main*: Player
-	- *Secondary*: None
-- **Pre-Conditions**: The player has a building selected to be built
-- **Main Flow**:
-	1. The use case starts after the player requests to build a building
-	2. The system creates an action to build the building
-	3. <mark style="background: #BBFABBA6;">Include Add Done Action</mark>
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**: The player is in a map.
+    - **Main Flow**:
+      1. The Player presses the keybinds to paste a copied schematic (default is Ctrl + V).
+      2. The game loads and displays the last copied schematic.
+      3. If the player presses the keybind to see the previous copied schematic.
+         1. Then displays the previous copied schematic.
+      4. If the player presses the keybind to see the next copied schematic.
+         1. Then displays the next copied schematic.
+      5. If the player presses the place keybind (left click by default)
+         1. Then places the displayed schematic in the game world.
+
+Extension point: Paste Copy
+
+Extension point: Scroll through copies
+
 - **Alternative Flows**
-	- None
-- **Post-Conditions**: The done action is recorded
-## Remove Selection
-- **Name**: Remove Selection
-- **ID**: UC5
-- **Description**: The player removes a selected area
-- **Actors**:
-	- *Main*: Player
-	- *Secondary*: None
-- **Pre-Conditions**: The player has an area selected to remove
-- **Main Flow**:
-	1. The use case starts after the player requests to remove a selection
-	2. The system creates an action to remove the selection
-	3. <mark style="background: #BBFABBA6;">Include Add Done Action</mark>
-- **Alternative Flows**
-	- None
-- **Post-Conditions**: The done action is recorded
-## Rotate Building
-- **Name**: Rotate Building
-- **ID**: UC6
-- **Description**: The player rotates a building
-- **Actors**:
-	- *Main*: Player
-	- *Secondary*: None
-- **Pre-Conditions**: The player has their cursor on a building to be rotated
-- **Main Flow**:
-	1. The use case starts after the player requests to rotate a building
-	2. The system creates an action to rotate the building
-	3. <mark style="background: #BBFABBA6;">Include Add Done Action</mark>
-- **Alternative Flows**
-	- None
-- **Post-Conditions**: The done action is recorded
-# Map
-## Enter Map
-- **Name**: Enter Map
-- **ID**: UC7
-- **Description**: The player enters a map, be it a sector, a custom map, a server...
-- **Actors**:
-	- *Main*: Player
-	- *Secondary*: None
-- **Pre-Conditions**: None
-- **Main Flow**:
-	1. The use case starts when the player enters a map (sector, a custom map, a server...)
-	2. <mark style="background: #BBFABBA6;">Include Reset Action Commander</mark>
-- **Alternative Flows**
-	- None
-- **Post-Conditions**: None
-## Leave Map
-- **Name**: Leave Map
-- **ID**: UC8
-- **Description**: The player leaves a map, be it a sector, a custom map, a server...
-- **Actors**:
-	- *Main*: Player
-	- *Secondary*: None
-- **Pre-Conditions**: None
-- **Main Flow**:
-	1. The use case starts when the player leaves a map (sector, a custom map, a server...)
-	2. <mark style="background: #BBFABBA6;">Include Reset Action Commander</mark>
-- **Alternative Flows**
-	- None
-- **Post-Conditions**: None
-# Includes
-## Add Done Action
-- **Name**: Add Done Action
+    - None
+- **Post-Conditions**: The last copied schematic is displayed and ready to be built.
+
+## Includes
+## **Eliminate History**
+- **Name**: Eliminate History
 - **ID**: IUC1
-- **Description**: This use case adds a done action to the system's memory
+- **Description**: This use case clears the history of copied schematics.
 - **Actors**:
-	- *Main*: Player
-	- *Secondary*: None
-- **Pre-Conditions**: None 
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**: The player selected to quit the game.
 - **Main Flow**:
-	1. The use  case starts when the player performs any request to add a done action (redo, placing, for example)
-	2. <mark style="background: #FFB86CA6;">The system adds the done action to its stack</mark>
-	3. The system executes the action just added
+    1. The instance that kept the copied schematics is eliminated.
 - **Alternative Flows**
-	- Done Stack Full
-- **Post-Conditions**: The done action is recorded
-### Done Stack Full
-- **Name**: Done Stack Full
-- **ID**: AF4
-- **Description**: The stack used to store the actions done by the player is full
+    - None
+- **Post-Conditions**: The game ended.
+
+## **Load Planets History**
+- **Name**: Load Planets History
+- **ID**: IUC2
+- **Description**: This use case loads a planet's history of copied schematics.
 - **Actors**:
-	- *Main*: Player
-	- *Secondary*: None
-- **Pre-Conditions**: None 
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**: The player selected a planet.
 - **Main Flow**:
-	1. The use case starts after step 2 of the main flow
-	2. The system removes the stack's last element
-	3. Return to step 2 of the main flow
+    1. The planet the player chose is loaded, as is it's history if it previously existed, otherwise its created.
 - **Alternative Flows**
-	- None
-- **Post-Conditions**: The done stack is not full
-## Reset Action Commander
-- **Name**: Reset Action Commander
-- **ID**: IC2
-- **Description**: The use case clears the system's memory of actions
+    - None
+- **Post-Conditions**: The planet's history of loaded schematics is loaded.
+
+
+## Extends
+## **Save Schematic**
+- **Name**: Save Schematic
+- **ID**: EUC1
+- **Description**: This use case adds the functionality of saving a selected schematic to a file 
 - **Actors**:
-	- *Main*: Player
-	- *Secondary*: None
-- **Pre-Conditions**: None
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**: The player has selected a schematic.
 - **Main Flow**:
-	1. The use case starts when the player requests to reset the action commander
-	2. The system clears the done action stack
-	3. The system clears the undone action stack
+  1. The player presses the "Save Schematic" button.
+  2. The menu to save a Schematic is open.
+  3. The player enters the necessary info and the schematic is saved.
+
 - **Alternative Flows**
-	- None
-- **Post-Conditions**: None
+    - None
+- **Post-Conditions**: The schematic is saved to a file.
+
+## **Copy Schematic**
+- **Name**: Copy Schematic
+- **ID**: EUC2
+- **Description**: This use case adds the functionality of saving a selected schematic to a history of copied schematics.
+- **Actors**:
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**: The player has selected a schematic.
+- **Main Flow**:
+    1. The player presses the keybind to copy a schematic (default is "ctrl + c").
+    2. The schematic selected is copied to the history of copied schematics.
+
+- **Alternative Flows**
+    - None
+- **Post-Conditions**: The schematic is saved to the planet's history.
+
+## **Paste Copy**
+- **Name**: Paste Copy
+- **ID**: EUC3
+- **Description**: This use case adds the functionality of pasting a copied schematic.
+- **Actors**:
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**: The player has selected a schematic from the history of copied ones.
+- **Main Flow**:
+    1. The player presses the place keybind (left click by default).
+    2. Then places the displayed schematic in the game world.
+
+- **Alternative Flows**
+    - None
+- **Post-Conditions**: The schematic is placed in the game world.
+
+## *Scroll through copies*
+- **Name**: Copy Schematic
+- **ID**: EUC4
+- **Description**: This use case adds the function of browsing through the saved schematics.
+- **Actors**:
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**: The player has selected a schematic.
+- **Main Flow**:
+    1. The player scrolls through the copies of schematics saved to the history.
+- **Alternative Flows**
+    - None
+- **Post-Conditions**: None.
+
+## **Get next copy**
+- **Name**: Get next copy
+- **ID**: EUC4.1
+- **Description**: This use case adds the function of saving a selected schematic to a history of copied schematics.
+- **Actors**:
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**: The player has selected a schematic.
+- **Main Flow**:
+  1. (01.) The player scrolls through the copies of schematics saved to the history.
+  2. The player presses the keybind to see the next copied schematic.
+  3. The game displays the next copied schematic.
+- **Alternative Flows**
+    - None
+- **Post-Conditions**: None.
+
+## **Get previous copy**
+- **Name**: Get previous copy
+- **ID**: EUC4.2
+- **Description**: This use case adds the function of saving a selected schematic to a history of copied schematics.
+- **Actors**:
+    - *Main*: Player
+    - *Secondary*: None
+- **Pre-Conditions**: The player has selected a schematic.
+- **Main Flow**:
+    1. (01.) The player scrolls through the copies of schematics saved to the history.
+    2. The player presses the keybind to see the previous copied schematic.
+    3. The game displays the previous copied schematic.
+- **Alternative Flows**
+    - None
+- **Post-Conditions**: None.
+
+

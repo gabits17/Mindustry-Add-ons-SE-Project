@@ -11,11 +11,18 @@ Copy and Paste
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story
 
+As an EXPERIENCED USER, I want to have access to a traversable history of
+copied block selections that I can pick to paste,
+so that I don't need to save quick changes as schematics (saved block selections).
+
 ### Review
 *(Please add your user story review here)*
 ## Use case diagram
+![CopyPaste.jpg](./Assets/CopyPaste.jpg)
 
 ## Use case textual description
+
+[Textual Description](US4%20Use%20Case%20Textual%20Description.md)
 
 ### Review
 **Author**:
