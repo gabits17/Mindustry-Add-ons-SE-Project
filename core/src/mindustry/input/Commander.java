@@ -23,10 +23,14 @@ public class Commander {
      * @param command command to add
      */
     private void addCommand(Command command){
-        if(doneCommands.size == maxDone){
+        if(isDoneFull()){
             doneCommands.remove(0);
         }
         doneCommands.add(command);
+    }
+
+    private boolean isDoneFull() {
+        return doneCommands.size == maxDone;
     }
 
     /**
@@ -34,10 +38,14 @@ public class Commander {
      * @param command command to add
      */
     private void addUndone(Command command){
-        if(undoneCommands.size == maxUndone){
+        if(isUndoneFull()){
             undoneCommands.remove(0);
         }
         undoneCommands.add(command);
+    }
+
+    private boolean isUndoneFull() {
+        return undoneCommands.size == maxUndone;
     }
 
     /**
@@ -84,34 +92,42 @@ public class Commander {
      * Undoes the topmost done command, and adds it to the undone stack
      */
     protected void undoTop(){
-        try {
+        if(hasDone()) {
             if (doneCommands.peek().canUndo()) {
                 doneCommands.peek().undo();
-                addUndone(doneCommands.pop());
+                addUndone(removeTopDone());
             } else {
-                doneCommands.pop();
+                removeTopDone();
                 //call the undo again probably until an undoable is found?
             }
-        } catch (IllegalStateException e) {
+        } else {
             System.out.println("Nothing to undo");
         }
+    }
+
+    private Command removeTopDone() {
+        return doneCommands.pop();
     }
 
     /**
      * Redoes the topmost command, and adds it to the done stack
      */
     protected void redoTop(){
-        try {
+        if(hasUndone()) {
             if (undoneCommands.peek().canRedo()) {
                 undoneCommands.peek().execute();
-                addCommand(undoneCommands.pop());
+                addCommand(removeTopUndone());
             } else {
-                undoneCommands.pop();
+                removeTopUndone();
                 //call the redo again probably until an redoable is found?
             }
-        } catch (IllegalStateException e) {
+        } else {
             System.out.println("Nothing to redo");
         }
+    }
+
+    private Command removeTopUndone() {
+        return undoneCommands.pop();
     }
 
 }

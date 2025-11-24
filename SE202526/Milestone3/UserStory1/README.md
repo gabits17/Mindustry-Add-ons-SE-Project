@@ -4,12 +4,30 @@ Undo and Redo
 - Gabriel Matias (67775)
 ## Reviewer(s)
 - Gabriela Silva (67286)
+- Dinis Neves (68130)
 
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story
 [User Story 1](../../Milestone1/UserStory1.md)
 ### Review
-*(Please add your user story review here)*
+**Author** : Diogo Antunes (67763), 23/11/2025 23:10
+In **Undo**, I think it'd be useful to create a local variable that stores the result of ``hasDone()``
+so that this result can be used as the condition in opt. This goes for other cases throughout the diagrams.
+
+Also, I think the sequence diagram referenced in **ref** should be within the label as "ref <name>".
+
+Typo of "DesktopInpu" in description.
+
+**Add Undone** and check inn all diagrams after **Add Command**
+Minor formatting comment - The text starts immediately after the image, should have an ``Enter`` there.
+Typo "refereed" -> referreed
+
+**Remove Selection**
+My own understanding of the vertical rectangles that indicate an activity are limited, but it may be useful to include one after ``execute()`` to show the activity roughly taking place.
+
+This isn't a diagram type I have as much knowledge of the specification on, so I may be lacking in some of my comments, and may
+have missed potential issues.
+
 ## Use case diagram
 ![Use Case](Assets/UseCases.drawio.svg)
 ## Use case textual description
@@ -40,9 +58,16 @@ Despite that, I have some things to point out:
 ### Class diagrams
 [Class Diagrams](US1%20Class%20Diagrams.md)
 ### Review
-*(Please add your class diagram review here)*
+**Author**: Dinis Neves (68130), 23/11/2025 00:30
+
+As someone who has followed this implementation the class diagrams seem to provide further details that dialogue and glances at the code did not. The Class Diagrams are well defined and the only issue with the Class Diagram that as of now can be identified is the repetition of the [Assets/PasteSchematic_BuildBuildingClass.drawio.svg]. I might be wrong but it looks to me as a small issue with the Class Diagram document. The use of the same diagram is to highlight that the implementation is identical. I believe at first glace that would hinder the understanding of the implementation. I believe an approach where adding to the small disclaimer at the top: "The description of the two following diagrams will only be given here, ... use the same implementation." (adding: "therefore only one diagram for both is shown below.") would be more understandable, maybe even removing Base Building and adding it to the previous subtitle.
+
+A small nitpick that I have is that for ease of traversing through the code to check the implemented and changed classes a path like [mindustry/input/Commander.java] would help out in this regard.
+
+Concluding, the Class Diagram is correct and I only have a small difference in preference for the explanation document layout of the Class Diagram.
+
 ### Sequence diagrams
-(*Sequence diagrams and their discussion in natural language.*)
+[Sequence Diagrams](US1%20Sequence%20Diagrams.md)
 #### Review
 *(Please add your sequence diagram review here)*
 ## Test specifications
