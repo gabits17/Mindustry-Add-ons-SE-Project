@@ -108,11 +108,9 @@ public class Turret extends ReloadTurret{
 
     /** Currently targeting mode. Default: Closest */                                                           // US3 CHANGES HERE
     public TargetingMode targetingMode = TargetingMode.CLOSEST_FIRST;
-    private static final TargetingMode[] modes = TargetingMode.values();
 
     /** Current targeting class. **/
     public TargetingType targetingType;
-    private static final TargetingType[] targetClasses = TargetingType.values();
 
     /** Function for choosing which unit to target. */
     public Sortf unitSort = UnitSorts.closest;
@@ -301,8 +299,10 @@ public class Turret extends ReloadTurret{
         public boolean wasShooting;
         public int queuedBullets = 0;
 
-        public TargetingMode targetingMode = Turret.this.targetingMode;                                                     // US3 CHANGES HERE
+        public TargetingMode targetingMode = Turret.this.targetingMode;
+        public TargetingMode[] tModes = TargetingMode.values();
         public TargetingType targetingType = Turret.this.targetingType;
+        public TargetingType[] tTypes = TargetingType.values();
 
         public float heatReq;
         public float[] sideHeat = new float[4];
@@ -858,8 +858,8 @@ public class Turret extends ReloadTurret{
             super.write(write);
             write.f(reloadCounter);
             write.f(rotation);
-            write.s(this.targetingMode.ordinal()); // saving the ordinal of the enum
-            write.s(this.targetingType.ordinal());
+//            write.s(this.targetingMode.ordinal()); // saving the ordinal of the enum
+//            write.s(this.targetingType.ordinal());
         }
 
         @Override
@@ -871,16 +871,18 @@ public class Turret extends ReloadTurret{
                 rotation = read.f();
             }
 
-            if(revision >= 2) {
-                this.targetingMode = Turret.modes[read.s()];
-                this.targetingType = Turret.targetClasses[read.s()];
-            }
+//            if(revision >= 2) {
+//                int k = read.s();
+//                targetingMode = tModes[k];
+//                int t = read.s();
+//                targetingType = tTypes[t];
+//            }
         }
 
         @Override
         public byte version(){
-            //return 1;
-            return 2; // new version because of targetingMode and targetingClass being added
+            return 1;
+            //return 2; // new version because of targetingMode and targetingClass being added
         }
 
         @Override
