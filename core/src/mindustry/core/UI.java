@@ -348,14 +348,31 @@ public class UI implements ApplicationListener, Loadable{
     }
 
     public void showInfoFade(String info, float duration){
+        Table table = getInfoTable(duration);
+        table.top().add(info).style(Styles.outlineLabel).padTop(10);
+        Core.scene.add(table);
+    }
+
+
+    public void showErrorFade(String info, float duration){
+        Table table = getInfoTable(duration);
+        table.top().add(info).style(Styles.outlineLabel).padTop(10).update(l -> l.setColor(Tmp.c1.set(Color.white).lerp(Color.scarlet, Mathf.absin(Time.time, 10f, 1f))));
+        Core.scene.add(table);
+    }
+
+    private static Table getInfoTable(float duration) {
+        Table table = createInfoTable();
+        table.actions(Actions.fadeOut(duration, Interp.fade), Actions.remove());
+        return table;
+    }
+
+    private static Table createInfoTable() {
         var cinfo = Core.scene.find("coreinfo");
         Table table = new Table();
         table.touchable = Touchable.disabled;
         table.setFillParent(true);
         if(cinfo.visible && !state.isMenu()) table.marginTop(cinfo.getPrefHeight() / Scl.scl() / 2);
-        table.actions(Actions.fadeOut(duration, Interp.fade), Actions.remove());
-        table.top().add(info).style(Styles.outlineLabel).padTop(10);
-        Core.scene.add(table);
+        return table;
     }
 
     public void addDescTooltip(Element elem, String description){
@@ -378,11 +395,7 @@ public class UI implements ApplicationListener, Loadable{
 
     /** Shows a fading label at the top of the screen. */
     public void showInfoToast(String info, float duration){
-        var cinfo = Core.scene.find("coreinfo");
-        Table table = new Table();
-        table.touchable = Touchable.disabled;
-        table.setFillParent(true);
-        if(cinfo.visible && !state.isMenu()) table.marginTop(cinfo.getPrefHeight() / Scl.scl() / 2);
+        Table table = createInfoTable();
         table.update(() -> {
             if(state.isMenu()) table.remove();
         });

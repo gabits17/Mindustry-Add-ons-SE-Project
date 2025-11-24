@@ -123,38 +123,6 @@ public class DesktopInput extends InputHandler{
                 });
             }).margin(6f);
         });
-
-        //Nothing to undo error top screen
-        group.fill(t -> {
-            t.name = "NothingToUndo";
-            t.touchable = Touchable.disabled;
-            t.center()
-            .table(Styles.black6, c -> c.add("Nothing to undo")
-            .update(l -> l.setColor(Tmp.c1.set(Color.white).lerp(Color.scarlet, Mathf.absin(Time.time, 10f, 1f))))
-            .labelAlign(Align.center, Align.center))
-            .margin(6f)
-            .update(u -> u.color.a = Mathf.lerpDelta(u.color.a, Mathf.num(ui.hudfrag.shown &&
-                    !Core.input.keyDown(Binding.boost) && //So that both undo and redo don't overlap
-                    Core.input.keyDown(Binding.control) &&
-                    Core.input.keyDown(Binding.undo) &&
-                    !commander.hasDone()), 0.1f)).get().color.a = 0f;;
-        });
-
-        //Nothing to redo error top screen
-        group.fill(t -> {
-            t.name = "NothingToRedo";
-            t.touchable = Touchable.disabled;
-            t.center()
-            .table(Styles.black6, c -> c.add("Nothing to redo")
-            .update(l -> l.setColor(Tmp.c1.set(Color.white).lerp(Color.scarlet, Mathf.absin(Time.time, 10f, 1f))))
-            .labelAlign(Align.center, Align.center))
-            .margin(6f)
-            .update(u -> u.color.a = Mathf.lerpDelta(u.color.a, Mathf.num(ui.hudfrag.shown &&
-                    Core.input.keyDown(Binding.boost) &&
-                    Core.input.keyDown(Binding.control) &&
-                    Core.input.keyDown(Binding.undo) &&
-                    !commander.hasUndone()), 0.1f)).get().color.a = 0f;;
-        });
     }
 
     @Override

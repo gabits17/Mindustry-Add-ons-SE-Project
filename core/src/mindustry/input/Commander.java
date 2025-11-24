@@ -1,6 +1,7 @@
 package mindustry.input;
 
 import arc.struct.Seq;
+import mindustry.Vars;
 
 
 public class Commander {
@@ -102,6 +103,7 @@ public class Commander {
             }
         } else {
             System.out.println("Nothing to undo");
+            Vars.ui.showErrorFade("Nothing to undo!!!", 5f);
         }
     }
 
@@ -123,6 +125,7 @@ public class Commander {
             }
         } else {
             System.out.println("Nothing to redo");
+            Vars.ui.showErrorFade("Nothing to redo!!!", 5f);
         }
     }
 
