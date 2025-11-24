@@ -1,12 +1,12 @@
 # User story 2
 Leak identification via minimap and proximity
 ## Author(s)
-Diogo Antunes 67763
+Diogo Antunes (67763)
 ## Reviewer(s)
 
-Gabriel Matias Falcão 67775
+Gabriel Matias Falcão (67775)
 
-Manuel Oliveira 68547
+Manuel Oliveira (68547)
 
 Carolina Ferreira (67804)  
 
