@@ -1,8 +1,10 @@
 # Sequence Diagrams
 ### Notation use
-Underlined classifiers: specific classifier instances.
+Underlined classifiers: specific classifier instances.  
 Specific as they're usually the instance that can be statically accessed from the singleton ``Vars``.
 Or, in the case of ``ApplicationListener`` in ``ApplicationCore``, the instances are processed once during setup.
+
+Not underlined: classifier instance roles. Can represent not just a specific instance, but a role performed by instances in that logic.
 
 Classifiers without ``:`` : Statically accessed. Eg: ``Events``, a mediator class.
 
@@ -29,8 +31,9 @@ with ``runExitSve()``. During this exit, the logic is reset, which leads to clea
 When the ``Logic`` reset is triggered in the previous use cases, this involves firing a ``ResetEvent``.
 I didn't consider this event as an entity since it carries no data and is used to trigger a list of functionalities registered
 to this event type.
-Additionally, while ``get(type)`` is called in ``Events``, it's called on an interface ``Cons`` that contains the function/method to be called,
-to handle the event, which in this case is **clear()** belonging to ``Leaks``.
+Additionally, while ``get(type)`` is called within a method in ``Events``, it's called on an interface ``Cons`` that contains the function/method to be called,
+to handle the event, which in this case is **clear()** belonging to ``Leaks``. This ``Cons`` isn't present in the class diagram because it's an interface without a concrete implementation
+(mostly lambda expressions).
 This only happens if ``Leaks`` has been instantiated, that is, if the singleton's ``getInstance()`` method has been called at any point since the
 game started running (if a map has been ).
 
@@ -124,3 +127,4 @@ The loop condition uses ``leakTilesInRange`` to refer to these tiles, since the 
 and not entities themselves. For the sake of simplicity, this abstraction was used to make representation in the sequence diagram more readable.  
 For each of these local leaking tiles, they are only considered if within a ``MIN_RADIUS`` of the player. If so, a dashed circle is drawn around the tile in the color ``LEAK_COLOR``.
 It's worth noting that the ``dashCircle()`` method is an abstraction of the code's use of a utility class that handles drawing to the display (so it's neither an entity, control, nor boundary).
+It's also worth noting that the ``Tile`` entities aren't underlined because it represents the role of a leaking tile, and not a particular instance of it.

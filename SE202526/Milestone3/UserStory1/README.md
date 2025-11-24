@@ -5,6 +5,7 @@ Undo and Redo
 ## Reviewer(s)
 - Gabriela Silva (67286)
 - Dinis Neves (68130)
+- Diogo Antunes (67763)
 
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story
