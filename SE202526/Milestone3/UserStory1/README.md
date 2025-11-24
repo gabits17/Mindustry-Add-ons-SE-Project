@@ -67,8 +67,11 @@ Typo "refereed" -> referreed
 **Remove Selection**
 My own understanding of the vertical rectangles that indicate an activity are limited, but it may be useful to include one after ``execute()`` to show the activity roughly taking place.
 
-This isn't a diagram type I have as much knowledge of the specification on, so I may be lacking in some of my comments, and may
-have missed potential issues.
+In general, the vertical activity bars should be present for most entities due to use of synchronous method calls.
+This should go along with return arrows, even if empty, since the synchronous message means waiting for a response.
+
+It might also be worth checking out notation in terms of underlining classifiers when they represent specific instances of classifiers, and not just roles.
+
 ## Test specifications
 (*Test cases specification and pointers to their implementation, where adequate.*)
 ### Review
