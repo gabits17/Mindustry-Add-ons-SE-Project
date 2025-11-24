@@ -34,20 +34,20 @@ Gabriela Silva (67286)
 
 ### Scrum Board at the beginning of the sprint
 
-![sprint6_initial_scrum_board](assets/sprint6_initial_scrum_board.png)
+![initial-scrumboard-s6](assets/sprint6_initial_scrum_board.png)
 
 ### Scrum Board in the middle of the sprint
 
-![sprint6_mid_scrum_board](assets/sprint6_mid_scrum_board.png)
+![mid-scrumboard-s6](assets/sprint6_mid_scrum_board.png)
 
 ### Scrum Board at the end of the sprint
 
-Please add the scrumboard picture here.
+![final-scrumboard-s6](assets/sprint6_final_scrum_board.png)
 
 ### Burndown Chart for the sprint
 
-Please add the burndown chart here.
+![burndown-s6](assets/burndown-chart-s6.png)
 
 ### Gantt Chart
 
-Please add the Gantt chart here.
+![gant-s6](assets/gant-chart-s6.png)
