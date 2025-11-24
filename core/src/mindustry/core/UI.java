@@ -348,19 +348,19 @@ public class UI implements ApplicationListener, Loadable{
     }
 
     public void showInfoFade(String info, float duration){
-        Table table = getInfoTable(duration);
+        Table table = getFadeInfoTable(duration);
         table.top().add(info).style(Styles.outlineLabel).padTop(10);
         Core.scene.add(table);
     }
 
 
     public void showErrorFade(String info, float duration){
-        Table table = getInfoTable(duration);
+        Table table = getFadeInfoTable(duration);
         table.top().add(info).style(Styles.outlineLabel).padTop(10).update(l -> l.setColor(Tmp.c1.set(Color.white).lerp(Color.scarlet, Mathf.absin(Time.time, 10f, 1f))));
         Core.scene.add(table);
     }
 
-    private static Table getInfoTable(float duration) {
+    private static Table getFadeInfoTable(float duration) {
         Table table = createInfoTable();
         table.actions(Actions.fadeOut(duration, Interp.fade), Actions.remove());
         return table;
