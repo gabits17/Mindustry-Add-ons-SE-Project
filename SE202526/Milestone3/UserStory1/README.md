@@ -81,7 +81,12 @@ In general, the vertical activity bars should be present for most entities due t
 This should go along with return arrows, even if empty, since the synchronous message means waiting for a response.
 
 It might also be worth checking out notation in terms of underlining classifiers when they represent specific instances of classifiers, and not just roles.
+#### Answer
+About the first point, I will have to ask one of the professors, what would be the best way to portray the diagram.
 
+I do not agree with the "ref \<name\>" formatting, I've been following this site as formatting reference, [UML Sequence Diagrams](https://www.uml-diagrams.org/sequence-diagrams.html ), and the author does not seem to use that type of formatting while portraying ref frames.
+
+I do agree with the rectangles after execute.
 ## Test specifications
 (*Test cases specification and pointers to their implementation, where adequate.*)
 ### Review

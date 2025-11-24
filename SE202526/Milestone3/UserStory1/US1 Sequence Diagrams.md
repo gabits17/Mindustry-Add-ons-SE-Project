@@ -1,14 +1,14 @@
 # Undo
 ![](Assets/US1-UndoSeq.svg)
 This sequence diagram shows how a player may interact with the program, in order to undo some action it had done previously, some important things to note here are:
-- The two occurrences of `undo`, the one invoked by the player and the one that `Input` “invokes” on `DesktopInpu`, are not actual methods. They are simplified "calls" added to prevent the diagram from going into unnecessary internal detail.
+- The two occurrences of `undo`, the one invoked by the player and the one that `Input` “invokes” on `DesktopInput`, are not actual methods. They are simplified "calls" added to prevent the diagram from going into unnecessary internal detail.
 - In reality, `undo` represents the polling performed by `DesktopInput` each frame to check whether the player is pressing the undo keybinds.
 ## Sequence Description
 Whenever the `Player` presses the keybinds associated with the undo action, the `Input` is notified, and thus `DesktopInput` while polling `Input` understands the `Player` wants to undo the previous action, thus it calls the `hasDone` method in `Commander`, if it returns false the `DesktopInput` will trigger an error message to be shown on the `Player`'s interface, `Group`.
 Independent of the previous result `DesktopInput` will call the `undoTop` method in `Commander` that will thus undo the last done action, remove the done action from the `Commander` history, and add it as an undone action.
 ## Add Undone
 ![](Assets/US1-AddUndoneSeq.svg)
-This diagram shows the refereed diagram in undo, it shows how the `addUndone`  method in `Commander` works.
+This diagram shows the referreed diagram in undo, it shows how the `addUndone`  method in `Commander` works.
 # Redo
 ![](Assets/US1-RedoSeq.svg)This sequence diagram shows how a player may interact with the program, in order to redo some action it had undone previously, the important things noted above also apply here in the case of the redo call".
 ## Sequence Description
