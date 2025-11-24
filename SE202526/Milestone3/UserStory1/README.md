@@ -73,7 +73,7 @@ Typo of "DesktopInpu" in description.
 
 **Add Undone** and check inn all diagrams after **Add Command**
 Minor formatting comment - The text starts immediately after the image, should have an ``Enter`` there.
-Typo "refereed" -> referreed
+Typo "refereed" -> referred
 
 **Remove Selection**
 My own understanding of the vertical rectangles that indicate an activity are limited, but it may be useful to include one after ``execute()`` to show the activity roughly taking place.
