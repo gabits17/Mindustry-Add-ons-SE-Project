@@ -14,17 +14,18 @@ public class Commander {
     //Holds the commands that have been undone
     private Seq<Command> undoneCommands;
 
-    protected  Commander(){
+    protected Commander() {
         doneCommands = new Seq<>(true, maxDone);
         undoneCommands = new Seq<>(true, maxUndone);
     }
 
     /**
      * Adds a command to the top of the done stack
+     *
      * @param command command to add
      */
-    private void addCommand(Command command){
-        if(isDoneFull()){
+    private void addCommand(Command command) {
+        if (isDoneFull()) {
             doneCommands.remove(0);
         }
         doneCommands.add(command);
@@ -36,10 +37,11 @@ public class Commander {
 
     /**
      * Adds a command to the top of the undone stack
+     *
      * @param command command to add
      */
-    private void addUndone(Command command){
-        if(isUndoneFull()){
+    private void addUndone(Command command) {
+        if (isUndoneFull()) {
             undoneCommands.remove(0);
         }
         undoneCommands.add(command);
@@ -66,6 +68,7 @@ public class Commander {
 
     /**
      * Used to record a command and execute it
+     *
      * @param command command to execute
      */
     protected void execute(Command command) {
@@ -74,36 +77,14 @@ public class Commander {
     }
 
     /**
-     *
-     * @return True if the undone stack is not empty
-     */
-    protected boolean hasUndone(){
-        return !undoneCommands.isEmpty();
-    }
-
-    /**
-     *
-     * @return True if the done stack is not empty
-     */
-    protected boolean hasDone(){
-        return !doneCommands.isEmpty();
-    }
-
-    /**
      * Undoes the topmost done command, and adds it to the undone stack
      */
-    protected void undoTop(){
-        if(hasDone()) {
-            if (doneCommands.peek().canUndo()) {
-                doneCommands.peek().undo();
-                addUndone(removeTopDone());
-            } else {
-                removeTopDone();
-                //call the undo again probably until an undoable is found?
-            }
+    protected void undoTop() {
+        if (doneCommands.peek().canUndo()) {
+            doneCommands.peek().undo();
+            addUndone(removeTopDone());
         } else {
-            System.out.println("Nothing to undo");
-            Vars.ui.showErrorFade("Nothing to undo!!!", 5f);
+            removeTopDone();
         }
     }
 
@@ -114,18 +95,12 @@ public class Commander {
     /**
      * Redoes the topmost command, and adds it to the done stack
      */
-    protected void redoTop(){
-        if(hasUndone()) {
-            if (undoneCommands.peek().canRedo()) {
-                undoneCommands.peek().execute();
-                addCommand(removeTopUndone());
-            } else {
-                removeTopUndone();
-                //call the redo again probably until an redoable is found?
-            }
+    protected void redoTop() {
+        if (undoneCommands.peek().canRedo()) {
+            undoneCommands.peek().execute();
+            addCommand(removeTopUndone());
         } else {
-            System.out.println("Nothing to redo");
-            Vars.ui.showErrorFade("Nothing to redo!!!", 5f);
+            removeTopUndone();
         }
     }
 
