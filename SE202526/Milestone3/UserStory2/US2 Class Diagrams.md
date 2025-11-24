@@ -66,7 +66,7 @@ it communicates with the ``Leaks`` singleton by calling ``checkLeak(this)`` to t
 The tile connected to the one being checked is obtained via calling ``nearby()`` on the building's tile.
 It's checked for solidity to indicate if there is currently a leak (different to checking if there used to be a leak -> checking if the tile is stored in the ``Leaks`` instance).
 The ``checkLeak`` method, checks for a transition from *not leaking -> leaking* and vice versa and in such case adds/removes the tile
-from the data structures ``leakTree`` and ``leakSet`` using the ``addLeak(Tile tile)`` or ``removeLeak(Tile tile)`` methods respectively.
+from the data structures ``leakTree`` and ``leakSet`` using the ``addLeak(Tile tile)`` or ``removeLeak(Tile tile)`` methods, respectively.
 This is so that in the **Update leak display** use case leaks can be displayed based on player proximity.
 Either of the two transitions mentioned above also leads to requesting for an update in the minimap for the pixel that represents the tile.
 ``Leaks`` communicates with a ``MinimapRenderer`` instance stored in the ``Renderer`` instance in ``Vars``.
