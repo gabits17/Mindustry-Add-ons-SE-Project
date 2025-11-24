@@ -94,7 +94,7 @@ Anything that happens afterward involves loading the map save and retrieving dat
 ![img.png](img.png)
 
 #### Affected classes
-**Created**
+**Created:**  
 ``Leaks`` (mindustry.game package in core/src)  
 Manages known leaks in the game.
 
