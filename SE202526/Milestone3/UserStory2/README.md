@@ -48,7 +48,7 @@ if it is necessary to explain the added functionality.
 Additionally, only the Desktop version of the game is considered, since that is the version readily available for testing.
 
 ## Use case diagram
-![LeakIdentificationSystem.svg](LeakIdentificationSystem.svg)
+![LeakIdentificationSystem.svg](assets/LeakIdentificationSystem.svg)
 
 ## Use case textual description
 [Textual Description](US2%20Use%20Case%20Textual%20Description.md)
@@ -95,7 +95,8 @@ from the data structures ``leakTree`` and ``leakSet`` using the ``addLeak(Tile t
 During my review, Diogo corrected the **Clear leaks** diagram, which is confirmed by the commits made in the past few hours. Therefore, I have no further comment on his report. It's a comprehensive report that provides the desired information.
 
 ### Sequence diagrams
-(*Sequence diagrams and their discussion in natural language.*)
+
+[Sequence Diagrams](US2%20Sequence%20Diagrams.md)
 #### Review
 *(Please add your sequence diagram review here)*
 ## Test specifications
