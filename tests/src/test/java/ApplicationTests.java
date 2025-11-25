@@ -974,6 +974,40 @@ public class ApplicationTests {
     }
 
     @Test
+    void undoRedoRotationTest() {
+        initUndoRedo();
+
+        Seq<BuildPlan> plans = new Seq<>();
+
+        DesktopInput input = new DesktopInput();
+        Commander commander = new Commander();
+
+        plans.add(new BuildPlan(0,0,0, Blocks.conveyor));
+
+        Command bPlan = new BuildPlansCommand(plans, input);
+
+        commander.execute(bPlan);
+
+        player.unit().update();
+
+        assert world.build(0,0).rotation == 0;
+
+        bPlan = new BlockRotateCommand(world.build(0,0), true);
+
+        commander.execute(bPlan);
+
+        assert world.build(0,0).rotation == 1;
+
+        commander.undoTop();
+
+        assert world.build(0,0).rotation == 0;
+
+        commander.redoTop();
+
+        assert world.build(0,0).rotation == 1;
+    }
+
+    @Test
     void allBlockTest() {
         Tiles tiles = world.resize(80, 80);
 
