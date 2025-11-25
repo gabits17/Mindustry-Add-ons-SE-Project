@@ -10,7 +10,7 @@ public class BuildPlansCommand implements Command {
     private Seq<BuildPlan> plans;
     private InputHandler input;
 
-    protected BuildPlansCommand(Seq<BuildPlan> plans, InputHandler input){
+    public BuildPlansCommand(Seq<BuildPlan> plans, InputHandler input){
         this.plans = new Seq<>(plans.size);
         for (BuildPlan plan : plans) {
             this.plans.add(plan.copy());
