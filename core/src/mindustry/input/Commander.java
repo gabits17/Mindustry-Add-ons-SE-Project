@@ -71,7 +71,10 @@ public class Commander {
      *
      * @param command command to execute
      */
-    protected void execute(Command command) {
+    public void execute(Command command) {
+        undoneCommands.clear(); //Create a new branch of done every time something is done
+        //Why?
+        //Intellij does the same if one undoes a lot of stuff and then does something, all the undone stuff is "lost"
         addCommand(command);
         executeTop();
     }
