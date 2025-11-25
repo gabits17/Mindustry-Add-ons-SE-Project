@@ -15,9 +15,7 @@ import mindustry.ctype.*;
 import mindustry.entities.units.*;
 import mindustry.game.*;
 import mindustry.gen.*;
-import mindustry.input.BuildPlansCommand;
-import mindustry.input.Commander;
-import mindustry.input.DesktopInput;
+import mindustry.input.*;
 import mindustry.io.*;
 import mindustry.maps.*;
 import mindustry.mod.*;
@@ -868,12 +866,61 @@ public class ApplicationTests {
             assertEquals(Blocks.copperWall, world.tile(0, i).block());
         }
 
-
         commander.redoTop();
 
         //Make sure that all the walls have been redone, and removed the removal plans
         for (int i = 0; i < 5; i++) {
             player.unit().update();
+            assertEquals(Blocks.copperWall, world.tile(0, i).block());
+        }
+    }
+
+    @Test
+    void undoRedoRemoveSelectionTest() {
+        initUndoRedo();
+        Seq<BuildPlan> plans = new Seq<>();
+
+        DesktopInput input = new DesktopInput();
+        Commander commander = new Commander();
+
+        for (int i = 0; i < 5; i++) {
+            plans.add(new BuildPlan(0, i, 0, Blocks.copperWall));
+        }
+
+        Command bPlan = new BuildPlansCommand(plans, input);
+        //Plan a line of copper walls
+        commander.execute(bPlan);
+
+        for (int i = 0; i < 5; i++) {
+            player.unit().update();
+            assertEquals(Blocks.copperWall, world.tile(0, i).block());
+        }
+
+        bPlan = new RemoveSelectionCommand(0, 0, 0, 2, 10, false, input);
+
+        commander.execute(bPlan);
+
+        //Remove and assure it was removed
+        for (int i = 0; i < 3; i++) {
+            player.unit().update();
+            assertEquals(Blocks.air, world.tile(0, i).block());
+        }
+
+        //Assure that stuff outside the plan was not removed
+        for (int i = 3; i < 5; i++) {
+            assertEquals(Blocks.copperWall, world.tile(0, i).block());
+        }
+
+        commander.undoTop();
+
+        //This is reversed because remove places what was removed in reverse
+        for (int i = 2; i >= 0; i--) {
+            player.unit().update();
+            assertEquals(Blocks.copperWall, world.tile(0, i).block());
+        }
+
+        //Assure that all walls have been placed
+        for (int i = 0; i < 5; i++) {
             assertEquals(Blocks.copperWall, world.tile(0, i).block());
         }
     }
