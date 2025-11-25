@@ -798,12 +798,15 @@ public class ApplicationTests {
     void initUndoRedo() {
         initBuilding();
         player = Player.create();
-        player.unit(UnitTypes.poly.create(Team.sharded));
+        Unit playerUnit = UnitTypes.poly.create(Team.sharded);
+        playerUnit.add();
+        player.unit(playerUnit);
 
         //infinite build range
         state.rules.editor = true;
         state.rules.infiniteResources = true;
         state.rules.buildSpeedMultiplier = 999999f;
+        assert player.unit().isValid();
     }
 
     @Test
@@ -920,6 +923,51 @@ public class ApplicationTests {
         }
 
         //Assure that all walls have been placed
+        for (int i = 0; i < 5; i++) {
+            assertEquals(Blocks.copperWall, world.tile(0, i).block());
+        }
+    }
+
+
+    @Test
+    void undoRedoIncompleteRemoveSelectionTest() {
+        initUndoRedo();
+        Seq<BuildPlan> plans = new Seq<>();
+
+        DesktopInput input = new DesktopInput();
+        Commander commander = new Commander();
+
+        for (int i = 0; i < 5; i++) {
+            plans.add(new BuildPlan(0, i, 0, Blocks.copperWall));
+        }
+
+        Command bPlan = new BuildPlansCommand(plans, input);
+        //Plan a line of copper walls
+        commander.execute(bPlan);
+
+        //Only build 3 of the walls
+        for (int i = 0; i < 3; i++) {
+            player.unit().update();
+            assertEquals(Blocks.copperWall, world.tile(0, i).block());
+        }
+
+        //Command to remove all walls, even the planned ones
+        bPlan = new RemoveSelectionCommand(0, 0, 0, 4, 10, false, input);
+
+        commander.execute(bPlan);
+
+        //Remove and assure it was removed
+        for (int i = 0; i < 5; i++) {
+            player.unit().update();
+            assertEquals(Blocks.air, world.tile(0, i).block());
+        }
+
+        commander.undoTop();
+
+        for (int i = 0; i < 5; i++) {
+            player.unit().update();
+        }
+
         for (int i = 0; i < 5; i++) {
             assertEquals(Blocks.copperWall, world.tile(0, i).block());
         }
