@@ -173,6 +173,9 @@ public class Planet extends UnlockableContent{
     /** If true, RTS AI can be customized. */
     public boolean showRtsAIRule = false;
 
+    /** History of copies. */
+    private CopyHist history;
+
     /** If true, planet data is loaded as 'planets/{name}.json'. This is only tested/functional in vanilla! */
     public boolean loadPlanetData = false;
     /** Data indicating attack sector positions and sector mappings. */
@@ -184,6 +187,9 @@ public class Planet extends UnlockableContent{
         this.radius = radius;
         this.parent = parent;
         this.orbitOffset = Mathf.randomSeed(id + 1, 360);
+
+        // history
+        this.history = new CopyHistClass();
 
         //total radius is initially just the radius
         totalRadius = radius;
@@ -207,6 +213,8 @@ public class Planet extends UnlockableContent{
 
     public Planet(String name, Planet parent, float radius, int sectorSize){
         this(name, parent, radius);
+        // history
+        this.history = new CopyHistClass();
 
         if(sectorSize > 0){
             grid = PlanetGrid.create(sectorSize);
@@ -218,6 +226,10 @@ public class Planet extends UnlockableContent{
 
             sectorApproxRadius = sectors.first().tile.v.dst(sectors.first().tile.corners[0].v);
         }
+    }
+
+    public CopyHist getHist(){
+        return this.history;
     }
 
     public void saveRules(){

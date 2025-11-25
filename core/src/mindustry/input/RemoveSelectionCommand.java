@@ -10,7 +10,7 @@ public class RemoveSelectionCommand implements Command {
     private boolean flush;
     private Seq<BuildPlan> removed;
 
-    protected RemoveSelectionCommand(int selectX,
+    public RemoveSelectionCommand(int selectX,
                                      int selectY,
                                      int cursorX,
                                      int cursorY,

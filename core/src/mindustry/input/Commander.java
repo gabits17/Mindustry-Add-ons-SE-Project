@@ -14,7 +14,7 @@ public class Commander {
     //Holds the commands that have been undone
     private Seq<Command> undoneCommands;
 
-    protected Commander() {
+    public Commander() {
         doneCommands = new Seq<>(true, maxDone);
         undoneCommands = new Seq<>(true, maxUndone);
     }
@@ -71,7 +71,10 @@ public class Commander {
      *
      * @param command command to execute
      */
-    protected void execute(Command command) {
+    public void execute(Command command) {
+        undoneCommands.clear(); //Create a new branch of done every time something is done
+        //Why?
+        //Intellij does the same if one undoes a lot of stuff and then does something, all the undone stuff is "lost"
         addCommand(command);
         executeTop();
     }
@@ -79,7 +82,7 @@ public class Commander {
     /**
      * Undoes the topmost done command, and adds it to the undone stack
      */
-    protected void undoTop() {
+    public void undoTop() {
         if (doneCommands.peek().canUndo()) {
             doneCommands.peek().undo();
             addUndone(removeTopDone());
@@ -95,7 +98,7 @@ public class Commander {
     /**
      * Redoes the topmost command, and adds it to the done stack
      */
-    protected void redoTop() {
+    public void redoTop() {
         if (undoneCommands.peek().canRedo()) {
             undoneCommands.peek().execute();
             addCommand(removeTopUndone());
