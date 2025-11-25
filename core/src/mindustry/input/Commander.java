@@ -14,7 +14,7 @@ public class Commander {
     //Holds the commands that have been undone
     private Seq<Command> undoneCommands;
 
-    protected Commander() {
+    public Commander() {
         doneCommands = new Seq<>(true, maxDone);
         undoneCommands = new Seq<>(true, maxUndone);
     }
@@ -79,7 +79,7 @@ public class Commander {
     /**
      * Undoes the topmost done command, and adds it to the undone stack
      */
-    protected void undoTop() {
+    public void undoTop() {
         if (doneCommands.peek().canUndo()) {
             doneCommands.peek().undo();
             addUndone(removeTopDone());
@@ -95,7 +95,7 @@ public class Commander {
     /**
      * Redoes the topmost command, and adds it to the done stack
      */
-    protected void redoTop() {
+    public void redoTop() {
         if (undoneCommands.peek().canRedo()) {
             undoneCommands.peek().execute();
             addCommand(removeTopUndone());
