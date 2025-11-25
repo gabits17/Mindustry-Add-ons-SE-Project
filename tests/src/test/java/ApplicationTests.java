@@ -15,6 +15,7 @@ import mindustry.ctype.*;
 import mindustry.entities.units.*;
 import mindustry.game.*;
 import mindustry.gen.*;
+import mindustry.graphics.MinimapRenderer;
 import mindustry.io.*;
 import mindustry.maps.*;
 import mindustry.mod.*;
