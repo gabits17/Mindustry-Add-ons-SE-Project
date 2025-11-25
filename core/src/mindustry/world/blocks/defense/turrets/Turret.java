@@ -7,6 +7,9 @@ import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.math.geom.*;
+import arc.scene.ui.Label;
+import arc.scene.ui.TextButton;
+import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
@@ -102,6 +105,13 @@ public class Turret extends ReloadTurret{
     public boolean alwaysShooting = false;
     /** Whether this turret predicts unit movement. */
     public boolean predictTarget = true;
+
+    /** Currently targeting mode. Default: Closest */                                                           // US3 CHANGES HERE
+    public TargetingMode targetingMode = TargetingMode.CLOSEST_FIRST;
+
+    /** Current targeting class. **/
+    public TargetingEnvironment targetingEnv = TargetingEnvironment.ANY;
+
     /** Function for choosing which unit to target. */
     public Sortf unitSort = UnitSorts.closest;
     /** Filter for types of units to attack. */
@@ -165,6 +175,8 @@ public class Turret extends ReloadTurret{
         visualRotationOffset = -90f;
         regionRotated1 = 1;
         regionRotated2 = 2;
+        configurable = true;
+        //targetingEnvironment = fixTargetingClass();
     }
 
     @Override
@@ -264,6 +276,12 @@ public class Turret extends ReloadTurret{
         }
     }
 
+    public String defaultTargetingToString() {
+        String tModeText = targetingMode.toString();
+        int idx = tModeText.indexOf('_');
+        return tModeText.substring(0, idx);
+    }
+
     public class TurretBuild extends ReloadTurretBuild implements ControlBlock{
         //TODO storing these as instance variables is horrible design
         /** Turret sprite offset, based on recoil. Updated every frame. */
@@ -282,12 +300,46 @@ public class Turret extends ReloadTurret{
         public boolean wasShooting;
         public int queuedBullets = 0;
 
+        public TargetingMode targetingMode = Turret.this.targetingMode;
+        public TargetingMode[] tModes = TargetingMode.values();
+        public TargetingEnvironment targetingEnv = Turret.this.targetingEnv;
+        public TargetingEnvironment[] tEnvironments = TargetingEnvironment.values();
+
         public float heatReq;
         public float[] sideHeat = new float[4];
 
         public @Nullable SoundLoop soundLoop = (loopSound == Sounds.none ? null : new SoundLoop(loopSound, loopSoundVolume));
 
         float lastRangeChange;
+
+        public TurretBuild() {
+            super();
+            targetingEnv = fixTargetingEnv();
+        }
+
+        /**
+         * Fixes the targeting class of the turret.
+         * Turrets that *only* targets air, returns AIR_FIRST
+         * and turrets that *only* targets ground returns GROUND_FIRST
+         * For turrets that target *both air and ground*, returns ANY
+         */
+        private TargetingEnvironment fixTargetingEnv() {
+            if(targetAir && !targetGround)
+                return TargetingEnvironment.AIR_FIRST;
+
+            else if(!targetAir && targetGround)
+                return TargetingEnvironment.GROUND_FIRST;
+
+            else return TargetingEnvironment.ANY;
+        }
+
+        /**
+         * Checks if the turret targets both types of enemies
+         * Returns true if it does; otherwise, returns false
+         */
+        private boolean targetsBoth() {
+            return targetAir && targetGround;
+        }
 
         @Override
         public void remove(){
@@ -579,6 +631,34 @@ public class Turret extends ReloadTurret{
             super.handleLiquid(source, liquid, amount);
         }
 
+        /** Returns the units sorted according to the targeting mode and class */                                                   // US3 CHANGE HERE
+        protected Sortf unitSorter() {
+            Sortf mode = getSortf();
+            // if targeting is focused on air units (for turrets that targets both air and ground targets)
+            if(targetingEnv == TargetingEnvironment.AIR_FIRST)
+                return UnitSorts.airFirst(mode);
+            // if targeting is focused on ground units (for turrets that targets both air and ground targets)
+            else if(targetingEnv == TargetingEnvironment.GROUND_FIRST)
+                return UnitSorts.groundFirst(mode);
+
+            // if targeting is not focused on any, only return the sorted according to mode
+            return mode;
+        }
+
+        /** Gets the current targeting mode **/
+        private Sortf getSortf() {
+            Sortf mode = null;
+            switch(targetingMode) {
+                case CLOSEST_FIRST -> mode = UnitSorts.closest;
+                case FARTHEST_FIRST -> mode = UnitSorts.farthest;
+                case STRONGEST_FIRST -> mode = UnitSorts.strongest;
+                case WEAKEST_FIRST -> mode = UnitSorts.weakest;
+                case FASTEST_FIRST -> mode = UnitSorts.fastest;
+                case SLOWEST_FIRST -> mode = UnitSorts.slowest;
+            }
+            return mode;
+        }
+
         protected boolean validateTarget(){
             return !Units.invalidateTarget(target, canHeal() ? Team.derelict : team, x, y) || isControlled() || logicControlled();
         }
@@ -588,14 +668,17 @@ public class Turret extends ReloadTurret{
         }
 
         protected Posc findEnemy(float range){
+
+            Sortf sort = unitSorter();
+
             if(targetAir && !targetGround){
-                return Units.bestEnemy(team, x, y, range, e -> !e.dead() && !e.isGrounded() && unitFilter.get(e), unitSort);
+                return Units.bestEnemy(team, x, y, range, e -> !e.dead() && !e.isGrounded() && unitFilter.get(e), sort);
             }else{
                 var ammo = peekAmmo();
                 boolean buildings = targetGround && targetBlocks && (ammo == null || ammo.targetBlocks), missiles = ammo == null || ammo.targetMissiles;
                 return Units.bestTarget(team, x, y, range,
                     e -> !e.dead() && unitFilter.get(e) && (e.isGrounded() || targetAir) && (!e.isGrounded() || targetGround) && (missiles || !(e instanceof TimedKillc)),
-                    b -> buildings && buildingFilter.get(b), unitSort);
+                    b -> buildings && buildingFilter.get(b), sort);
             }
         }
 
@@ -776,21 +859,36 @@ public class Turret extends ReloadTurret{
             super.write(write);
             write.f(reloadCounter);
             write.f(rotation);
+            /** Snippet code to handle saving configurations between loads and saves **/
+            /* write.i(targetingMode.ordinal());
+            write.i(targetingEnv.ordinal()); */
         }
 
         @Override
         public void read(Reads read, byte revision){
             super.read(read, revision);
 
-            if(revision >= 1){
+            if(revision >= 1) {
                 reloadCounter = read.f();
                 rotation = read.f();
             }
+
+            /** Snippet code to handle saving configurations between loads and saves **/
+            /* if(revision >= 2) {
+                targetingMode = tModes[read.i()];
+                targetingEnv = tEnvironments[read.i()];
+            }
+            else {
+                targetingMode = TargetingMode.CLOSEST_FIRST;
+                targetingEnv = fixTargetingEnv();
+            } */
         }
 
         @Override
         public byte version(){
             return 1;
+            /** Snippet code to handle saving configurations between loads and saves **/
+            /* return 2; */
         }
 
         @Override
@@ -803,6 +901,66 @@ public class Turret extends ReloadTurret{
             rotation = oldRot;
             reloadCounter = oldReload;
         }
+
+        public TargetingMode nextTargetingMode(){
+            return targetingMode.next();
+        }
+
+        public TargetingEnvironment nextTargetingEnv() {
+            return targetingEnv.next();
+        }
+
+        private String getCurrentTargetingModeString(){
+            return targetingMode.toString().split("_")[0].toLowerCase();
+        }
+
+        private String getCurrentTargetingTypeString(){
+            return targetingEnv.toString().split("_")[0].toLowerCase();
+        }
+
+        @Override
+        public void buildConfiguration(Table table) {
+            super.buildConfiguration(table);
+
+            Runnable swapTargetingMode = () -> targetingMode = nextTargetingMode();
+            Runnable swapTargetingEnv = () -> {
+                if(targetsBoth()) targetingEnv = nextTargetingEnv();
+                // else, targetingEnv stays the same
+            };
+
+            TextButton modeButton = table.button(getCurrentTargetingModeString(), swapTargetingMode).get();
+            // Updating each time it is pressed
+            modeButton.update(() -> {
+                modeButton.setText(getCurrentTargetingModeString());
+            });
+
+            TextButton envButton = table.button(getCurrentTargetingTypeString(), swapTargetingEnv).get();
+            // envButton is not clickable if the turret only targets one type of enemies
+            envButton.setDisabled(!targetsBoth());
+            // Updating each time it is pressed
+            envButton.update( () -> envButton.setText(getCurrentTargetingTypeString()));
+
+
+            table.add(modeButton).width(200f).tooltip("Swap targeting mode");
+            table.add(envButton).width(200f).tooltip("Swap targeting environment");
+        }
+
+        private String getDisplayTargetingString(){
+            return "Targeting: " + getCurrentTargetingModeString();
+        }
+
+        @Override
+        public void display(Table t){
+            //String CurrentMode = targetingMode.toString().split("_")[0].toLowerCase();
+            super.display(t);
+            Label label = new Label(getDisplayTargetingString());
+            t.row();
+            t.add(label);
+            label.update(() -> label.setText(getDisplayTargetingString()));
+            t.row();
+            t.bottom();
+        }
+
     }
 
     public static class BulletEntry{

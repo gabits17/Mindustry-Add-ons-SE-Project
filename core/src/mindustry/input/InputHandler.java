@@ -1646,6 +1646,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener {
                 if (world.build(plan.x, plan.y) != null && Objects.equals(world.build(plan.x, plan.y).block.name, plan.block.name)) {
                     player.unit().removeBuild(plan.x, plan.y, true); //This is used in undo, why? because when undoing a build action one needs to remove the remove buildplans that were there
                     //And make sure that it does not remove the remove plans of blocks that are not equal to the planned block
+                    builtPlans.add(plan);
                 }
                 if (validPlace(plan.x, plan.y, plan.block, plan.rotation, null, true)) {
                 BuildPlan copy = plan.copy();
@@ -1714,7 +1715,6 @@ public abstract class InputHandler implements InputProcessor, GestureListener {
      * Remove everything from the queue in a selection.
      */
     protected Seq<BuildPlan> removeSelection(int x1, int y1, int x2, int y2, boolean flush, int maxLength) {
-        System.out.println("I broke stuff");
         Seq<BuildPlan> removedBuilds = new Seq<>();
         NormalizeResult result = Placement.normalizeArea(x1, y1, x2, y2, rotation, false, maxLength);
         for (int x = 0; x <= Math.abs(result.x2 - result.x); x++) {
@@ -1729,7 +1729,7 @@ public abstract class InputHandler implements InputProcessor, GestureListener {
                 if (!flush) {
                     if (tryBreakBlock(wx, wy)) {
                         Building build = world.build(wx, wy);
-                        if (build instanceof ConstructBuild cBuild) {
+                        if (build instanceof ConstructBuild cBuild) { //Remove build plans and add them
                             removedBuilds.add(new BuildPlan(build.tileX(), build.tileY(), build.rotation, cBuild.current, build.config()));
                         } else {
                             if (build != null)

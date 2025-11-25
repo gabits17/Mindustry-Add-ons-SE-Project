@@ -1,6 +1,6 @@
 # Class Diagrams
 ## Enter map
-![img_2.png](img_2.png)
+![EnterMap.png](assets/cdEnterMap.png)
 
 This class diagram is related to the player action of joining a map. It's worth noting that selecting a map to play in the code is different from
 selecting a map to play in the campaign. However, within the use case context, the interaction is the same since the use case doesn't involve the map selection, but instead what happens afterwards.
@@ -11,20 +11,20 @@ selecting a map to play in the campaign. However, within the use case context, t
   the game state as indicated in its documentation.
 
 ## Leave map
-![img_3.png](img_3.png)
+![LeaveMap.png](assets/cdLeaveMap.png)
 
 In this case the action is confirmed in the method ``showQuitConfirm()`` in the class ``PausedDialog`` that calls ``runExitSave()`` of the same class.
 This method directly calls for a ``reset()`` on the instance of the ``Logic`` class in ``Vars``.
 
 ## Clear leaks (behavior fragment)
-![img_4.png](img_4.png)
+![ClearLeaks.png](assets/cdClearLeaks.png)
 
 This class diagram represents the behaviour fragment common to the two use cases above. It describes how in the constructor, ``Leaks`` sets up a response to a ``ResetEvent``
 that is stored in ``Events``. On entering and leaving the map, this event is fired (in the cases above, fired in the ``reset()`` method of the ``Logic`` class).
 It involves calling ``clear()`` for the attributes leakSet and leakTree to avoid having identified leaks carry over into other maps.
 
 ## Break block, Place block, Request tile update (included use case)
-![img_7.png](img_7.png)
+![PlaceBreakUpdate.png](assets/cdPlaceBreakUpdate.png)
 
 I joined the class diagram because ``BreakBlock`` and ``PlaceBlock`` only call slightly different methods, and ``Request tile update`` is a behavior fragment
 included in both that makes more sens in context.
@@ -42,7 +42,7 @@ Involvement of classes:
   case of leakable tiles (conduits) can be seen in the use case "Update leakable block tile".
 
 ## Update building
-![img_5.png](img_5.png)
+![UpdateBuilding.png](assets/cdUpdateBuilding.png)
 
 This class diagram shows how Buildings are updated in mindustry.
 The ``DesktopLauncher`` is executed to launch the game and start running it. It is a specialization of ``ClientLauncher``, which during setup,
@@ -59,19 +59,21 @@ for the **new functionality**, checking for leaks (updating the ``Leaks`` single
 That functionality was separated into a Behavior fragment due to being common to 2 use cases.
 
 ## Update leakable block tile
-![img_6.png](img_6.png)
+![UpdateLeakableBlockTile.png](assets/cdUpdateLeakableBlockTile.png)
 
 This class diagram reflects the extended behaviour of ``updateTile()`` for a conduit building. After pushing forward contained liquid,
-it communicates with the ``Leaks`` singleton by calling ``checkLeak(this)`` to tell the singleton that changes may have occurred.  
+it communicates with the ``Leaks`` singleton by calling ``checkLeak(this)`` to tell the singleton that changes may have occurred. 
+The tile connected to the one being checked is obtained via calling ``nearby()`` on the building's tile.
+It's checked for solidity to indicate if there is currently a leak (different to checking if there used to be a leak -> checking if the tile is stored in the ``Leaks`` instance).
 The ``checkLeak`` method, checks for a transition from *not leaking -> leaking* and vice versa and in such case adds/removes the tile
-from the data structures ``leakTree`` and ``leakSet`` using the ``addLeak(Tile tile)`` or ``removeLeak(Tile tile)`` methods respectively.
+from the data structures ``leakTree`` and ``leakSet`` using the ``addLeak(Tile tile)`` or ``removeLeak(Tile tile)`` methods, respectively.
 This is so that in the **Update leak display** use case leaks can be displayed based on player proximity.
 Either of the two transitions mentioned above also leads to requesting for an update in the minimap for the pixel that represents the tile.
 ``Leaks`` communicates with a ``MinimapRenderer`` instance stored in the ``Renderer`` instance in ``Vars``.
 It then sets the tile as pending for an update in the next minimap update using ``updatePixel(Tile tile)``, to change the colour and indicate a leak.
 
 ## Update leak display
-![img.png](img.png)
+![UpdateLeakDisplay.png](assets/cdUpdateLeakDisplay.png)
 
 This class diagram is related to the frequent calling of the renderer update method that updates the minimap, ensuring pending updates are drawn it.
 In the user story scenario, these updates concern tiles labelled as leaking in the ``Leaks`` singleton class.
@@ -116,6 +118,6 @@ What I'm omitting in the diagram to condense the logic is the following:
 - This method uses the player's x and y coordinates from the static ``Player`` instance in ``Vars`` to find all leaks within a 10 block radius of the player
   and show a blue-dashed ring as below (drawn using the static ``dashCircle(float x, float y, float rad, Color color)`` method in the ``Drawf`` class):
 
-![img_1.png](img_1.png)
-Note: I cnsidered the InputHandler and DesktopInput here as control and not as boundary because they perform multiple functions,
+![LocalLeaksExampleRender.png](assets/cdLocalLeaksExampleRender.png)
+Note: I considered the InputHandler and DesktopInput here as control and not as boundary because they perform multiple functions,
 and in this use case they aren't handling direct input, but instead managing a portion fo the logic regarding drawing overlays in the map.

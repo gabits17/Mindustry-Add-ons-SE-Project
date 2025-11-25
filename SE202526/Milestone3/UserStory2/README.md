@@ -1,11 +1,11 @@
 # User story 2
 Leak identification via minimap and proximity
 ## Author(s)
-Diogo Antunes 67763
+- Diogo Antunes (67763)
 ## Reviewer(s)
-
-Gabriel Matias Falcão 67775
-Manuel Oliveira 68547
+- Gabriel Matias Falcão (67775)
+- Manuel Oliveira (68547)
+- Carolina Ferreira (67804)  
 
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story:
@@ -45,7 +45,11 @@ if it is necessary to explain the added functionality.
 Additionally, only the Desktop version of the game is considered, since that is the version readily available for testing.
 
 ## Use case diagram
-![LeakIdentificationSystem.svg](LeakIdentificationSystem.svg)
+![LeakIdentificationSystem.svg](assets/LeakIdentificationSystem.svg)
+
+#### Actors
+Player - Mindustry game user.  
+Time - Fixed interval of time in game ticks (game time unit).
 
 ## Use case textual description
 [Textual Description](US2%20Use%20Case%20Textual%20Description.md)
@@ -76,18 +80,87 @@ as the focus for the use case of entering a map and leaving a map is purely the 
 Anything that happens afterward involves loading the map save and retrieving data and then loading buildings, which I feel goes beyond the use case, and more into the scenario into **Update building**.
 
 ## Implementation documentation
-(*Please add the class diagram(s) illustrating your code evolution, along with a technical description of the changes made by your team. The description may include code snippets if adequate.*)
+### Tour Report
+#### Commits:
+12/11/2025
+![img_4.png](img_4.png)
+15/11/2025
+![img_3.png](img_3.png)
+18/11/2025
+![img_2.png](img_2.png)
+19/11/2025
+![img_1.png](img_1.png)
+20/11/2025
+![img.png](img.png)
+
+#### Affected classes
+**Created:**  
+``Leaks`` (mindustry.game package in core/src)  
+Manages known leaks in the game.
+
+**Modified:**  
+``Conduit`` (mindustry.world.blocks.liquid package in core/src)  
+Added minimapColor method to override ``Block`` implementation so that the color returned depends on whether the tile is leaking:
+````java
+    @Override
+    public int minimapColor(Tile tile){
+        if (Leaks.getInstance().isLeaking(tile)) {
+            return Leaks.getLeakColorValue();
+        } else {
+            return super.minimapColor(tile);
+        }
+    }
+````
+
+``ConduitBuild`` (nested class of Conduit)  
+Added a call to check for leaks at the end of ``updateTile()`` so that when the tile updates, there's a check for whether it stopped/started leaking:
+````java
+Leaks.getInstance().checkLeak(this);
+````
+
+``Pal`` (mindustry.graphics package in core/src)  
+Contains the colors used in game. Added a new color ``leakingWarn`` to be used when showing leaks.
+
+``DesktopInput`` (mindustry.input package in core/src)  
+Added a call to draw the leak overlays (the dashed circles) in ``drawBottom()``.
+````java
+Leaks.getInstance().drawLocalLeaks();
+````
+
+``Build`` (package mindustry.world package in core/src)  
+When breaking a block in ``beginBreak()``, there is an explicit attempt to remove the tile from leaks.
+````java
+Leaks.getInstance().removeLeak(tile);
+````
+
+#### Modification class diagram (all classes and methods modified/created)
+![cdModifications.png](assets/cdModifications.png)
+
 ### Implementation summary
-(*Summary description of the implementation.*)
+The implementation consists of adding a ``Leaks`` singleton that stores currently active leaking tiles in both a ``HashSet`` (for quickly checking if a tile is present
+in the set) and a ``QuadTree`` that stores it in a grid layout to find leaks within a rectangular area more efficiently.
+
+The classes above were modified so that when an action occurs that updates the flow of liquid, this is shown in the minimap (in example: plugging a leak with a solid block,
+removing a block that was plugging a leak, or putting down an open-ended pipe (``Conduit``) that begins to leak into a puddle).
+The minimap gains a bright blue spot dot to indicate that a spot is leaking, which is removed when the leak stops.  
+Additionally, moving close to a leak shows a circle around the leak,
+which is useful if the leak wasn't very visible in a busy base.
+
 #### Review
 *(Please add your implementation summary review here)*
 ### Class diagrams
 [Class Diagrams](US2%20Class%20Diagrams.md)
 #### Review
-*(Please add your class diagram review here)*
+**Author** : Carolina Ferreira (67804) 23/11/2025 19:11
+
+Besides a little punctuation error in the **Update leakable block tile** section - "The ``checkLeak`` method, checks for a transition from *not leaking -> leaking* and vice versa and in such case adds/removes the tile
+from the data structures ``leakTree`` and ``leakSet`` using the ``addLeak(Tile tile)`` or ``removeLeak(Tile tile)`` methods (missing the comma - **,**) respectively." - there are no other elements to correct, in my opinion.
+
+During my review, Diogo corrected the **Clear leaks** diagram, which is confirmed by the commits made in the past few hours. Therefore, I have no further comment on his report. It's a comprehensive report that provides the desired information.
 
 ### Sequence diagrams
-(*Sequence diagrams and their discussion in natural language.*)
+
+[Sequence Diagrams](US2%20Sequence%20Diagrams.md)
 #### Review
 *(Please add your sequence diagram review here)*
 ## Test specifications

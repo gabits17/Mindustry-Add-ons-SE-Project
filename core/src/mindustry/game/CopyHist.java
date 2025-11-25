@@ -11,12 +11,6 @@ public interface CopyHist {
     void copy(Schematic scheme);
 
     /**
-     * Gets the schematic in a given position
-     * @param pos: the position of the desired schematic
-     */
-    Schematic get(int pos);
-
-    /**
      * Gets the schematic of the last visited position
      */
     Schematic getCurrent();
