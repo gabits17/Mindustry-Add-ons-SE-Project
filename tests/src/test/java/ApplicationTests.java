@@ -930,7 +930,7 @@ public class ApplicationTests {
 
 
     @Test
-    void undoRedoIncompleteRemoveSelectionTest() {
+    void undoRedoPlannedRemoveSelectionTest() {
         initUndoRedo();
         Seq<BuildPlan> plans = new Seq<>();
 
