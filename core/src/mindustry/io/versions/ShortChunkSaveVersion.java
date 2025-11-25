@@ -6,6 +6,7 @@ import mindustry.entities.*;
 import mindustry.gen.*;
 import mindustry.io.*;
 import mindustry.world.*;
+import mindustry.world.blocks.defense.turrets.Turret;
 
 import java.io.*;
 
@@ -114,6 +115,8 @@ public class ShortChunkSaveVersion extends SaveVersion{
 
                 if(hadEntity){
                     if(isCenter){ //only read entity for center blocks
+                        /** Snippet code to handle saving configurations between loads and saves **/
+                        //if(block.hasBuilding() || tile.build instanceof Turret.TurretBuild || block instanceof Turret)
                         if(block.hasBuilding()){
                             try{
                                 readLegacyShortChunk(stream, (in, len) -> {
