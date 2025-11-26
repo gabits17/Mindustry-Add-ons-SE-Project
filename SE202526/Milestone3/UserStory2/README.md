@@ -196,7 +196,7 @@ interact with them directly.
 It's also worth noting that in some tests I didn't include variants for whether a leak happens over water or over ground, as the only difference is whether a puddle appears (in-game occurrence unrelated to new functionality),
 and there is no distinction made between leaks over ground or over liquid sources (all leaking pipes are leaks).
 
-![joinMap.mp4](assets/testVids/joinMap.mp4)
+[joinMap](assets/testVids/joinMap.mp4)
 
 These tests cover single player tests:
 
