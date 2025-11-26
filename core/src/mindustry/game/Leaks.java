@@ -99,6 +99,7 @@ public class Leaks {
      * @param building the Building undergoing a leak update.
      */
     public void checkLeak(Conduit.ConduitBuild building) {
+        if(! (building.block instanceof Conduit conduit && conduit.leaks)) return;
         // Don't check for leaks unless the building belongs to the player
         if (building.team != Vars.player.team()) return;
         Tile tile = building.tile;
