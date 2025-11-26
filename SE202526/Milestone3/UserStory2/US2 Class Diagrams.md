@@ -62,7 +62,8 @@ That functionality was separated into a Behavior fragment due to being common to
 ![UpdateLeakableBlockTile.png](assets/cdUpdateLeakableBlockTile.png)
 
 This class diagram reflects the extended behaviour of ``updateTile()`` for a conduit building. After pushing forward contained liquid,
-it communicates with the ``Leaks`` singleton by calling ``checkLeak(this)`` to tell the singleton that changes may have occurred. 
+it communicates with the ``Leaks`` singleton by calling ``checkLeak(this)`` to tell the singleton that changes may have occurred. To even verify that the leak is worth checking, the method
+checks that the building is of a block type that can leak, and that the building team is the same as the player team.
 The tile connected to the one being checked is obtained via calling ``nearby()`` on the building's tile.
 It's checked for solidity to indicate if there is currently a leak (different to checking if there used to be a leak -> checking if the tile is stored in the ``Leaks`` instance).
 The ``checkLeak`` method, checks for a transition from *not leaking -> leaking* and vice versa and in such case adds/removes the tile

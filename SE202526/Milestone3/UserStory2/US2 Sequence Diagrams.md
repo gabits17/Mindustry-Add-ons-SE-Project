@@ -90,7 +90,9 @@ This is a sequence diagram reusable component, which corresponds to a behavior f
 It starts when ``updateTile()`` is called on the ``ConduitBuild`` in particular, since it is the type of ``Building`` that can create leaks.
 To identify a leak in the tile ``checkLeak()`` is called on the singleton instance.
 
-It's first relevant to know whether the tile is in the ``Player`` team, as the leaks displayed are only those in buildings belonging to the player team.
+It's first relevant to know whether the ``ConduitBuild`` can actually leak, since the ``ArmoredConduit`` is a type of pipeline that extends ``Conduit`` which does not leak. The **opt** "buildingCanLeak" abstracts
+away the process of checking if the block type indicated by the building is one that can leak resources.
+It's then relevant to know whether the tile is in the ``Player`` team, as the leaks displayed are only those in buildings belonging to the player team.
 With this verified, the tile of the building is obtained. to later check for leaks (``Leaks`` stores the tiles that are identified as leaks).
 If the building has liquid, then a leak might have started (or stopped, if the leak was plugged, the building starts to fill with liquid).
 Otherwise, we're sure there's no leak, so just in case, there is an attempt to remove the tile from registered leaks, and an update is sent to the minimap.

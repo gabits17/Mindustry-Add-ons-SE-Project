@@ -92,6 +92,8 @@ Anything that happens afterward involves loading the map save and retrieving dat
 ![img_1.png](img_1.png)
 20/11/2025
 ![img.png](img.png)
+26/11/2025
+![img_5.png](img_5.png)
 
 #### Affected classes
 **Created:**  
