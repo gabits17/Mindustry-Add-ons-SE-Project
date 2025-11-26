@@ -27,9 +27,9 @@ so that I don't need to save quick changes as schematics (saved block selections
 ### Review
 **Author**:
 ## Implementation documentation
-(*Please add the class diagram(s) illustrating your code evolution, along with a technical description of the changes made by your team. The description may include code snippets if adequate.*)
-### Implementation summary
-(*Summary description of the implementation.*)
+
+[Textual Description](US2%20Use%20Case%20Textual%20Description.md)
+
 #### Review
 *(Please add your implementation summary review here)*
 ### Class diagrams
