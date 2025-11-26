@@ -83,17 +83,17 @@ Anything that happens afterward involves loading the map save and retrieving dat
 ### Tour Report
 #### Commits:
 12/11/2025
-![img_4.png](img_4.png)
+![img_4.png](assets/commitImgs/img_4.png)
 15/11/2025
-![img_3.png](img_3.png)
+![img_3.png](assets/commitImgs/img_3.png)
 18/11/2025
-![img_2.png](img_2.png)
+![img_2.png](assets/commitImgs/img_2.png)
 19/11/2025
-![img_1.png](img_1.png)
+![img_1.png](assets/commitImgs/img_1.png)
 20/11/2025
-![img.png](img.png)
+![img.png](assets/commitImgs/img.png)
 26/11/2025
-![img_5.png](img_5.png)
+![img_5.png](assets/commitImgs/img_5.png)
 
 #### Affected classes
 **Created:**  
@@ -196,11 +196,13 @@ interact with them directly.
 It's also worth noting that in some tests I didn't include variants for whether a leak happens over water or over ground, as the only difference is whether a puddle appears (in-game occurrence unrelated to new functionality),
 and there is no distinction made between leaks over ground or over liquid sources (all leaking pipes are leaks).
 
+![joinMap.mp4](assets/testVids/joinMap.mp4)
+
 These tests cover single player tests:
 
-| Pre-Condition                                                                                                                                                                | Test case id                                            | Step number                                        | Description                                                                                                                                                                                             | Expected Result                                                                                                                                                                                                                                                 |
-|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| - At map selection screen                                                                                                                                                    | Joining map with leaks                                  | Step 1<br/>Step 2                                  | - Join a custom game.<br/>- Open minimap.                                                                                                                                                               | - Map loads all active leaks. Nearby player-team leaks have light-blue dashed circle.<br/>- All leak tiles have corresponding pixels on minimap as light blue color.                                                                                            |
+| Pre-Condition                                                                                                                                                                | Test case id                                            | Step number                                        | Description                                                                                                                                                                                             | Expected Result                                                                                                                                                                                                                                                 | Video          |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|
+| - At map selection screen                                                                                                                                                    | Joining map with leaks                                  | Step 1<br/>Step 2                                  | - Join a custom game.<br/>- Open minimap.                                                                                                                                                               | - Map loads all active leaks. Nearby player-team leaks have light-blue dashed circle.<br/>- All leak tiles have corresponding pixels on minimap as light blue color.                                                                                            |  |
 | - Within a map with player-team leaks<br/>- Enough resources for block placement                                                                                             | Plugging player team leak with block                    | Step 1<br/>Step 2<br/>Step 3                       | - Move close to a nearby leak in the team-controlled section.<br/> - Place block on leaking end of conduit.<br/>- Open minimap.                                                                         | - Dashed circle around leak shows.<br/>- Leak stops. Dashed circle disappears.<br/>- Minimap pixel for corresponding tile stops being light blue.                                                                                                               |
 | - Within a map with plugged leak <br/>- Player-team conduit leak over ground plugged by solid block                                                                          | Creating player team leak by breaking block over ground | Step 1<br/>Step 2<br/>Step 3<br/>Step 4<br/>Step 5 | - Approach nearby plugged leak in the team-controlled section without liquid floor.<br/>- Open minimap.<br/>- Close minimap.<br/> - Remove solid block from flowing end of conduit.<br/>- Open minimap. | - No dashed circle loads around plugged leak (since there is no leak).<br/>- Corresponding minimap pixel is not light blue<br/>- Normal overworld shown.<br/>- Puddle forms on ground. Dashed circle around newly created leak.<br/>- Corresponding minimap pixel is light blue.              |
 | - Within a map with plugged leak<br/>- Player-team conduit leak over water plugged by solid block                                                                            | Creating player team leak by breaking block over water  | Step 1<br/>Step 2<br/>Step 3<br/>Step 4<br/>Step 5 | - Approach nearby plugged leak in the team-controlled section with liquid floor.<br/>- Open minimap.<br/>- Close minimap.<br/> - Remove solid block from flowing end of conduit.<br/>- Open minimap.    | - No dashed circle loads around plugged leak (since there is no leak).<br/>- Corresponding minimap pixel is not light blue<br/>- Normal overworld shown.<br/>- Dashed circle around newly created leak.<br/>- Corresponding minimap pixel is light blue. |
