@@ -171,7 +171,7 @@ public class ContinuousTurret extends Turret{
 
         @Override
         public byte version(){
-            return 3;
+            return 6;
         }
 
         @Override
@@ -185,7 +185,7 @@ public class ContinuousTurret extends Turret{
         public void read(Reads read, byte revision){
             super.read(read, revision);
 
-            if(revision >= 3){
+            if(revision >= 6){
                 lastLength = read.f();
             }
         }

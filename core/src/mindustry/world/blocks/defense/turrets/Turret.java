@@ -860,8 +860,8 @@ public class Turret extends ReloadTurret{
             write.f(reloadCounter);
             write.f(rotation);
             /** Snippet code to handle saving configurations between loads and saves **/
-            /* write.i(targetingMode.ordinal());
-            write.i(targetingEnv.ordinal()); */
+            write.b(targetingMode.ordinal());
+            write.b(targetingEnv.ordinal());
         }
 
         @Override
@@ -874,21 +874,27 @@ public class Turret extends ReloadTurret{
             }
 
             /** Snippet code to handle saving configurations between loads and saves **/
-            /* if(revision >= 2) {
-                targetingMode = tModes[read.i()];
-                targetingEnv = tEnvironments[read.i()];
+             if(revision >= 4) {
+                 int mId = read.ub();
+                 int eId = read.ub();
+
+                 if(mId >= 0 && mId < tModes.length) targetingMode = tModes[mId];
+                 else targetingMode = TargetingMode.CLOSEST_FIRST;
+
+                 if(eId >= 0 && eId < tEnvironments.length) targetingEnv = tEnvironments[eId];
+                 else targetingEnv = fixTargetingEnv();
             }
             else {
-                targetingMode = TargetingMode.CLOSEST_FIRST;
-                targetingEnv = fixTargetingEnv();
-            } */
+                 targetingMode = TargetingMode.CLOSEST_FIRST;
+                 targetingEnv = fixTargetingEnv();
+            }
         }
 
         @Override
         public byte version(){
-            return 1;
+            //return 1;
             /** Snippet code to handle saving configurations between loads and saves **/
-            /* return 2; */
+            return 4;
         }
 
         @Override
