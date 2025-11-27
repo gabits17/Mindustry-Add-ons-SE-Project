@@ -39,7 +39,33 @@ _The use case diagram's textual description was modified according to this revie
 ## Implementation documentation
 (*Please add the class diagram(s) illustrating your code evolution, along with a technical description of the changes made by your team. The description may include code snippets if adequate.*)
 ### Implementation summary
-(*Summary description of the implementation.*)
+
+The implemenation of this user story took place mostly around the ``Turret`` class, since it was added new configurations to it. It was created two new classes: Java Enums ``TargetingMode`` and ``TargetingEnvironment``. They contain a list of possible modes and environments for the targeting configuration of a turret.
+- Possible targeting modes:
+  - *Closests* first
+  - *Farthest* first
+  - *Strongest* first
+  - *Weakest* first
+  - *Fastest* first
+  - *Slowest* first
+
+- Possible targeting environments:
+  - *Ground units* first
+  - *Air units* first
+  - *Any* first
+
+It is possible to **combine** the targeting environment with a mode. For instance, it is possible for a turret to target the strongest ground units around it. For targets that target both air and ground units, it is possible to (or not) focus on an environment.
+
+To sort the enemy units that a turret will attack, the ``SortUnits`` was utilized. There was already four ways for sorting them (``Sortf`` objects): ``closest``, ``farthest``, ``strongest`` and ``weakest``. It was added two new ways: ``fastest`` and ``slowest``.
+
+To combine the targeting environment with a targeting mode, it was also implemented two new (static) functions that handle air or ground units first, with the mode parameterized: ``airFirst(mode)`` and ``groundFirst(mode)``.
+
+These configurations are defined and depend on the ``Turret``'s ``targetingMode`` and ``targetingEnv`` new instance variables. The sort occurs in the ``unitSorter()`` new method in the ``TurretBuild`` class (inner class from ``Turret``). This method is called in the function ``findEnemy()`` in the same way the default sort was before this functionality was added.
+
+To display this configuration, the ``Turret`` block became configurable (``configurable = true`` in its constructor), which means it can be configurated by the player, by clicking on it. 
+
+<mark style="background: #f4f44fa2;"> *// TODO: Describe UI implementation to display and change the targeting configuration*</mark>
+
 #### Review
 *(Please add your implementation summary review here)*
 ### Class diagrams

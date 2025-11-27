@@ -21,11 +21,11 @@ The only interesting action in this sequence diagram is the selection of the tur
 
 This sequence diagram doesn't represent a particular use case, but part of the *Select Placed Turret* one. Since it is complex and big enough, it was refactorized, so it is easier to understand.
 
-// TO DO (after changing the display to a menu rather than a live-updatable button)
+<mark style="background: #f4f44fa2;">// TO DO (after changing the display to a menu rather than a live-updatable button)</mark>
 
 ## Change Turret's Target Environment && Change Turret's Target Mode
-// TO DO (after changing the display to a menu rather than a live-updatable button)
-These two use cases will (probably) be very similar as sequence diagrams.
+<mark style="background: #f4f44fa2;">// TO DO (after changing the display to a menu rather than a live-updatable button);
+These two use cases will (probably) be very similar as sequence diagrams.</mark>
 
 ## Unselect Turret
 ![unselect-turret-sd](./assets/unselect-turret-sd.svg)
