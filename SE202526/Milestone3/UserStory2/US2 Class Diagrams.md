@@ -1,4 +1,8 @@
 # Class Diagrams
+
+Note: after teacher feedback, I removed all classes not in the sequence diagrams from the class diagrams, including utility classes
+(with the exception of Drawf because as explained in the sequence diagrams it's logic is abstracted in the method ``dashCircle()`` in the ``Update leak display`` sequence diagram).
+
 ## Enter map
 ![EnterMap.png](assets/cdEnterMap.png)
 

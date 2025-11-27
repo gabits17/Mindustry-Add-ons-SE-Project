@@ -1,12 +1,10 @@
 # Sequence Diagrams
 ### Notation use
 Underlined classifiers: specific classifier instances.  
-Specific as they're usually the instance that can be statically accessed from the singleton ``Vars``.
-Or, in the case of ``ApplicationListener`` in ``ApplicationCore``, the instances are processed once during setup.
+Specific as they're usually the instance that can be statically accessed from the singleton ``Vars``, or themselves serve as a singleton (eg: Events, has static variables to represent events and isn't instantiated
+so in that regard there's only a singular Events instance from the point of view of the sequence diagram).
 
-Not underlined: classifier instance roles. Can represent not just a specific instance, but a role performed by instances in that logic.
-
-Classifiers without ``:`` : Statically accessed. Eg: ``Events``, a mediator class.
+Not underlined: classifier instance roles. Can represent not just a specific instance, but a role performed by a non-specific instance in that functionality.
 
 ## Enter map
 ![seqEnterMap.svg](assets/seqEnterMap.svg)
