@@ -7,8 +7,7 @@ import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.math.geom.*;
-import arc.scene.ui.Label;
-import arc.scene.ui.TextButton;
+import arc.scene.ui.*;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
@@ -178,6 +177,22 @@ public class Turret extends ReloadTurret{
         regionRotated1 = 1;
         regionRotated2 = 2;
         configurable = true;
+
+        config(TargetingMode.class, (TurretBuild build, TargetingMode mode) ->{
+            if(!configurable) return;
+            build.targetingMode = mode;
+        });
+
+        config(TargetingType.class, (TurretBuild build, TargetingType type) ->{
+            if(!configurable) return;
+            build.targetingType = type;
+        });
+
+        configClear((TurretBuild build) ->{
+            build.targetingMode = TargetingMode.CLOSEST_FIRST;
+            build.targetingType = targetingType;
+        });
+
     }
 
     @Override
@@ -902,43 +917,80 @@ public class Turret extends ReloadTurret{
             return targetingType.next();
         }
 
-        private String getCurrentTargetingModeString(){
-            return targetingMode.toString().split("_")[0].toLowerCase();
+        private String modeString(TargetingMode mode){
+            return mode.toString().split("_")[0].toLowerCase();
         }
 
-        private String getCurrentTargetingTypeString(){
-            return targetingType.toString().split("_")[0].toLowerCase();
+        private String typeString(){
+            return targetingType.toString().toLowerCase();
         }
 
         @Override
         public void buildConfiguration(Table table) {
-            super.buildConfiguration(table);
 
-            Runnable swapTargetingMode = () -> targetingMode = targetingMode.next();
-            Runnable swapTargetingType = () -> {
-                if(targetsBoth()) targetingType = nextTargetingType();
-                // else, targetingType stays the same
+
+            // modes
+            Table commandModes = new Table();
+            commandModes.top().left();
+
+            Runnable rebuildCommands = () -> {
+            commandModes.clear();
+            commandModes.background(Styles.black6);
+            var group = new ButtonGroup<TextButton>();
+            group.setMinCheckCount(0);
+
+                for(TargetingMode mode : TargetingMode.values()){
+                    commandModes.row();
+                    TextButton curButton = commandModes.button(modeString(mode), Styles.togglet,() -> {
+                        configure(mode);
+                        targetingMode = mode;
+                    }).group(group).get();
+
+                    curButton.update(() -> {
+                        curButton.setChecked(targetingMode == mode);
+                    });
+
+                    commandModes.add(curButton).width(160f).tooltip("Swap targeting mode");
+                }
             };
 
-            TextButton modeButton = table.button(getCurrentTargetingModeString(), swapTargetingMode).get();
-            // Updating each time it is pressed
-            modeButton.update(() -> {
-                modeButton.setText(getCurrentTargetingModeString());
-            });
+            rebuildCommands.run();
 
-            TextButton typeButton = table.button(getCurrentTargetingTypeString(), swapTargetingType).get();
-            // typeButton is not clickable if the turret only targets one type of enemies
-            typeButton.setDisabled(!targetsBoth());
-            // Updating each time it is pressed
-            typeButton.update( () -> typeButton.setText(getCurrentTargetingTypeString()));
+            Table commandTypes = new Table();
+            commandTypes.top().left();
 
+            Runnable rebuildCommandsType = () -> {
+                commandTypes.clear();
+                commandTypes.background(Styles.black6);
+                if (targetingType == TargetingType.ANY) {
+                var group = new ButtonGroup<TextButton>();
+                group.setMinCheckCount(0);
+                    for (TargetingType type : TargetingType.values()) {
+                        commandTypes.row();
+                        TextButton curButton = commandTypes.button(type.toString().toLowerCase(), Styles.togglet, () -> {
+                            configure(type);
+                            targetingType = type;
+                        }).group(group).get();
 
-            table.add(modeButton).width(200f).tooltip("Swap targeting mode");
-            table.add(typeButton).width(200f).tooltip("Swap targeting type");
+                        curButton.update(() -> {
+                            curButton.setChecked(targetingType == type);
+                        });
+
+                        commandTypes.add(curButton).width(160f).tooltip("Swap targeting type");
+                    }
+                }
+                else{
+                    commandTypes.add(new TextArea(typeString())).tooltip("can not swap target type");
+                }
+            };
+            rebuildCommandsType.run();
+
+            table.add(commandModes);
+            table.add(commandTypes).left().top();
         }
 
         private String getDisplayTargetingString(){
-            return "Targeting: " + getCurrentTargetingModeString();
+            return "Targeting: " + modeString(targetingMode);
         }
 
         @Override
