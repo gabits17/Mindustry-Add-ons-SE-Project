@@ -1,7 +1,6 @@
 # Class Diagrams
 
-Note: after teacher feedback, I classes not in the sequence diagrams from the class diagrams, including utility classes. It's worth noting that
-this considerably reduces the size of the class diagrams, as I feel the other classes helped provide an explanation.
+Note: after teacher feedback, I removed classes not in the sequence diagrams from the class diagrams (where it doesn't break structure), including utility classes.
 However, I kept classes in cases where:
 - They were the class types of data returned in the sequence diagrams but where the classifier was not necessary to call for methods (eg: only public attributes of the class were used)
 - They are interfaces or extended by classes present in the sequence diagram (where the method called in the sequence diagram belongs to the abstract super). Eg. ``ApplicationCore`` in **UpdateBuilding**
@@ -63,9 +62,7 @@ adds an instance of ``Logic`` (an implementation of ``ApplicationListener``), am
 
 As such, when ``ClientLauncher`` calls ``update()`` at a regular interval(which involves calling ``super.update()``),
 it calls the saved ``Logic`` instance's ``update()`` method too. This gets passed on as:  
-``Logic``-->``Groups``-->``EntityGroup<Entityc>``
-
-``EntityGroup<Entityc>`` then calls the ``update()`` method on each instance of ``Entityc`` that it holds, which includes buildings that passing around liquid.
+``Logic``-->``Groups``, and in the data structure that holds instances of ``Entityc`` calls ``update()`` for each of them, including the ``ConduitBuild`` we're looking for in particular.
 As seen in the diagram, one of these ``Entityc`` can be implemented by a ``Building``, which will call the ``updateTile()`` method during ``update()``.
 The content of this method differs greatly with the purpose of the block type, but for ``ConduitBuild``, it involves sending the liquid forward, and
 for the **new functionality**, checking for leaks (updating the ``Leaks`` singleton).  
@@ -76,7 +73,7 @@ That functionality was separated into a Behavior fragment due to being common to
 
 This class diagram reflects the extended behaviour of ``updateTile()`` for a conduit building. After pushing forward contained liquid,
 it communicates with the ``Leaks`` singleton by calling ``checkLeak(this)`` to tell the singleton that changes may have occurred. To even verify that the leak is worth checking, the method
-checks that the building is of a block type that can leak, and that the building team is the same as the player team.
+checks that the building is of a block type that can leak (is a ``Conduit`` block with attribute ``leaks`` true), and that the building team is the same as the player team.
 The tile connected to the one being checked is obtained via calling ``nearby()`` on the building's tile.
 It's checked for solidity to indicate if there is currently a leak (different to checking if there used to be a leak -> checking if the tile is stored in the ``Leaks`` instance).
 The ``checkLeak`` method, checks for a transition from *not leaking -> leaking* and vice versa and in such case adds/removes the tile
@@ -102,10 +99,7 @@ As such:
 
 Note on stereotypes:  
 I consider the renderers to be of the **control** stereotype as they communicate with the lower
-structures that hold the data for the on-screen pixels.  
-I also consider *Block* to be control as there's one per type of block in the game for which
-it performs a set of functionalities, while there's an instance of building, per building block in the game.
-Pal instantiates colors and nothing else, so it doesn't perform a specific function aside from holding **Colors**.
+structures that hold the data for the on-screen pixels.
 ### - Minimap Update
 - ``update()`` in ``MinimapRenderer`` goes through pending updates for world positions that were sent for update
   (the global Vars can translate these into tiles, and then blocks, from which a color can be fetched).
