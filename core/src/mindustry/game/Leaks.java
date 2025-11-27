@@ -11,8 +11,6 @@ import mindustry.world.blocks.liquid.Conduit;
 
 import java.util.HashSet;
 
-import static mindustry.Vars.world;
-
 /** Class that manages leaks for display.*/
 public class Leaks {
     // Constants

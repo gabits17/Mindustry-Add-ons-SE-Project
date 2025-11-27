@@ -1,7 +1,16 @@
 # Class Diagrams
 
-Note: after teacher feedback, I removed all classes not in the sequence diagrams from the class diagrams, including utility classes
-(with the exception of Drawf because as explained in the sequence diagrams it's logic is abstracted in the method ``dashCircle()`` in the ``Update leak display`` sequence diagram).
+Note: after teacher feedback, I classes not in the sequence diagrams from the class diagrams, including utility classes. It's worth noting that
+this considerably reduces the size of the class diagrams, as I feel the other classes helped provide an explanation.
+However, I kept classes in cases where:
+- They were the class types of data returned in the sequence diagrams but where the classifier was not necessary to call for methods (eg: only public attributes of the class were used)
+- They are interfaces or extended by classes present in the sequence diagram (where the method called in the sequence diagram belongs to the abstract super). Eg. ``ApplicationCore`` in **UpdateBuilding**
+- They are a utility class (and not justifiably boundary, control, or entity) for which the functionality was abstracted. Eg:``Drawf`` utility class has method ``dashCircle()`` abstracted into Leaks in sequence diagram "Update leak display".
+
+Color-coding:
+- Blue: Unmodified but relevant class;
+- Yellow: Class modified for new functionality;
+- Green: Class created for new functionality;
 
 ## Enter map
 ![EnterMap.png](assets/cdEnterMap.png)
