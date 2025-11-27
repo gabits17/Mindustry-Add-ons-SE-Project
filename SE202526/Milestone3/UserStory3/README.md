@@ -47,7 +47,7 @@ _The use case diagram's textual description was modified according to this revie
 ### Review
 *(Please add your class diagram review here)*
 ### Sequence diagrams
-(*Sequence diagrams and their discussion in natural language.*)
+[Sequence diagrams for Swapping Turret's Targeting User Story](./SEQUENCE-DIAGRAMS.md)
 #### Review
 *(Please add your sequence diagram review here)*
 ## Test specifications
