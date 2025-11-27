@@ -170,6 +170,9 @@ Which involved declaring the object, populate it and creating a get method for i
     }
 ````
 
+#### Modification class diagram (all classes and methods modified/created)
+![ClassDiagram_altered.png](Assets/ClassDiagram_altered.png)
+
 ### Implementation summary
 With this user story we wanted to make a simpler interface than the Schematics function that already exists in the game.
 
