@@ -62,7 +62,7 @@ To combine the targeting environment with a targeting mode, it was also implemen
 
 These configurations are defined and depend on the ``Turret``'s ``targetingMode`` and ``targetingEnv`` new instance variables. The sort occurs in the ``unitSorter()`` new method in the ``TurretBuild`` class (inner class from ``Turret``). This method is called in the function ``findEnemy()`` in the same way the default sort was before this functionality was added.
 
-To display this configuration, the ``Turret`` block became configurable (``configurable = true`` in its constructor), which means it can be configurated by the player, by clicking on it. 
+To display this configuration, the ``Turret`` block became configurable (``configurable = true`` in its constructor), which means it can be configured by the player, by clicking on it. 
 
 <mark style="background: #f4f44fa2;"> *// TODO: Describe UI implementation to display and change the targeting configuration*</mark>
 
