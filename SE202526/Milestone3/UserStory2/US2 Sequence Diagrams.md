@@ -1,4 +1,13 @@
 # Sequence Diagrams
+### Notation use
+Underlined classifiers: specific classifier instances.  
+Specific as they're usually the instance that can be statically accessed from the singleton ``Vars``.
+Or, in the case of ``ApplicationListener`` in ``ApplicationCore``, the instances are processed once during setup.
+
+Not underlined: classifier instance roles. Can represent not just a specific instance, but a role performed by instances in that logic.
+
+Classifiers without ``:`` : Statically accessed. Eg: ``Events``, a mediator class.
+
 ## Enter map
 ![seqEnterMap.svg](assets/seqEnterMap.svg)
 
@@ -22,10 +31,15 @@ with ``runExitSve()``. During this exit, the logic is reset, which leads to clea
 When the ``Logic`` reset is triggered in the previous use cases, this involves firing a ``ResetEvent``.
 I didn't consider this event as an entity since it carries no data and is used to trigger a list of functionalities registered
 to this event type.
-Additionally, while ``get(type)`` is called in Events, it's called on an interface ``Cons`` that contains the function/method to be called,
-to handle the event, which in this case is **clear()** belonging to ``Leaks``.
+Additionally, while ``get(type)`` is called within a method in ``Events``, it's called on an interface ``Cons`` that contains the function/method to be called,
+to handle the event, which in this case is **clear()** belonging to ``Leaks``. This ``Cons`` isn't present in the class diagram because it's an interface without a concrete implementation
+(mostly lambda expressions).
 This only happens if ``Leaks`` has been instantiated, that is, if the singleton's ``getInstance()`` method has been called at any point since the
 game started running (if a map has been ).
+In such a case the ``clear()`` method wipes the stored leaks (I didn't include a sub-activity vertical rectangle for clear as it is the sole activity being performed in ``Leaks``
+for this functionality).
+
+Note: ``Events`` is a mediator class that allows classes to create custom logic as a response to an event corresponding to a specific kind of occurrence.
 
 ## Place block
 ![seqPlaceBlock.svg](assets/seqPlaceBlock.svg)
@@ -56,8 +70,8 @@ When a tile is to be updated in the scenario where a block is broken or placed, 
 (both instances are static attributes in a class ``Vars``). From here, the tiles of the block (multiple if the block occupies multiple tiles) are enqueued for update.
 (``updateSingleTile()`` is applied per tile in the linked tiles as part of the ``getLinkedTiles()`` method).
 
-Later on, these tiles corresponding to buildings that are activated are updated, some being tiles that can leak, in which case the
-attempt to check for leaks will occur (in ``UpdateLeakableBlock``).
+Later on (omission of correspondence between many intermediate classes), these tiles corresponding to active buildings that are updated, the tiles of those buildings that can leak, result
+in the attempt to check for leaks that may have occurred/stopped (in ``UpdateLeakableBlock``).
 
 ## Update building
 ![seqUpdateBuilding.svg](assets/seqUpdateBuilding.svg)
@@ -66,7 +80,7 @@ At a specific time interval, the ``update()`` method in the ``ApplicationCore`` 
 This involves updating each listener in the modules (eg: renderers), but in this diagram we're focusing on the use case, which relates to the ``Logic`` update.
 Updating the logic includes updating ``Groups``, which stores all entities. These entities implement an interface ``Entityc``.
 However, in this use case, we're only interested in the ``Building`` type entities. These are updated by calling ``update()``, which itself calls ``updateTile()``, where we make
-an exception for ``Building`` that are instances of ``Conduit``, which are leakable buildings. By default ``updateTile()`` will depend on the subClass functionality, since it is empty in base.
+an exception for ``Building`` that are instances of ``ConduitBuild``, which are leakable buildings. By default ``updateTile()`` will depend on the subClass functionality, since it is empty in base.
 In the case of ``Building`` of leakable block types, it interacts with the added functionality of **Leak Identification** (this reflects the extension point).
 
 ## Update leakable block tile
@@ -76,7 +90,9 @@ This is a sequence diagram reusable component, which corresponds to a behavior f
 It starts when ``updateTile()`` is called on the ``ConduitBuild`` in particular, since it is the type of ``Building`` that can create leaks.
 To identify a leak in the tile ``checkLeak()`` is called on the singleton instance.
 
-It's first relevant to know whether the tile is in the ``Player`` team, as the leaks displayed are only those in buildings belonging to the player team.
+It's first relevant to know whether the ``ConduitBuild`` can actually leak, since the ``ArmoredConduit`` is a type of pipeline that extends ``Conduit`` which does not leak. The **opt** "buildingCanLeak" abstracts
+away the process of checking if the block type indicated by the building is one that can leak resources.
+It's then relevant to know whether the tile is in the ``Player`` team, as the leaks displayed are only those in buildings belonging to the player team.
 With this verified, the tile of the building is obtained. to later check for leaks (``Leaks`` stores the tiles that are identified as leaks).
 If the building has liquid, then a leak might have started (or stopped, if the leak was plugged, the building starts to fill with liquid).
 Otherwise, we're sure there's no leak, so just in case, there is an attempt to remove the tile from registered leaks, and an update is sent to the minimap.
@@ -115,3 +131,4 @@ The loop condition uses ``leakTilesInRange`` to refer to these tiles, since the 
 and not entities themselves. For the sake of simplicity, this abstraction was used to make representation in the sequence diagram more readable.  
 For each of these local leaking tiles, they are only considered if within a ``MIN_RADIUS`` of the player. If so, a dashed circle is drawn around the tile in the color ``LEAK_COLOR``.
 It's worth noting that the ``dashCircle()`` method is an abstraction of the code's use of a utility class that handles drawing to the display (so it's neither an entity, control, nor boundary).
+It's also worth noting that the ``Tile`` entities aren't underlined because it represents the role of a leaking tile, and not a particular instance of it.

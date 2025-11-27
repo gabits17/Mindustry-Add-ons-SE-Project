@@ -2,7 +2,7 @@
 **The description of both diagrams below will be given here as the only aspect that differs between both is the relevant functions, shown in `Commander`**
 
 The undo and redo functionalities have only been implemented in the desktop version of the game; thus, only `DesktopInput` is relevant in the diagram. The implementation is based on the command pattern learned in class.  It utilizes the `Commander` class, which serves as both an Invoker and a command history. 
-The `Group` abstract class is also rather important as it is used to show an error message to the player if the player tries to undo or redo something, and there is no action to be taken.
+The `UI` class is also rather important as it is used to show an error message to the player if the player tries to undo or redo something, and there is no action to be taken.
 
 Some key points to take going into the next descriptions are:
 - `DesktopInput` has one and only one `Commander`

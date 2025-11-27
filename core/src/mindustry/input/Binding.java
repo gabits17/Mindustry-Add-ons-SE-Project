@@ -10,8 +10,6 @@ import mindustry.*;
 public class Binding{
     public static final KeyBind
 
-    //Undo stuff
-    undo = KeyBind.add("undo", KeyCode.z),
 
     paste = KeyBind.add("paste", KeyCode.v),
     ctrl = KeyBind.add("ctrl", KeyCode.controlLeft),
@@ -47,6 +45,9 @@ public class Binding{
     schematicFlipX = KeyBind.add("schematic_flip_x", KeyCode.z),
     schematicFlipY = KeyBind.add("schematic_flip_y", KeyCode.x),
     schematicMenu = KeyBind.add("schematic_menu", KeyCode.t),
+
+    //Undo stuff
+    undo = KeyBind.add("undo", KeyCode.z),
 
     commandMode = KeyBind.add("command_mode", KeyCode.shiftLeft, "command"),
     commandQueue = KeyBind.add("command_queue", KeyCode.mouseMiddle),

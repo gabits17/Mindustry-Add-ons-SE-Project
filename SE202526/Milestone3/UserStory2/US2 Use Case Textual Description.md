@@ -130,7 +130,7 @@ Extension point: Update leakable block tile
 - **Segment 1 Flow**:
     1. The use case starts when a game logic reset event is triggered.
     2. The system forwards liquid in the tile to the next connected tile.
-    3. If the system verifies that the leaking building tile belongs to the player team.
+    3. If the system verifies that building tile can leak and belongs to the player team.
        1. The system checks if the tile connected to the current is solid (to know if it's leaking)
        1. If the system verifies that the tile has started leaking.
            1. The system registers the tile as leaking.
@@ -157,7 +157,7 @@ Extension point: Update leakable block tile
     1. The use case starts when the time interval corresponding to a display update has passed.
     2. The system starts handling pending pixel updates for the minimap.
     3. The system gets the color for new pixels on the minimap (pixels in leaking tiles shown as a light blue).
-    4. The system draws dashes rings around the leaks.
+    4. The system draws dashed rings around the leaks.
 
 - **Alternative Flows**
     - None

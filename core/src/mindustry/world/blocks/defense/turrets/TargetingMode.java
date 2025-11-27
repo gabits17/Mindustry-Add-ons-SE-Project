@@ -12,6 +12,7 @@ public enum TargetingMode {
 
     private static final TargetingMode[] vals = values();
 
+
     public TargetingMode next() {
         return vals[(this.ordinal() + 1) % vals.length];
     }
