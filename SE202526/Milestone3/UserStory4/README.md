@@ -34,6 +34,8 @@ so that I don't need to save quick changes as schematics (saved block selections
 *(Please add your implementation summary review here)*
 ### Class diagrams
 
+[US4ClassDiagrams.md](US4%20Use%20Case%20Diagrams.md)
+
 ### Review
 *(Please add your class diagram review here)*
 ### Sequence diagrams
