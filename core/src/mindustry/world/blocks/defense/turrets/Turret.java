@@ -7,8 +7,7 @@ import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.math.geom.*;
-import arc.scene.ui.Label;
-import arc.scene.ui.TextButton;
+import arc.scene.ui.*;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
@@ -106,11 +105,11 @@ public class Turret extends ReloadTurret{
     /** Whether this turret predicts unit movement. */
     public boolean predictTarget = true;
 
-    /** Currently targeting mode. Default: Closest */                                                           // US3 CHANGES HERE
+    /** Currently targeting mode. Default: Closest */
     public TargetingMode targetingMode = TargetingMode.CLOSEST_FIRST;
 
     /** Current targeting class. **/
-    public TargetingEnvironment targetingEnv = TargetingEnvironment.ANY;
+    public TargetingEnvironment targetingEnv;
 
     /** Function for choosing which unit to target. */
     public Sortf unitSort = UnitSorts.closest;
@@ -176,7 +175,22 @@ public class Turret extends ReloadTurret{
         regionRotated1 = 1;
         regionRotated2 = 2;
         configurable = true;
-        //targetingEnvironment = fixTargetingClass();
+
+        config(TargetingMode.class, (TurretBuild build, TargetingMode mode) ->{
+            if(!configurable) return;
+            build.targetingMode = mode;
+        });
+
+        config(TargetingEnvironment.class, (TurretBuild build, TargetingEnvironment type) ->{
+            if(!configurable) return;
+            build.targetingEnv = type;
+        });
+
+        configClear((TurretBuild build) ->{
+            build.targetingMode = TargetingMode.CLOSEST_FIRST;
+            build.targetingEnv = targetingEnv;
+        });
+
     }
 
     @Override
@@ -631,7 +645,7 @@ public class Turret extends ReloadTurret{
             super.handleLiquid(source, liquid, amount);
         }
 
-        /** Returns the units sorted according to the targeting mode and class */                                                   // US3 CHANGE HERE
+        /** Returns the units sorted according to the targeting mode and class */
         protected Sortf unitSorter() {
             Sortf mode = getSortf();
             // if targeting is focused on air units (for turrets that targets both air and ground targets)
@@ -859,7 +873,8 @@ public class Turret extends ReloadTurret{
             super.write(write);
             write.f(reloadCounter);
             write.f(rotation);
-            /** Snippet code to handle saving configurations between loads and saves **/
+
+            // To save targeting mode and env between saves and loads
             write.b(targetingMode.ordinal());
             write.b(targetingEnv.ordinal());
         }
@@ -873,28 +888,25 @@ public class Turret extends ReloadTurret{
                 rotation = read.f();
             }
 
-            /** Snippet code to handle saving configurations between loads and saves **/
-             if(revision >= 4) {
-                 int mId = read.ub();
-                 int eId = read.ub();
+            if(revision >= 4) {
+                int mId = read.ub();
+                int eId = read.ub();
 
-                 if(mId >= 0 && mId < tModes.length) targetingMode = tModes[mId];
-                 else targetingMode = TargetingMode.CLOSEST_FIRST;
+                if(mId >= 0 && mId < tModes.length) targetingMode = tModes[mId];
+                else targetingMode = TargetingMode.CLOSEST_FIRST;
 
-                 if(eId >= 0 && eId < tEnvironments.length) targetingEnv = tEnvironments[eId];
-                 else targetingEnv = fixTargetingEnv();
+                if(eId >= 0 && eId < tEnvironments.length) targetingEnv = tEnvironments[eId];
+                else targetingEnv = fixTargetingEnv();
             }
             else {
-                 targetingMode = TargetingMode.CLOSEST_FIRST;
-                 targetingEnv = fixTargetingEnv();
+                targetingMode = TargetingMode.CLOSEST_FIRST;
+                targetingEnv = fixTargetingEnv();
             }
         }
 
         @Override
         public byte version(){
-            //return 1;
-            /** Snippet code to handle saving configurations between loads and saves **/
-            return 4;
+            return 4; // new version because of targetingMode and targetingEnv being added
         }
 
         @Override
@@ -916,48 +928,82 @@ public class Turret extends ReloadTurret{
             return targetingEnv.next();
         }
 
-        private String getCurrentTargetingModeString(){
-            return targetingMode.toString().split("_")[0].toLowerCase();
+        private String modeString(TargetingMode mode){
+            return mode.toString().split("_")[0].toLowerCase();
         }
 
-        private String getCurrentTargetingTypeString(){
-            return targetingEnv.toString().split("_")[0].toLowerCase();
+        private String envString(){
+            return targetingEnv.toString().toLowerCase();
         }
 
         @Override
         public void buildConfiguration(Table table) {
-            super.buildConfiguration(table);
+            // modes
+            Table commandModes = new Table();
+            commandModes.top().left();
 
-            Runnable swapTargetingMode = () -> targetingMode = nextTargetingMode();
-            Runnable swapTargetingEnv = () -> {
-                if(targetsBoth()) targetingEnv = nextTargetingEnv();
-                // else, targetingEnv stays the same
+            Runnable rebuildCommands = () -> {
+            commandModes.clear();
+            commandModes.background(Styles.black6);
+            var group = new ButtonGroup<TextButton>();
+            group.setMinCheckCount(0);
+
+                for(TargetingMode mode : TargetingMode.values()){
+                    commandModes.row();
+                    TextButton curButton = commandModes.button(modeString(mode), Styles.togglet,() -> {
+                        configure(mode);
+                        targetingMode = mode;
+                    }).group(group).get();
+
+                    curButton.update(() -> {
+                        curButton.setChecked(targetingMode == mode);
+                    });
+
+                    commandModes.add(curButton).width(160f).tooltip("Swap targeting mode");
+                }
             };
 
-            TextButton modeButton = table.button(getCurrentTargetingModeString(), swapTargetingMode).get();
-            // Updating each time it is pressed
-            modeButton.update(() -> {
-                modeButton.setText(getCurrentTargetingModeString());
-            });
+            rebuildCommands.run();
 
-            TextButton envButton = table.button(getCurrentTargetingTypeString(), swapTargetingEnv).get();
-            // envButton is not clickable if the turret only targets one type of enemies
-            envButton.setDisabled(!targetsBoth());
-            // Updating each time it is pressed
-            envButton.update( () -> envButton.setText(getCurrentTargetingTypeString()));
+            Table commandTypes = new Table();
+            commandTypes.top().left();
 
+            Runnable rebuildCommandsType = () -> {
+                commandTypes.clear();
+                commandTypes.background(Styles.black6);
+                if (targetingEnv == TargetingEnvironment.ANY) {
+                var group = new ButtonGroup<TextButton>();
+                group.setMinCheckCount(0);
+                    for (TargetingEnvironment type : TargetingEnvironment.values()) {
+                        commandTypes.row();
+                        TextButton curButton = commandTypes.button(type.toString().toLowerCase(), Styles.togglet, () -> {
+                            configure(type);
+                            targetingEnv = type;
+                        }).group(group).get();
 
-            table.add(modeButton).width(200f).tooltip("Swap targeting mode");
-            table.add(envButton).width(200f).tooltip("Swap targeting environment");
+                        curButton.update(() -> {
+                            curButton.setChecked(targetingEnv == type);
+                        });
+
+                        commandTypes.add(curButton).width(160f).tooltip("Swap targeting type");
+                    }
+                }
+                else{
+                    commandTypes.add(new TextArea(envString())).tooltip("can not swap target type");
+                }
+            };
+            rebuildCommandsType.run();
+
+            table.add(commandModes);
+            table.add(commandTypes).left().top();
         }
 
         private String getDisplayTargetingString(){
-            return "Targeting: " + getCurrentTargetingModeString();
+            return "Targeting: " + modeString(targetingMode);
         }
 
         @Override
         public void display(Table t){
-            //String CurrentMode = targetingMode.toString().split("_")[0].toLowerCase();
             super.display(t);
             Label label = new Label(getDisplayTargetingString());
             t.row();
