@@ -174,6 +174,7 @@ public class Turret extends ReloadTurret{
         regionRotated1 = 1;
         regionRotated2 = 2;
         configurable = true;
+        targetMode = TargetMode.CLOSEST_FIRST;
 
         config(TargetMode.class, (TurretBuild build, TargetMode mode) ->{
             if(!configurable) return;
@@ -289,12 +290,6 @@ public class Turret extends ReloadTurret{
         }
     }
 
-    public String defaultTargetingToString() {
-        String tModeText = targetMode.toString();
-        int idx = tModeText.indexOf('_');
-        return tModeText.substring(0, idx);
-    }
-
     public class TurretBuild extends ReloadTurretBuild implements ControlBlock{
         //TODO storing these as instance variables is horrible design
         /** Turret sprite offset, based on recoil. Updated every frame. */
@@ -335,7 +330,7 @@ public class Turret extends ReloadTurret{
 
         public TurretBuild() {
             super();
-            targetMode = TargetMode.CLOSEST_FIRST;
+            targetMode = Turret.this.targetMode;
             targetEnv = setTargetEnv();
 
             showModes = false;
