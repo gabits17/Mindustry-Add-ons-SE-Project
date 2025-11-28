@@ -216,10 +216,10 @@ public class Turret extends ReloadTurret{
 
         if(heatRequirement > 0){
             addBar("heat", (TurretBuild entity) ->
-            new Bar(() ->
-            Core.bundle.format("bar.heatpercent", (int)entity.heatReq, (int)(Math.min(entity.heatReq / heatRequirement, maxHeatEfficiency) * 100)),
-            () -> Pal.lightOrange,
-            () -> entity.heatReq / heatRequirement));
+                    new Bar(() ->
+                            Core.bundle.format("bar.heatpercent", (int)entity.heatReq, (int)(Math.min(entity.heatReq / heatRequirement, maxHeatEfficiency) * 100)),
+                            () -> Pal.lightOrange,
+                            () -> entity.heatReq / heatRequirement));
         }
     }
 
@@ -651,7 +651,7 @@ public class Turret extends ReloadTurret{
             // if targeting is focused on air units (for turrets that targets both air and ground targets)
             if(targetingEnv == TargetingEnvironment.AIR_FIRST)
                 return UnitSorts.airFirst(mode);
-            // if targeting is focused on ground units (for turrets that targets both air and ground targets)
+                // if targeting is focused on ground units (for turrets that targets both air and ground targets)
             else if(targetingEnv == TargetingEnvironment.GROUND_FIRST)
                 return UnitSorts.groundFirst(mode);
 
@@ -691,8 +691,8 @@ public class Turret extends ReloadTurret{
                 var ammo = peekAmmo();
                 boolean buildings = targetGround && targetBlocks && (ammo == null || ammo.targetBlocks), missiles = ammo == null || ammo.targetMissiles;
                 return Units.bestTarget(team, x, y, range,
-                    e -> !e.dead() && unitFilter.get(e) && (e.isGrounded() || targetAir) && (!e.isGrounded() || targetGround) && (missiles || !(e instanceof TimedKillc)),
-                    b -> buildings && buildingFilter.get(b), sort);
+                        e -> !e.dead() && unitFilter.get(e) && (e.isGrounded() || targetAir) && (!e.isGrounded() || targetGround) && (missiles || !(e instanceof TimedKillc)),
+                        b -> buildings && buildingFilter.get(b), sort);
             }
         }
 
@@ -784,8 +784,8 @@ public class Turret extends ReloadTurret{
 
         protected void shoot(BulletType type){
             float
-            bulletX = x + Angles.trnsx(rotation - 90, shootX, shootY),
-            bulletY = y + Angles.trnsy(rotation - 90, shootX, shootY);
+                    bulletX = x + Angles.trnsx(rotation - 90, shootX, shootY),
+                    bulletY = y + Angles.trnsy(rotation - 90, shootX, shootY);
 
             if(shoot.firstShotDelay > 0){
                 chargeSound.at(bulletX, bulletY, Mathf.random(soundPitchMin, soundPitchMax));
@@ -820,10 +820,10 @@ public class Turret extends ReloadTurret{
             if(dead || (!consumeAmmoOnce && !hasAmmo())) return;
 
             float
-            xSpread = Mathf.range(xRand),
-            bulletX = x + Angles.trnsx(rotation - 90, shootX + xOffset + xSpread, shootY + yOffset),
-            bulletY = y + Angles.trnsy(rotation - 90, shootX + xOffset + xSpread, shootY + yOffset),
-            shootAngle = rotation + angleOffset + Mathf.range(inaccuracy + type.inaccuracy);
+                    xSpread = Mathf.range(xRand),
+                    bulletX = x + Angles.trnsx(rotation - 90, shootX + xOffset + xSpread, shootY + yOffset),
+                    bulletY = y + Angles.trnsy(rotation - 90, shootX + xOffset + xSpread, shootY + yOffset),
+                    shootAngle = rotation + angleOffset + Mathf.range(inaccuracy + type.inaccuracy);
 
             float lifeScl = type.scaleLife ? Mathf.clamp((1 + scaleLifetimeOffset) * Mathf.dst(bulletX, bulletY, targetPos.x, targetPos.y) / type.range, minRange() / type.range, range() / type.range) : 1f;
 
@@ -835,9 +835,9 @@ public class Turret extends ReloadTurret{
             shootSound.at(bulletX, bulletY, Mathf.random(soundPitchMin, soundPitchMax));
 
             ammoUseEffect.at(
-                x - Angles.trnsx(rotation, ammoEjectBack),
-                y - Angles.trnsy(rotation, ammoEjectBack),
-                rotation * Mathf.sign(xOffset)
+                    x - Angles.trnsx(rotation, ammoEjectBack),
+                    y - Angles.trnsy(rotation, ammoEjectBack),
+                    rotation * Mathf.sign(xOffset)
             );
 
             if(shake > 0){
@@ -943,10 +943,10 @@ public class Turret extends ReloadTurret{
             commandModes.top().left();
 
             Runnable rebuildCommands = () -> {
-            commandModes.clear();
-            commandModes.background(Styles.black6);
-            var group = new ButtonGroup<TextButton>();
-            group.setMinCheckCount(0);
+                commandModes.clear();
+                commandModes.background(Styles.black6);
+                var group = new ButtonGroup<TextButton>();
+                group.setMinCheckCount(0);
 
                 for(TargetingMode mode : TargetingMode.values()){
                     commandModes.row();
@@ -972,8 +972,8 @@ public class Turret extends ReloadTurret{
                 commandTypes.clear();
                 commandTypes.background(Styles.black6);
                 if (targetingEnv == TargetingEnvironment.ANY) {
-                var group = new ButtonGroup<TextButton>();
-                group.setMinCheckCount(0);
+                    var group = new ButtonGroup<TextButton>();
+                    group.setMinCheckCount(0);
                     for (TargetingEnvironment type : TargetingEnvironment.values()) {
                         commandTypes.row();
                         TextButton curButton = commandTypes.button(type.toString().toLowerCase(), Styles.togglet, () -> {
