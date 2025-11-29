@@ -1,36 +1,39 @@
 ## Select Placed Turret
 ![select-turret-sd](./assets/select-turret-sd.svg)
 
-This sequence diagram represents the message flow between the player and the code base when selecting a placed turret in the grid.
+To select a turret, the player must simply tap on a built turret. This turret **must be from the same team of the player**, which is checked by the alternative combined fragment. If not the case, the system doesn't allow the player to click on it.
 
-The ``update()`` method triggers the player's interaction of selecting (``Binding.select``) a built build, which is better described by this code snippet:
+
+## Change Turret's Target Mode
+![change-target-mode-sd](./assets/change-target-mode.sd.svg)
+
+``DesktopInput`` and ``InputHandler`` classes handle the game-world input, such as movement, selection and placing blocks. Actually, these classes often execute the check ``!Core.scene.hasMouse()`` to verify if the mouse cursor is hovering over or interacting with any UI element. Because of that, the most accurate boundary for the player's action to press an UI text button can be the ``ClickListener`` class.
+
+To open the mode's options menu, there is a toggle ``boolean showModes``. Each time the main mode button is pressed, the menu is shown/hidden. There can only be one menu opened at a time, so:
 ````java
-if (Core.input.keyTap(Binding.select) && !Core.scene.hasMouse()) {  
-
-    Tile selected = world.tileWorld(input.mouseWorldX(), input.mouseWorldY());  
-    if (selected != null) {  
-        Call.tileTap(player, selected);  
-    }  
-}
+if(showModes) showEnvs = false;
 ````
-The built turret being selected **must be from the same team of the player**, which is checked by the alternative combined fragment. If not the case, the system doesn't allow the player to click on it, returning nothing.
 
-The only interesting action in this sequence diagram is the selection of the turret. The *Configuration Display* is referenced and detailed below in this report. 
+The same happens for when pressing the main target environment, but (clearly) with the toggles exchanged.
 
-### Configuration Display
+Every time a target mode option is selected (by pressing on its text button), the current target mode is updated (on change). Two updates are run: the option button's highlight and the displayed text in the main mode button.
 
-This sequence diagram doesn't represent a particular use case, but part of the *Select Placed Turret* one. Since it is complex and big enough, it was refactorized, so it is easier to understand.
+## Change Turret's Target Environment
+![change-target-env-sd](./assets/change-target-env.sd.svg)
 
-<mark style="background: #f4f44fa2;">// TO DO (after changing the display to a menu rather than a live-updatable button)</mark>
+Changing the target environment is essentialy similar to changing the target mode. The only (but impactful) change is that if the turret can only attack in *one* environment (air or ground), then the player can not change it, because it is not possible.
 
-## Change Turret's Target Environment && Change Turret's Target Mode
-<mark style="background: #f4f44fa2;">// TO DO (after changing the display to a menu rather than a live-updatable button);
-These two use cases will (probably) be very similar as sequence diagrams.</mark>
+For that, the main button that displays the current target environment is disabled.
+````java
+ // button is disabled if turret does not target in both environments
+currEnv.setDisabled(!targetsBoth());
+````
+
 
 ## Unselect Turret
 ![unselect-turret-sd](./assets/unselect-turret-sd.svg)
 
-The above sequence diagram shows how a player stops selecting a turret. For that, the player simply has to tap (click) on a tile that is **not** the tile where the selected turret is built.
+To stop selecting a turret, the player simply has to tap (click) on a tile that is **not** the tile where the selected turret is built.
 
 There are two essential paths:
 - The player clicks on a tile *without* a building on it
