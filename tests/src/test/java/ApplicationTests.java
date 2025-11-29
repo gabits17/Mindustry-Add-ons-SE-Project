@@ -879,6 +879,49 @@ public class ApplicationTests {
     }
 
     @Test
+    void undoBuildOverlapTest() {
+        initUndoRedo();
+        Seq<BuildPlan> plans = new Seq<>();
+
+        DesktopInput input = new DesktopInput();
+        Commander commander = new Commander();
+
+
+        plans.add(new BuildPlan(0,3,0,Blocks.conveyor));
+        BuildPlansCommand bPlan = new BuildPlansCommand(plans, input);
+        commander.execute(bPlan);
+        player.unit().update();
+        assertEquals(Blocks.conveyor, world.tile(0, 3).block());
+        plans.clear();
+
+        for (int i = 0; i < 5; i++) {
+            plans.add(new BuildPlan(0, i, 0, Blocks.copperWall));
+        }
+
+        bPlan = new  BuildPlansCommand(plans, input);
+        commander.execute(bPlan);
+
+        for (int i = 0; i < 5; i++) {
+            player.unit().update();
+            if (i == 3) continue; //Dont test the block with the conveyor
+            assertEquals(Blocks.copperWall, world.tile(0, i).block());
+        }
+
+        commander.undoTop();
+
+        for (int i = 0; i < 5; i++) {
+            player.unit().update();
+            if (i == 3) {
+                assertEquals(Blocks.conveyor, world.tile(0, i).block()); //Make sure that the command did not try to remove the conveyor
+                //as it was in the line that was built
+                continue;
+            };
+            assertEquals(Blocks.air, world.tile(0, i).block());
+        }
+
+    }
+
+    @Test
     void undoRedoRemoveSelectionTest() {
         initUndoRedo();
         Seq<BuildPlan> plans = new Seq<>();

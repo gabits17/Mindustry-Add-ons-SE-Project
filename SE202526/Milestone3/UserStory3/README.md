@@ -75,7 +75,42 @@ To display this configuration, the ``Turret`` block became configurable (``confi
 ### Sequence diagrams
 [Sequence diagrams for Swapping Turret's Targeting User Story](./SEQUENCE-DIAGRAMS.md)
 #### Review
-*(Please add your sequence diagram review here)*
+**Author** : Diogo Antunes (67763), 29/11/2025 14:35
+
+**Select Placed Turret**
+
+- Boundary ``InputHandler`` interacts directly with an entity ``TurretBuild``, this shouldn't happen in a sequence diagram.  
+- I think there should be separate vertical activity rectangles for the interactions with TurretBuild as it doesn't seem to be one run on interaction, but instead multiple starting from the InputHandler.  
+- The arrows having the "return" text are a different style from what I used, instead of being empty, but the lesson powerpoints also show return arrows in a variety of ways.
+
+**Change Turret's Target Mode**
+
+- There is no return arrow at the end for a synchronous message, which I think is wrong.  
+- The combined fragment strict seems to have been applied incorrectly. It should encompass the section with the opt combined fragment as well in a separate operand.
+In truth, there actually doesn't seem to be a need for this combined fragment.
+- "Playerr" has a typo.
+
+**Change Turret's Target Environment**
+
+- Strict doesn't seem to be necessary here.
+- There's also direct communication between the boundary and the entity within the operand in strict.
+
+I'm assuming "environment button is pressed" is the value of an attribute and not an additional interaction from the player, since ``ClickListener`` receives all input.
+With that assumption, the opt looks right.
+
+**Unselect Turret**
+
+- Boundary communication with entity again.  
+- The ``onConfigureBuildTapped(build)`` is synchronous but has no empty return.
+- The activity bar in ``hideConfig()`` that starts in ``BlockConfigFragment`` starts within an "alt" operand and carries over to the next. i'm not sure this is according to specification,
+but I might be wrong in pointing this out.
+
+**Other notes**
+
+- There seems to be a use of public methods like ``toString()`` at times or using java boolean negation like "!targetsBoth()" which potentially lessens readability
+considering it's meant to be understood by non-programmers. However, since each method in the sequence diagram is supposed to correspond to something in the code, I'm not sure how this could be changed without removing meaning.
+Altering the method name in the sequence diagram and then explaining the abstraction that was used could be an option but I'm not at all sure that would be the right thing to do.
+
 ## Test specifications
 (*Test cases specification and pointers to their implementation, where adequate.*)
 ### Review
