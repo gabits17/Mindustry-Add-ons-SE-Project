@@ -1004,7 +1004,8 @@ public class Turret extends ReloadTurret{
             for(TargetMode mode : tModes){
                 TextButton b = commandModes.button(TargetMode.toString(mode), Styles.togglet,() -> {
                     configure(mode);
-                    targetMode = mode;
+                    // only does the work of changing it if it is not the same mode when choosing an option (ucd alternative flow)
+                    if(targetMode != mode) targetMode = mode;
                 }).group(modeGroup).get();
 
                 b.update(() -> b.setChecked(targetMode == mode)); // updating the highlighted button
@@ -1043,7 +1044,8 @@ public class Turret extends ReloadTurret{
                 for (TargetEnv env : tEnvironments) {
                     TextButton b = commandEnvs.button(TargetEnv.toString(env), Styles.togglet, () -> {
                         configure(env);
-                        targetEnv = env;
+                        // only does the work of changing if it is not the same environment when choosing an option (ucd alternative flow)
+                        if(targetEnv != env) targetEnv = env;
                     }).group(envGroup).get();
 
                     b.update(() -> b.setChecked(targetEnv == env)); // updating the highlighted button

@@ -16,7 +16,7 @@ This document was updated according to Diogo's review on it.
 - **Pre-Conditions**: The turret must be built, alive (not destroyed) and belong to the player's team.
 - **Main Flow**:
   1. The use case starts when the player clicks on a placed turret.
-  2. The system displays the turret's current targeting mode and type.
+  2. The system displays the turret's current targeting mode and environment.
 
   *Extension points*: <mark style="background: #bff79fc9;">Press target mode button</mark>, <mark style="background: #bff79fc9;">Press target environment button</mark>
 - **Alternative Flows**
@@ -50,10 +50,12 @@ This document was updated according to Diogo's review on it.
   - *Secondary*: None
 - **Pre-Conditions**: The player pressed the turret's target mode button. 
 - **Segment 1 Flow**:
-  1. The use case starts when the player presses the turret's target mode button.
-  2. The system swaps the turret's targeting mode to the next one and displays it.
+  1. The use case starts when the player presses the turret's target mode main button.
+  2. The system displays a menu with every possible target mode option.
+  3. The player chooses an option.
+  4. The system swaps the turret's targeting mode to the option chosen and displays it.
 - **Alternative Flows**
-  - None
+  - Same target mode chosen <mark style="background: #ff0000db;"> // TODO</mark>
 - **Post-Conditions**: The turret's targeting mode is swapped.
 
 ### Change turret's target evironment
@@ -66,14 +68,25 @@ This document was updated according to Diogo's review on it.
 - **Pre-Conditions**: The player pressed the turret's target environment button. 
 - **Segment 2 Flow**:
   1. The use case starts when the player presses the turret's target environment button.
-  2. The system swaps the turret's targeting environment to the next one and displays it.
+  2. The system displays a menu with every possible target environment option.
+  3. The player chooses an option.
+  4. The system swaps the turret's targeting environment to the option chosen and displays it.
 - **Alternative Flows**
+  - Same target environment chosen <mark style="background: #ff0000db;"> // TODO</mark>
   - <mark style="background: #bff79fc9;">Can't swap targeting environment</mark>
 - **Post-Conditions**: The turret's targeting environment is swapped.
 
 ---
 
 ## Alternative flows
+
+### Same target mode chosen
+<mark style="background: #ff0000db;"> // TODO</mark>
+
+### Same target environment chosen
+<mark style="background: #ff0000db;"> // TODO</mark>
+
+
 ### Can't swap turret's targeting environment
 - **Name**: Can't swap turret's targeting environment
 - **ID**: 4.1
