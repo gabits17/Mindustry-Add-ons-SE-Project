@@ -319,7 +319,7 @@ public class Turret extends ReloadTurret{
         /** Whether if the modes menu should be displayed **/
         public boolean showModes;
         /** Whether if the environments menu should be displayed **/
-        public boolean showEnvironments;
+        public boolean showEnvs;
 
         public float heatReq;
         public float[] sideHeat = new float[4];
@@ -334,7 +334,7 @@ public class Turret extends ReloadTurret{
             targetEnv = setTargetEnv();
 
             showModes = false;
-            showEnvironments = false;
+            showEnvs = false;
         }
 
         /**
@@ -931,7 +931,7 @@ public class Turret extends ReloadTurret{
             super.onConfigureClosed();
 
             showModes = false;
-            showEnvironments = false;
+            showEnvs = false;
         }
 
         @Override
@@ -958,11 +958,11 @@ public class Turret extends ReloadTurret{
             return menu.button(configStr, Styles.togglet, () -> {
                 if(configStr.equals(TargetMode.toString(targetMode))) {
                     showModes = !showModes;
-                    if(showModes) showEnvironments = false;
+                    if(showModes) showEnvs = false;
                 }
                 else {
-                    showEnvironments = !showEnvironments;
-                    if(showEnvironments) showModes = false;
+                    showEnvs = !showEnvs;
+                    if(showEnvs) showModes = false;
                 }
             }).width(160f).left().get();
         }
@@ -978,7 +978,7 @@ public class Turret extends ReloadTurret{
 
             Table commandConfigs = new Table();
             commandConfigs.top().left();
-            commandConfigs.visible(() -> modes ? showModes : showEnvironments);
+            commandConfigs.visible(() -> modes ? showModes : showEnvs);
             commandConfigs.defaults().left().growX().pad(0f).padLeft(0f).padRight(0f);
 
             return commandConfigs;
@@ -1031,7 +1031,8 @@ public class Turret extends ReloadTurret{
 
             TextButton currEnv = mainButton(envsMenu, TargetEnv.toString(targetEnv));
 
-            currEnv.setDisabled(!targetsBoth()); // button is disabled if turret does not target both
+            // button is disabled if turret does not target in both environments
+            currEnv.setDisabled(!targetsBoth());
 
             Table commandEnvs = menuOptions(TargetEnv.toString(targetEnv));
 
