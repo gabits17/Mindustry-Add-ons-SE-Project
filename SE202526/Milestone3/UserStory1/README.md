@@ -36,6 +36,9 @@ Gabriel Falcão (67775), 24/11/2025 10:17
 
 I have updated the diagram's description, given the points above.
 ## Implementation documentation
+### Modified Classes
+The classes in yellow are the ones that have been modified the ones in green were the ones created to aid with the implementation.
+![US1-ModificationClass.svg](Assets/US1-ModificationClass.svg)
 (*Please add the class diagram(s) illustrating your code evolution, along with a technical description of the changes made by your team. The description may include code snippets if adequate.*)
 ### Implementation summary
 The implementation of this user story was primarily carried out within the `input` package, as it is closely tied to player input. The design follows the Command Pattern covered in class, where three basic commands were implemented:
