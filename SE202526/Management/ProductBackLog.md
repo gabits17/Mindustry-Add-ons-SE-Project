@@ -69,3 +69,15 @@ US13: As an aspiring software engineer, I want to implement an US defined in mil
 US14: As an aspiring software engineer, I want to illustrate an US implementation with a use case and a sequence diagram, so that I can detail about my group's work.
 
 US15: As an aspiring software engineer, I want to think about an US implementation class diagram representation, so that my group is able to design it.
+
+## Sprint 7
+
+US16: As an aspiring software engineer, I want to design and perform unit tests on my new functionality, so that I can be sure it is implemented well and bug free.
+
+US17: As an aspiring software engineer, I want to  write an implementation summary about the code I made, to that I can better showcase the work done to anyone interested in it.
+
+US18: As an aspiring software engineer, I want to additionally refine previously implemented code, so that I know I am producing the best code possible.
+
+US19: As an aspiring software engineer, I want to produce a video illustrating the new implemented features, so that I can easily showcase them to anyone interested.
+
+US20: As an aspiring software engineer, I want to produce an animation of our scrum board's animation over time, so that I can easily showcase it's progress to anyone interested.

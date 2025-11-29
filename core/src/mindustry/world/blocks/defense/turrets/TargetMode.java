@@ -1,7 +1,7 @@
 package mindustry.world.blocks.defense.turrets;
 
 /** Used for changing the target mode of a turret **/
-public enum TargetingMode {
+public enum TargetMode {
     CLOSEST_FIRST,      // The closest enemies around the turret. This is the default mode.
     FARTHEST_FIRST,     // The farthest enemies from the turret, in its range (or other one)
     STRONGEST_FIRST,    // The strongest enemies (with higher maxHealth) around the turret.
@@ -9,11 +9,7 @@ public enum TargetingMode {
     FASTEST_FIRST,      // The fastest enemies around the turret (highest u.type.speed * u.speedMultiplier)
     SLOWEST_FIRST;      // The slowest enemies around the turret (lowest u.type.speed * u.speedMultiplier)
 
-
-    private static final TargetingMode[] vals = values();
-
-
-    public TargetingMode next() {
-        return vals[(this.ordinal() + 1) % vals.length];
+    public static String toString(TargetMode m) {
+        return m.toString().split("_")[0];
     }
 }
