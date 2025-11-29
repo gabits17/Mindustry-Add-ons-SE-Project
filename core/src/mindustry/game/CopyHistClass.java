@@ -51,7 +51,7 @@ public class CopyHistClass implements CopyHist {
 
     @Override
     public void copy(Schematic scheme){
-        if (this.size != INIT_POS)
+        if (!history.isEmpty())
             queueIt();
 
         if (!history.contains(scheme)){
