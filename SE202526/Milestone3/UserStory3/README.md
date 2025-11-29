@@ -87,11 +87,12 @@ To display this configuration, the ``Turret`` block became configurable (``confi
 
 - There is no return arrow at the end for a synchronous message, which I think is wrong.  
 - The combined fragment strict seems to have been applied incorrectly. It should encompass the section with the opt combined fragment as well in a separate operand.
+In truth, there actually doesn't seem to be a need for this combined fragment.
 - "Playerr" has a typo.
 
 **Change Turret's Target Environment**
 
-- Strict needs to be changed once again to be applied correctly.  
+- Strict doesn't seem to be necessary here.
 - There's also direct communication between the boundary and the entity within the operand in strict.
 
 I'm assuming "environment button is pressed" is the value of an attribute and not an additional interaction from the player, since ``ClickListener`` receives all input.
