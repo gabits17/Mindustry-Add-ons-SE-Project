@@ -94,10 +94,11 @@ Extension point: Update leakable block tile
 - **Pre-Conditions**: The game is in an active, unpaused map.
 - **Main Flow**:
     1. The use case starts when a fixed interval of time (game ticks) passes.
-    2. The system updates the active building according to its traits.
-    3. The system updates the main tile belonging to the building.
-
-Extension point: Update leakable block tile
+    2. The system checks currently active buildings. 
+    3. For building in active buildings.
+        1. The system updates the active building according to its traits.
+        2. The system updates the main tile belonging to the building.  
+        Extension point: Update leakable block tile
 - **Alternative Flows**
     - None
 - **Post-Conditions**: The building remains active in the unpaused map.
@@ -130,7 +131,7 @@ Extension point: Update leakable block tile
 - **Segment 1 Flow**:
     1. The use case starts when a game logic reset event is triggered.
     2. The system forwards liquid in the tile to the next connected tile.
-    3. If the system verifies that the leaking building tile belongs to the player team.
+    3. If the system verifies that building tile can leak and belongs to the player team.
        1. The system checks if the tile connected to the current is solid (to know if it's leaking)
        1. If the system verifies that the tile has started leaking.
            1. The system registers the tile as leaking.

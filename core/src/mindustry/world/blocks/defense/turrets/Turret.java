@@ -7,12 +7,12 @@ import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.math.geom.*;
-import arc.scene.ui.Label;
-import arc.scene.ui.TextButton;
+import arc.scene.ui.*;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
+import mindustry.Vars;
 import mindustry.audio.*;
 import mindustry.content.*;
 import mindustry.core.*;
@@ -106,11 +106,10 @@ public class Turret extends ReloadTurret{
     /** Whether this turret predicts unit movement. */
     public boolean predictTarget = true;
 
-    /** Currently targeting mode. Default: Closest */                                                           // US3 CHANGES HERE
-    public TargetingMode targetingMode = TargetingMode.CLOSEST_FIRST;
-
-    /** Current targeting class. **/
-    public TargetingEnvironment targetingEnv = TargetingEnvironment.ANY;
+    /** Currently targeting mode. Default: Closest */
+    public TargetMode targetMode;
+    /** Current targeting environment. **/
+    public TargetEnv targetEnv;
 
     /** Function for choosing which unit to target. */
     public Sortf unitSort = UnitSorts.closest;
@@ -176,7 +175,23 @@ public class Turret extends ReloadTurret{
         regionRotated1 = 1;
         regionRotated2 = 2;
         configurable = true;
-        //targetingEnvironment = fixTargetingClass();
+        targetMode = TargetMode.CLOSEST_FIRST;
+
+        config(TargetMode.class, (TurretBuild build, TargetMode mode) ->{
+            if(!configurable) return;
+            build.targetMode = mode;
+        });
+
+        config(TargetEnv.class, (TurretBuild build, TargetEnv type) ->{
+            if(!configurable) return;
+            build.targetEnv = type;
+        });
+
+        configClear((TurretBuild build) ->{
+            build.targetMode = TargetMode.CLOSEST_FIRST;
+            build.targetEnv = build.setTargetEnv();
+        });
+
     }
 
     @Override
@@ -202,10 +217,10 @@ public class Turret extends ReloadTurret{
 
         if(heatRequirement > 0){
             addBar("heat", (TurretBuild entity) ->
-            new Bar(() ->
-            Core.bundle.format("bar.heatpercent", (int)entity.heatReq, (int)(Math.min(entity.heatReq / heatRequirement, maxHeatEfficiency) * 100)),
-            () -> Pal.lightOrange,
-            () -> entity.heatReq / heatRequirement));
+                    new Bar(() ->
+                            Core.bundle.format("bar.heatpercent", (int)entity.heatReq, (int)(Math.min(entity.heatReq / heatRequirement, maxHeatEfficiency) * 100)),
+                            () -> Pal.lightOrange,
+                            () -> entity.heatReq / heatRequirement));
         }
     }
 
@@ -276,12 +291,6 @@ public class Turret extends ReloadTurret{
         }
     }
 
-    public String defaultTargetingToString() {
-        String tModeText = targetingMode.toString();
-        int idx = tModeText.indexOf('_');
-        return tModeText.substring(0, idx);
-    }
-
     public class TurretBuild extends ReloadTurretBuild implements ControlBlock{
         //TODO storing these as instance variables is horrible design
         /** Turret sprite offset, based on recoil. Updated every frame. */
@@ -300,10 +309,18 @@ public class Turret extends ReloadTurret{
         public boolean wasShooting;
         public int queuedBullets = 0;
 
-        public TargetingMode targetingMode = Turret.this.targetingMode;
-        public TargetingMode[] tModes = TargetingMode.values();
-        public TargetingEnvironment targetingEnv = Turret.this.targetingEnv;
-        public TargetingEnvironment[] tEnvironments = TargetingEnvironment.values();
+        /** Possible values for targeting configurations: modes and environments **/
+        public TargetMode[] tModes = TargetMode.values();
+        public TargetEnv[] tEnvironments = TargetEnv.values();
+
+        /** Current targeting configurations **/
+        public TargetMode targetMode;
+        public TargetEnv targetEnv;
+
+        /** Whether if the modes menu should be displayed **/
+        public boolean showModes;
+        /** Whether if the environments menu should be displayed **/
+        public boolean showEnvs;
 
         public float heatReq;
         public float[] sideHeat = new float[4];
@@ -314,23 +331,27 @@ public class Turret extends ReloadTurret{
 
         public TurretBuild() {
             super();
-            targetingEnv = fixTargetingEnv();
+            targetMode = Turret.this.targetMode;
+            targetEnv = setTargetEnv();
+
+            showModes = false;
+            showEnvs = false;
         }
 
         /**
-         * Fixes the targeting class of the turret.
+         * Sets the targeting class of the turret.
          * Turrets that *only* targets air, returns AIR_FIRST
          * and turrets that *only* targets ground returns GROUND_FIRST
          * For turrets that target *both air and ground*, returns ANY
          */
-        private TargetingEnvironment fixTargetingEnv() {
+        private TargetEnv setTargetEnv() {
             if(targetAir && !targetGround)
-                return TargetingEnvironment.AIR_FIRST;
+                return TargetEnv.AIR_FIRST;
 
             else if(!targetAir && targetGround)
-                return TargetingEnvironment.GROUND_FIRST;
+                return TargetEnv.GROUND_FIRST;
 
-            else return TargetingEnvironment.ANY;
+            else return TargetEnv.ANY;
         }
 
         /**
@@ -631,14 +652,14 @@ public class Turret extends ReloadTurret{
             super.handleLiquid(source, liquid, amount);
         }
 
-        /** Returns the units sorted according to the targeting mode and class */                                                   // US3 CHANGE HERE
+        /** Returns the units sorted according to the targeting mode and class */
         protected Sortf unitSorter() {
             Sortf mode = getSortf();
             // if targeting is focused on air units (for turrets that targets both air and ground targets)
-            if(targetingEnv == TargetingEnvironment.AIR_FIRST)
+            if(targetEnv == TargetEnv.AIR_FIRST)
                 return UnitSorts.airFirst(mode);
-            // if targeting is focused on ground units (for turrets that targets both air and ground targets)
-            else if(targetingEnv == TargetingEnvironment.GROUND_FIRST)
+                // if targeting is focused on ground units (for turrets that targets both air and ground targets)
+            else if(targetEnv == TargetEnv.GROUND_FIRST)
                 return UnitSorts.groundFirst(mode);
 
             // if targeting is not focused on any, only return the sorted according to mode
@@ -648,7 +669,7 @@ public class Turret extends ReloadTurret{
         /** Gets the current targeting mode **/
         private Sortf getSortf() {
             Sortf mode = null;
-            switch(targetingMode) {
+            switch(targetMode) {
                 case CLOSEST_FIRST -> mode = UnitSorts.closest;
                 case FARTHEST_FIRST -> mode = UnitSorts.farthest;
                 case STRONGEST_FIRST -> mode = UnitSorts.strongest;
@@ -677,8 +698,8 @@ public class Turret extends ReloadTurret{
                 var ammo = peekAmmo();
                 boolean buildings = targetGround && targetBlocks && (ammo == null || ammo.targetBlocks), missiles = ammo == null || ammo.targetMissiles;
                 return Units.bestTarget(team, x, y, range,
-                    e -> !e.dead() && unitFilter.get(e) && (e.isGrounded() || targetAir) && (!e.isGrounded() || targetGround) && (missiles || !(e instanceof TimedKillc)),
-                    b -> buildings && buildingFilter.get(b), sort);
+                        e -> !e.dead() && unitFilter.get(e) && (e.isGrounded() || targetAir) && (!e.isGrounded() || targetGround) && (missiles || !(e instanceof TimedKillc)),
+                        b -> buildings && buildingFilter.get(b), sort);
             }
         }
 
@@ -770,8 +791,8 @@ public class Turret extends ReloadTurret{
 
         protected void shoot(BulletType type){
             float
-            bulletX = x + Angles.trnsx(rotation - 90, shootX, shootY),
-            bulletY = y + Angles.trnsy(rotation - 90, shootX, shootY);
+                    bulletX = x + Angles.trnsx(rotation - 90, shootX, shootY),
+                    bulletY = y + Angles.trnsy(rotation - 90, shootX, shootY);
 
             if(shoot.firstShotDelay > 0){
                 chargeSound.at(bulletX, bulletY, Mathf.random(soundPitchMin, soundPitchMax));
@@ -806,10 +827,10 @@ public class Turret extends ReloadTurret{
             if(dead || (!consumeAmmoOnce && !hasAmmo())) return;
 
             float
-            xSpread = Mathf.range(xRand),
-            bulletX = x + Angles.trnsx(rotation - 90, shootX + xOffset + xSpread, shootY + yOffset),
-            bulletY = y + Angles.trnsy(rotation - 90, shootX + xOffset + xSpread, shootY + yOffset),
-            shootAngle = rotation + angleOffset + Mathf.range(inaccuracy + type.inaccuracy);
+                    xSpread = Mathf.range(xRand),
+                    bulletX = x + Angles.trnsx(rotation - 90, shootX + xOffset + xSpread, shootY + yOffset),
+                    bulletY = y + Angles.trnsy(rotation - 90, shootX + xOffset + xSpread, shootY + yOffset),
+                    shootAngle = rotation + angleOffset + Mathf.range(inaccuracy + type.inaccuracy);
 
             float lifeScl = type.scaleLife ? Mathf.clamp((1 + scaleLifetimeOffset) * Mathf.dst(bulletX, bulletY, targetPos.x, targetPos.y) / type.range, minRange() / type.range, range() / type.range) : 1f;
 
@@ -821,9 +842,9 @@ public class Turret extends ReloadTurret{
             shootSound.at(bulletX, bulletY, Mathf.random(soundPitchMin, soundPitchMax));
 
             ammoUseEffect.at(
-                x - Angles.trnsx(rotation, ammoEjectBack),
-                y - Angles.trnsy(rotation, ammoEjectBack),
-                rotation * Mathf.sign(xOffset)
+                    x - Angles.trnsx(rotation, ammoEjectBack),
+                    y - Angles.trnsy(rotation, ammoEjectBack),
+                    rotation * Mathf.sign(xOffset)
             );
 
             if(shake > 0){
@@ -859,9 +880,10 @@ public class Turret extends ReloadTurret{
             super.write(write);
             write.f(reloadCounter);
             write.f(rotation);
-            /** Snippet code to handle saving configurations between loads and saves **/
-            /* write.i(targetingMode.ordinal());
-            write.i(targetingEnv.ordinal()); */
+
+            // To save targeting mode and env between saves and loads
+            write.b(targetMode.ordinal());
+            write.b(targetEnv.ordinal());
         }
 
         @Override
@@ -873,22 +895,25 @@ public class Turret extends ReloadTurret{
                 rotation = read.f();
             }
 
-            /** Snippet code to handle saving configurations between loads and saves **/
-            /* if(revision >= 2) {
-                targetingMode = tModes[read.i()];
-                targetingEnv = tEnvironments[read.i()];
+            if(revision >= 4) {
+                int mId = read.ub();
+                int eId = read.ub();
+
+                if(mId >= 0 && mId < tModes.length) targetMode = tModes[mId];
+                else targetMode = TargetMode.CLOSEST_FIRST;
+
+                if(eId >= 0 && eId < tEnvironments.length) targetEnv = tEnvironments[eId];
+                else targetEnv = setTargetEnv();
             }
             else {
-                targetingMode = TargetingMode.CLOSEST_FIRST;
-                targetingEnv = fixTargetingEnv();
-            } */
+                targetMode = TargetMode.CLOSEST_FIRST;
+                targetEnv = setTargetEnv();
+            }
         }
 
         @Override
         public byte version(){
-            return 1;
-            /** Snippet code to handle saving configurations between loads and saves **/
-            /* return 2; */
+            return 4; // new version because of targetingMode and targetingEnv being added
         }
 
         @Override
@@ -902,65 +927,180 @@ public class Turret extends ReloadTurret{
             reloadCounter = oldReload;
         }
 
-        public TargetingMode nextTargetingMode(){
-            return targetingMode.next();
-        }
+        @Override
+        public void onConfigureClosed() {
+            super.onConfigureClosed();
 
-        public TargetingEnvironment nextTargetingEnv() {
-            return targetingEnv.next();
-        }
-
-        private String getCurrentTargetingModeString(){
-            return targetingMode.toString().split("_")[0].toLowerCase();
-        }
-
-        private String getCurrentTargetingTypeString(){
-            return targetingEnv.toString().split("_")[0].toLowerCase();
+            showModes = false;
+            showEnvs = false;
         }
 
         @Override
         public void buildConfiguration(Table table) {
-            super.buildConfiguration(table);
+            table.left();
 
-            Runnable swapTargetingMode = () -> targetingMode = nextTargetingMode();
-            Runnable swapTargetingEnv = () -> {
-                if(targetsBoth()) targetingEnv = nextTargetingEnv();
-                // else, targetingEnv stays the same
-            };
+            Table modesMenu = buildModesMenu();
+            Table envsMenu = buildEnvsMenu();
 
-            TextButton modeButton = table.button(getCurrentTargetingModeString(), swapTargetingMode).get();
-            // Updating each time it is pressed
-            modeButton.update(() -> {
-                modeButton.setText(getCurrentTargetingModeString());
-            });
-
-            TextButton envButton = table.button(getCurrentTargetingTypeString(), swapTargetingEnv).get();
-            // envButton is not clickable if the turret only targets one type of enemies
-            envButton.setDisabled(!targetsBoth());
-            // Updating each time it is pressed
-            envButton.update( () -> envButton.setText(getCurrentTargetingTypeString()));
-
-
-            table.add(modeButton).width(200f).tooltip("Swap targeting mode");
-            table.add(envButton).width(200f).tooltip("Swap targeting environment");
+            table.row();
+            table.add(modesMenu).padRight(8f).left();
+            table.add(envsMenu).top().left();
         }
 
-        private String getDisplayTargetingString(){
-            return "Targeting: " + getCurrentTargetingModeString();
+        /************ Helper functions for buildConfiguration() method: ************/
+
+        /**
+         * Creates the main displayed button for a given targeting configuration
+         * @param menu Menu for which the button is being created
+         * @param configStr String that defines if it is the mode or the environment targeting configuration
+         * @return The main displayed button
+         */
+        private TextButton mainButton(Table menu, String configStr) {
+            return menu.button(configStr, Styles.togglet, () -> {
+                if(configStr.equals(TargetMode.toString(targetMode))) {
+                    showModes = !showModes;
+                    if(showModes) showEnvs = false;
+                }
+                else {
+                    showEnvs = !showEnvs;
+                    if(showEnvs) showModes = false;
+                }
+            }).width(160f).left().get();
+        }
+
+        /**
+         * Handles the creation and the alignment of the table for the targeting options menu
+         * according to the configuration passed as an argument
+         * @param configStr String that defines if it is the mode or the environment targeting configuration
+         * @return Menu with the targeting configuration options
+         */
+        private Table menuOptions(String configStr) {
+            boolean modes = configStr.equals(TargetMode.toString(targetMode));
+
+            Table commandConfigs = new Table();
+            commandConfigs.top().left();
+            commandConfigs.visible(() -> modes ? showModes : showEnvs);
+            commandConfigs.defaults().left().growX().pad(0f).padLeft(0f).padRight(0f);
+
+            return commandConfigs;
+        }
+
+        /**
+         * Handles the creation and the configuration of the left column menu to
+         * display the targeting modes menu
+         * @return Table with every possible targeting mode
+         */
+        private Table buildModesMenu() {
+            Table modesMenu = new Table();
+            modesMenu.top().left();
+            modesMenu.defaults().left();
+
+            TextButton currMode = mainButton(modesMenu, TargetMode.toString(targetMode));
+
+            Table commandModes = menuOptions(TargetMode.toString(targetMode));
+
+            var modeGroup = new ButtonGroup<TextButton>();
+            modeGroup.setMinCheckCount(0);
+
+            for(TargetMode mode : tModes){
+                TextButton b = commandModes.button(TargetMode.toString(mode), Styles.togglet,() -> {
+                    // only does the work of changing it if it is not the same mode when choosing an option (ucd alternative flow)
+                    if(targetMode != mode)
+                        configure(mode);
+                    else
+                        ui.showErrorFade("Same current target mode!", 2f);
+                }).group(modeGroup).get();
+
+                b.update(() -> b.setChecked(targetMode == mode)); // updating the highlighted button
+                commandModes.row();
+                commandModes.add(b).width(160f).left().tooltip("Swap targeting mode");
+            }
+
+            modesMenu.row();
+            modesMenu.add(commandModes).width(160f).left();
+
+            currMode.update(() -> currMode.setText(TargetMode.toString(targetMode)));
+
+            return modesMenu;
+        }
+
+        /**
+         * Handles the creation and configuration of the right column menu that displays
+         * ths possible targeting environments options
+         * @return Table with every possible targeting environment
+         */
+        private Table buildEnvsMenu() {
+            Table envsMenu = new Table();
+            envsMenu.top().left();
+
+            TextButton currEnv = mainButton(envsMenu, TargetEnv.toString(targetEnv));
+
+            // button is disabled if turret does not target in both environments
+            currEnv.setDisabled(!targetsBoth());
+
+            Table commandEnvs = menuOptions(TargetEnv.toString(targetEnv));
+
+            var envGroup = new ButtonGroup<TextButton>();
+            envGroup.setMinCheckCount(0);
+
+            if(targetsBoth()) {
+                for (TargetEnv env : tEnvironments) {
+                    TextButton b = commandEnvs.button(TargetEnv.toString(env), Styles.togglet, () -> {
+                        // only does the work of changing if it is not the same environment when choosing an option (ucd alternative flow)
+                        if(targetEnv != env)
+                            configure(env);
+                        else
+                            Vars.ui.showErrorFade("Same current target environment!", 2f);
+                    }).group(envGroup).get();
+
+                    b.update(() -> b.setChecked(targetEnv == env)); // updating the highlighted button
+                    commandEnvs.row();
+                    commandEnvs.add(b).width(160f).left().tooltip("Swap targeting environment");
+                }
+            }
+
+            envsMenu.row();
+            envsMenu.add(commandEnvs).width(160f).left();
+
+            currEnv.update(() -> currEnv.setText(TargetEnv.toString(targetEnv)));
+
+            return envsMenu;
         }
 
         @Override
-        public void display(Table t){
-            //String CurrentMode = targetingMode.toString().split("_")[0].toLowerCase();
-            super.display(t);
-            Label label = new Label(getDisplayTargetingString());
-            t.row();
-            t.add(label);
-            label.update(() -> label.setText(getDisplayTargetingString()));
-            t.row();
-            t.bottom();
+        public void display(Table table){
+            super.display(table);
+
+            Label modeLabel = new Label(labelModeString());
+            Label envLabel = new Label(labelEnvString());
+            Label header = new Label("Targeting configurations:");
+
+            table.row();
+            table.add(header);
+
+            table.row();
+            table.add(modeLabel);
+            modeLabel.update(() -> modeLabel.setText(labelModeString()));
+
+            table.row();
+            table.add(envLabel);
+            envLabel.update(() -> envLabel.setText(labelEnvString()));
+
+            table.row();
+            table.bottom();
         }
 
+        /************ Helper functions for display() method ************/
+
+        /** Helper string; purpose: avoid code repetition **/
+        private String labelModeString(){
+            return "Mode: " + TargetMode.toString(targetMode);
+        }
+
+        /** Helper string; purpose: avoid code repetition **/
+        private String labelEnvString() {
+            return "Units environment: " + TargetEnv.toString(targetEnv);
+        }
     }
 
     public static class BulletEntry{

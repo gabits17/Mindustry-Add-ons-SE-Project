@@ -184,7 +184,7 @@ public class ItemTurret extends Turret{
 
         @Override
         public byte version(){
-            return 2;
+            return 5;
         }
 
         @Override
@@ -205,7 +205,7 @@ public class ItemTurret extends Turret{
             totalAmmo = 0;
             int amount = read.ub();
             for(int i = 0; i < amount; i++){
-                Item item = Vars.content.item(revision < 2 ? read.ub() : read.s());
+                Item item = Vars.content.item(revision < 5 ? read.ub() : read.s());
                 short a = read.s();
 
                 //only add ammo if this is a valid ammo type

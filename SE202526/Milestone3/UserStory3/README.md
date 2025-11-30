@@ -38,8 +38,85 @@ _The use case diagram's textual description was modified according to this revie
 
 ## Implementation documentation
 (*Please add the class diagram(s) illustrating your code evolution, along with a technical description of the changes made by your team. The description may include code snippets if adequate.*)
+
+### Tour report
+
+##### Commits
+
+17/11/2025:
+![commit1](./assets/commits/commit1.png)
+
+19/11/2025:
+![commit2](./assets/commits/commit2.png)
+
+20/11/2025:
+![commit3](./assets/commits/commit3.png)
+
+21/11/2025:
+![commit4](./assets/commits/commit4.png)
+
+22/11/2025:
+![commit5](./assets/commits/commit5.png)
+![commit6](./assets/commits/commit6.png)
+
+23/11/2025:
+![commit7](./assets/commits/commit7.png)
+
+26/11/2025:
+![commit8](./assets/commits/commit8.png)
+
+27/11/2025:
+![commit9](./assets/commits/commit9.png)
+
+28/11/2025:
+![commit10](./assets/commits/commit10.png)
+![commit11](./assets/commits/commit11.png)
+
+30/11/2025:
+![commit12](./assets/commits/commit12.png)
+
+
+##### Briefing 
+The implemenation of this user story took place mostly around the ``Turret`` class, since it was added new configurations to it. It was created two new classes: Java Enums ``TargetMode`` and ``TargetEnv``. They contain a list of possible modes and environments for the targeting configuration of a turret.
+- Possible targeting modes:
+  - *Closests* first
+  - *Farthest* first
+  - *Strongest* first
+  - *Weakest* first
+  - *Fastest* first
+  - *Slowest* first
+
+- Possible targeting environments:
+  - *Ground units* first
+  - *Air units* first
+  - *Any* first
+
+It is possible to **combine** the targeting environment with a mode. For instance, it is possible for a turret to target the *strongest ground* units around it. For targets that target both air and ground units, it is possible to (or not) focus on an environment.
+
+##### Logic
+To sort the enemy units that a turret will attack, the ``SortUnits`` class was utilized. There was already four ways for sorting them (``Sortf`` objects): ``closest``, ``farthest``, ``strongest`` and ``weakest``. It was added two new ways: ``fastest`` and ``slowest``.
+
+To combine the targeting environment with a targeting mode, it was also implemented two new (static) functions that handle air or ground units first, with the mode parameterized: ``airFirst(mode)`` and ``groundFirst(mode)``.
+
+These configurations are defined and depend on the ``Turret``'s ``targetMode`` and ``targetEnv`` new instance variables. The sort occurs in the ``unitSorter()`` new method in the ``TurretBuild`` class (inner class from ``Turret``). This method is called in the function ``findEnemy()`` in the same way the default sort was before this functionality was added.
+
+To display this configuration, the ``Turret`` block became configurable (``configurable = true`` in its constructor), which means it can be configured by the player, by clicking on it. Two configurations were added in the ``Turret``'s constructor. The method ``configure()`` is responsible to update the turret's configurations. Every time a configuration option is pressed, the method is called and updates the variable that matches the configuration being swapped (``targetMode`` or ``targetEnv``),
+
+
+##### Display
+The current target configurations were added to the turret's information table. This table is shown at the right bottom corner, above the building menu, when the mouse cursor is hovering over the placed turret.
+
+The configurations are also shown when the player clicks on the turret, by showing two buttons with the current target mode (left one) and environment (right one).
+
+##### UI interaction
+
+Having the two buttons shown, the player can choose to swap the turret's target configurations or to not do anything. Every time one of the buttons is pressed, the system displays the possible options for that target configuration, unless the turret can not target both environments. In that case, the environment button is disabled and can not be pressed on; the mode button is always enabled.
+
+When having the options displayed, if one is chosen and it is different from the current configuration, the configuration is swapped to that option. Otherwise, an error message appears, informing that the option chosen is the same as the current one. The player can eventually do nothing, by unselecting the turret.
+
 ### Implementation summary
 (*Summary description of the implementation.*)
+
 #### Review
 *(Please add your implementation summary review here)*
 ### Class diagrams
@@ -47,9 +124,44 @@ _The use case diagram's textual description was modified according to this revie
 ### Review
 *(Please add your class diagram review here)*
 ### Sequence diagrams
-(*Sequence diagrams and their discussion in natural language.*)
+[Sequence diagrams for Swapping Turret's Targeting User Story](./SEQUENCE-DIAGRAMS.md)
 #### Review
-*(Please add your sequence diagram review here)*
+**Author** : Diogo Antunes (67763), 29/11/2025 14:46
+
+**Select Placed Turret**
+
+- Boundary ``InputHandler`` interacts directly with an entity ``TurretBuild``, this shouldn't happen in a sequence diagram.  
+- I think there should be separate vertical activity rectangles for the interactions with TurretBuild as it doesn't seem to be one run on interaction, but instead multiple starting from the InputHandler.  
+- The arrows having the "return" text are a different style from what I used, instead of being empty, but the lesson powerpoints also show return arrows in a variety of ways.
+
+**Change Turret's Target Mode**
+
+- There is no return arrow at the end for a synchronous message, which I think is wrong.  
+- The combined fragment strict seems to have been applied incorrectly. It should encompass the section with the opt combined fragment as well in a separate operand.
+In truth, there actually doesn't seem to be a need for this combined fragment.
+- "Playerr" has a typo.
+
+**Change Turret's Target Environment**
+
+- Strict doesn't seem to be necessary here.
+- There's also direct communication between the boundary and the entity within the operand in strict.
+
+I'm assuming "environment button is pressed" is the value of an attribute and not an additional interaction from the player, since ``ClickListener`` receives all input.
+With that assumption, the opt looks right.
+
+**Unselect Turret**
+
+- Boundary communication with entity again.  
+- The ``onConfigureBuildTapped(build)`` is synchronous but has no empty return.
+- The activity bar in ``hideConfig()`` that starts in ``BlockConfigFragment`` starts within an "alt" operand and carries over to the next. i'm not sure this is according to specification,
+but I might be wrong in pointing this out.
+
+**Other notes**
+
+- There seems to be a use of public methods like ``toString()`` at times or using java boolean negation like "!targetsBoth()" which potentially lessens readability
+considering it's meant to be understood by non-programmers. However, since each method in the sequence diagram is supposed to correspond to something in the code, I'm not sure how this could be changed without removing meaning.
+Altering the method name in the sequence diagram and then explaining the abstraction that was used could be an option but I'm not at all sure that would be the right thing to do.
+
 ## Test specifications
 (*Test cases specification and pointers to their implementation, where adequate.*)
 ### Review

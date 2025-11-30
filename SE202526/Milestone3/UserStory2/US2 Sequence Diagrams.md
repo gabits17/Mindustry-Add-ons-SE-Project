@@ -1,12 +1,10 @@
 # Sequence Diagrams
 ### Notation use
 Underlined classifiers: specific classifier instances.  
-Specific as they're usually the instance that can be statically accessed from the singleton ``Vars``.
-Or, in the case of ``ApplicationListener`` in ``ApplicationCore``, the instances are processed once during setup.
+Specific as they're usually the instance that can be statically accessed from the singleton ``Vars``, or themselves serve as a singleton (eg: Events, has static variables to represent events and isn't instantiated
+so in that regard there's only a singular Events instance from the point of view of the sequence diagram).
 
-Not underlined: classifier instance roles. Can represent not just a specific instance, but a role performed by instances in that logic.
-
-Classifiers without ``:`` : Statically accessed. Eg: ``Events``, a mediator class.
+Not underlined: classifier instance roles. Can represent not just a specific instance, but a role performed by a non-specific instance in that functionality.
 
 ## Enter map
 ![seqEnterMap.svg](assets/seqEnterMap.svg)
@@ -20,7 +18,7 @@ The functionality in reset given focus for the use case is related to clearing t
 ## Leave map
 ![seqLeaveMap.svg](assets/seqLeaveMap.svg)
 
-Similar to Enter **map**, but it's a sequence diagram focusing on the transition from being within a map, to outside of it.
+Similar to **Enter map**, but it's a sequence diagram focusing on the transition from being within a map, to outside of it.
 Follows a simple direction of the **Player** pressing a quit button indicated by the ``PausedDialog`` instance.
 This triggers a method ``showQuitConfirm()`` that during its execution calls to exit the map and save progress (saving goes beyond the use case scope)
 with ``runExitSve()``. During this exit, the logic is reset, which leads to clearing leaks.
@@ -45,7 +43,7 @@ Note: ``Events`` is a mediator class that allows classes to create custom logic 
 ![seqPlaceBlock.svg](assets/seqPlaceBlock.svg)
 
 A ``Call`` occurs when a user places a block, and the method ``beginPlace`` is called, which is forwarded to the control class
-``Build`` using a static method of the same name and parameters.
+``Build`` using a method of the same name and parameters.
 The corresponding tile is obtained from the ``World`` instance, and the block the tile represents (previous) is retrieved from the tile.
 A block of the same size as the one desired (result) is obtained from ``ConstructBlock``.
 The current building in that tile is also retrieved from the tile (previous).
@@ -60,7 +58,7 @@ A ``Call`` occurs when a user breaks a block, and the method ``beginBreak`` is c
 The corresponding tile is obtained from the ``World`` instance, and the block the tile represents (previous) is retrieved from the tile.
 The building is also retrieved from the tile, so that ``setDeconstruct`` can perform the block removal, but, more importantly for the use case,
 leading to checking for leaks in the surrounding blocks.
-At the end, there is an explicit attempt to remove the tile from the ``Leaks`` instance, as the normal route of calling ``checkLeaks`` on update
+At the end, there is an explicit attempt to remove the tile from the ``Leaks`` instance, as the normal route of calling ``checkLeaks()`` on update
 doesn't work when the tile is being removed.
 
 ## Request tile update
@@ -90,7 +88,9 @@ This is a sequence diagram reusable component, which corresponds to a behavior f
 It starts when ``updateTile()`` is called on the ``ConduitBuild`` in particular, since it is the type of ``Building`` that can create leaks.
 To identify a leak in the tile ``checkLeak()`` is called on the singleton instance.
 
-It's first relevant to know whether the tile is in the ``Player`` team, as the leaks displayed are only those in buildings belonging to the player team.
+It's first relevant to know whether the ``ConduitBuild`` can actually leak, since the ``ArmoredConduit`` is a type of pipeline that extends ``Conduit`` which does not leak. The **opt** "buildingCanLeak" abstracts
+away the process of checking if the block type indicated by the building is one that can leak resources.
+It's then relevant to know whether the tile is in the ``Player`` team, as the leaks displayed are only those in buildings belonging to the player team.
 With this verified, the tile of the building is obtained. to later check for leaks (``Leaks`` stores the tiles that are identified as leaks).
 If the building has liquid, then a leak might have started (or stopped, if the leak was plugged, the building starts to fill with liquid).
 Otherwise, we're sure there's no leak, so just in case, there is an attempt to remove the tile from registered leaks, and an update is sent to the minimap.
@@ -128,5 +128,6 @@ This consists of getting the player location **(x, y)**, and iterating over the 
 The loop condition uses ``leakTilesInRange`` to refer to these tiles, since the actual code uses a lambda expression parameter for a method called on a data structure of ``Leaks``, which I feel are auxiliary
 and not entities themselves. For the sake of simplicity, this abstraction was used to make representation in the sequence diagram more readable.  
 For each of these local leaking tiles, they are only considered if within a ``MIN_RADIUS`` of the player. If so, a dashed circle is drawn around the tile in the color ``LEAK_COLOR``.
-It's worth noting that the ``dashCircle()`` method is an abstraction of the code's use of a utility class that handles drawing to the display (so it's neither an entity, control, nor boundary).
+It's worth noting that the ``dashCircle()`` method is an abstraction of the code's use of a utility class ``Drawf`` that handles drawing to the display (so it's neither an entity, control, nor boundary, but it's still relevant so it's shown in the
+class diagram).
 It's also worth noting that the ``Tile`` entities aren't underlined because it represents the role of a leaking tile, and not a particular instance of it.

@@ -16,7 +16,7 @@ This document was updated according to Diogo's review on it.
 - **Pre-Conditions**: The turret must be built, alive (not destroyed) and belong to the player's team.
 - **Main Flow**:
   1. The use case starts when the player clicks on a placed turret.
-  2. The system displays the turret's current targeting mode and type.
+  2. The system displays the turret's current targeting mode and environment.
 
   *Extension points*: <mark style="background: #bff79fc9;">Press target mode button</mark>, <mark style="background: #bff79fc9;">Press target environment button</mark>
 - **Alternative Flows**
@@ -50,13 +50,15 @@ This document was updated according to Diogo's review on it.
   - *Secondary*: None
 - **Pre-Conditions**: The player pressed the turret's target mode button. 
 - **Segment 1 Flow**:
-  1. The use case starts when the player presses the turret's target mode button.
-  2. The system swaps the turret's targeting mode to the next one and displays it.
+  1. The use case starts when the player presses the turret's target mode main button.
+  2. The system displays a menu with every possible target mode option.
+  3. The player chooses an option.
+  4. The system swaps the turret's targeting mode to the option chosen and displays it.
 - **Alternative Flows**
-  - None
+  - <mark style="background: #bff79fc9;">Same target mode chosen</mark>
 - **Post-Conditions**: The turret's targeting mode is swapped.
 
-### Change turret's target evironment
+### Change turret's target environment
 - **Name**: Change turret's target environment
 - **ID**: 4
 - **Description**: The player swaps the turret's current targeting environment.
@@ -66,17 +68,51 @@ This document was updated according to Diogo's review on it.
 - **Pre-Conditions**: The player pressed the turret's target environment button. 
 - **Segment 2 Flow**:
   1. The use case starts when the player presses the turret's target environment button.
-  2. The system swaps the turret's targeting environment to the next one and displays it.
+  2. The system displays a menu with every possible target environment option.
+  3. The player chooses an option.
+  4. The system swaps the turret's targeting environment to the option chosen and displays it.
 - **Alternative Flows**
+  - <mark style="background: #bff79fc9;">Same target environment chosen</mark>
   - <mark style="background: #bff79fc9;">Can't swap targeting environment</mark>
 - **Post-Conditions**: The turret's targeting environment is swapped.
 
 ---
 
 ## Alternative flows
+
+### Same target mode chosen
+- **Name**: Same target mode chosen
+- **ID**: 3.1
+- **Description**: The system does not change the turret's target mode to the same target mode.
+- **Actors**:
+  - *Main*: Player
+  - *Secondary*: None
+- **Pre-Conditions**: The player chose the same target mode as the current one. 
+- **Segment 2 Flow**:
+  1. The alternative flow begins after step 3 of the segment 1 flow.
+  2. The system displays a warning message, informing that the chosen option matches the current mode.
+- **Alternative Flows**
+  - None
+- **Post-Conditions**: The turret's target mode stays unmodified (the system does not change it to the same one).
+
+### Same target environment chosen
+- **Name**: Same target mode chosen
+- **ID**: 4.1
+- **Description**: The system does not change the turret's target environment to the same target environment.
+- **Actors**:
+  - *Main*: Player
+  - *Secondary*: None
+- **Pre-Conditions**: The player chose the same target environment as the current one.
+- **Segment 2 Flow**:
+  1. The alternative flow begins after step 3 of the segment 2 flow.
+  2. The system displays a warning message, informing that the chosen option matches the current environment.
+- **Alternative Flows**
+  - None
+- **Post-Conditions**: The turret's target environment stays unmodified (the system does not change it to the same one).
+
 ### Can't swap turret's targeting environment
 - **Name**: Can't swap turret's targeting environment
-- **ID**: 4.1
+- **ID**: 4.2
 - **Description**: The system doesn't allow the player to change the turret's targeting environment.
 - **Actors**:
   - *Main*: Player

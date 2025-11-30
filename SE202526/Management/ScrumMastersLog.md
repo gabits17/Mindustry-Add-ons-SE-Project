@@ -5,7 +5,7 @@
 4. Carolina Ferreira (67804)
 5. Dinis Neves (68130)
 6. Gabriela Silva (67286)
-7. gggg gggg (ggggg)
+7. Manel Oliveira(68547)
 
 *Note:* Please replace the above lines with the student's name, last name, and student number. No student may serve as Scrum Master for two consecutive sprints. No student may serve as Scrum Master more than two sprints overall. After understanding the file fomat, you may safely remove this note. Here is an example of the expected format:
 

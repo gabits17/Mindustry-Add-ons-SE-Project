@@ -416,16 +416,6 @@ public class PlacementFragment{
                                 }
                             }).growX().left().margin(3);
 
-                            // space bellow the requirements to build
-                            if(displayBlock instanceof Turret tur) {
-                                topTable.row(); topTable.table(info -> { info.left();
-
-                                    String defaultTargetingInfo = tur.defaultTargetingToString();
-
-                                    info.labelWrap(() -> "Targeting Mode: " + defaultTargetingInfo).width(200f).left();
-                                }).padTop(4f).left();
-                            }
-
                             if((!displayBlock.isPlaceable() || !player.isBuilder()) && !state.rules.editor){
                                 topTable.row();
                                 topTable.table(b -> {

@@ -6,11 +6,21 @@
 
 ## Scrum master
 
-Student name and number
+Manel Oliveira (68547)
 
 ## Management info
 ### Sprint Planning Meeting: 
-*(This meeting is held at the beginning of the sprint to define the primary purpose and goal of the sprint. The Scrum team, comprising the product manager, development team, and Scrum Master, selects and commits to a set of product backlog items (PBIs) referred to as the sprint backlog. You can use this section to log what happened during this meeting. A few bullet points should be enough.)*
+- The subgroups for implementation will be kept for the remainder of projects duration.
+- Summary of what is there left to do in the sprint.
+  - Class Diagrams for US3 and US4
+  - Sequence Diagrams for US3 and US4
+  - Unit tests for all USs
+  - Implementation summary report of all USs
+  - Tour Video of all features
+  - Scrum Board animation video
+- Group reminder that some reviews were left to be done from last sprint.
+- Some members voiced a concern of going back and refining their code.
+
 
 ### Sprint Review Meeting: 
 *(Held at the end of the sprint, this meeting is attended by all stakeholders to demo the completed work and validate if the sprint goal has been met.)*
