@@ -12,6 +12,7 @@ import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
+import mindustry.Vars;
 import mindustry.audio.*;
 import mindustry.content.*;
 import mindustry.core.*;
@@ -1003,9 +1004,11 @@ public class Turret extends ReloadTurret{
 
             for(TargetMode mode : tModes){
                 TextButton b = commandModes.button(TargetMode.toString(mode), Styles.togglet,() -> {
-                    configure(mode);
                     // only does the work of changing it if it is not the same mode when choosing an option (ucd alternative flow)
-                    if(targetMode != mode) targetMode = mode;
+                    if(targetMode != mode)
+                        configure(mode);
+                    else
+                        ui.showErrorFade("Same current target mode!", 2f);
                 }).group(modeGroup).get();
 
                 b.update(() -> b.setChecked(targetMode == mode)); // updating the highlighted button
@@ -1043,9 +1046,11 @@ public class Turret extends ReloadTurret{
             if(targetsBoth()) {
                 for (TargetEnv env : tEnvironments) {
                     TextButton b = commandEnvs.button(TargetEnv.toString(env), Styles.togglet, () -> {
-                        configure(env);
                         // only does the work of changing if it is not the same environment when choosing an option (ucd alternative flow)
-                        if(targetEnv != env) targetEnv = env;
+                        if(targetEnv != env)
+                            configure(env);
+                        else
+                            Vars.ui.showErrorFade("Same current target environment!", 2f);
                     }).group(envGroup).get();
 
                     b.update(() -> b.setChecked(targetEnv == env)); // updating the highlighted button
