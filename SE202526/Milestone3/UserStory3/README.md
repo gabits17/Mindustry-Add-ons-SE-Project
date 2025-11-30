@@ -126,7 +126,7 @@ When having the options displayed, if one is chosen and it is different from the
 ### Sequence diagrams
 [Sequence diagrams for Swapping Turret's Targeting User Story](./SEQUENCE-DIAGRAMS.md)
 #### Review
-**Author** : Diogo Antunes (67763), 29/11/2025 14:35
+**Author** : Diogo Antunes (67763), 29/11/2025 14:46
 
 **Select Placed Turret**
 
