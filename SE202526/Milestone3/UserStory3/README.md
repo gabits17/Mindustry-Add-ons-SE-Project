@@ -38,9 +38,46 @@ _The use case diagram's textual description was modified according to this revie
 
 ## Implementation documentation
 (*Please add the class diagram(s) illustrating your code evolution, along with a technical description of the changes made by your team. The description may include code snippets if adequate.*)
-### Implementation summary
 
-The implemenation of this user story took place mostly around the ``Turret`` class, since it was added new configurations to it. It was created two new classes: Java Enums ``TargetingMode`` and ``TargetingEnvironment``. They contain a list of possible modes and environments for the targeting configuration of a turret.
+### Tour report
+
+##### Commits
+
+17/11/2025:
+![commit1](./assets/commits/commit1.png)
+
+19/11/2025:
+![commit2](./assets/commits/commit2.png)
+
+20/11/2025:
+![commit3](./assets/commits/commit3.png)
+
+21/11/2025:
+![commit4](./assets/commits/commit4.png)
+
+22/11/2025:
+![commit5](./assets/commits/commit5.png)
+![commit6](./assets/commits/commit6.png)
+
+23/11/2025:
+![commit7](./assets/commits/commit7.png)
+
+26/11/2025:
+![commit8](./assets/commits/commit8.png)
+
+27/11/2025:
+![commit9](./assets/commits/commit9.png)
+
+28/11/2025:
+![commit10](./assets/commits/commit10.png)
+![commit11](./assets/commits/commit11.png)
+
+30/11/2025:
+![commit12](./assets/commits/commit12.png)
+
+
+##### Briefing 
+The implemenation of this user story took place mostly around the ``Turret`` class, since it was added new configurations to it. It was created two new classes: Java Enums ``TargetMode`` and ``TargetEnv``. They contain a list of possible modes and environments for the targeting configuration of a turret.
 - Possible targeting modes:
   - *Closests* first
   - *Farthest* first
@@ -54,17 +91,31 @@ The implemenation of this user story took place mostly around the ``Turret`` cla
   - *Air units* first
   - *Any* first
 
-It is possible to **combine** the targeting environment with a mode. For instance, it is possible for a turret to target the strongest ground units around it. For targets that target both air and ground units, it is possible to (or not) focus on an environment.
+It is possible to **combine** the targeting environment with a mode. For instance, it is possible for a turret to target the *strongest ground* units around it. For targets that target both air and ground units, it is possible to (or not) focus on an environment.
 
-To sort the enemy units that a turret will attack, the ``SortUnits`` was utilized. There was already four ways for sorting them (``Sortf`` objects): ``closest``, ``farthest``, ``strongest`` and ``weakest``. It was added two new ways: ``fastest`` and ``slowest``.
+##### Logic
+To sort the enemy units that a turret will attack, the ``SortUnits`` class was utilized. There was already four ways for sorting them (``Sortf`` objects): ``closest``, ``farthest``, ``strongest`` and ``weakest``. It was added two new ways: ``fastest`` and ``slowest``.
 
 To combine the targeting environment with a targeting mode, it was also implemented two new (static) functions that handle air or ground units first, with the mode parameterized: ``airFirst(mode)`` and ``groundFirst(mode)``.
 
-These configurations are defined and depend on the ``Turret``'s ``targetingMode`` and ``targetingEnv`` new instance variables. The sort occurs in the ``unitSorter()`` new method in the ``TurretBuild`` class (inner class from ``Turret``). This method is called in the function ``findEnemy()`` in the same way the default sort was before this functionality was added.
+These configurations are defined and depend on the ``Turret``'s ``targetMode`` and ``targetEnv`` new instance variables. The sort occurs in the ``unitSorter()`` new method in the ``TurretBuild`` class (inner class from ``Turret``). This method is called in the function ``findEnemy()`` in the same way the default sort was before this functionality was added.
 
-To display this configuration, the ``Turret`` block became configurable (``configurable = true`` in its constructor), which means it can be configured by the player, by clicking on it. 
+To display this configuration, the ``Turret`` block became configurable (``configurable = true`` in its constructor), which means it can be configured by the player, by clicking on it. Two configurations were added in the ``Turret``'s constructor. The method ``configure()`` is responsible to update the turret's configurations. Every time a configuration option is pressed, the method is called and updates the variable that matches the configuration being swapped (``targetMode`` or ``targetEnv``),
 
-<mark style="background: #f4f44fa2;"> *// TODO: Describe UI implementation to display and change the targeting configuration*</mark>
+
+##### Display
+The current target configurations were added to the turret's information table. This table is shown at the right bottom corner, above the building menu, when the mouse cursor is hovering over the placed turret.
+
+The configurations are also shown when the player clicks on the turret, by showing two buttons with the current target mode (left one) and environment (right one).
+
+##### UI interaction
+
+Having the two buttons shown, the player can choose to swap the turret's target configurations or to not do anything. Every time one of the buttons is pressed, the system displays the possible options for that target configuration, unless the turret can not target both environments. In that case, the environment button is disabled and can not be pressed on; the mode button is always enabled.
+
+When having the options displayed, if one is chosen and it is different from the current configuration, the configuration is swapped to that option. Otherwise, an error message appears, informing that the option chosen is the same as the current one. The player can eventually do nothing, by unselecting the turret.
+
+### Implementation summary
+(*Summary description of the implementation.*)
 
 #### Review
 *(Please add your implementation summary review here)*

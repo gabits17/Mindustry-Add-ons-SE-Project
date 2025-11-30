@@ -109,7 +109,7 @@ public class Turret extends ReloadTurret{
     /** Currently targeting mode. Default: Closest */
     public TargetMode targetMode;
     /** Current targeting environment. **/
-    public TargetEnv targetingEnv;
+    public TargetEnv targetEnv;
 
     /** Function for choosing which unit to target. */
     public Sortf unitSort = UnitSorts.closest;
@@ -189,7 +189,7 @@ public class Turret extends ReloadTurret{
 
         configClear((TurretBuild build) ->{
             build.targetMode = TargetMode.CLOSEST_FIRST;
-            build.targetEnv = targetingEnv;
+            build.targetEnv = build.setTargetEnv();
         });
 
     }
