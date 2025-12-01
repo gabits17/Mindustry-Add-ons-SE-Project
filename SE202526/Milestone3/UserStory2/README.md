@@ -170,15 +170,7 @@ During my review, Diogo corrected the **Clear leaks** diagram, which is confirme
 I wasn't able to create unit tests for the new functionality. The ``ApplicationTests`` supports setting up a very reduced game environment to allow for testing functionalities. The problem is that the ``Leaks`` class specifically interacts with the ``Renderer`` from ``Vars``, and ``Renderer``
 has a series of **public final** attributes that in test mode cause errors due to some structures at a lower level of abstraction (a ByteBuffer that isn't working in test mode). No existing unit test seems to use renderers either, due to their communication with the display that becomes problematic in a test case.
 
-The problem is that ``Leaks`` communicates with the ``Renderer`` instance of ``Vars`` that contains many static attributes. Since ``Renderer`` has public final attributes, I cannot assign new class instances that are modified using an anonymous class with different attributes to disable the creation of the classes that cause the errors during test.
-I can also not simply create a modified Renderer without those attributes as exising attributes cannot be removed by anonymous classes.
-
-Additionally, since ``Leaks`` is a singleton, I also cannot create an anonymous class that wouldn't require communicating with the ``MinimapRenderer`` in ``Renderer`` as the instantiation of the singleton is encapsulated in the own class via the ``getInstance()`` method.
-As such, unless a separate project branch was created as a version that removed that interaction entirely from Leaks, creating unit tests doesn't seem to be possible. Also, that branch would omit functionality that communicates with the renderer, so it would only function for the test, and nto for playing the game, which doesn't seem to align
-with the scenario for which tests are created.
-
-because loading the ``Renderer`` class in test mode causes errors due to some data structures (byte buffers) that are loaded in some
-**public final** attributes of the class. The issue with these is that I unfortunately cannot use anonymous classes to override their function since attributes cannot be overridden by anonymous classes.
+The issue with these is that I unfortunately cannot use anonymous classes to override their function since attributes cannot be overridden by anonymous classes.
 Since the main important method in ``Leaks`` ``checkLeak()`` requires using the ``Renderer`` instance in ``Vars`` to access the minimap, and others are simply complementary to it (or in the case of showLocalLeaks interact with drawing to the display,
 so can't be tested in test mode), it means no tests can be reasonably done without creating an entirely separate branch with modified logic to allow for testing, but that would then not function for the normal game scenario. This doesn't
 seem to be the outcome we're looking for in unit tests, so I'll set that aside.
