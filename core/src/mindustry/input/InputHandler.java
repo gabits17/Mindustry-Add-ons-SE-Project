@@ -111,7 +111,6 @@ public abstract class InputHandler implements InputProcessor, GestureListener {
     public Seq<BuildPlan> linePlans = new Seq<>();
     public Seq<BuildPlan> selectPlans = new Seq<>(BuildPlan.class);
     public Queue<BuildPlan> lastPlans = new Queue<>();
-    public Seq<Queue<BuildPlan>> buildStack = new Seq<>();
     public @Nullable Unit lastUnit;
     public @Nullable Unit spectating;
 
@@ -1636,7 +1635,6 @@ public abstract class InputHandler implements InputProcessor, GestureListener {
                 building.add(copy);
             }
         }
-        buildStack.add(building);
     }
 
     protected Seq<BuildPlan> flushPlans(Seq<BuildPlan> plans) {
@@ -2352,42 +2350,5 @@ public abstract class InputHandler implements InputProcessor, GestureListener {
     static class PlaceLine {
         public int x, y, rotation;
         public boolean last;
-    }
-
-    //Stuff added by me
-
-    /**
-     * Function called when a player wants to undo its last building action
-     * <p>
-     * Removing, Placing, Rotating etc..
-     * <p>
-     * TODO
-     * - Rotating is not implemented
-     * - When a player draws a converyor above another if a junction is placed (replaces the existing conveyor)
-     * this atm does not take it into account maybe if the build plan had some time of replaced with or whatever this could be fixed
-     * - Should add a max size to the building stack so that it does not store events forever or maybe a timeout or some callable that deletes events after some time
-     * - Shoulf also take into account the stack part if a player builds somrthing but is all invalid an empty queue should not be added
-     * - Maybe isto devia tar apenas no desktop input não tenho a certeza como o mobile input utilisaria isto
-     */
-    void undoLastBuild() {
-        try {
-            Queue<BuildPlan> buildQueue = buildStack.pop();
-            for (BuildPlan plan : buildQueue) {
-                plan.breaking = !plan.breaking;
-                if (plan.breaking) { //If it was a place (Already switched) and thus break
-                    System.out.println(plan);
-                    player.unit().addBuild(plan);
-                } else { //If it was a break and thus we will rebuild it
-                    if (validPlace(plan.x, plan.y, plan.block, plan.rotation, null, true)) {
-                        System.out.println(plan);
-                        player.unit().addBuild(plan);
-                    }
-                }
-            }
-            System.out.println("Undid Last build");
-            ui.consolefrag.addMessage("Undid last build");
-        } catch (IllegalStateException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }
