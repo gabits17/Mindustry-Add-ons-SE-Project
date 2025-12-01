@@ -82,7 +82,7 @@ public class Commander {
     /**
      * Undoes the topmost done command, and adds it to the undone stack
      */
-    public void undoTop() {
+    public void undoTop() throws IllegalStateException{
         if (doneCommands.peek().canUndo()) {
             doneCommands.peek().undo();
             addUndone(removeTopDone());
@@ -98,7 +98,7 @@ public class Commander {
     /**
      * Redoes the topmost command, and adds it to the done stack
      */
-    public void redoTop() {
+    public void redoTop() throws IllegalStateException {
         if (undoneCommands.peek().canRedo()) {
             undoneCommands.peek().execute();
             addCommand(removeTopUndone());
