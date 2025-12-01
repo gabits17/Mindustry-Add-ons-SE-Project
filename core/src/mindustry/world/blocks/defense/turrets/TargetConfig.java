@@ -11,7 +11,7 @@ public interface TargetConfig {
         STRONGEST_FIRST,    // The strongest enemies (with higher maxHealth) around the turret.
         WEAKEST_FIRST,      // The weakest enemies (with lower maxHealth) around the turret
         FASTEST_FIRST,      // The fastest enemies around the turret (highest u.type.speed * u.speedMultiplier)
-        SLOWEST_FIRST
+        SLOWEST_FIRST       // The slowest enemies around the turret (lowest u.type.speed * u.speedMultiplier)
     };
 
     /** Possible target environments **/

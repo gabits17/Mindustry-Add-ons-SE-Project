@@ -292,8 +292,8 @@ public class Turret extends ReloadTurret{
         //TODO storing these as instance variables is horrible design
 
         /** Constants to be more understandable **/
-        public final static boolean MODE = true;
-        public final static boolean ENV = false;
+        private final static boolean MODE = true;
+        private final static boolean ENV = false;
 
         /** Turret sprite offset, based on recoil. Updated every frame. */
         public Vec2 recoilOffset = new Vec2();
@@ -315,9 +315,9 @@ public class Turret extends ReloadTurret{
         public TargetConfig targetConfig;
 
         /** Whether if the modes menu should be displayed **/
-        public boolean showModes;
+        private boolean showModes;
         /** Whether if the environments menu should be displayed **/
-        public boolean showEnvs;
+        private boolean showEnvs;
 
         public float heatReq;
         public float[] sideHeat = new float[4];
@@ -406,7 +406,7 @@ public class Turret extends ReloadTurret{
          * Checks if the turret targets both types of enemies
          * Returns true if it does; otherwise, returns false
          */
-        private boolean targetsBoth() {
+        public boolean targetsBoth() {
             return targetAir && targetGround;
         }
 
@@ -703,7 +703,7 @@ public class Turret extends ReloadTurret{
         /**
          * @return Units sorted according to the targeting mode and environment.
          */
-        public Sortf unitSorter() {
+        protected Sortf unitSorter() {
             Sortf mode = getSortf();
             TargetConfig.Env env = getTargetEnv();
 
@@ -722,7 +722,7 @@ public class Turret extends ReloadTurret{
         /**
          * @return Current sorted units according ONLY to mode
          */
-        private Sortf getSortf() {
+        protected Sortf getSortf() {
             Sortf mode = null;
             TargetConfig.Mode currMode = getTargetMode();
 
@@ -1022,7 +1022,7 @@ public class Turret extends ReloadTurret{
          *               if true: mode config; otherwise: env config
          * @return The main displayed button
          */
-        private TextButton mainButton(Table menu, boolean config) {
+        protected TextButton mainButton(Table menu, boolean config) {
             String configStr;
             if(config) configStr = modeString(getTargetMode());
             else configStr = envString(getTargetEnv());
@@ -1059,7 +1059,7 @@ public class Turret extends ReloadTurret{
          * display the targeting modes menu
          * @return Table with every possible targeting mode
          */
-        private Table buildModesMenu() {
+        protected Table buildModesMenu() {
             Table modesMenu = new Table();
             modesMenu.top().left();
             modesMenu.defaults().left();
@@ -1101,7 +1101,7 @@ public class Turret extends ReloadTurret{
          * the possible targeting environments options
          * @return Table with every possible targeting environment
          */
-        private Table buildEnvsMenu() {
+        protected Table buildEnvsMenu() {
             Table envsMenu = new Table();
             envsMenu.top().left();
 
