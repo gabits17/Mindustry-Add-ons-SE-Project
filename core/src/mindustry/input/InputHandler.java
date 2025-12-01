@@ -1624,15 +1624,12 @@ public abstract class InputHandler implements InputProcessor, GestureListener {
     }
 
     protected void flushPlansReverse(Seq<BuildPlan> plans) {
-        //reversed iteration.
-        Queue<BuildPlan> building = new Queue<>();
         for (int i = plans.size - 1; i >= 0; i--) {
             var plan = plans.get(i);
             if (plan.block != null && validPlace(plan.x, plan.y, plan.block, plan.rotation, null, true)) {
                 BuildPlan copy = plan.copy();
                 plan.block.onNewPlan(copy);
                 player.unit().addBuild(copy, false);
-                building.add(copy);
             }
         }
     }
