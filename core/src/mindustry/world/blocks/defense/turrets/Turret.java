@@ -106,11 +106,6 @@ public class Turret extends ReloadTurret{
     /** Whether this turret predicts unit movement. */
     public boolean predictTarget = true;
 
-    /** Currently targeting mode. Default: Closest */
-    //public TargetMode targetMode;
-    /** Current targeting environment. **/
-    //public TargetEnv targetEnv;
-
     /** Targeting configuration. Default: Closest and Any **/
     public TargetConfig targetConfig;
 
@@ -178,16 +173,16 @@ public class Turret extends ReloadTurret{
         regionRotated1 = 1;
         regionRotated2 = 2;
         configurable = true;
-        targetConfig = new TargetConfiguration(TargetConfig.Mode.CLOSEST_FIRST, TargetConfig.Env.ANY);
+        targetConfig = new TargetConfiguration(TargetConfig.Mode.CLOSEST_FIRST, TargetConfig.Env.ANY_FIRST);
 
         config(TargetConfig.Mode.class, (TurretBuild build, TargetConfig.Mode mode) ->{
             if(!configurable) return;
-            build.targetConfig.swapMode(mode);
+            build.swapTargetMode(mode);
         });
 
         config(TargetConfig.Env.class, (TurretBuild build, TargetConfig.Env env) ->{
             if(!configurable) return;
-            build.targetConfig.swapEnv(env);
+            build.swapTargetEnv(env);
         });
 
         configClear((TurretBuild build) ->{
@@ -319,11 +314,6 @@ public class Turret extends ReloadTurret{
         /** Current targeting configurations **/
         public TargetConfig targetConfig;
 
-        /** Possible values for targeting configurations: modes and environments **/
-        public TargetConfig.Mode[] tModes = TargetConfig.Mode.values();
-        public TargetConfig.Env[] tEnvironments = TargetConfig.Env.values();
-
-
         /** Whether if the modes menu should be displayed **/
         public boolean showModes;
         /** Whether if the environments menu should be displayed **/
@@ -339,7 +329,11 @@ public class Turret extends ReloadTurret{
         public TurretBuild() {
             super();
 
-            targetConfig = Turret.this.targetConfig;
+            targetConfig = new TargetConfiguration(
+                    Turret.this.targetConfig.getMode(),
+                    Turret.this.targetConfig.getEnv()
+            );
+
             showModes = false;
             showEnvs = false;
         }
@@ -357,7 +351,7 @@ public class Turret extends ReloadTurret{
             else if(!targetAir && targetGround)
                 return TargetConfig.Env.GROUND_FIRST;
 
-            else return TargetConfig.Env.ANY;
+            else return TargetConfig.Env.ANY_FIRST;
         }
 
         /********************** TargetConfig private helpers **********************/
@@ -709,7 +703,7 @@ public class Turret extends ReloadTurret{
         /**
          * @return Units sorted according to the targeting mode and environment.
          */
-        protected Sortf unitSorter() {
+        public Sortf unitSorter() {
             Sortf mode = getSortf();
             TargetConfig.Env env = getTargetEnv();
 
@@ -1080,7 +1074,7 @@ public class Turret extends ReloadTurret{
             var modeGroup = new ButtonGroup<TextButton>();
             modeGroup.setMinCheckCount(0);
 
-            for(TargetConfig.Mode mode : tModes){
+            for(TargetConfig.Mode mode : TargetConfig.Mode.values()){
                 TextButton b = commandModes.button(modeString(mode), Styles.togglet,() -> {
                     // only does the work of changing it if it is not the same mode when choosing an option (ucd alternative flow)
                     if(getTargetMode() != mode)
@@ -1125,7 +1119,7 @@ public class Turret extends ReloadTurret{
             envGroup.setMinCheckCount(0);
 
             if(targetsBoth()) {
-                for (TargetConfig.Env env : tEnvironments) {
+                for (TargetConfig.Env env : TargetConfig.Env.values()) {
                     TextButton b = commandEnvs.button(envString(env), Styles.togglet, () -> {
                         // only does the work of changing if it is not the same environment when choosing an option (ucd alternative flow)
                         if(getTargetEnv() != env)
@@ -1174,7 +1168,7 @@ public class Turret extends ReloadTurret{
         /************ Helper functions for display() method ************/
 
         /** Helper string; purpose: avoid code repetition **/
-        private String labelModeString(){
+        private String labelModeString() {
             return "Mode: " + modeString(getTargetMode());
         }
 

@@ -16,7 +16,7 @@ public interface TargetConfig {
 
     /** Possible target environments **/
     public enum Env {
-        ANY,                // Any Air or Ground target enemy
+        ANY_FIRST,          // Any Air or Ground target enemy
         AIR_FIRST,          // Focus *first* on Air targets enemies
         GROUND_FIRST;       // Focus *first* on Ground targets enemies;
     };

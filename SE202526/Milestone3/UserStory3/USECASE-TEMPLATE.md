@@ -90,7 +90,7 @@ This document was updated according to Diogo's review on it.
 - **Pre-Conditions**: The player chose the same target mode as the current one. 
 - **Segment 2 Flow**:
   1. The alternative flow begins after step 3 of the segment 1 flow.
-  2. The system displays a warning message, informing that the chosen option matches the current mode.
+  2. The system displays an error message, informing that the chosen option matches the current mode.
 - **Alternative Flows**
   - None
 - **Post-Conditions**: The turret's target mode stays unmodified (the system does not change it to the same one).
@@ -105,7 +105,7 @@ This document was updated according to Diogo's review on it.
 - **Pre-Conditions**: The player chose the same target environment as the current one.
 - **Segment 2 Flow**:
   1. The alternative flow begins after step 3 of the segment 2 flow.
-  2. The system displays a warning message, informing that the chosen option matches the current environment.
+  2. The system displays an error message, informing that the chosen option matches the current environment.
 - **Alternative Flows**
   - None
 - **Post-Conditions**: The turret's target environment stays unmodified (the system does not change it to the same one).

@@ -37,7 +37,6 @@ as well as the deselection being considered part of the **Select placed turret**
 _The use case diagram's textual description was modified according to this review._
 
 ## Implementation documentation
-(*Please add the class diagram(s) illustrating your code evolution, along with a technical description of the changes made by your team. The description may include code snippets if adequate.*)
 
 ### Tour report
 
@@ -77,7 +76,7 @@ _The use case diagram's textual description was modified according to this revie
 
 
 ##### Briefing 
-The implemenation of this user story took place mostly around the ``Turret`` class, since it was added new configurations to it. It was created two new classes: Java Enums ``TargetMode`` and ``TargetEnv``. They contain a list of possible modes and environments for the targeting configuration of a turret.
+The implemenation of this user story took place mostly around the ``Turret`` class, since it was added new configurations to it. It was created one new interface: ``TargetConfig``, which is implemented by the new class ``TargetConfiguration`` and contains two enumerations ``Mode`` and ``Env``. They contain a list of possible modes and environments for the targeting configuration of a turret.
 - Possible targeting modes:
   - *Closests* first
   - *Farthest* first
@@ -98,7 +97,7 @@ To sort the enemy units that a turret will attack, the ``SortUnits`` class was u
 
 To combine the targeting environment with a targeting mode, it was also implemented two new (static) functions that handle air or ground units first, with the mode parameterized: ``airFirst(mode)`` and ``groundFirst(mode)``.
 
-These configurations are defined and depend on the ``Turret``'s ``targetMode`` and ``targetEnv`` new instance variables. The sort occurs in the ``unitSorter()`` new method in the ``TurretBuild`` class (inner class from ``Turret``). This method is called in the function ``findEnemy()`` in the same way the default sort was before this functionality was added.
+These configurations are defined and depend on the ``Turret``'s ``targetConfig`` new instance variable. The sort occurs in the ``unitSorter()`` new method in the ``TurretBuild`` class (inner class from ``Turret``). This method is called in the function ``findEnemy()`` in the same way the default sort was before this functionality was added.
 
 To display this configuration, the ``Turret`` block became configurable (``configurable = true`` in its constructor), which means it can be configured by the player, by clicking on it. Two configurations were added in the ``Turret``'s constructor. The method ``configure()`` is responsible to update the turret's configurations. Every time a configuration option is pressed, the method is called and updates the variable that matches the configuration being swapped (``targetMode`` or ``targetEnv``),
 
@@ -114,8 +113,28 @@ Having the two buttons shown, the player can choose to swap the turret's target 
 
 When having the options displayed, if one is chosen and it is different from the current configuration, the configuration is swapped to that option. Otherwise, an error message appears, informing that the option chosen is the same as the current one. The player can eventually do nothing, by unselecting the turret.
 
+#### Class diagram for modifications
+![modif-class-diagram](./assets/modifications-class-diagram.svg)
+
+Since this class diagram only shows modifications on the codebase, the represented ``UnitSorts`` attributes are just the ones that were added: ``fastest`` and ``slowest``.
+
+Part of the new private methods are helper functions for the ``buildConfiguration()`` method, which is an *@override* method from the ``Building`` class, as ``display()`` and ``onConfigureClosed()`` are. The other part are helper functions that come from the ``TargetConfiguration`` class.
+
+The three methods ``read()``, ``write()`` and ``version()`` were modified for saving and loading target configurations.
+
+<mark style="background: #ff0000ff;"> // TODO: Underline static variables and methods in UnitSorts and display stereotypes; also amend code so every turret INSTANCE have its own target configuration... </mark>
+
+##### Note
+Color code meaning:
+- <mark style="background: #32e556ff;"> Green</mark>: Classes that were *created* 
+- <mark style="background: #fbff02f0;">Yellow</mark>: Classes that were *modified*
+
 ### Implementation summary
-(*Summary description of the implementation.*)
+- Main class affected: ``TurretBuild`` inner class from ``Turret``
+- Took advantage of the sorting modes from the ``UnitSorts`` class for defining target modes
+- Most dispendious part of the implementation: Handling the UI with several text buttons
+- Main problem: Maps that in its initially launch have turrets placed on some tile in the grid. These maps have problems on saves and loads. However, saving and loading target configurations are working, except for that particular case.
+- It was needed to handle (a lot of) corrupt old save files because of the loading and saving part.
 
 #### Review
 *(Please add your implementation summary review here)*
@@ -163,6 +182,6 @@ considering it's meant to be understood by non-programmers. However, since each 
 Altering the method name in the sequence diagram and then explaining the abstraction that was used could be an option but I'm not at all sure that would be the right thing to do.
 
 ## Test specifications
-(*Test cases specification and pointers to their implementation, where adequate.*)
+[Swap Targeting Configurations Functionality Testing](./SYSTEM-TESTING.md)
 ### Review
 *(Please add your test specification review here)*
