@@ -1051,6 +1051,309 @@ public class ApplicationTests {
     }
 
     @Test
+    void copiesValidSelectionTest() {
+        initUndoRedo();
+
+        Seq<BuildPlan> plans = new Seq<>();
+
+        DesktopInput input = new DesktopInput();
+        Commander commander = new Commander();
+        CopyHist copyHist = new CopyHistClass();
+
+        plans.add(new BuildPlan(0,0,0, Blocks.conveyor));
+
+        Command bPlan = new BuildPlansCommand(plans, input);
+
+        commander.execute(bPlan);
+
+        input.lastSchematic = schematics.create(0, 0, 1, 1);
+
+        //if (Core.input.keyDown(Binding.ctrl) && Core.input.keyTap(Binding.copy)) {
+        assertTrue(!input.selectPlans.isEmpty() && input.lastSchematic != null);
+        copyHist.copy(input.lastSchematic);
+
+        player.unit().update();
+
+        assertTrue(!copyHist.isEmpty());
+
+        assertTrue(copyHist.getCurrent() == input.lastSchematic);
+    }
+
+    @Test
+    void copiesEmptySelectionTest() {
+        initUndoRedo();
+
+        DesktopInput input = new DesktopInput();
+
+        //if (Core.input.keyDown(Binding.ctrl) && Core.input.keyTap(Binding.copy)) {
+        assertFalse(!input.selectPlans.isEmpty() && input.lastSchematic != null);
+
+    }
+
+    @Test
+    void nothingToPasteTest() {
+        initUndoRedo();
+
+        CopyHist copyHist = new CopyHistClass();
+
+        //if (Core.input.keyDown(Binding.paste) && Core.input.keyDown(Binding.ctrl)) {
+        assertTrue(copyHist.isEmpty());
+
+        player.unit().update();
+    }
+
+    @Test
+    void getNextTest() {
+        initUndoRedo();
+
+        Seq<BuildPlan> plans = new Seq<>();
+
+        DesktopInput input = new DesktopInput();
+        Commander commander = new Commander();
+
+        CopyHist copyHist = new CopyHistClass();
+
+        plans.add(new BuildPlan(0,0,0, Blocks.conveyor));
+
+        Command bPlan = new BuildPlansCommand(plans, input);
+
+        commander.execute(bPlan);
+
+        input.lastSchematic = schematics.create(0, 0, 1, 1);
+
+        Schematic fstSchematic = input.lastSchematic;
+
+        copyHist.copy(input.lastSchematic);
+
+        player.unit().update();
+
+
+        plans.add(new BuildPlan(2,2,0, Blocks.conveyor));
+
+        bPlan = new BuildPlansCommand(plans, input);
+
+        commander.execute(bPlan);
+
+        input.lastSchematic = schematics.create(2, 2, 3, 3);
+
+        Schematic sndSchematic = input.lastSchematic;
+
+        copyHist.copy(input.lastSchematic);
+
+        player.unit().update();
+
+
+        plans.add(new BuildPlan(4,4,0, Blocks.conveyor));
+
+        bPlan = new BuildPlansCommand(plans, input);
+
+        commander.execute(bPlan);
+
+        input.lastSchematic = schematics.create(4, 4, 5, 5);
+
+        Schematic trdSchematic = input.lastSchematic;
+
+        copyHist.copy(input.lastSchematic);
+
+        player.unit().update();
+
+        assertTrue(!copyHist.isEmpty());
+
+
+        assertTrue(copyHist.getCurrent() == trdSchematic);
+        assertTrue(copyHist.getNext() == sndSchematic);
+        assertTrue(copyHist.getNext() == fstSchematic);
+    }
+
+    @Test
+    void getPreviousTest() {
+        initUndoRedo();
+
+        Seq<BuildPlan> plans = new Seq<>();
+
+        DesktopInput input = new DesktopInput();
+        Commander commander = new Commander();
+
+        CopyHist copyHist = new CopyHistClass();
+
+        plans.add(new BuildPlan(0,0,0, Blocks.conveyor));
+
+        Command bPlan = new BuildPlansCommand(plans, input);
+
+        commander.execute(bPlan);
+
+        input.lastSchematic = schematics.create(0, 0, 1, 1);
+
+        Schematic fstSchematic = input.lastSchematic;
+
+        copyHist.copy(input.lastSchematic);
+
+        player.unit().update();
+
+
+        plans.add(new BuildPlan(2,2,0, Blocks.conveyor));
+
+        bPlan = new BuildPlansCommand(plans, input);
+
+        commander.execute(bPlan);
+
+        input.lastSchematic = schematics.create(2, 2, 3, 3);
+
+        Schematic sndSchematic = input.lastSchematic;
+
+        copyHist.copy(input.lastSchematic);
+
+        player.unit().update();
+
+
+        plans.add(new BuildPlan(4,4,0, Blocks.conveyor));
+
+        bPlan = new BuildPlansCommand(plans, input);
+
+        commander.execute(bPlan);
+
+        input.lastSchematic = schematics.create(4, 4, 5, 5);
+
+        Schematic trdSchematic = input.lastSchematic;
+
+        copyHist.copy(input.lastSchematic);
+
+        player.unit().update();
+
+        assertTrue(!copyHist.isEmpty());
+
+
+        assertTrue(copyHist.getCurrent() == trdSchematic);
+        assertTrue(copyHist.getPrevious() == fstSchematic);
+        assertTrue(copyHist.getPrevious() == sndSchematic);
+    }
+
+    @Test
+    void pasteLoopTest() {
+        initUndoRedo();
+
+        Seq<BuildPlan> plans = new Seq<>();
+
+        DesktopInput input = new DesktopInput();
+        Commander commander = new Commander();
+
+        CopyHist copyHist = new CopyHistClass();
+
+        plans.add(new BuildPlan(0,0,0, Blocks.conveyor));
+
+        Command bPlan = new BuildPlansCommand(plans, input);
+
+        commander.execute(bPlan);
+
+        input.lastSchematic = schematics.create(0, 0, 1, 1);
+
+        Schematic fstSchematic = input.lastSchematic;
+
+        copyHist.copy(input.lastSchematic);
+
+        player.unit().update();
+
+
+        plans.add(new BuildPlan(2,2,0, Blocks.conveyor));
+
+        bPlan = new BuildPlansCommand(plans, input);
+
+        commander.execute(bPlan);
+
+        input.lastSchematic = schematics.create(2, 2, 3, 3);
+
+        Schematic sndSchematic = input.lastSchematic;
+
+        copyHist.copy(input.lastSchematic);
+
+        player.unit().update();
+
+
+        plans.add(new BuildPlan(4,4,0, Blocks.conveyor));
+
+        bPlan = new BuildPlansCommand(plans, input);
+
+        commander.execute(bPlan);
+
+        input.lastSchematic = schematics.create(4, 4, 5, 5);
+
+        Schematic trdSchematic = input.lastSchematic;
+
+        copyHist.copy(input.lastSchematic);
+
+        player.unit().update();
+
+        assertTrue(!copyHist.isEmpty());
+
+
+        assertTrue(copyHist.getCurrent() == trdSchematic);
+        assertTrue(copyHist.getPrevious() == fstSchematic);
+        assertTrue(copyHist.getPrevious() == sndSchematic);
+        assertTrue(copyHist.getPrevious() == trdSchematic);
+        assertTrue(copyHist.getNext() == sndSchematic);
+        assertTrue(copyHist.getNext() == fstSchematic);
+        assertTrue(copyHist.getNext() == trdSchematic);
+    }
+
+    @Test
+    void copyLimitsTest() {
+        initUndoRedo();
+
+        Seq<BuildPlan> plans = new Seq<>();
+
+        DesktopInput input = new DesktopInput();
+        Commander commander = new Commander();
+
+        CopyHist copyHist = new CopyHistClass();
+
+        Schematic[] testSchematics =  new Schematic[5];
+
+        Command bPlan;
+
+        plans.add(new BuildPlan(10,10,0, Blocks.conveyor));
+
+        bPlan = new BuildPlansCommand(plans, input);
+
+        commander.execute(bPlan);
+
+        input.lastSchematic = schematics.create(10, 10, 10 + 1, 10 + 1);
+
+        Schematic falseSchematic = input.lastSchematic;
+
+        copyHist.copy(input.lastSchematic);
+
+        player.unit().update();
+
+        for(int i = 0; i <  testSchematics.length - 1; i++) {
+
+            plans.add(new BuildPlan(i,i,0, Blocks.conveyor));
+
+            bPlan = new BuildPlansCommand(plans, input);
+
+            commander.execute(bPlan);
+
+            input.lastSchematic = schematics.create(i, i, i + 1, i + 1);
+
+            testSchematics[i] = input.lastSchematic;
+
+            copyHist.copy(input.lastSchematic);
+
+            player.unit().update();
+
+        }
+
+        assertTrue(!copyHist.isEmpty());
+
+        assertFalse(copyHist.getCurrent() == falseSchematic);
+        assertTrue(copyHist.getCurrent() == testSchematics[4]);
+
+        for(int i = testSchematics.length - 2; i >= 0; i--) {
+            assertTrue(copyHist.getNext() == testSchematics[i]);
+            assertFalse(copyHist.getCurrent() == falseSchematic);
+        }
+    }
+
+    @Test
     void allBlockTest() {
         Tiles tiles = world.resize(80, 80);
 
