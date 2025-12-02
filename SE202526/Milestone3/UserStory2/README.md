@@ -148,6 +148,9 @@ Leaks.getInstance().removeLeak(tile);
 #### Modification class diagram (all classes and methods modified/created)
 ![cdModifications.png](assets/cdModifications.png)
 
+Omitted private constants as they're either magic numbers (a specific max range) or "shortcuts" to another variable (the color used for leaks).
+I feel these aren't specifically relevant to the class structure and don't need to exist (just syntactic sugar), therefore I didn't put them into class diagrams.
+
 #### Review
 *(Please add your implementation summary review here)*
 ### Class diagrams
