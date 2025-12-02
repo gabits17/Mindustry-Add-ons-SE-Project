@@ -53,6 +53,8 @@ Involvement of classes:
 - The ``updateTile()`` is custom defined for each building and has no logic in its original definition. However, the logic for the specific
   case of leakable tiles (conduits) can be seen in the use case "Update leakable block tile".
 
+Note: the <<use>> dependency between Leaks and Tile isn't present to represent the particular dependencies being used within the sequence diagram for this use case.
+
 ## Update building
 ![UpdateBuilding.png](assets/cdUpdateBuilding.png)
 
