@@ -80,6 +80,16 @@ as the focus for the use case of entering a map and leaving a map is purely the 
 Anything that happens afterward involves loading the map save and retrieving data and then loading buildings, which I feel goes beyond the use case, and more into the scenario into **Update building**.
 
 ## Implementation documentation
+### Implementation summary
+The implementation consists of adding a ``Leaks`` singleton that stores currently active leaking tiles in both a ``HashSet`` (for quickly checking if a tile is present
+in the set) and a ``QuadTree`` that stores it in a grid layout to find leaks within a rectangular area more efficiently.
+
+The classes above were modified so that when an action occurs that updates the flow of liquid, this is shown in the minimap (in example: plugging a leak with a solid block,
+removing a block that was plugging a leak, or putting down an open-ended pipe (``Conduit``) that begins to leak into a puddle).
+The minimap gains a bright blue spot dot to indicate that a spot is leaking, which is removed when the leak stops.  
+Additionally, moving close to a leak shows a circle around the leak,
+which is useful if the leak wasn't very visible in a busy base.
+
 ### Tour Report
 #### Commits:
 12/11/2025
@@ -137,16 +147,6 @@ Leaks.getInstance().removeLeak(tile);
 
 #### Modification class diagram (all classes and methods modified/created)
 ![cdModifications.png](assets/cdModifications.png)
-
-### Implementation summary
-The implementation consists of adding a ``Leaks`` singleton that stores currently active leaking tiles in both a ``HashSet`` (for quickly checking if a tile is present
-in the set) and a ``QuadTree`` that stores it in a grid layout to find leaks within a rectangular area more efficiently.
-
-The classes above were modified so that when an action occurs that updates the flow of liquid, this is shown in the minimap (in example: plugging a leak with a solid block,
-removing a block that was plugging a leak, or putting down an open-ended pipe (``Conduit``) that begins to leak into a puddle).
-The minimap gains a bright blue spot dot to indicate that a spot is leaking, which is removed when the leak stops.  
-Additionally, moving close to a leak shows a circle around the leak,
-which is useful if the leak wasn't very visible in a busy base.
 
 #### Review
 *(Please add your implementation summary review here)*
