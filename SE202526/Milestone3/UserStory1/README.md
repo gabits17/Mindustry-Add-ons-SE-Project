@@ -36,12 +36,17 @@ Gabriel Falcão (67775), 24/11/2025 10:17
 
 I have updated the diagram's description, given the points above.
 ## Implementation documentation
-
-
-(*Please add the class diagram(s) illustrating your code evolution, along with a technical description of the changes made by your team. The description may include code snippets if adequate.*)
-
 ### Implementation summary
-####  Modified Classes
+The implementation of this user story was primarily carried out within the `input` package, as it is closely tied to player input. The design follows the Command Pattern covered in class, where three basic commands were implemented:
+- `BuildPlansCommand` $\rightarrow$ Schematics and Normal Placement
+- `RemoveSelectionCommand` $\rightarrow$ Removing something
+- `BlockRotateCommand` $\rightarrow$ Rotating a block with the scroll wheel
+
+These commands make use of pre-existing functions in the `DesktopInput` and `InputHandler` classes to achieve their intended behaviour. Together, they allow the player to perform an action, undo a previously executed action, and redo an action that was undone.
+Several modifications were required to the existing methods in `DesktopInput` and `InputHandler` to improve the undo/redo experience. For example, the `removeSelection` method in `InputHandler` had to be updated to return the list of blocks or plans that were actually removed.
+
+To display error messages when the player attempts to undo or redo a non-existent action, the `UI` class also required modifications. A new method, `showErrorFade`, was introduced, derived from the existing `showInfoFade` method in the same class. This allows the `UI` to present error notifications, that "pulse" with a red color.
+####  Class Diagram
 The classes in yellow are the ones that have been modified the ones in green were the ones created to aid with the implementation.
 ![US1-ModificationClass.svg](Assets/US1-ModificationClass.svg)
 ####    Created
@@ -228,15 +233,7 @@ In line `50` the following was added:
 undo = KeyBind.add("undo", KeyCode.z),
 ```
 All this does is declare a variable `undo` associated with the key `z`, this is used in `DesktopInput` to detect any input related to undoing and redoing.
-The implementation of this user story was primarily carried out within the `input` package, as it is closely tied to player input. The design follows the Command Pattern covered in class, where three basic commands were implemented:
-- `BuildPlansCommand` $\rightarrow$ Schematics and Normal Placement
-- `RemoveSelectionCommand` $\rightarrow$ Removing something
-- `BlockRotateCommand` $\rightarrow$ Rotating a block with the scroll wheel
 
-These commands make use of pre-existing functions in the `DesktopInput` and `InputHandler` classes to achieve their intended behaviour. Together, they allow the player to perform an action, undo a previously executed action, and redo an action that was undone.
-Several modifications were required to the existing methods in `DesktopInput` and `InputHandler` to improve the undo/redo experience. For example, the `removeSelection` method in `InputHandler` had to be updated to return the list of blocks or plans that were actually removed.
-
-To display error messages when the player attempts to undo or redo a non-existent action, the `UI` class also required modifications. A new method, `showErrorFade`, was introduced, derived from the existing `showInfoFade` method in the same class. This allows the `UI` to present error notifications, that "pulse" with a red color.
 
 #### Review
 *(Please add your implementation summary review here)*
