@@ -177,7 +177,7 @@ public boolean tryBreakBlock(int x, int y) {
     return false;  
 }
 ```
-######    UI
+#####    UI
 The following was changed:
 ```java
 public void showInfoFade(String info, float duration){  
@@ -222,7 +222,7 @@ public void showInfoToast(String info, float duration){
 The method `showErrorFade` was created to display error messages to the player, which would fade after a parameterized amount of time. This method is very similar to `showInfoFade`, as it differs from this one only in adding a gradient to the label in the info, transitioning from red to white and vice versa. 
 
 The methods `showInfoToast` and `showInfoFade` were modified to utilize the `createInfoTable` and `getFadeInfoTable` methods, thereby eliminating code duplication.
-######    Binding
+#####   Binding
 In line `50` the following was added:
 ```java
 undo = KeyBind.add("undo", KeyCode.z),
