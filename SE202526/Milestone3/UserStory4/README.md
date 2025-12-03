@@ -28,13 +28,13 @@ so that I don't need to save quick changes as schematics (saved block selections
 **Author**: Added the implementation documentation
 ## Implementation documentation
 
-[Textual Description](US2%20Use%20Case%20Textual%20Description.md)
+[Implementation Documentation](US4%20Implementation%20Documentation.md)
 
 #### Review
 *(Please add your implementation summary review here)*
 ### Class diagrams
 
-[US4ClassDiagrams.md](US4%20Use%20Case%20Diagrams.md)
+[US4 Class Diagram](US4%20Class%20Diagrams.md)
 
 ### Review
 **Author:** Gabriel Falcão (67775) (2/12/25) 16:53
