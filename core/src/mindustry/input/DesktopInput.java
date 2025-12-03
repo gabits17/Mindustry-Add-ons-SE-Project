@@ -151,6 +151,8 @@ public class DesktopInput extends InputHandler {
                 b.table(a -> {
                     a.button("@schematic.add", Icon.save, this::showSchematicSave).colspan(2).size(250f, 50f).disabled(f -> lastSchematic == null || lastSchematic.file != null);
                 });
+                b.row();
+                b.label(() -> Core.bundle.format("schematic.copysave",  Binding.ctrl.value.key.toString(), Binding.copy.value.key.toString())).style(Styles.outlineLabel).visible(() -> Core.settings.getBool("hints"));
             }).margin(6f);
         });
     }

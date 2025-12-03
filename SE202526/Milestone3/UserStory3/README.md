@@ -252,4 +252,19 @@ Altering the method name in the sequence diagram and then explaining the abstrac
 ## Test specifications
 [Swap Targeting Configurations Functionality Testing](./SYSTEM-TESTING.md)
 ### Review
-*(Please add your test specification review here)*
+**Author:** Gabriel Falcão (67775) (3/12/25) 10:53
+
+Besides the typos I have described bellow, I like your test specification report, not only that I would say that the video is well done, and correctly represents what the tests ask for.
+
+**Better Test Descriptions**:
+- In test *Test Targeting Display* instead of "2. Hover over the turret" you should write "2. Hover the cursor over the turret"
+- In test  *Test Targeting broad (using custom map for testing targeting)* you should elaborate on what these two turrets are **2. Navigate towards the first two turrets.**, I do understand that they are within view but the Player's view covers quite a lot of screen, maybe add some indicator on the map; maybe define their type, scatter, duo, salvo.
+**Typos**:
+- thee targeting -> the targeting
+- through all of the targeting as if it -> through all of the targeting options as if it were
+- The selected option is also has -> The selected option also has
+	- Test Targeting broad (using any map), step 3
+- 3. Press one of the options or option. -> 3. Press one of the options.
+	- I'm not sure if you meant something else with this.
+
+From what was stated above, I really like that you included the video, gives us some visuals of what is actually being testes, not just some script to be followed.
