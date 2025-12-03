@@ -252,6 +252,8 @@ Altering the method name in the sequence diagram and then explaining the abstrac
 ## Test specifications
 [Swap Targeting Configurations Functionality Testing](./SYSTEM-TESTING.md)
 ### Review
+**Author:** Gabriel Falcão (67775) (3/12/25) 10:53
+
 Besides the typos I have described bellow, I like your test specification report, not only that I would say that the video is well done, and correctly represents what the tests ask for.
 
 **Better Test Descriptions**:
