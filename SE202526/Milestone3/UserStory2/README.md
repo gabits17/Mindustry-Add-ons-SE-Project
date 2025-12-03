@@ -152,7 +152,9 @@ Omitted private constants as they're either magic numbers (a specific max range)
 I feel these aren't specifically relevant to the class structure and don't need to exist (just syntactic sugar), therefore I didn't put them into class diagrams.
 
 #### Review
-*(Please add your implementation summary review here)*
+
+Dinis Neves (68130) The Implementation summary is nice and concise not wasting the readers time. All information seems to be present. If there is something that is missing form the documentation and or from the summary I have missed it. Everything is correctly mentioned and no real issue was noticed by me.
+
 ### Class diagrams
 [Class Diagrams](US2%20Class%20Diagrams.md)
 #### Review
