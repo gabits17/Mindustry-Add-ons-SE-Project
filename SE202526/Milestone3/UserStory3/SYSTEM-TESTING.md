@@ -4,12 +4,13 @@
 
 Due to the nature of the implementation we think System Testing is more suitable because it offers a better look into the targeting implementation working. More than one test characterized below with complexity and number of Steps being decreased.
 
-A video of the implemented feature is available, it uses a custom map to show clearly thee targeting in action.
+A video of the implemented feature is available, it uses a custom map to show clearly the targeting in action.
 
 The video goes through all of the targeting as if it was looping through steps 3 through 6 of Test Case Id: "Targeting broad (using custom map for testing targeting)". 5.03 onwards it shows the error message in action "Targeting Same option Error".
 
 - Video Link: (https://youtu.be/iA4hxU7g2-M)
 
+(to provide further help "Targeting_Map.msav" is a map where targeting is easier to test).
 
 ---
 ## Scenario Based Testing
@@ -32,11 +33,11 @@ The video goes through all of the targeting as if it was looping through steps 3
 ---
 ## Test Targeting using any map
 
-| Pre Condition                                         | Test Case Id                         | Steps                                                                                                                                                     | Expected Result                                                                                                                                                                                            |
-| ----------------------------------------------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Inside a map<br>Map has a turret of the player's team | Targeting broad (using any map) | 1. Click on the owned turret.                                                                                                                             | Menu appears below the turret.                                                                                                                                                                             |
-|                                                       |                                      | 2. Press button of the two targeting buttons.<br>(If turret can only target ground or air, the button on the right is grayed out and can not be selected) | A corresponding drop down menu appears with more options.                                                                                                                                                  |
-|                                                       |                                      | 3. Select a option  from the drop down.                                                                                                                   | The selected option swaps to being the current, replacing the text above. The selected option is also has it's boarder highlighted and the previous selected option swaps from highlighted boarder to not. |
+| Pre Condition                                         | Test Case Id                         | Steps                                                                                                                                                     | Expected Result                                                                                                                                                                                         |
+| ----------------------------------------------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Inside a map<br>Map has a turret of the player's team | Targeting broad (using any map) | 1. Click on the owned turret.                                                                                                                             | Menu appears below the turret.                                                                                                                                                                          |
+|                                                       |                                      | 2. Press button of the two targeting buttons.<br>(If turret can only target ground or air, the button on the right is grayed out and can not be selected) | A corresponding drop down menu appears with more options.                                                                                                                                               |
+|                                                       |                                      | 3. Select a option  from the drop down.                                                                                                                   | The selected option swaps to being the current, replacing the text above. The selected option also has it's boarder highlighted and the previous selected option swaps from highlighted boarder to not. |
 
 ---
 
