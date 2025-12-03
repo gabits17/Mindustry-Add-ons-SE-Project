@@ -4,7 +4,6 @@ Note: after teacher feedback, I removed classes not in the sequence diagrams fro
 However, I kept classes in cases where:
 - They were the class types of data returned in the sequence diagrams but where the classifier was not necessary to call for methods (eg: only public attributes of the class were used)
 - They are interfaces or extended by classes present in the sequence diagram (where the method called in the sequence diagram belongs to the abstract super). Eg. ``ApplicationCore`` in **UpdateBuilding**
-- They are a utility class (and not justifiably boundary, control, or entity) for which the functionality was abstracted. Eg:``Drawf`` utility class has method ``dashCircle()`` abstracted into Leaks in sequence diagram "Update leak display".
 
 Color-coding:
 - Blue: Unmodified but relevant class;
@@ -54,6 +53,8 @@ Involvement of classes:
   case of leakable tiles (conduits) can be seen in the use case "Update leakable block tile".
 
 Note: the <<use>> dependency between Leaks and Tile isn't present to represent the particular dependencies being used within the sequence diagram for this use case.
+Also, many tiles can have the same Building, but I didn't model this in the class diagram because a Building only knows it's base tile, and other tiles are accessed via linked tiles, neither of which
+is strictly relevant for the corresponding sequence diagram.
 
 ## Update building
 ![UpdateBuilding.png](assets/cdUpdateBuilding.png)
@@ -104,14 +105,12 @@ I consider the renderers to be of the **control** stereotype as they communicate
 structures that hold the data for the on-screen pixels.
 ### - Minimap Update
 - ``update()`` in ``MinimapRenderer`` goes through pending updates for world positions that were sent for update
-  (the global Vars can translate these into tiles, and then blocks, from which a color can be fetched).
+  (the ``World`` instance in ``Vars`` can translate these into tiles via ``tile(int pos) that calls tile(int x, int y)`, and then blocks, from which a color can be fetched).
 - Adding to pending updates is described in another use case, but as shown in the diagram involves the ``updateTile`` method in ``ConduitBuild`` I modified to allow this.
 
 I won't go further into detail of the many intermediate classes that the renderer goes through to get the Block and color avoid confusion.
-
-What I'm omitting in the diagram to condense the logic is the following:
-
-- The ``Vars`` class has an attribute of class ``World`` that stores the tiles of the active map and can get a tile given an ``int`` position value using a method ``tile(int pos)``.
+- The ``Vars`` class has an attribute of class ``World`` that stores the tiles of the active map and can get a tile given an ``int`` position value using a method ``tile(int pos)``,
+This is used in ``MinimapRenderer``
 
 **Relevant case for minimap**
 - The relevant case here is when the tile corresponds to a ``Block`` specialization ``Conduit``. Getting the color for display is done using ``minimapColor(Tile tile)`` I overrode in ``Conduit``
