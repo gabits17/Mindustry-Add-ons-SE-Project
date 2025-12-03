@@ -128,6 +128,6 @@ This consists of getting the player location **(x, y)**, and iterating over the 
 The loop condition uses ``leakTilesInRange`` to refer to these tiles, since the actual code uses a lambda expression parameter for a method called on a data structure of ``Leaks``, which I feel are auxiliary
 and not entities themselves. For the sake of simplicity, this abstraction was used to make representation in the sequence diagram more readable.  
 For each of these local leaking tiles, they are only considered if within a ``MIN_RADIUS`` of the player. If so, a dashed circle is drawn around the tile in the color ``LEAK_COLOR``.
-It's worth noting that the ``dashCircle()`` method is an abstraction of the code's use of a utility class ``Drawf`` that handles drawing to the display (so it's neither an entity, control, nor boundary, but it's still relevant so it's shown in the
-class diagram).
+To make sure these changes are visible, the ``dashCircle()`` method in ``Drawf`` is used. Despite being a utility class, it is responsible for performing the operations that eventually draw the circle to the display, so I marked it as a ``control`` class.
+In previous versions, I abstracted this from the diagram, but it's a functionality from a separate class, even if all methods are static.
 It's also worth noting that the ``Tile`` entities aren't underlined because it represents the role of a leaking tile, and not a particular instance of it.
