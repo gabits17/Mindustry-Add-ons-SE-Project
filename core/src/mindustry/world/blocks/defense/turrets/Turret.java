@@ -12,7 +12,6 @@ import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
-import mindustry.Vars;
 import mindustry.audio.*;
 import mindustry.content.*;
 import mindustry.core.*;
@@ -1126,7 +1125,7 @@ public class Turret extends ReloadTurret{
                         if(getTargetEnv() != env)
                             configure(env);
                         else
-                            Vars.ui.showErrorFade("Same current target environment!", 2f);
+                            ui.showErrorFade("Same current target environment!", 2f);
                     }).group(envGroup).get();
 
                     b.update(() -> b.setChecked(getTargetEnv() == env)); // updating the highlighted button
