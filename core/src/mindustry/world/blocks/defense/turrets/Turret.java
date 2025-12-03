@@ -995,7 +995,7 @@ public class Turret extends ReloadTurret{
 
         @Override
         public void onConfigureClosed() {
-            super.onConfigureClosed();
+            super.onConfigureClosed(); // does nothing, but is important to represent the inheritance
 
             showModes = false;
             showEnvs = false;
@@ -1003,6 +1003,7 @@ public class Turret extends ReloadTurret{
 
         @Override
         public void buildConfiguration(Table table) {
+            super.buildConfiguration(table); // does nothing, but is important to represent the inheritance
             table.left();
 
             Table modesMenu = buildModesMenu();
