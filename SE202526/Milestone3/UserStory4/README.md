@@ -5,8 +5,7 @@ Copy and Paste
 - Manuel Oliveira (68547)
 
 ## Reviewer(s)
-
-- 
+- Diogo Antunes (67763)
 
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story
@@ -31,7 +30,22 @@ so that I don't need to save quick changes as schematics (saved block selections
 [Textual Description](US2%20Use%20Case%20Textual%20Description.md)
 
 #### Review
-*(Please add your implementation summary review here)*
+
+**Author** : Diogo Antunes (67763), 3/12/2025 11:55
+
+As with other user stories, the implementation is done with a focus on desktop, since it can be more readily tested.
+
+The class diagram has already been given feedback in its own section, so I won't be commenting here, aside from a typo in "DesktoInput" instead of "Deskto**p**Input"
+
+The ``getNext`` and ``getPrevious`` methods seem fine from a surface-level glance, the copyHist doesn't know about inputs, as should be the case,
+to separate its functionality from the input control.
+
+The use of an interface for the class isn't a necessity, but also does no harm. It allows, in example for other types of copyHistory, without introducing speculative generality.
+In example, if in the future there was another type of copy history that would reset with a ``ResetEvent``, or with some other varying functionality that justified a separate class and
+not merely a specialization, such a change would require modifying less variables.
+
+The implementation summary covers the user story functionality well, and explains the rationale for the actions taken, so I've little to comment there.
+
 ### Class diagrams
 
 [US4ClassDiagrams.md](US4%20Use%20Case%20Diagrams.md)
