@@ -1075,7 +1075,7 @@ public class Turret extends ReloadTurret{
             modeGroup.setMinCheckCount(0);
 
             for(TargetConfig.Mode mode : TargetConfig.Mode.values()){
-                TextButton b = commandModes.button(modeString(mode), () -> {
+                TextButton b = commandModes.button(modeString(mode), Styles.togglet, () -> {
                     // only does the work of changing it if it is not the same mode when choosing an option (ucd alternative flow)
                     if(getTargetMode() != mode)
                         configure(mode);
@@ -1120,7 +1120,7 @@ public class Turret extends ReloadTurret{
 
             if(targetsBoth()) {
                 for (TargetConfig.Env env : TargetConfig.Env.values()) {
-                    TextButton b = commandEnvs.button(envString(env), () -> {
+                    TextButton b = commandEnvs.button(envString(env), Styles.togglet,() -> {
                         // only does the work of changing if it is not the same environment when choosing an option (ucd alternative flow)
                         if(getTargetEnv() != env)
                             configure(env);
