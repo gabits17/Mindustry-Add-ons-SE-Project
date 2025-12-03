@@ -8,13 +8,13 @@ Swapping turret's targeting priorities
 
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story:
-[User Story 3: Swap Targeting](../../Milestone1/UserStory3.md)
+[User Story 3: Swap Target Configurations](../../Milestone1/UserStory3.md)
 ### Review
 *(Please add your user story review here)*
 ## Use case diagram
 ![us3-UCD](./assets/swap-targeting-ucd.svg)
 ## Use case textual description
-[Textual description from Swap Targeting's use case diagram](./USECASE-TEMPLATE.md)
+[Swap Target Configurations Use Case Diagram textual description](./USECASE-TEMPLATE.md)
 ### Review
 **Author** : Diogo Antunes (67763), 23/11/2025 16:13
 
@@ -207,11 +207,11 @@ Color code meaning:
 #### Review
 *(Please add your implementation summary review here)*
 ### Class diagrams
-(*Class diagrams and their discussion in natural language.*)
+[Swap Target Configurations Class Diagram](./CLASS-DIAGRAMS.md)
 ### Review
 *(Please add your class diagram review here)*
 ### Sequence diagrams
-[Sequence diagrams for Swapping Turret's Targeting User Story](./SEQUENCE-DIAGRAMS.md)
+[Swap Target Configurations Sequence Diagrams](./SEQUENCE-DIAGRAMS.md)
 #### Review
 **Author** : Diogo Antunes (67763), 29/11/2025 14:46
 
