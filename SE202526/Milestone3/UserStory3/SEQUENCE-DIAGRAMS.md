@@ -1,13 +1,39 @@
+#### Notes
+This report was updated after Diogo's review on it, at 04/12/2025 04:00.
+
+---
+
 ## Select Placed Turret
 ![select-turret-sd](./assets/select-turret-sd.svg)
 
-To select a turret, the player must simply tap on a built turret. This turret **must be from the same team of the player**, which is checked by the alternative combined fragment. If not the case, the system doesn't allow the player to click on it.
+To select a turret, the player must simply tap on a built turret. This turret **must be from the same team of the player**, which is checked by the ``interactable(player.team())``. If not the case, the system doesn't allow the player to click on it.
 
+---
 
 ## Change Turret's Target Mode
 ![change-target-mode-sd](./assets/change-target-mode.sd.svg)
 
-``DesktopInput`` and ``InputHandler`` classes handle the game-world input, such as movement, selection and placing blocks. Actually, these classes often execute the check ``!Core.scene.hasMouse()`` to verify if the mouse cursor is hovering over or interacting with any UI element. Because of that, the most accurate boundary for the player's action to press an UI text button can be the ``ClickListener`` class.
+To specify which of the buttons is being pressed, it was added a comment (code style) ``// mode main button`` and ``// mode option button``. Since the time line is well defined, there is no need to add a *strict* fragment in here. Howerver, it is important to understand that only when the main button is pressed, one of the options can be selected. 
+
+Every button is created with a ``Runnable`` object that is associated to its ``ClickListener`` listener. This means that when the button is clicked, the ``Runnable`` runs. For the mode options buttons, the ``Runnable`` defined was:
+
+````java
+() -> {
+    if(getTargetMode() != mode)
+        configure(mode);
+    else
+        ui.showErrorFade("Same current target mode!", 2f);
+}
+````
+
+This behavior is expected because of the ``clicked()`` method in the ``Button`` class:
+````java
+public ClickListener clicked(Runnable r) {
+    return this.clicked(KeyCode.mouseLeft, r);
+}
+````
+
+Because of this, the ``TextButton`` class is the best candidate to be a *boundary* that handles the clicks of the player on it, giving this information to the ``ClickListener`` class and running the ``Runnable`` defined in its creation.
 
 To open the mode's options menu, there is a toggle ``boolean showModes``. Each time the main mode button is pressed, the menu is shown/hidden. There can only be one menu opened at a time, so:
 ````java
@@ -18,8 +44,20 @@ The same happens for when pressing the main target environment, but (clearly) wi
 
 Every time a target mode option is selected (by pressing on its text button), the current target mode is updated (on change). Two updates are run: the option button's highlight and the displayed text in the main mode button.
 
+---
+
 ## Change Turret's Target Environment
 ![change-target-env-sd](./assets/change-target-env.sd.svg)
+
+The ``Runnable`` that is run each time a environment option button is pressed is the following:
+````java
+() -> {
+    if(getTargetEnv() != env)
+        configure(env);
+    else
+        ui.showErrorFade("Same current target environment!", 2f);
+}
+````
 
 Changing the target environment is essentialy similar to changing the target mode. The only (but impactful) change is that if the turret can only attack in *one* environment (air or ground), then the player can not change it, because it is not possible.
 
@@ -29,6 +67,7 @@ For that, the main button that displays the current target environment is disabl
 currEnv.setDisabled(!targetsBoth());
 ````
 
+---
 
 ## Unselect Turret
 ![unselect-turret-sd](./assets/unselect-turret-sd.svg)

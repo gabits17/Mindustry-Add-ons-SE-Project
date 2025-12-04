@@ -34,8 +34,10 @@ With that in mind, the functionality is an easy to understand extension to the t
 as well as the deselection being considered part of the **Select placed turret** use case.
 
 ---
+
 _The use case diagram's textual description was modified according to this review._
 
+---
 ## Implementation documentation
 
 #### Commits
@@ -251,6 +253,19 @@ but I might be wrong in pointing this out.
 - There seems to be a use of public methods like ``toString()`` at times or using java boolean negation like "!targetsBoth()" which potentially lessens readability
 considering it's meant to be understood by non-programmers. However, since each method in the sequence diagram is supposed to correspond to something in the code, I'm not sure how this could be changed without removing meaning.
 Altering the method name in the sequence diagram and then explaining the abstraction that was used could be an option but I'm not at all sure that would be the right thing to do.
+
+---
+_The sequence diagrams report was modified according to this review._
+
+**Answer:**
+We believe that, since every message and condition of the sequence diagram must be justified by code in the codebase, the methods should stay as abstract as the coding is, with a textual explanation (when necessary) in the report.
+
+We also want to explain that when the first version of the sequence diagrams report was made, the boundary handling with buttons was then not understanded by us. After a deeper research, we managed to understand that "*mode button is pressed*" can be translated to the method ``isPressed()`` in the ``TextButton`` and ``ClickListener`` classes.
+
+The "*return*" in the return messages was explicitly written because in the *Visual Paradigm* application, we did not manage to hide the sequence numbers of the time line, which leads us to decide that a message with just a number would look weird.
+
+---
+
 
 ## Test specifications
 [Swap Targeting Configurations Functionality Testing](./SYSTEM-TESTING.md)
