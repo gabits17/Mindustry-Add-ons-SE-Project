@@ -23,29 +23,32 @@ Manel Oliveira (68547)
 
 
 ### Sprint Review Meeting: 
-*(Held at the end of the sprint, this meeting is attended by all stakeholders to demo the completed work and validate if the sprint goal has been met.)*
+- Each subgroup shared the work done so far
+- Discussed the reviews that were needed at that point
+- Division of labor regarding the remaining necessary videos
 
 ### Sprint Retrospective Meeting: 
-*(This meeting happens after the sprint review and before the next sprint planning meeting. The team reflects on what went well, what needs improvement, and how to enhance their processes for future sprints.)*
+- This was the hardest sprint, because of the sprint itself
+- It was concluded that the work handout added unneeded difficulty
 
 ## Relevant resources
 
 ### Scrum Board at the beginning of the sprint
 
-Please add the scrumboard picture here.
+![ScrumBoard-sprint7-beginning](Assets/ScrumBoard-sprint7-beginning.png)
 
 ### Scrum Board in the middle of the sprint
 
-Please add the scrumboard picture here.
+![ScrumBoard-sprint7-middle](Assets/ScrumBoard-sprint7-middle.png)
 
 ### Scrum Board at the end of the sprint
 
-Please add the scrumboard picture here.
+![ScrumBoard-sprint7-end](Assets/ScrumBoard-sprint7-end.png)
 
 ### Burndown Chart for the sprint
 
-Please add the burndown chart here.
+![BurndownChart](Assets/BurndownChart.png)
 
 ### Gantt Chart
 
-Please add the Gantt chart here.
+![GanttChart-sprint7](Assets/GanttChart-sprint7.png)
