@@ -159,3 +159,5 @@ This is already marked for review, but as of review, in the master branch:
 - Tests: `copiesValidSelectionTest`, `getNextTest`, `getPreviousTest`, `pasteLoopTest`, `copyLimitsTest`, run with errors.
 
 I´m guessing you guys tagged this for review accidentally, I'll review again when its done.
+#### Further Review
+I believe you made the right decision to change to "guided" tests, not only are they easier to understand. The only wrong things I found that were wrong is the link to the user story and "Instead, we preferred testing the code that we made. The tests bellow are implemented in **tests/src/test/java/ApplicationTests.java**." since your tests aren't unit tests now, this should be changed, though I believe this as already been changed in the newer version of the report.
