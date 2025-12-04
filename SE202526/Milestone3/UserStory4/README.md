@@ -82,7 +82,7 @@ What was said in this review was taken into account and the diagram changed acco
 #### Review
 **Author**: Gabriela Silva (67286) 04/12 12:30
 
-More important: Include ``%20`` between spaces in your assets' links or change the name of the files so it does not include spaces. The figures does not appear in every IDEA. 
+**More important**: *Include ``%20`` between spaces in your assets' links or change the name of the files so it does not include spaces. The figures does not appear in every IDEA. Also include the links to the sequence diagrams report and the test case specifications report.*
 
 Overall, I've understand the general behavior represented in all of these sequence diagrams. Most of the things I've point out are related to return messages, even if they are void. Some guard-conditions could be textual explained so it is cleaner to understand what they mean. The report should be more consistent in the key binds that call the start of the behavior and the return messages for every ``showInfoFade()`` message from the ``UI`` should be equal: either passage of time messages or just returns.
 
