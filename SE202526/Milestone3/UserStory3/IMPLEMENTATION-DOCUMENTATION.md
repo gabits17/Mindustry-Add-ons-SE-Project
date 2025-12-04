@@ -39,7 +39,7 @@
 
 
 #### Briefing 
-The implemenation of this user story took place mostly around the ``Turret`` class, since it was added new configurations to it. It was created one new interface: ``TargetConfig``, which is implemented by the new class ``TargetConfiguration`` and contains two enumerations ``Mode`` and ``Env``. They contain a list of possible modes and environments for the targeting configuration of a turret.
+The implemenation of this user story took place mostly around the ``Turret`` class (``src/mindustry/world/blocks/defense/turrets/Turret.java``), since new configurations were added to. One new interface was created: ``TargetConfig``, which is implemented by the new class ``TargetConfiguration`` and contains two enumerations ``Mode`` and ``Env``. They contain a list of possible modes and environments for the targeting configuration of a turret.
 
 ````java
 /** Possible target modes **/
@@ -63,7 +63,7 @@ public enum Env {
 It is possible to **combine** the targeting environment with a mode. For instance, it is possible for a turret to target the *strongest ground* units around it. For targets that target both air and ground units, it is possible to (or not) focus on an environment.
 
 #### Logic
-To sort the enemy units that a turret will attack, the ``SortUnits`` class was utilized. There was already four ways for sorting them (``Sortf`` objects): ``closest``, ``farthest``, ``strongest`` and ``weakest``. It was added two new ways: ``fastest`` and ``slowest``.
+To sort the enemy units that a turret will attack, the ``SortUnits`` class was utilized. There was already four ways for sorting them (``Sortf`` objects): ``closest``, ``farthest``, ``strongest`` and ``weakest``. Two new ways were added: ``fastest`` and ``slowest``.
 
 ````java
 public class UnitSorts {
@@ -74,7 +74,7 @@ public class UnitSorts {
 }
 ````
 
-To combine the targeting environment with a targeting mode, it was also implemented two new (static) functions that handle air or ground units first, with the mode parameterized: ``airFirst(mode)`` and ``groundFirst(mode)``.
+To combine the targeting environment with a targeting mode, two new (static) functions were also implemented to handle air or ground units first, with the mode parameterized: ``airFirst(mode)`` and ``groundFirst(mode)``.
 
 ````java
 public class UnitSorts {
@@ -111,7 +111,7 @@ protected Sortf unitSorter() {
 }
 ````
 
-To display this configuration, the ``Turret`` block became configurable (``configurable = true`` in its constructor), which means it can be configured by the player, by clicking on it. Two configurations were added in the ``Turret``'s constructor. The method ``configure()`` is responsible to update the turret's configurations. Every time a configuration option is pressed, the method is called and updates the variable that matches the configuration being swapped (``targetMode`` or ``targetEnv``)-
+To display this configuration, the ``Turret`` block became configurable (``configurable = true`` in its constructor), which means it can be configured by the player, by clicking on it. Two configurations were added in the ``Turret``'s constructor. The method ``configure()`` is responsible to update the turret's configurations. All it does is simply execute the swap of the target configuration to the specified one, which is defined in the ``config()`` calls that were added to the ``Turret``'s class constructor. Every time a configuration option is pressed, the method is called and updates the variable that matches the configuration being swapped (``targetMode`` or ``targetEnv``).
 
 ````java
 public Turret(String name) {
@@ -168,4 +168,4 @@ Color code meaning:
 - Took advantage of the sorting modes from the ``UnitSorts`` class for defining target modes
 - Most dispendious part of the implementation: Handling the UI with several text buttons
 - Main problem: Maps that in its initially launch have turrets placed on some tile in the grid. These maps have problems on saves and loads. However, saving and loading target configurations are working, except for that particular case.
-- It was needed to handle (a lot of) corrupted old save files because of the loading and saving part.
+- (A lot of) corrupted old save files were needed to be handled, because of the loading and saving part.

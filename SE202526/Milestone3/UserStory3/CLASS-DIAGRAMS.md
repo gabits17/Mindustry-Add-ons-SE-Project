@@ -37,7 +37,9 @@ The ``InputHandler`` class gives a great use of the ``BlockConfigFragment`` clas
 ### Usage of ``Table``
 To display and build the configurations' menu from the ``TurretBuild`` instance being clicked on, the ``Table`` class is the main object that handles buttons, labels and listeners. Every ``TextButton`` object is created for a ``Table`` object.
 
-The configurations' menu table has two inner tables that are not visible at the same time. This behavior is controlled by two variables that acts as flags: ``showMenus`` and ``showEnvs``. If one is ``true``, the other is ``false``. Both are set to ``false`` on the ``onConfigureClose()`` method, that represents the act of closing the configurations menu of the turret by unselecting it. Each of this tables have a ``ButtonGroup`` object to group the ``TextButton`` objects of each target configuration.
+The configurations' menu table has two inner tables that are not visible at the same time. This behavior is controlled by two variables that acts as flags: ``showMenus`` and ``showEnvs``. When *opening* one of the menus, if one is ``true``, the other is ``false``.
+
+Both are set to ``false`` on the ``onConfigureClose()`` method, that represents the act of closing the configurations menu of the turret by unselecting it. Each of this tables have a ``ButtonGroup`` object to group the ``TextButton`` objects of each target configuration.
 
 By hovering the mouse cursor over the ``TurretBuild`` instance, its current target configurations are added to the turrets information dialog that is displayed above the building menu. The ``display()`` method was over written to add that information, by creating ``Label`` objects and updating them accordingly.
 
@@ -75,9 +77,9 @@ public void write(Writes write) {
 }
 ````
 
-During this implementation, it was discovered several issues with the serialization of data. First, custom maps that have built turrets in its initial launch triggered corrputed files. After solving that issue, they still have problems in saving ``TurretBuild`` instances in general. If turrets are placed and the already built ones are not touched, the turrets that were placed are not saved, so when loading the save file, they are not placed anywhere.
+During this implementation, several issues with the serialization of data were discovered. First, custom maps that have built turrets in its initial launch triggered corrputed files. After solving that issue, they still have problems in saving ``TurretBuild`` instances in general. If turrets are placed and the already built ones are not touched, the turrets that were placed are not saved, so when loading the save file, they are not placed anywhere.
 
 Besides that particular case, saving and loading turrets instances and its configurations are working.
 
 ##### Notes
-For simplicity, some methods from the ``TurretBuild`` class were not mentioned in the diagram, since they are *inner helpers* for other methods. Every new and changed method were specified in [modifications' class diagram](./README.md#Class-diagram-for-modifications)
+For simplicity, some methods from the ``TurretBuild`` class were not mentioned in the diagram, since they are *inner helpers* for other methods. Every new and changed method were specified in [modifications' class diagram](./README.md#Class-diagram-for-modifications).

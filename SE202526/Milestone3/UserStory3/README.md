@@ -19,7 +19,7 @@ Swap Turret's Target Configurations
 ### Review
 **Authors**: Carolina Ferreira (67804) and Gabriela Silva (67286) on 24/10/2025
 
-This functionality would definitly give a better taste for pvp enthusiasts. It might need testing to ensure it doesn't make the defese overpowered too soon in the game. We should also consider a clear display to let players change targetting settings easily during gameplay.*
+This functionality would definitly give a better taste for pvp enthusiasts. It might need testing to ensure it doesn't make the defese overpowered too soon in the game. We should also consider a clear display to let players change targetting settings easily during gameplay.
 
 Even though it looks like a great add to the game, we need to ensure it doesn't change highly the gameplay and the base goal of the game.
 
@@ -55,7 +55,7 @@ as well as the deselection being considered part of the **Select placed turret**
 **Answer**:
 I understand what you mean. *Type* was changed to **Environment**, since it fits better the context of air units and ground units. Also, the unselect turret use case was added.
 
-_The use case diagram and its textual description was modified according to this review._
+_The use case diagram and its textual description were modified according to this review._
 
 ---
 
@@ -66,13 +66,19 @@ _The use case diagram and its textual description was modified according to this
 
 
 #### Review
-**Author** : Manel Oliveira (68547), 04/12/2025 16:50
+**Author** : Manuel Oliveira (68547), 04/12/2025 16:50
 
 This may be me, but I couldn't quite understand the part where you explain the ``configure`` method in ``Turret``, maybe its poorly written. It could also be it is just a hard topic to grasp.
 
 I think you could also add the absolut path to the package where most of your classes are, it isn't necessary but could ease more research on your work.
 
 There are some minor spelling mistakes, like " it was added new configurations to it.".
+
+**Answer**:
+The ``configure()`` method is not directly explained. We have added some lines to the report so that it is more understable. 
+
+_The implementation report was modified according to this review._
+
 
 
 [comment]: <> (% ------------------ CLASS DIAGRAM ---------------------- %)
@@ -93,6 +99,10 @@ In the **Usage of Table** there is a contradiction when saying "If one is `true`
 
 In the **Usage of Reads and Write**, it's my opinion that the phrase "it was discovered several issues with the serialization of data" should be rewritten to "several issues with the serialization of data were discovered".
 
+**Answer**:
+We understand the confusion in *Usage of Table* and wrote it in a cleaner way. The attributes were added as suggested.
+
+_The use class diagram and its report were modified according to this review._
 
 [comment]: <> (% ------------------ SEQUENCE DIAGRAMS ---------------------- %)
 
@@ -174,6 +184,6 @@ Besides the typos I have described bellow, I like your test specification report
 
 From what was stated above, I really like that you included the video, gives us some visuals of what is actually being testes, not just some script to be followed.
 
-Answer
+**Answer**
 
 _The sequence diagrams report was modified according to this review._
