@@ -13,7 +13,7 @@ To select a turret, the player must simply tap on a built turret. This turret **
 ## Change Turret's Target Mode
 ![change-target-mode-sd](./assets/sequence-diagrams/change-target-mode-sd.png)
 
-To specify which of the buttons is being pressed, it was added a comment (code style) ``// mode main button`` and ``// mode option button``. Since the time line is well defined, there is no need to add a *strict* fragment in here. Howerver, it is important to understand that only when the main button is pressed, one of the options can be selected. 
+To specify which of the buttons is being pressed, it was added a comment (code style) ``// mode main button`` and ``// mode option button``. It is important to understand that only when the main button is pressed, one of the options can be selected. The *strict* fragment shows this constraint. This is also true for the next sequence diagram. 
 
 Every button is created with a ``Runnable`` object that is associated to its ``ClickListener`` listener. This means that when the button is clicked, the ``Runnable`` runs. For the mode options buttons, the ``Runnable`` defined was:
 
