@@ -117,6 +117,7 @@ The loop checks for the listener that instantiates ``Renderer`` since it´s the 
 
 #### UpdateMinimap
 ![seqUpdateMinimap.svg](assets/seqUpdateMinimap.svg)
+
 From there, the update is passed into the ``MinimapRenderer`` instance in ``Renderer``, that handles each pending update identified by a position ``pos``.
 This position is converted to a tile according to the ``World`` instance, and then the color is obtained to update the minimap.
 
@@ -130,6 +131,7 @@ which is omitted as updating the color buffer seems to go beyond the use case sc
 
 #### UpdateOverlay
 ![seqUpdateOverlay.svg](assets/seqUpdateOverlay.svg)
+
 The next section handles the update of the ``OverlayRenderer`` instance.  
 The relevant draw call occurs in the ``drawBottom()`` method in ``OverlayRenderer`` and then ``DesktopInput``, where the ``drawLocalLeaks()`` method for the ``Leaks`` singleton instance is called.
 This consists of getting the player location **(x, y)**, and iterating over the leaking tiles within a ``MIN_RANGE`` of this position.
