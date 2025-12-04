@@ -109,7 +109,7 @@ In either of those cases, the minimap needs an update in that tile -> ``updatePi
 ## Update leak display
 ![seqUpdateLeakDisplay.svg](assets/seqUpdateLeakDisplay.svg)
 
-This sequence diagrams covers the update of display elements related to leaks (minimap and local leaks circle overlays).  
+This sequence diagram covers the update of display elements related to leaks (minimap and local leaks circle overlays).  
 Similar to ``Logic`` updates, ``Renderer`` is one of the ``ApplicationListener`` modules updated at a regular interval.
 The two renderers within this instance we will be covering are the ``MinimapRenderer`` and the ``OverlayRenderer`` with respect
 to their functionality regarding ``Leaks``.  
