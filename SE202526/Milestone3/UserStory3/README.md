@@ -73,6 +73,9 @@ _The use case diagram's textual description was modified according to this revie
 ![commit12](./assets/commits/commit12.png)
 ![commit13](./assets/commits/commit13.png)
 
+03/12/2025:
+![commit14](./assets/commits/commit14.png)
+
 
 #### Briefing 
 The implemenation of this user story took place mostly around the ``Turret`` class, since it was added new configurations to it. It was created one new interface: ``TargetConfig``, which is implemented by the new class ``TargetConfiguration`` and contains two enumerations ``Mode`` and ``Env``. They contain a list of possible modes and environments for the targeting configuration of a turret.
