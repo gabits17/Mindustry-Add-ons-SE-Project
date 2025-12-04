@@ -43,22 +43,21 @@ For that reason, except for titles, throughout this document we'll be referring 
     - **Main Flow**:
     1. The use case starts when the player presses the **select** keybind (default is "f").
     2. The Player presses the keybinds to paste a copied schematic (default is Ctrl + V).
-    3. If there are no copied schematics.
-        1. Ends the use case.
-    4. The game loads and displays the last copied schematic.
-    5. If the player presses the keybind to see the previous copied schematic.
+    3. The game loads and displays the last copied schematic.
+    4. If the player presses the keybind to see the previous copied schematic.
         1. Then displays the previous copied schematic.
         2. Extension point: Scroll through copies
-    6. If the player presses the keybind to see the next copied schematic.
+    5. If the player presses the keybind to see the next copied schematic.
         1. Then displays the next copied schematic.
         2. Extension point: Scroll through copies
-    7. If the player presses the place keybind (left click by default)
+    6. If the player presses the place keybind (left click by default)
         1. Then places the displayed schematic in the game world.
         2. Extension point: Paste Copy
 
 
 - **Alternative Flows**
-    - None
+    1. If there are no copied schematics.
+        1. Ends the use case.
 - **Post-Conditions**: The last copied schematic is displayed and ready to be built.
 
 ## Extends
