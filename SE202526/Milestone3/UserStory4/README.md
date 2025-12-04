@@ -17,9 +17,6 @@ so that I don't need to save quick changes as schematics (saved block selections
 
 ### Review
 Since this was a User Story originated from the split of US1 made after Milestone 1, there were no direct reviews from our colleagues.
-## Use case diagram
-![CopyPaste.jpg](./Assets/CopyPaste.svg)
-
 ## Use case textual description
 
 [Textual Description](US4-Use-Case-Textual-Description.md)
