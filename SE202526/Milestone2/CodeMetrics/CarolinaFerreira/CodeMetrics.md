@@ -57,8 +57,6 @@ As you can see, this class, unlike the majority of the other, is bloated, full o
 ___
 ## Graphs
 [TabelaMetrics.xlsx](Assets/TabelaMetrics.xlsx)
-### Project analysis
-![Project.jpg](Assets/Project.jpg)
 ### Code Smell 1
 ![CodeSmell1.jpg](Assets/CodeSmell1.jpg)
 ### Code Smell 2

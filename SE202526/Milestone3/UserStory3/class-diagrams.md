@@ -85,4 +85,8 @@ Besides that particular case, saving and loading turrets instances and its confi
 
 
 ##### Notes
+<<<<<<< HEAD:SE202526/Milestone3/UserStory3/CLASS-DIAGRAMS.md
 For simplicity, some methods from the ``TurretBuild`` class were not mentioned in the diagram, since they are *inner helpers* for other methods. Every new and changed method were specified in [modifications' class diagram](./implementation-documentation.md#Class-diagram-for-modifications).
+=======
+For simplicity, some methods from the ``TurretBuild`` class were not mentioned in the diagram, since they are *inner helpers* for other methods. Every new and changed method were specified in [modifications' class diagram](./README.md#Class-diagram-for-modifications).
+>>>>>>> 3b60ebbbcb063edae5cac9fa5054e47ab85425c1:SE202526/Milestone3/UserStory3/class-diagrams.md
