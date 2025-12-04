@@ -65,8 +65,13 @@ _The use case diagram and its textual description was modified according to this
 ## Implementation documentation
 [Swap Target Configurations Implementation Documentation](./IMPLEMENTATION-DOCUMENTATION.md)
 
+
 #### Review
 **Author** : Manel Oliveira (68547), 04/12/2025 16:50
+
+This may be me, but I couldn't quite understand the part where you explain the ``configure`` method in ``Turret``, maybe its poorly written. It could also be it is just a hard topic to grasp.
+
+I think you could also add the absolut path to the package where most of your classes are, it isn't necessary but could ease more research on your work.
 
 There are some minor spelling mistakes, like " it was added new configurations to it.".
 
