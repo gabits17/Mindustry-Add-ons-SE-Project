@@ -43,6 +43,8 @@ Both are set to ``false`` on the ``onConfigureClose()`` method, that represents 
 
 By hovering the mouse cursor over the ``TurretBuild`` instance, its current target configurations are added to the turrets information dialog that is displayed above the building menu. The ``display()`` method was over written to add that information, by creating ``Label`` objects and updating them accordingly.
 
+``TextButton`` and ``Button`` are considered *boundary*, since every button (in this user story context) has a ``Runnable`` object associated that is executed when a button is clicked, by a ``ClickListener`` class. These classes are the ones that handle the input from the player to the system. This topic is deeper explained in the [sequence diagrams' report](./sequence-diagrams.md).
+
 ### Usage of ``UI``
 The only usage of the ``UI`` class is made when the player tries to select the same current target configuration. For instance, if the player is choosing the *STRONGEST* mode and the it is the current target mode, an error message is displayed: "*Same current target mode!*". The same happens for the target environment configuration. This is defined in the ``Runnable`` object that is associated with each option button creation.
 ````java
@@ -81,5 +83,6 @@ During this implementation, several issues with the serialization of data were d
 
 Besides that particular case, saving and loading turrets instances and its configurations are working.
 
+
 ##### Notes
-For simplicity, some methods from the ``TurretBuild`` class were not mentioned in the diagram, since they are *inner helpers* for other methods. Every new and changed method were specified in [modifications' class diagram](./README.md#Class-diagram-for-modifications).
+For simplicity, some methods from the ``TurretBuild`` class were not mentioned in the diagram, since they are *inner helpers* for other methods. Every new and changed method were specified in [modifications' class diagram](./implementation-documentation.md#Class-diagram-for-modifications).
