@@ -72,6 +72,10 @@ This may be me, but I couldn't quite understand the part where you explain the `
 
 I think you could also add the absolut path to the package where most of your classes are, it isn't necessary but could ease more research on your work.
 
+This may be me, but I couldn't quite understand the part where you explain the ``configure`` method in ``Turret``, maybe its poorly written. It could also be it is just a hard topic to grasp.
+
+I think you could also add the absolut path to the package where most of your classes are, it isn't necessary but could ease more research on your work.
+
 There are some minor spelling mistakes, like " it was added new configurations to it.".
 
 **Answer**:
