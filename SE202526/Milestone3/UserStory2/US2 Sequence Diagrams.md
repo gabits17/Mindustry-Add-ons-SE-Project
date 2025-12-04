@@ -118,7 +118,7 @@ The loop checks for the listener that instantiates ``Renderer`` since it´s the 
 #### UpdateMinimap
 ![seqUpdateMinimap.svg](assets/seqUpdateMinimap.svg)
 
-From there, the update is passed into the ``MinimapRenderer`` instance in ``Renderer``, that handles each pending update identified by a position ``pos``.
+The update is passed into the ``MinimapRenderer`` instance in ``Renderer``, that handles each pending update identified by a position ``pos``.
 This position is converted to a tile according to the ``World`` instance, and then the color is obtained to update the minimap.
 
 For the sake of this use case, the diagram checks that the block is a ``Conduit`` (type of leaking block) so that the modified implementation of ``minimapColor()`` can be explained
