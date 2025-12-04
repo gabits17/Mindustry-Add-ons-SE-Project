@@ -85,7 +85,7 @@ The same logic for `CopyHistClass` and its `Schematic`s maybe use an aggregation
 
 Besides what was stated above, the diagram looks fine.
 ### Sequence diagrams
-(*Sequence diagrams and their discussion in natural language.*)
+[US4 Sequence Diagrams](US4%20Sequence%20Diagrams.md)
 #### Review
 **Author**: Gabriela Silva (67286) 04/12 12:30
 
@@ -124,7 +124,7 @@ Also in **Select Tiles**:
 
 
 ## Test specifications
-(*Test cases specification and pointers to their implementation, where adequate.*)
+[US4 Test Case Specifications](US4%20Test%20Case%20Specification.md)
 ### Review
 **Author:** Gabriel Falcão (67775) (2/12/25) 16:53
 
