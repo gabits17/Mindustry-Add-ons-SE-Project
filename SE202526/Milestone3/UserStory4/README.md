@@ -27,7 +27,7 @@ so that I don't need to save quick changes as schematics (saved block selections
 **Author**: Added the implementation documentation
 ## Implementation documentation
 
-[Textual Description](US2%20Use%20Case%20Textual%20Description.md)
+[Implementation Documentation](US4%20Implementation%20Documentation.md)
 
 #### Review
 
@@ -48,7 +48,7 @@ The implementation summary covers the user story functionality well, and explain
 
 ### Class diagrams
 
-[US4ClassDiagrams.md](US4%20Use%20Case%20Diagrams.md)
+[US4 Class Diagram](US4%20Class%20Diagrams.md)
 
 ### Review
 **Author:** Gabriel Falcão (67775) (2/12/25) 16:53
@@ -71,6 +71,11 @@ All of the usage arrow dependencies are flipped, as `Schematic` does not use `Co
 They are in the correct places but all should be flipped around.
 ##### Implementation
 The arrow used for an interface implementation is dashed and non solid, thus you should change the arrow between `CopyHistClass` and `CopyHist` and the arrow between `ArrayList` and `List`.
+
+#### Author's note
+What was said in this review was taken into account and the diagram changed accordingly.
+
+
 ### Sequence diagrams
 (*Sequence diagrams and their discussion in natural language.*)
 #### Review

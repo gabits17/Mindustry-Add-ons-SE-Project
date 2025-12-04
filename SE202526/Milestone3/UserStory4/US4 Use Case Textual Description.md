@@ -75,7 +75,7 @@ Extension point: Copy Schematic
     - *Secondary*: None
 - **Pre-Conditions**: The player is in a map.
     - **Main Flow**:
-      1. The Player presses the keybinds to paste a copied schematic (default is Ctrl + V).
+      1. The Player presses the keybinds to paste a copied schematic (default is Ctrl + V).P
       2. The game loads and displays the last copied schematic.
       3. If the player presses the keybind to see the previous copied schematic.
          1. Then displays the previous copied schematic.
