@@ -211,7 +211,9 @@ Color code meaning:
 - It was needed to handle (a lot of) corrupted old save files because of the loading and saving part.
 
 #### Review
-*(Please add your implementation summary review here)*
+**Author** : Manel Oliveira (68547), 04/12/2025 16:50
+
+There are some minor spelling mistakes, like " it was added new configurations to it.".
 ### Class diagrams
 [Swap Target Configurations Class Diagram](./CLASS-DIAGRAMS.md)
 #### Review
