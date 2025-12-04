@@ -1,3 +1,5 @@
+# Diagram
+![Use Case](Assets/UseCases.drawio.svg)
 # Main Functionalities
 ##  Undo
 - **Name**: Undo
