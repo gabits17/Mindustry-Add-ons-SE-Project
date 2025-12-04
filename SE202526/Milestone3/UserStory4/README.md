@@ -87,7 +87,42 @@ Besides what was stated above, the diagram looks fine.
 ### Sequence diagrams
 (*Sequence diagrams and their discussion in natural language.*)
 #### Review
-*(Please add your sequence diagram review here)*
+**Author**: Gabriela Silva (67286) 04/12 12:30
+
+More important: Include ``%20`` between spaces in your assets' links or change the name of the files so it does not include spaces. The figures does not appear in every IDEA. 
+
+Overall, I've understand the general behavior represented in all of these sequence diagrams. Most of the things I've point out are related to return messages, even if they are void. Some guard-conditions could be textual explained so it is cleaner to understand what they mean. The report should be more consistent in the key binds that call the start of the behavior and the return messages for every ``showInfoFade()`` message from the ``UI`` should be equal: either passage of time messages or just returns.
+
+On **Choosy copy**:
+- The message "*5. showInfoFade(...)*" does not have a return message.
+- The message "*10. useSchematic(current)*" does not have a return message.
+- The message "*12. showInfoFade(...)*" returns to the wrong lifeline. It should return to the ``DesktopInput`` lifeline.
+- After and outside the alternative fragment, the messages 2 and 1 should return to the player.
+- Personally, while working on the sequence diagrams for the third user story, me and my colleague considered the ``UI`` class as z *control* instead of *boundary*. The reason I am saying this is because the behavior we've modeled that envolves the ``UI`` class is similar, showing fade info messages. The main difference is that the ``UI`` here is used by the ``DesktopInput`` class, which is a *control* class, while in the third user story it is used by an entity class ``TurretBuild``. Maybe that is why it is different, but I'm not sure. I believe that because of this differences, it is well designed.
+- I understand ``axisTap`` is checking if the mouse scroll is going in one direction or other. I just think it would be good to mentioned that it is never zero or that when it is, nothing happens. I also think that explaining what this guard condition do would enrich the report.
+	
+On **Copy Schematic**:
+- The message "*3. copy(lastSchematic)*" does not have a return message. I'm not sure if it would be returned right away or only after the events that occur after.
+- The message "*8. add(0, scheme)*" does not have a return message
+- The guard-condition *[!contains]* is not well formatted, it should be below "opt". However, it is clear that it is the guard-condition for that opt fragment.
+- I believe the ``ArrayList`` lifeline should be continuous from the 6th to the 10th message and the ``CopyHistClass`` should as well be continuous from the 3rd to the 10th message.
+- The 11th and 13th messages should return to the ``DesktopInput`` lifeline first, then return to the ``Input``, then return to the Player.
+- Be consistent between the diagrams. If you choose to represent the calls as "Keybind : Paste" in the first diagram, do the same in this diagram, instead of just "Copy Schematic". Also, if you choose to represent the passage of time for the showInfoFade messages, do it for every message or don't do for any.
+- In the textual description, I believe it should be written "...the ``Nothing to copy!`` **text** is displayed via ``UI``".
+	
+	
+On **Get Next** and **Get Previous**:
+- Although it is clearly understandable for code developers, mentioning what is the ``size`` field in the guard condition and what does each guard condition check, would enrich the report.
+	
+On **Paste Copy** and **Select Tiles**:
+- Even if it returns void, there should be a return message from the ``DesktopInput`` lifeline, then to the ``Input`` and then to the player.
+	
+Also in **Select Tiles**:
+- The message "*3. useSchematic(lastSchematic)*" should have a return message
+- From what I understand, the reference ``create(schemX, schemY, rawCursorX, rawCursorY)`` is some behavior that happens that is not that relevant to the details of this sequence diagram, but it is important to know that it happens in that timeline. It should be explained in the textual description that it was not designed for that reason.
+
+
+
 ## Test specifications
 (*Test cases specification and pointers to their implementation, where adequate.*)
 ### Review
