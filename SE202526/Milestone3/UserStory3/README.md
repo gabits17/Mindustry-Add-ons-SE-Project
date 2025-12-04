@@ -5,6 +5,7 @@ Swapping turret's targeting priorities
 - Gabriela Silva (67286)
 ## Reviewer(s)
 - Diogo Antunes (67763)
+- Carolina Ferreira (67804)
 
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story:
@@ -210,9 +211,23 @@ Color code meaning:
 - It was needed to handle (a lot of) corrupted old save files because of the loading and saving part.
 
 #### Review
-*(Please add your implementation summary review here)*
+**Author** : Manel Oliveira (68547), 04/12/2025 16:50
+
+There are some minor spelling mistakes, like " it was added new configurations to it.".
 ### Class diagrams
 [Swap Target Configurations Class Diagram](./CLASS-DIAGRAMS.md)
+#### Review
+**Author** : Carolina Ferreira (67804), 04/12/2025 03:26
+
+For starters, as defined between the group members, Gabriela and Dinis followed the color code, which shows a sense of knowledge of what are the group decisions.
+
+With this in mind, I have nothing to point about the color chosen for each class, or the type. I would recommend, though, to add the name of the attribute used in all relations of type One-to-One, and One-to-Many.
+
+In the **Usage of Table** there is a contradiction when saying "If one is `true`, the other is `false`." and right after it's written "Both are set to `false` on the `onConfigureClose()` method (...)", referring to the ``showMenus`` and ``showEnvs`` variables. I would recommend rephrasing this sentence in order to be more accurate and to avoid confusion.
+
+In the **Usage of Reads and Write**, it's my opinion that the phrase "it was discovered several issues with the serialization of data" should be rewritten to "several issues with the serialization of data were discovered".
+
+
 ### Review
 *(Please add your class diagram review here)*
 ### Sequence diagrams

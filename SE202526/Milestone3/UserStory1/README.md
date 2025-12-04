@@ -6,6 +6,7 @@ Undo and Redo
 - Gabriela Silva (67286)
 - Dinis Neves (68130)
 - Diogo Antunes (67763)
+- Carolina Ferreira (67804)
 
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story
@@ -236,7 +237,29 @@ All this does is declare a variable `undo` associated with the key `z`, this is 
 
 
 #### Review
-*(Please add your implementation summary review here)*
+**Author**: Carolina Ferreira (67804), 04/12/2025 02:55
+
+The implementation summary is well-written and organized. I wasn't able to find any spelling or gramatical errors, but, if found, please report under this review.
+
+About the implementation itself, I was able to follow along it since me and Gabriel worked in kind of similar User Stories (Undo/Redo and Copy/Paste), so there was some input I've already given, mainly the use of already existing UI methods, in constraint to the complex solution Gabriel had before.
+I found the implementation excellent and coherent, but I would have added more comments to the additions made to ``DesktopInput``. Though they are present, personally I found them quite confusing when reading through the code to implement my onw functionalities. 
+I suggest adding some information to the comments referring the added functionality in some of those, per example:
+
+```java
+if (Core.input.keyRelease(Binding.breakBlock) || Core.input.keyRelease(Binding.select)) {
+
+            //Handle placing of blocks 
+            if (mode == placing && block != null) { //touch up while placing, place everything in selection
+                if (input.keyDown(Binding.boost)) {
+                    flushPlansReverse(linePlans);
+                } else {
+                    Command c = new BuildPlansCommand(linePlans, this);
+                    commander.execute(c);
+                }
+```
+
+
+
 ### Class diagrams
 [Class Diagrams](US1%20Class%20Diagrams.md)
 ### Review
