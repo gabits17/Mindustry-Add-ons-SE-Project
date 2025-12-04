@@ -9,7 +9,6 @@ Copy and Paste
 - Gabriel Matias (67775)
 - Gabriela Silva (67286)
 
-(*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story
 
 As an EXPERIENCED USER, I want to have access to a traversable history of
@@ -17,13 +16,13 @@ copied block selections that I can pick to paste,
 so that I don't need to save quick changes as schematics (saved block selections).
 
 ### Review
-*(Please add your user story review here)*
+Since this was a User Story originated from the split of US1 made after Milestone 1, there were no direct reviews from our colleagues.
 ## Use case diagram
-![CopyPaste.jpg](./Assets/CopyPaste.jpg)
+![CopyPaste.jpg](./Assets/CopyPaste.svg)
 
 ## Use case textual description
 
-[Textual Description](US4%20Use%20Case%20Textual%20Description.md)
+[Textual Description](US4-Use-Case-Textual-Description.md)
 
 ### Review
 **Author**: Gabriela Silva, 04/12/2025, 14:20
@@ -55,7 +54,7 @@ I understand that in this report there are no alternative flows, because they we
 
 ## Implementation documentation
 
-[Implementation Documentation](US4%20Implementation%20Documentation.md)
+[Implementation Documentation](US4-Implementation-Documentation.md)
 
 #### Review
 
@@ -76,7 +75,7 @@ The implementation summary covers the user story functionality well, and explain
 
 ### Class diagrams
 
-[US4 Class Diagram](US4%20Class%20Diagrams.md)
+[US4 Class Diagram](US4-Class-Diagrams.md)
 
 ### Review
 **Author:** Gabriel Falcão (67775) (2/12/25) 16:53
@@ -111,7 +110,7 @@ The same logic for `CopyHistClass` and its `Schematic`s maybe use an aggregation
 
 Besides what was stated above, the diagram looks fine.
 ### Sequence diagrams
-[US4 Sequence Diagrams](US4%20Sequence%20Diagrams.md)
+[US4 Sequence Diagrams](US4-Sequence-Diagrams.md)
 #### Review
 **Author**: Gabriela Silva (67286) 04/12 12:30
 
@@ -150,7 +149,7 @@ Also in **Select Tiles**:
 
 
 ## Test specifications
-[US4 Test Case Specifications](US4%20Test%20Case%20Specification.md)
+[US4 Test Case Specifications](US4-Test-Case-Specifications.md)
 ### Review
 **Author:** Gabriel Falcão (67775) (2/12/25) 16:53
 
