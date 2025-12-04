@@ -4,14 +4,14 @@ This report was updated after Diogo's review on it, at 04/12/2025 04:00.
 ---
 
 ## Select Placed Turret
-![select-turret-sd](./assets/Select%20Turret.png)
+![select-turret-sd](./assets/sequence-diagrams/select-turret-sd.png)
 
 To select a turret, the player must simply tap on a built turret. This turret **must be from the same team of the player**, which is checked by the ``interactable(player.team())``. If not the case, the system doesn't allow the player to click on it.
 
 ---
 
 ## Change Turret's Target Mode
-![change-target-mode-sd](./assets/change-target-mode.sd.svg)
+![change-target-mode-sd](./assets/sequence-diagrams/change-target-mode-sd.png)
 
 To specify which of the buttons is being pressed, it was added a comment (code style) ``// mode main button`` and ``// mode option button``. Since the time line is well defined, there is no need to add a *strict* fragment in here. Howerver, it is important to understand that only when the main button is pressed, one of the options can be selected. 
 
@@ -47,7 +47,7 @@ Every time a target mode option is selected (by pressing on its text button), th
 ---
 
 ## Change Turret's Target Environment
-![change-target-env-sd](./assets/change-target-env.sd.svg)
+![change-target-env-sd](./assets/sequence-diagrams/change-target-env-sd.png)
 
 The ``Runnable`` that is run each time a environment option button is pressed is the following:
 ````java
@@ -70,7 +70,7 @@ currEnv.setDisabled(!targetsBoth());
 ---
 
 ## Unselect Turret
-![unselect-turret-sd](./assets/unselect-turret-sd.svg)
+![unselect-turret-sd](./assets/sequence-diagrams/unselect-turret-sd.png)
 
 To stop selecting a turret, the player simply has to tap (click) on a tile that is **not** the tile where the selected turret is built.
 

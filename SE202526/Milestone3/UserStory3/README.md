@@ -12,7 +12,7 @@ Swapping turret's targeting priorities
 ### Review
 *(Please add your user story review here)*
 ## Use case diagram
-![us3-UCD](./assets/swap-targeting-ucd.svg)
+![us3-UCD](./assets/use-cases/change-targeting-ucd.png)
 ## Use case textual description
 [Swap Target Configurations Use Case Diagram textual description](./USECASE-TEMPLATE.md)
 ### Review
@@ -188,7 +188,7 @@ Having the two buttons shown, the player can choose to swap the turret's target 
 When having the options displayed, if one is chosen and it is different from the current configuration, the configuration is swapped to that option. Otherwise, an error message appears, informing that the option chosen is the same as the current one. The player can eventually do nothing, by unselecting the turret.
 
 #### Class diagram for modifications
-![modif-class-diagram](./assets/modifications-class-diagram.svg)
+![modif-class-diagram](./assets/class-diagrams/modifications-cd.png)
 
 Since this class diagram only shows modifications on the codebase, the represented ``UnitSorts`` attributes are just the ones that were added: ``fastest`` and ``slowest``.
 
@@ -261,6 +261,8 @@ _The sequence diagrams report was modified according to this review._
 We believe that, since every message and condition of the sequence diagram must be justified by code in the codebase, the methods should stay as abstract as the coding is, with a textual explanation (when necessary) in the report.
 
 We also want to explain that when the first version of the sequence diagrams report was made, the boundary handling with buttons was then not understanded by us. After a deeper research, we managed to understand that "*mode button is pressed*" can be translated to the method ``isPressed()`` in the ``TextButton`` and ``ClickListener`` classes.
+
+The *strict* fragment was ambiguous in the first version of the sequence diagrams report. After modifying it, we've understood that in the current version, it must have the *strict* fragment in both *Change Turret's Target Mode* and *Change Turret's Target Environment* sequence diagrams, since different and not directly related lifelines have behaviors that must be from a *strict order*.
 
 The "*return*" in the return messages was explicitly written because in the *Visual Paradigm* application, we did not manage to hide the sequence numbers of the time line, which leads us to decide that a message with just a number would look weird.
 
