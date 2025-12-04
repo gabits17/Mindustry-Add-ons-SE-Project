@@ -1,3 +1,9 @@
+# Use Case Diagram
+![LeakIdentificationSystem.svg](assets/LeakIdentificationSystem.svg)
+#### Actors
+Player - Mindustry game user.  
+Time - Fixed interval of time in game ticks (game time unit).
+
 # Leak interaction system
 (Supplementary to new functionality)
 Note - included steps are those relating to reaching the **new functionality**, unrelated steps are omitted.
