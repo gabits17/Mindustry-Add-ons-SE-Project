@@ -39,7 +39,7 @@ The meeting was held as usual
 
 ### Burndown Chart for the sprint
 
-Please add the burndown chart here.
+![sprint4_burndown_chart.png](sprint4_burndown_chart.png)
 
 ### Gantt Chart
 ![sprint4_gantt_chart.png](sprint4_gantt_chart.png)

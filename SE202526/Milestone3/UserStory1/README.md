@@ -6,6 +6,7 @@ Undo and Redo
 - Gabriela Silva (67286)
 - Dinis Neves (68130)
 - Diogo Antunes (67763)
+- Carolina Ferreira (67804)
 
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story
@@ -236,7 +237,29 @@ All this does is declare a variable `undo` associated with the key `z`, this is 
 
 
 #### Review
-*(Please add your implementation summary review here)*
+**Author**: Carolina Ferreira (67804), 04/12/2025 02:55
+
+The implementation summary is well-written and organized. I wasn't able to find any spelling or gramatical errors, but, if found, please report under this review.
+
+About the implementation itself, I was able to follow along it since me and Gabriel worked in kind of similar User Stories (Undo/Redo and Copy/Paste), so there was some input I've already given, mainly the use of already existing UI methods, in constraint to the complex solution Gabriel had before.
+I found the implementation excellent and coherent, but I would have added more comments to the additions made to ``DesktopInput``. Though they are present, personally I found them quite confusing when reading through the code to implement my onw functionalities. 
+I suggest adding some information to the comments referring the added functionality in some of those, per example:
+
+```java
+if (Core.input.keyRelease(Binding.breakBlock) || Core.input.keyRelease(Binding.select)) {
+
+            //Handle placing of blocks 
+            if (mode == placing && block != null) { //touch up while placing, place everything in selection
+                if (input.keyDown(Binding.boost)) {
+                    flushPlansReverse(linePlans);
+                } else {
+                    Command c = new BuildPlansCommand(linePlans, this);
+                    commander.execute(c);
+                }
+```
+
+
+
 ### Class diagrams
 [Class Diagrams](US1%20Class%20Diagrams.md)
 ### Review
@@ -267,7 +290,7 @@ Also, I think the sequence diagram referenced in **ref** should be within the la
 
 Typo of "DesktopInpu" in description.
 
-**Add Undone** and check inn all diagrams after **Add Command**
+**Add Undone** and check in all diagrams after **Add Command**
 Minor formatting comment - The text starts immediately after the image, should have an ``Enter`` there.
 Typo "refereed" -> referred
 
@@ -284,8 +307,36 @@ About the first point, I will have to ask one of the professors, what would be t
 I do not agree with the "ref \<name\>" formatting, I've been following this site as formatting reference, [UML Sequence Diagrams](https://www.uml-diagrams.org/sequence-diagrams.html ), and the author does not seem to use that type of formatting while portraying ref frames.
 
 I do agree with the rectangles after execute.
+
+#### Further Review
+**Author** : Diogo Antunes (67763), 4/12/2025 10:25
+
+The return arrows have not been added for synchronous messages.
+Paste Schematic seems to be missing a diagram? Unless it's a subheading.
+
+The diagrams with repeated logic contain a collective explanation, which is reasonable. However, I think for cases where the messages
+aren't methods, that there should be an explanation message saying what they are (so that there's an explanation for potential mismatches with the class diagrams).
+
+The entity ``ResetEvent`` is something I didn't personally include, since it merely serves as a kind of "tag" for the event system. Given its appearance in the sequence diagram, it also
+doesn't seem to be particularly relevant here as an entity.
+##### Answer
+Paste schematics has a diagram.
+Added return arrows, with nothing.
+Fixed rectangles.
+I prefer having the `ResetEvent` entity in the diagram.
+
 ## Test specifications
 [Test Specifications](US1%20Test%20Case%20Specifications.md)
 ### Review
-*(Please add your test specification review here)*
 
+**Author** : Dinis Neves (68130), 04/12/2025 01:50
+
+The unit tests are working as of the current version, although i had to run each test separately. After running the tests and reviewing the test code they are well built (specifically appreciating the `state.rules.buildSpeedMultiplier = 999999f;` line int that after removing seeming as though it did not have a change in my local testing time).
+
+These feature speaking from a personal experience is clearer to see the change through visual means, as in the demo video for this feature. (not discrediting unit tests). Do not know if adding a unit test for rotating more than one block is necessary.
+
+
+#### Answer
+The line `state.rules.buildSpeedMultiplier = 999999f` was included, because while building these tests, I used pre-existent tests as a starter, since I needed some idea how the author tested building, `buildingOverlap`, and `buildingDestruction`.
+
+About the visual representation, I too do agree that testing would have been much simpler and intuitive to understand using a visual method. Though, as you said, the visual demo goes through it more clearly, and the report tries to immerse the reader in what is actually happening.

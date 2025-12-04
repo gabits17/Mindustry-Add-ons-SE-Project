@@ -5,8 +5,9 @@ Copy and Paste
 - Manuel Oliveira (68547)
 
 ## Reviewer(s)
+- Diogo Antunes (67763)
+- Gabriel Matias (67775)
 - Gabriela Silva (67286)
-- 
 
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story
@@ -57,7 +58,22 @@ I understand that in this report there are no alternative flows, because they we
 [Implementation Documentation](US4%20Implementation%20Documentation.md)
 
 #### Review
-*(Please add your implementation summary review here)*
+
+**Author** : Diogo Antunes (67763), 3/12/2025 11:55
+
+As with other user stories, the implementation is done with a focus on desktop, since it can be more readily tested.
+
+The class diagram has already been given feedback in its own section, so I won't be commenting here, aside from a typo in "DesktoInput" instead of "Deskto**p**Input"
+
+The ``getNext`` and ``getPrevious`` methods seem fine from a surface-level glance, the copyHist doesn't know about inputs, as should be the case,
+to separate its functionality from the input control.
+
+The use of an interface for the class isn't a necessity, but also does no harm. It allows, in example for other types of copyHistory, without introducing speculative generality.
+In example, if in the future there was another type of copy history that would reset with a ``ResetEvent``, or with some other varying functionality that justified a separate class and
+not merely a specialization, such a change would require modifying less variables.
+
+The implementation summary covers the user story functionality well, and explains the rationale for the actions taken, so I've little to comment there.
+
 ### Class diagrams
 
 [US4 Class Diagram](US4%20Class%20Diagrams.md)
@@ -88,11 +104,58 @@ The arrow used for an interface implementation is dashed and non solid, thus you
 What was said in this review was taken into account and the diagram changed accordingly.
 
 
+#### Further Review
+The diagram is much better, the implementation arrows are ok, but they should be dashed.
+I know I didn't say this before and maybe the deadline is a little to close to change, but `DesktopInput` instead of a use to `CopyHist`, you should you a attribute as an arrow, instead of an attribute in `DesktopInput`, the same goes for planet.
+The same logic for `CopyHistClass` and its `Schematic`s maybe use an aggregation, instead of an use.
+
+Besides what was stated above, the diagram looks fine.
 ### Sequence diagrams
-(*Sequence diagrams and their discussion in natural language.*)
+[US4 Sequence Diagrams](US4%20Sequence%20Diagrams.md)
 #### Review
-*(Please add your sequence diagram review here)*
+**Author**: Gabriela Silva (67286) 04/12 12:30
+
+More important: Include ``%20`` between spaces in your assets' links or change the name of the files so it does not include spaces. The figures does not appear in every IDEA. 
+
+Overall, I've understand the general behavior represented in all of these sequence diagrams. Most of the things I've point out are related to return messages, even if they are void. Some guard-conditions could be textual explained so it is cleaner to understand what they mean. The report should be more consistent in the key binds that call the start of the behavior and the return messages for every ``showInfoFade()`` message from the ``UI`` should be equal: either passage of time messages or just returns.
+
+On **Choosy copy**:
+- The message "*5. showInfoFade(...)*" does not have a return message.
+- The message "*10. useSchematic(current)*" does not have a return message.
+- The message "*12. showInfoFade(...)*" returns to the wrong lifeline. It should return to the ``DesktopInput`` lifeline.
+- After and outside the alternative fragment, the messages 2 and 1 should return to the player.
+- Personally, while working on the sequence diagrams for the third user story, me and my colleague considered the ``UI`` class as z *control* instead of *boundary*. The reason I am saying this is because the behavior we've modeled that envolves the ``UI`` class is similar, showing fade info messages. The main difference is that the ``UI`` here is used by the ``DesktopInput`` class, which is a *control* class, while in the third user story it is used by an entity class ``TurretBuild``. Maybe that is why it is different, but I'm not sure. I believe that because of this differences, it is well designed.
+- I understand ``axisTap`` is checking if the mouse scroll is going in one direction or other. I just think it would be good to mentioned that it is never zero or that when it is, nothing happens. I also think that explaining what this guard condition do would enrich the report.
+	
+On **Copy Schematic**:
+- The message "*3. copy(lastSchematic)*" does not have a return message. I'm not sure if it would be returned right away or only after the events that occur after.
+- The message "*8. add(0, scheme)*" does not have a return message
+- The guard-condition *[!contains]* is not well formatted, it should be below "opt". However, it is clear that it is the guard-condition for that opt fragment.
+- I believe the ``ArrayList`` lifeline should be continuous from the 6th to the 10th message and the ``CopyHistClass`` should as well be continuous from the 3rd to the 10th message.
+- The 11th and 13th messages should return to the ``DesktopInput`` lifeline first, then return to the ``Input``, then return to the Player.
+- Be consistent between the diagrams. If you choose to represent the calls as "Keybind : Paste" in the first diagram, do the same in this diagram, instead of just "Copy Schematic". Also, if you choose to represent the passage of time for the showInfoFade messages, do it for every message or don't do for any.
+- In the textual description, I believe it should be written "...the ``Nothing to copy!`` **text** is displayed via ``UI``".
+	
+	
+On **Get Next** and **Get Previous**:
+- Although it is clearly understandable for code developers, mentioning what is the ``size`` field in the guard condition and what does each guard condition check, would enrich the report.
+	
+On **Paste Copy** and **Select Tiles**:
+- Even if it returns void, there should be a return message from the ``DesktopInput`` lifeline, then to the ``Input`` and then to the player.
+	
+Also in **Select Tiles**:
+- The message "*3. useSchematic(lastSchematic)*" should have a return message
+- From what I understand, the reference ``create(schemX, schemY, rawCursorX, rawCursorY)`` is some behavior that happens that is not that relevant to the details of this sequence diagram, but it is important to know that it happens in that timeline. It should be explained in the textual description that it was not designed for that reason.
+
+
+
 ## Test specifications
-(*Test cases specification and pointers to their implementation, where adequate.*)
+[US4 Test Case Specifications](US4%20Test%20Case%20Specification.md)
 ### Review
-*(Please add your test specification review here)*
+**Author:** Gabriel Falcão (67775) (2/12/25) 16:53
+
+This is already marked for review, but as of review, in the master branch:
+- Embed to use case textual description points to US2's textual description instead of US4's
+- Tests: `copiesValidSelectionTest`, `getNextTest`, `getPreviousTest`, `pasteLoopTest`, `copyLimitsTest`, run with errors.
+
+I´m guessing you guys tagged this for review accidentally, I'll review again when its done.

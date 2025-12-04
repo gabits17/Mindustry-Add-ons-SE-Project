@@ -125,8 +125,8 @@ public class Leaks {
 
     /** Draw dotted circles around all leaks in a certain player distance. */
     public void drawLocalLeaks(){
-        float x = Vars.player.x;
-        float y = Vars.player.y;
+        float x = Vars.player.getX();
+        float y = Vars.player.getY();
         // Intersects with square around player x and y
         this.leakTree.intersect(x - MIN_RANGE , y - MIN_RANGE, MIN_DIAM, MIN_DIAM, tile -> {
             //Ensure the tile really is leaking (if the block was broken, it shouldn't be registered as a leak)

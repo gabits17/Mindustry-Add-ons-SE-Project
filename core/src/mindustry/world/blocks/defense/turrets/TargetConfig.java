@@ -56,5 +56,12 @@ public interface TargetConfig {
      * @return Environment that matches; or null (should never happen)
      */
     Env findEnv(String str);
+
+    /**
+     * Returns the specific configuration String
+     * @param m Mode configuration
+     * @param e Env configuration
+     * @return Mode configuration to string if e is null; Env configuration to string if m is null
+     */
     String getConfigText(Mode m, Env e);
 }
