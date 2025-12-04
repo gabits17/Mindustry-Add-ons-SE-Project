@@ -10,16 +10,5 @@ The class `DesktopInput` had to be altered in order to manage the inputs for the
 
 `DesktopInput` also uses the `UI` class to show the fading text onscreen as a schematic is copied or pasted.
 
-## TODO (remove later)
- - KeyBind is not a nested class of Binding, it's an attribute
- - desktopInput is depending on the interface of CopyHist and not in the class
- - CopyHistClass is not using a concrete Schematic class that its using fot its object
- - Schematic can only be aux OR interface, not both
- - DesktopInput is control
- - UI boundary
- - Input and core as boundary
- - constants should not be shown
- - <<use>> arrows are flipped
- - implementation arrow is dashed and non solid
 
 

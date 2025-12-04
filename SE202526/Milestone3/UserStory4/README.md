@@ -57,6 +57,11 @@ All of the usage arrow dependencies are flipped, as `Schematic` does not use `Co
 They are in the correct places but all should be flipped around.
 ##### Implementation
 The arrow used for an interface implementation is dashed and non solid, thus you should change the arrow between `CopyHistClass` and `CopyHist` and the arrow between `ArrayList` and `List`.
+
+#### Author's note
+What was said in this review was taken into account and the diagram changed accordingly.
+
+
 ### Sequence diagrams
 (*Sequence diagrams and their discussion in natural language.*)
 #### Review
