@@ -114,6 +114,9 @@ Similar to ``Logic`` updates, ``Renderer`` is one of the ``ApplicationListener``
 The two renderers within this instance we will be covering are the ``MinimapRenderer`` and the ``OverlayRenderer`` with respect
 to their functionality regarding ``Leaks``.  
 The loop checks for the listener that instantiates ``Renderer`` since it´s the one covered in this use case.
+
+#### UpdateMinimap
+![seqUpdateMinimap.svg](assets/seqUpdateMinimap.svg)
 From there, the update is passed into the ``MinimapRenderer`` instance in ``Renderer``, that handles each pending update identified by a position ``pos``.
 This position is converted to a tile according to the ``World`` instance, and then the color is obtained to update the minimap.
 
@@ -125,6 +128,8 @@ For the sake of this use case, the diagram checks that the block is a ``Conduit`
 The color **col** is just a variable to facilitate explanation in the diagram. It is then used to update the ``pixelMap`` in the ``MinimapRenderer``,
 which is omitted as updating the color buffer seems to go beyond the use case scope of explanation, and it might be confusing to go into detail in the data structures.
 
+#### UpdateOverlay
+![seqUpdateOverlay.svg](assets/seqUpdateOverlay.svg)
 The next section handles the update of the ``OverlayRenderer`` instance.  
 The relevant draw call occurs in the ``drawBottom()`` method in ``OverlayRenderer`` and then ``DesktopInput``, where the ``drawLocalLeaks()`` method for the ``Leaks`` singleton instance is called.
 This consists of getting the player location **(x, y)**, and iterating over the leaking tiles within a ``MIN_RANGE`` of this position.

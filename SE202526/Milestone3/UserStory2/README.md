@@ -198,8 +198,11 @@ The `opt[not pixalated]` could be addressed separately and have a diagram just f
 There are more picky grievances than actual issues (if any) with the sequence diagrams. The effort into these diagrams cannot be understated and the report does more than suffice.
 
 #### Review response
+**Author:** Diogo Antunes (67763) (4/12/2025) : 11:30
 I have made changes to explanations as requested. I did not change, however, the opt conditions because they explicitly use the variable in messages in the sequence diagram,
 and I think it helps show where those variables are relevant.
+
+Absolutely agree with the separation of the large diagram, and have done so.
 
 I only use the "Note" notation to indicate when things may not explicitly match the class diagram: like the ``Cons`` interface mostly composed of lambda expressions relevant to ``Events``
 and, after changing according to this review, the checking for an alternate block size in "Place block" since it differs from the use case scenario.
