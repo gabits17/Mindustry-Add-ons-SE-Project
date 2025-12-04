@@ -1,3 +1,7 @@
+## Use Case Diagram
+
+![us3-UCD](./assets/use-cases/change-targeting-ucd.png)
+
 ### Notes
 Targeting **Environment** and Targeting **Mode** are two distinguished concepts.
 - *Environment* refers to which category of units the turret can attack. A turret attack air units, ground units or both.

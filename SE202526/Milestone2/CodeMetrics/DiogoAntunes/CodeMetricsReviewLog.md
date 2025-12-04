@@ -16,7 +16,7 @@ This report shows a good understanding of the matter in question and the "Contem
 
 I have no further to say, just compliment my peer for his great work and his search.
 
-### Review Response - Diogo Antunes
+### Review Response - Diogo Antunes (67763)
 I'd just like to mention that the source of the bad values weren't plugin errors, but instead due to the scope constraint
 of the metrics set itself. Good subsystem metric data can be found, but aren't guaranteed especially when there are cross-package dependencies.
 

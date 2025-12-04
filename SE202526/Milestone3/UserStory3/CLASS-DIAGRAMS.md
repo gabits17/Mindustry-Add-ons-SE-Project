@@ -2,7 +2,7 @@
 
 The class diagram for the swap turret's target configuration new functionality as a whole is shown in this file.
 
-![](./assets/swap-targetconfig-cd.svg)
+![](./assets/class-diagrams/us3-cd.png)
 
 Color code meaning:
 - <mark style="background: #32e556ff;"> Green</mark>: Classes that were *created* 

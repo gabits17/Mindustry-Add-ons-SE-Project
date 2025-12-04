@@ -13,15 +13,19 @@ This diagram shows the referred diagram in undo, it shows how the `addUndone`  m
 ## Sequence Description
 Whenever the `Player` presses the keybinds associated with the redo action, the `Input` is notified, and thus `DesktopInput` while polling `Input` understands the `Player` wants to redo the previous action, thus it calls the `redoTop` method in `Commander`,  that will thus redo the last undone action, remove the undone action from the `Commander` history, and add it as a done action, if something does not go as planed (nothing to redo), the method throws an exception and `DesktopInput` uses the `showErrorFade` method in `UI` to show an error to the `Player`.
 # Actions
-The following sequence diagrams are related to the actions that a `Player` may perform and are undo able/re doable, to note that the first call made by `Player` and the first call made by `Input` to `DesktopInput`, are just like the ones described above in undo and redo, they are mere simplifications of the keybind polling system used by `DesktopInput`.
+The following sequence diagrams are related to the actions that a `Player` may perform and are undo able/re doable, to note that the first call made by `Player` and the first call made by `Input` to `DesktopInput`, are just like the ones described above in undo and redo, they are mere simplifications of the keybind polling system used by `DesktopInput`, in description of each one of the diagrams a brief description will be given.
 All the diagrams have a similar flow, `Player` does an action -> `DesktopInput` detects the action -> `DesktopInput` creates the appropriate `Command`, and calls the `Commader` to execute that `Command`.
 ## Paste Schematic
+- place $\rightarrow$ player places the selected schematic
 ![](US1-PasteSchematicSeq.svg)
 ## Build
+- build $\rightarrow$ player plans something to be built
 ![](Assets/US1-BuildBuildingSeq.svg)
 ## Remove Selection
+- remove $\rightarrow$ player attempts to remove a selection
 ![](Assets/US1-RemoveSelectionSeq.svg)
 ## Rotate Building
+- rotate block $\rightarrow$ player rotates a block
 ![](Assets/US1-RotateBuildingSeq.svg)
 # Add Command
 ![](Assets/US1-AddCommandSeq.svg)
