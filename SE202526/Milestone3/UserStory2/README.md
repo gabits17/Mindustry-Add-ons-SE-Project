@@ -129,3 +129,8 @@ and, after changing according to this review, the checking for an alternate bloc
 ## Test specifications
 [Test Cases](test-case-specifications.md)
 ### Review
+**Author:** Manel Oliveira (68547) (4/12/2025) : 21:30
+
+Overall the tests seem very consistent and well done all throughout. I used a slightly different template for describing my tests and while the way you did it isn't worse, it may be more confusing, but this is only a matter of personal opinion. 
+
+Additionally,  brief initial explanation of how and why you couldn't design the tests in the ``ApplicationTests`` is quite well done and extensive.
