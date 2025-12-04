@@ -4,7 +4,7 @@ This report was updated after Diogo's review on it, at 04/12/2025 04:00.
 ---
 
 ## Select Placed Turret
-![select-turret-sd](./assets/select-turret-sd.svg)
+![select-turret-sd](./assets/Select%20Turret.png)
 
 To select a turret, the player must simply tap on a built turret. This turret **must be from the same team of the player**, which is checked by the ``interactable(player.team())``. If not the case, the system doesn't allow the player to click on it.
 
