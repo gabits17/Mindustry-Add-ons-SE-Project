@@ -6,8 +6,8 @@
 ## Duplicated Code
 The **Duplicated Code** code smell is found in the ``Blocks.java`` file, from the package ``mindustry.content``, more specifically in the ``load()`` method, as showed in the snippet below:
 
-![alt text](image-1.png)
-![alt text](image-9.png)
+![alt text](Assets/image-1.png)
+![alt text](Assets/image-9.png)
 
 **Duplicated Code** is the product of many factors, and it can even be purposeful. 
 
@@ -21,10 +21,10 @@ This change not only solves the **Duplication code** problem, but also makes the
 ## Data Clumps
 The **Data Clumps** code smell is found in the ``BlockerIndex.java`` file, from the package ``mindustry.ai``, more specifically in the ``findEnemyTile()`` and ``findTile()`` methods, as showed in the snippets below:
 
-![alt text](image-3.png)
-![alt text](image-4.png)
-![alt text](image-5.png)
-![alt text](image-6.png)
+![alt text](Assets/image-3.png)
+![alt text](Assets/image-4.png)
+![alt text](Assets/image-5.png)
+![alt text](Assets/image-6.png)
 
 As seen above, the ``team``, ``x``, ``y`` and ``pred`` parameters appear together more than once, as a clear sign of **Data Clumps**, a result from a vast number of reasons, like poor program structure or the so-called "copypasta programming".
 
@@ -36,12 +36,12 @@ To solve this case of bad smell in the area (pun inteended), since we're peaking
 ## Feature envy 
 The **Feature envy** code smell is found in the ``ContentParser.java`` file, from the package ``mindustry.mod``, specifically in the ``readFields()``, as showed in the snippet below:
 
-![alt text](image-11.png)
+![alt text](Assets/image-11.png)
 
 We can see this code smell better in the following section:
 
-![alt text](image-12.png)
-![alt text](image-13.png)
+![alt text](Assets/image-12.png)
+![alt text](Assets/image-13.png)
 
 In this method, the ``ContentParser`` class directly accesses methods of ``TechTree`` and ``TechNode`` classes, to set, get and manipulate it's data.
 
