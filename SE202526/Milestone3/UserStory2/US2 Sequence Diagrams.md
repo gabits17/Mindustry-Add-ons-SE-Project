@@ -109,7 +109,7 @@ In either of those cases, the minimap needs an update in that tile -> ``updatePi
 ## Update leak display
 ![seqUpdateLeakDisplay.svg](assets/seqUpdateLeakDisplay.svg)
 
-This sequence diagrams covers the update of display elements related to leaks (minimap and local leaks circle overlays).  
+This sequence diagram covers the update of display elements related to leaks (minimap and local leaks circle overlays).  
 Similar to ``Logic`` updates, ``Renderer`` is one of the ``ApplicationListener`` modules updated at a regular interval.
 The two renderers within this instance we will be covering are the ``MinimapRenderer`` and the ``OverlayRenderer`` with respect
 to their functionality regarding ``Leaks``.  
@@ -118,7 +118,7 @@ The loop checks for the listener that instantiates ``Renderer`` since it´s the 
 #### UpdateMinimap
 ![seqUpdateMinimap.svg](assets/seqUpdateMinimap.svg)
 
-From there, the update is passed into the ``MinimapRenderer`` instance in ``Renderer``, that handles each pending update identified by a position ``pos``.
+The update is passed into the ``MinimapRenderer`` instance in ``Renderer``, that handles each pending update identified by a position ``pos``.
 This position is converted to a tile according to the ``World`` instance, and then the color is obtained to update the minimap.
 
 For the sake of this use case, the diagram checks that the block is a ``Conduit`` (type of leaking block) so that the modified implementation of ``minimapColor()`` can be explained
