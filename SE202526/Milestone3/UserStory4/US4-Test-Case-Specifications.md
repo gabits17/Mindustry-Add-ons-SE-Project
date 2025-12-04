@@ -3,7 +3,7 @@
 ## Small note
 The system we built strictly adds on top of the pre-existing Schematics, building and selecting systems of the game, and therefore we felt it would be unnecessary and repetitive to be testing those aspects of the entire copying and pasting functions.
 
-Instead, we preferred testing the code that we made. The tests bellow are implemented in **tests/src/test/java/ApplicationTests.java**.
+Instead, we preferred testing mainly functionalities we implemented on an "in-game" situation.
 
 For this document it should be referred the explanation at the beginning of our [US4 Use Case Textual Description](US4%20Use%20Case%20Textual%20Description.md) report.
 
