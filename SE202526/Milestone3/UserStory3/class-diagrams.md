@@ -1,3 +1,7 @@
+#### Notes
+This report was updated after Carolina's review on it, at 04/12/2025 22:15.
+
+---
 ## Swap Turret's Target Configuration Class Diagram
 
 The class diagram for the swap turret's target configuration new functionality as a whole is shown in this file.

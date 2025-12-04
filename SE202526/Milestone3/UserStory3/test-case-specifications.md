@@ -1,3 +1,8 @@
+#### Notes
+This report was updated after Gabriel's review on it, at 03/12/2025 22:15.
+
+---
+
 ## System Testing
 
 ### Introduction

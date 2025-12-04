@@ -1,4 +1,7 @@
+#### Notes
+This report was updated after Manuel's review on it, at 04/12/2025 22:30.
 
+---
 #### Commits
 
 17/11/2025:
