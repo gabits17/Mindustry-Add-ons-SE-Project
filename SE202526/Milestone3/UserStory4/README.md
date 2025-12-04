@@ -26,7 +26,33 @@ so that I don't need to save quick changes as schematics (saved block selections
 [Textual Description](US4%20Use%20Case%20Textual%20Description.md)
 
 ### Review
-**Author**: Added the implementation documentation
+**Author**: Gabriela Silva, 04/12/2025, 14:20
+
+**Most important:** Every use case main flow should start with "*The use case starts when...*"!
+
+On **Select Tiles**:
+- The extension points should not be only at the end of the use case, but in the middle were they can happen.
+
+On **Choose Copy**:
+- Its name (*Change Copy*) does not match its title; it should be *Choose Copy*.
+- Main flow is not with sequence numbers but with sequence letters; "inner sequences" are also with sequence letters, which could be confusing. Keep the textual description consistent: display sequence numbers in the outter sequence and letters in the inner.
+- Again, the extention points should be in the middle where they can happen, not only at the end.
+
+I think it would be better to write "*Extension Points*" as the title for the extension points use cases, instead of "*Extends*".
+
+On **Paste Copy**:
+- As I said, every use case main flow should start with "*The use case starts when...*". Point *ii.* of the main flow has "*Then places the displayed schematic in the game world.*" Do not use "then", I recommend using "*The system/game places the displayed schematic in the game world.*". At least specify a subject that acts in the point, don't just write "then does this".
+
+On **Scroll Through Copies**:
+- If this use case is abstract (because in the template it is written with italic), it should be noted in the diagram. That is, have ``{abstract}`` on it or write it as italic as well.
+
+On **Get Next Copy** and **Get Previous Copy**:
+- Since this use cases are generalizations of the abstract *Scroll Through Copies*, both should have an additional field "**Specializes**: *Scroll through copies*".
+- Me and my colleague modeled the use cases IDs with, for instance, "1.1" for one alternative flow for the use case with ID "1". Here, although *Get Next Copy* and *Get Previous Copy* are generalizations of *Scroll Through Copies*, I think it would be best if they had their own ID, as "EUC4" and "EUC5", to follow your style of identification.
+- I don't understand what is "(01.) in the first point (i.) of both main flows.
+
+I understand that in this report there are no alternative flows, because they were modeled as "``ifs``" on the use case's main flow. Despite understanding your intentions, I believe there should be an alternative flow named "No copied schematics".
+
 ## Implementation documentation
 
 [Implementation Documentation](US4%20Implementation%20Documentation.md)
