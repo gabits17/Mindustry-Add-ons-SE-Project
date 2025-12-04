@@ -8,7 +8,7 @@ Swap Turret's Target Configurations
 ## Reviewer(s)
 - Diogo Antunes (67763)
 - Carolina Ferreira (67804)
--
+- Manuel Oliveira (68547)
 
 ---
 
@@ -27,8 +27,7 @@ Even though it looks like a great add to the game, we need to ensure it doesn't 
 [comment]: <> (% ------------------ USE CASE ---------------------- %)
 
 ## Use case diagram
-![us3-UCD](./assets/use-cases/change-targeting-ucd.png)
-
+The use case diagram is in the following link.
 
 ## Use case textual description
 [Swap Target Configurations Use Case Diagram textual description](./USECASE-TEMPLATE.md)
