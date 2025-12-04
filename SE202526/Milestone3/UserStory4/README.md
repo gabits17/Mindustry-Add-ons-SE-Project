@@ -78,6 +78,12 @@ The arrow used for an interface implementation is dashed and non solid, thus you
 What was said in this review was taken into account and the diagram changed accordingly.
 
 
+#### Further Review
+The diagram is much better, the implementation arrows are ok, but they should be dashed.
+I know I didn't say this before and maybe the deadline is a little to close to change, but `DesktopInput` instead of a use to `CopyHist`, you should you a attribute as an arrow, instead of an attribute in `DesktopInput`, the same goes for planet.
+The same logic for `CopyHistClass` and its `Schematic`s maybe use an aggregation, instead of an use.
+
+Besides what was stated above, the diagram looks fine.
 ### Sequence diagrams
 (*Sequence diagrams and their discussion in natural language.*)
 #### Review
