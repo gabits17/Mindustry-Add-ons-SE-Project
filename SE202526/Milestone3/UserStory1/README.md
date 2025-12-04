@@ -59,9 +59,6 @@ if (Core.input.keyRelease(Binding.breakBlock) || Core.input.keyRelease(Binding.s
                     commander.execute(c);
                 }
 ```
-
-
-
 ### Class diagrams
 [Class Diagrams](US1%20Class%20Diagrams.md)
 ### Review
@@ -72,8 +69,6 @@ As someone who has followed this implementation the class diagrams seem to provi
 A small nitpick that I have is that for ease of traversing through the code to check the implemented and changed classes a path like [mindustry/input/Commander.java] would help out in this regard.
 
 Concluding, the Class Diagram is correct and I only have a small difference in preference for the explanation document layout of the Class Diagram.
-
-
 #### Answer
 Gabriel Falcão (67775), 24/11/2025 10:14
 
