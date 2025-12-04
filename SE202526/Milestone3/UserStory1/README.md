@@ -13,7 +13,6 @@ Undo and Redo
 [User Story 1](../../Milestone1/UserStory1.md)
 
 ## Use case diagram
-![Use Case](Assets/UseCases.drawio.svg)
 ## Use case textual description
 [Textual Description](US1%20Use%20Case%20Textual%20Description.md)
 ### Review
