@@ -8,13 +8,13 @@ Swapping turret's targeting priorities
 
 (*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story:
-[User Story 3: Swap Targeting](../../Milestone1/UserStory3.md)
+[User Story 3: Swap Target Configurations](../../Milestone1/UserStory3.md)
 ### Review
 *(Please add your user story review here)*
 ## Use case diagram
 ![us3-UCD](./assets/swap-targeting-ucd.svg)
 ## Use case textual description
-[Textual description from Swap Targeting's use case diagram](./USECASE-TEMPLATE.md)
+[Swap Target Configurations Use Case Diagram textual description](./USECASE-TEMPLATE.md)
 ### Review
 **Author** : Diogo Antunes (67763), 23/11/2025 16:13
 
@@ -34,8 +34,10 @@ With that in mind, the functionality is an easy to understand extension to the t
 as well as the deselection being considered part of the **Select placed turret** use case.
 
 ---
+
 _The use case diagram's textual description was modified according to this review._
 
+---
 ## Implementation documentation
 
 #### Commits
@@ -72,6 +74,9 @@ _The use case diagram's textual description was modified according to this revie
 30/11/2025:
 ![commit12](./assets/commits/commit12.png)
 ![commit13](./assets/commits/commit13.png)
+
+03/12/2025:
+![commit14](./assets/commits/commit14.png)
 
 
 #### Briefing 
@@ -207,11 +212,11 @@ Color code meaning:
 #### Review
 *(Please add your implementation summary review here)*
 ### Class diagrams
-(*Class diagrams and their discussion in natural language.*)
+[Swap Target Configurations Class Diagram](./CLASS-DIAGRAMS.md)
 ### Review
 *(Please add your class diagram review here)*
 ### Sequence diagrams
-[Sequence diagrams for Swapping Turret's Targeting User Story](./SEQUENCE-DIAGRAMS.md)
+[Swap Target Configurations Sequence Diagrams](./SEQUENCE-DIAGRAMS.md)
 #### Review
 **Author** : Diogo Antunes (67763), 29/11/2025 14:46
 
@@ -248,6 +253,19 @@ but I might be wrong in pointing this out.
 - There seems to be a use of public methods like ``toString()`` at times or using java boolean negation like "!targetsBoth()" which potentially lessens readability
 considering it's meant to be understood by non-programmers. However, since each method in the sequence diagram is supposed to correspond to something in the code, I'm not sure how this could be changed without removing meaning.
 Altering the method name in the sequence diagram and then explaining the abstraction that was used could be an option but I'm not at all sure that would be the right thing to do.
+
+---
+_The sequence diagrams report was modified according to this review._
+
+**Answer:**
+We believe that, since every message and condition of the sequence diagram must be justified by code in the codebase, the methods should stay as abstract as the coding is, with a textual explanation (when necessary) in the report.
+
+We also want to explain that when the first version of the sequence diagrams report was made, the boundary handling with buttons was then not understanded by us. After a deeper research, we managed to understand that "*mode button is pressed*" can be translated to the method ``isPressed()`` in the ``TextButton`` and ``ClickListener`` classes.
+
+The "*return*" in the return messages was explicitly written because in the *Visual Paradigm* application, we did not manage to hide the sequence numbers of the time line, which leads us to decide that a message with just a number would look weird.
+
+---
+
 
 ## Test specifications
 [Swap Targeting Configurations Functionality Testing](./SYSTEM-TESTING.md)

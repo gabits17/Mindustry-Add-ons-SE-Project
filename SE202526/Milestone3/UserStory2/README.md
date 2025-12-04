@@ -152,7 +152,11 @@ Omitted private constants as they're either magic numbers (a specific max range)
 I feel these aren't specifically relevant to the class structure and don't need to exist (just syntactic sugar), therefore I didn't put them into class diagrams.
 
 #### Review
-*(Please add your implementation summary review here)*
+
+**Author** : Dinis Neves (68130) 03/12/2025 11:11
+
+The Implementation summary is nice and concise not wasting the readers time. All information seems to be present. If there is something that is missing form the documentation and or from the summary I have missed it. Everything is correctly mentioned and no real issue was noticed by me.
+
 ### Class diagrams
 [Class Diagrams](US2%20Class%20Diagrams.md)
 #### Review
@@ -167,7 +171,32 @@ During my review, Diogo corrected the **Clear leaks** diagram, which is confirme
 
 [Sequence Diagrams](US2%20Sequence%20Diagrams.md)
 #### Review
-*(Please add your sequence diagram review here)*
+
+**Author:** Dinis Neves (68130) (04/12/2025) 3:00
+
+The communication in between boundary, entity, controller, seems to be correct. Issues with repetition of explanations could be addressed to make the writing more concise. ex: logic reset that is mentioned in enter, exit map and clear leaks could be only addressed once instead of being mentioned in all sequence diagram explanations.
+
+I appreciate the addresses like the addressing the `Event` mediator class. The seclusion of this explanation could be used in other parts of the Sequence diagram explanation. ex: `Place block` having "This case wasn't considered in the use case... "
+
+
+Tackling `Update leakable block tile` I agree with the sequence diagram. Regarding the explanation I believe the separate conditions (opt) like (abbreviated) can leak, which team, and within those the was to is leaking and vice versa.
+Could be explained in a shorter manner. For example bullet points (like how it is used for the leaking to not transitions).
+
+- "know whether the ``ConduitBuild`` can actually leak"
+- "know whether the tile is in the ``Player`` team"
+
+And then if need be delve into further detail.
+
+(Personal preference would be to have the "... we can check for a transition:" bullet points first and then explain them).
+
+`Update leak display` Sequence diagram in my perspective looks unapproachable at first. I think it could, (not saying it should), be split into minimap and dash circle sections.
+
+The `opt[not pixalated]` could be addressed separately and have a diagram just for it. Although more effort and not necessary 3 diagrams to go over `Update leak display` in my eyes would help out the who is to interpret the diagram. (full one like the original,  and the two renderers: minimap and local circle overlays).
+
+(Not to repeat myself but, "For the sake of this use case, the diagram checks that the block is a ``Conduit``" could be addressed separately as a "Note:" I believe it is not the most important in part of the explanation and could be addressed separately, (personal preference)).
+
+There are more picky grievances than actual issues (if any) with the sequence diagrams. The effort into these diagrams cannot be understated and the report does more than suffice.
+
 ## Test specifications
 
 I wasn't able to create unit tests for the new functionality. The ``ApplicationTests`` supports setting up a very reduced game environment to allow for testing functionalities. The problem is that the ``Leaks`` class specifically interacts with the ``Renderer`` from ``Vars``, and ``Renderer``

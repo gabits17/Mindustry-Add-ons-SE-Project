@@ -287,5 +287,12 @@ I do agree with the rectangles after execute.
 ## Test specifications
 [Test Specifications](US1%20Test%20Case%20Specifications.md)
 ### Review
-*(Please add your test specification review here)*
+
+**Author** : Dinis Neves (68130), 04/12/2025 01:50
+
+The unit tests are working as of the current version, although i had to run each test separately. After running the tests and reviewing the test code they are well built (specifically appreciating the `state.rules.buildSpeedMultiplier = 999999f;` line int that after removing seeming as though it did not have a change in my local testing time).
+
+These feature speaking from a personal experience is clearer to see the change through visual means, as in the demo video for this feature. (not discrediting unit tests). Do not know if adding a unit test for rotating more than one block is necessary.
+
+
 

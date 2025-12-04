@@ -12,7 +12,6 @@ import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
-import mindustry.Vars;
 import mindustry.audio.*;
 import mindustry.content.*;
 import mindustry.core.*;
@@ -995,7 +994,7 @@ public class Turret extends ReloadTurret{
 
         @Override
         public void onConfigureClosed() {
-            super.onConfigureClosed();
+            super.onConfigureClosed(); // does nothing, but is important to represent the inheritance
 
             showModes = false;
             showEnvs = false;
@@ -1003,6 +1002,7 @@ public class Turret extends ReloadTurret{
 
         @Override
         public void buildConfiguration(Table table) {
+            super.buildConfiguration(table); // does nothing, but is important to represent the inheritance
             table.left();
 
             Table modesMenu = buildModesMenu();
@@ -1027,7 +1027,7 @@ public class Turret extends ReloadTurret{
             if(config) configStr = modeString(getTargetMode());
             else configStr = envString(getTargetEnv());
 
-            return menu.button(configStr, Styles.togglet, () -> {
+            return menu.button(configStr, () -> {
                 if(config) {
                     showModes = !showModes;
                     if(showModes) showEnvs = false;
@@ -1075,7 +1075,7 @@ public class Turret extends ReloadTurret{
             modeGroup.setMinCheckCount(0);
 
             for(TargetConfig.Mode mode : TargetConfig.Mode.values()){
-                TextButton b = commandModes.button(modeString(mode), Styles.togglet,() -> {
+                TextButton b = commandModes.button(modeString(mode), Styles.togglet, () -> {
                     // only does the work of changing it if it is not the same mode when choosing an option (ucd alternative flow)
                     if(getTargetMode() != mode)
                         configure(mode);
@@ -1120,12 +1120,12 @@ public class Turret extends ReloadTurret{
 
             if(targetsBoth()) {
                 for (TargetConfig.Env env : TargetConfig.Env.values()) {
-                    TextButton b = commandEnvs.button(envString(env), Styles.togglet, () -> {
+                    TextButton b = commandEnvs.button(envString(env), Styles.togglet,() -> {
                         // only does the work of changing if it is not the same environment when choosing an option (ucd alternative flow)
                         if(getTargetEnv() != env)
                             configure(env);
                         else
-                            Vars.ui.showErrorFade("Same current target environment!", 2f);
+                            ui.showErrorFade("Same current target environment!", 2f);
                     }).group(envGroup).get();
 
                     b.update(() -> b.setChecked(getTargetEnv() == env)); // updating the highlighted button
