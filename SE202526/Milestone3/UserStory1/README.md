@@ -296,6 +296,11 @@ aren't methods, that there should be an explanation message saying what they are
 
 The entity ``ResetEvent`` is something I didn't personally include, since it merely serves as a kind of "tag" for the event system. Given its appearance in the sequence diagram, it also
 doesn't seem to be particularly relevant here as an entity.
+##### Answer
+Paste schematics has a diagram.
+Added return arrows, with nothing.
+Fixed rectangles.
+I prefer having the `ResetEvent` entity in the diagram.
 
 ## Test specifications
 [Test Specifications](US1%20Test%20Case%20Specifications.md)

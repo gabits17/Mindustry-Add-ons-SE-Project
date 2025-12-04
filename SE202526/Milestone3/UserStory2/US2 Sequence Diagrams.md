@@ -109,12 +109,16 @@ In either of those cases, the minimap needs an update in that tile -> ``updatePi
 ## Update leak display
 ![seqUpdateLeakDisplay.svg](assets/seqUpdateLeakDisplay.svg)
 
-This sequence diagrams covers the update of display elements related to leaks (minimap and local leaks circle overlays).  
+This sequence diagram covers the update of display elements related to leaks (minimap and local leaks circle overlays).  
 Similar to ``Logic`` updates, ``Renderer`` is one of the ``ApplicationListener`` modules updated at a regular interval.
 The two renderers within this instance we will be covering are the ``MinimapRenderer`` and the ``OverlayRenderer`` with respect
 to their functionality regarding ``Leaks``.  
 The loop checks for the listener that instantiates ``Renderer`` since it´s the one covered in this use case.
-From there, the update is passed into the ``MinimapRenderer`` instance in ``Renderer``, that handles each pending update identified by a position ``pos``.
+
+#### UpdateMinimap
+![seqUpdateMinimap.svg](assets/seqUpdateMinimap.svg)
+
+The update is passed into the ``MinimapRenderer`` instance in ``Renderer``, that handles each pending update identified by a position ``pos``.
 This position is converted to a tile according to the ``World`` instance, and then the color is obtained to update the minimap.
 
 For the sake of this use case, the diagram checks that the block is a ``Conduit`` (type of leaking block) so that the modified implementation of ``minimapColor()`` can be explained
@@ -124,6 +128,9 @@ For the sake of this use case, the diagram checks that the block is a ``Conduit`
 
 The color **col** is just a variable to facilitate explanation in the diagram. It is then used to update the ``pixelMap`` in the ``MinimapRenderer``,
 which is omitted as updating the color buffer seems to go beyond the use case scope of explanation, and it might be confusing to go into detail in the data structures.
+
+#### UpdateOverlay
+![seqUpdateOverlay.svg](assets/seqUpdateOverlay.svg)
 
 The next section handles the update of the ``OverlayRenderer`` instance.  
 The relevant draw call occurs in the ``drawBottom()`` method in ``OverlayRenderer`` and then ``DesktopInput``, where the ``drawLocalLeaks()`` method for the ``Leaks`` singleton instance is called.
