@@ -8,7 +8,6 @@ Leak identification via minimap and proximity
 - Dinis Neves (68130)
 - Manuel Oliveira (68547)
 
-(*Please add the user story reviewer(s) here, one in each line, providing the authors' name and surname, along with their student number. In the reviews presented in this document, add the corresponding reviewers.*)
 ## User Story:
 [User Story 2: Leak identification](../../Milestone1/UserStory2.md)
 
@@ -130,4 +129,3 @@ and, after changing according to this review, the checking for an alternate bloc
 ## Test specifications
 [Test Cases](test-case-specifications.md)
 ### Review
-*(Please add your test specification review here)*
