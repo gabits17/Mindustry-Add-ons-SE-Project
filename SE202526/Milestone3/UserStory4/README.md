@@ -25,7 +25,7 @@ so that I don't need to save quick changes as schematics (saved block selections
 [Textual Description](US4%20Use%20Case%20Textual%20Description.md)
 
 ### Review
-**Author**: Gabriela Silva
+**Author**: Gabriela Silva, 04/12/2025, 14:20
 
 **Most important:** Every use case main flow should start with "*The use case starts when...*"!
 
