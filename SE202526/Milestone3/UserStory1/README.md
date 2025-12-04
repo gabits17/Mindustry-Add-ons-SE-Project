@@ -295,4 +295,7 @@ The unit tests are working as of the current version, although i had to run each
 These feature speaking from a personal experience is clearer to see the change through visual means, as in the demo video for this feature. (not discrediting unit tests). Do not know if adding a unit test for rotating more than one block is necessary.
 
 
+#### Answer
+The line `state.rules.buildSpeedMultiplier = 999999f` was included, because while building these tests, I used pre-existent tests as a starter, since I needed some idea how the author tested building, `buildingOverlap`, and `buildingDestruction`.
 
+About the visual representation, I too do agree that testing would have been much simpler and intuitive to understand using a visual method. Though, as you said, the visual demo goes through it more clearly, and the report tries to immerse the reader in what is actually happening.
