@@ -30,7 +30,7 @@ Even though it looks like a great add to the game, we need to ensure it doesn't 
 The use case diagram is in the following link.
 
 ## Use case textual description
-[Swap Target Configurations Use Case Diagram textual description](./USECASE-TEMPLATE.md)
+[Swap Target Configurations Use Case Diagram textual description](./use-case-template.md)
 
 
 ### Review
@@ -62,7 +62,7 @@ _The use case diagram and its textual description were modified according to thi
 [comment]: <> (% ------------------ IMPLEMENTATION DOC ---------------------- %)
 
 ## Implementation documentation
-[Swap Target Configurations Implementation Documentation](./IMPLEMENTATION-DOCUMENTATION.md)
+[Swap Target Configurations Implementation Documentation](./implementation-documentation.md)
 
 
 #### Review
@@ -85,7 +85,7 @@ _The implementation report was modified according to this review._
 
 ---
 ### Class diagrams
-[Swap Target Configurations Class Diagram](./CLASS-DIAGRAMS.md)
+[Swap Target Configurations Class Diagram](./class-diagrams.md)
 
 
 ### Review
@@ -108,7 +108,7 @@ _The use class diagram and its report were modified according to this review._
 
 ---
 ### Sequence diagrams
-[Swap Target Configurations Sequence Diagrams](./SEQUENCE-DIAGRAMS.md)
+[Swap Target Configurations Sequence Diagrams](./sequence-diagrams.md)
 
 
 #### Review
@@ -165,7 +165,7 @@ _The sequence diagrams report was modified according to this review._
 
 
 ## Test specifications
-[Swap Targeting Configurations Functionality Testing](./SYSTEM-TESTING.md)
+[Swap Targeting Configurations Functionality Testing](./test-case-specifications.md)
 ### Review
 **Author:** Gabriel Falcão (67775) (3/12/25) 10:53
 
