@@ -21,21 +21,19 @@ For that reason, except for titles, throughout this document we'll be referring 
     - *Secondary*: None
 - **Pre-Conditions**: The Player is in a valid game and map.
 - **Main Flow**:
-    1. The player selects the tiles to turn to a schematic.
-    2. If the player presses the keybind to copy a schematic (default is "ctrl + c").
+    1. The use case starts when the player presses the **select** keybind (default is "f").
+    2. The player selects the tiles to turn to a schematic.
+    3. If the player presses the keybind to copy a schematic (default is "ctrl + c").
         1. Then the schematic selected is copied to the history of copied schematics.
-    3. The use case ends.
-
-Extension point: Save Schematic
-
-Extension point: Copy Schematic
+        2. Extension point: Copy Schematic
+    4. The use case ends.
 
 - **Alternative Flows**
     - None
 - **Post-Conditions**: The tiles selected are displayed.
 
 ###  **Choose Copy**
-- **Name**: Change Copy
+- **Name**: Choose Copy
 - **ID**: UC2
 - **Description**: The player chooses what copied schematic they want to build.
 - **Actors**:
@@ -43,20 +41,21 @@ Extension point: Copy Schematic
     - *Secondary*: None
 - **Pre-Conditions**: The player is in a map.
     - **Main Flow**:
-        1. The Player presses the keybinds to paste a copied schematic (default is Ctrl + V).
-        2. If there are no copied schematics.
-            1. Ends the use case.
-        3. The game loads and displays the last copied schematic.
-        4. If the player presses the keybind to see the previous copied schematic.
-            1. Then displays the previous copied schematic.
-        5. If the player presses the keybind to see the next copied schematic.
-            1. Then displays the next copied schematic.
-        6. If the player presses the place keybind (left click by default)
-            1. Then places the displayed schematic in the game world.
+    1. The use case starts when the player presses the **select** keybind (default is "f").
+    2. The Player presses the keybinds to paste a copied schematic (default is Ctrl + V).
+    3. If there are no copied schematics.
+        1. Ends the use case.
+    4. The game loads and displays the last copied schematic.
+    5. If the player presses the keybind to see the previous copied schematic.
+        1. Then displays the previous copied schematic.
+        2. Extension point: Scroll through copies
+    6. If the player presses the keybind to see the next copied schematic.
+        1. Then displays the next copied schematic.
+        2. Extension point: Scroll through copies
+    7. If the player presses the place keybind (left click by default)
+        1. Then places the displayed schematic in the game world.
+        2. Extension point: Paste Copy
 
-Extension point: Paste Copy
-
-Extension point: Scroll through copies
 
 - **Alternative Flows**
     - None
@@ -72,13 +71,12 @@ Extension point: Scroll through copies
     - *Secondary*: None
 - **Pre-Conditions**: The player has selected a schematic.
 - **Main Flow**:
-    1. The player presses the keybind to copy a schematic (default is "ctrl + c").
-    2. If there are no copied schematics.
-        1. Ends the use case.
-    3. The schematic selected is copied to the history of copied schematics.
+    1. The use case starts when the player presses the keybind to copy a schematic (default is "ctrl + c").
+    2. The schematic selected is copied to the history of copied schematics.
 
 - **Alternative Flows**
-    - None
+    1. If there are no copied schematics.
+        1. Ends the use case.
 - **Post-Conditions**: The schematic is saved to the planet's history.
 
 ## **Paste Copy**
@@ -90,7 +88,7 @@ Extension point: Scroll through copies
     - *Secondary*: None
 - **Pre-Conditions**: The player has selected a schematic from the history of copied ones, and said history is not empty.
 - **Main Flow**:
-    1. The player presses the place keybind (left click by default).
+    1. The use case starts when the player presses the place keybind (left click by default).
     2. Then places the displayed schematic in the game world.
 
 - **Alternative Flows**
@@ -106,7 +104,7 @@ Extension point: Scroll through copies
     - *Secondary*: None
 - **Pre-Conditions**: The player has selected a schematic.
 - **Main Flow**:
-    1. The player scrolls through the copies of schematics saved to the history using the input selected.
+    1. The use case starts when the player scrolls through the copies of schematics saved to the history using the input selected.
 - **Alternative Flows**
     - None
 - **Post-Conditions**: None.
@@ -120,9 +118,11 @@ Extension point: Scroll through copies
     - *Secondary*: None
 - **Pre-Conditions**: The player has selected a schematic.
 - **Main Flow**:
-    1. (01.) The player scrolls through the copies of schematics saved to the history using the input selected.
+    1. (01.) The use case starts when the player scrolls through the copies of schematics saved to the history using the input selected.
     2. The player presses the keybind to see the next copied schematic.
     3. The game displays the next copied schematic.
+
+- "**Specializes**: *Scroll through copies*"
 - **Alternative Flows**
     - None
 - **Post-Conditions**: None.
@@ -136,9 +136,11 @@ Extension point: Scroll through copies
     - *Secondary*: None
 - **Pre-Conditions**: The player has selected a schematic.
 - **Main Flow**:
-    1. (01.) The player scrolls through the copies of schematics saved to the history using the input selected.
+    1. (01.) The use case starts when the player scrolls through the copies of schematics saved to the history using the input selected.
     2. The player presses the keybind to see the previous copied schematic.
     3. The game displays the previous copied schematic.
+
+- "**Specializes**: *Scroll through copies*"
 - **Alternative Flows**
     - None
 - **Post-Conditions**: None.
