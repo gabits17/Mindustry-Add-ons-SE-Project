@@ -83,4 +83,11 @@ What was said in this review was taken into account and the diagram changed acco
 ## Test specifications
 (*Test cases specification and pointers to their implementation, where adequate.*)
 ### Review
+**Author:** Gabriel Falcão (67775) (2/12/25) 16:53
+
+This is already marked for review, but as of review, in the master branch:
+- Embed to use case textual description points to US2's textual description instead of US4's
+- Tests: `copiesValidSelectionTest`, `getNextTest`, `getPreviousTest`, `pasteLoopTest`, `copyLimitsTest`, run with errors.
+
+I´m guessing you guys tagged this for review accidentally, I'll review again when its done.
 *(Please add your test specification review here)*
