@@ -5,7 +5,7 @@ The system we built strictly adds on top of the pre-existing Schematics, buildin
 
 Instead, we preferred testing the code that we made. The tests bellow are implemented in **tests/src/test/java/ApplicationTests.java**.
 
-For this document it should be referred the explanation at the beginning of our [US4 Use Case Textual Description](US2%20Use%20Case%20Textual%20Description.md) report.
+For this document it should be referred the explanation at the beginning of our [US4 Use Case Textual Description](US4%20Use%20Case%20Textual%20Description.md) report.
 
 In which it is clarified the difference between "schematic" and "Schematic" for the context of explaining our work. In summary the game already implements "Schematics" in a different system, and every time we talk about "schematics", it means a way to keep a selection of tiles.
 
