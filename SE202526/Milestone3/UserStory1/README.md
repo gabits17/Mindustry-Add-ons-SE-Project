@@ -267,7 +267,7 @@ Also, I think the sequence diagram referenced in **ref** should be within the la
 
 Typo of "DesktopInpu" in description.
 
-**Add Undone** and check inn all diagrams after **Add Command**
+**Add Undone** and check in all diagrams after **Add Command**
 Minor formatting comment - The text starts immediately after the image, should have an ``Enter`` there.
 Typo "refereed" -> referred
 
@@ -284,6 +284,19 @@ About the first point, I will have to ask one of the professors, what would be t
 I do not agree with the "ref \<name\>" formatting, I've been following this site as formatting reference, [UML Sequence Diagrams](https://www.uml-diagrams.org/sequence-diagrams.html ), and the author does not seem to use that type of formatting while portraying ref frames.
 
 I do agree with the rectangles after execute.
+
+#### Further Review
+**Author** : Diogo Antunes (67763), 4/12/2025 10:25
+
+The return arrows have not been added for synchronous messages.
+Paste Schematic seems to be missing a diagram? Unless it's a subheading.
+
+The diagrams with repeated logic contain a collective explanation, which is reasonable. However, I think for cases where the messages
+aren't methods, that there should be an explanation message saying what they are (so that there's an explanation for potential mismatches with the class diagrams).
+
+The entity ``ResetEvent`` is something I didn't personally include, since it merely serves as a kind of "tag" for the event system. Given its appearance in the sequence diagram, it also
+doesn't seem to be particularly relevant here as an entity.
+
 ## Test specifications
 [Test Specifications](US1%20Test%20Case%20Specifications.md)
 ### Review

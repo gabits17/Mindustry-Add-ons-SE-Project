@@ -197,6 +197,13 @@ The `opt[not pixalated]` could be addressed separately and have a diagram just f
 
 There are more picky grievances than actual issues (if any) with the sequence diagrams. The effort into these diagrams cannot be understated and the report does more than suffice.
 
+#### Review response
+I have made changes to explanations as requested. I did not change, however, the opt conditions because they explicitly use the variable in messages in the sequence diagram,
+and I think it helps show where those variables are relevant.
+
+I only use the "Note" notation to indicate when things may not explicitly match the class diagram: like the ``Cons`` interface mostly composed of lambda expressions relevant to ``Events``
+and, after changing according to this review, the checking for an alternate block size in "Place block" since it differs from the use case scenario.
+
 ## Test specifications
 
 I wasn't able to create unit tests for the new functionality. The ``ApplicationTests`` supports setting up a very reduced game environment to allow for testing functionalities. The problem is that the ``Leaks`` class specifically interacts with the ``Renderer`` from ``Vars``, and ``Renderer``
